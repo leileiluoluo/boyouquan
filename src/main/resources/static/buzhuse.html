@@ -1,30 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="zh">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>博友圈 · 博客人的朋友圈！</title>
+    <title>博友圈 - 博客人的朋友圈！</title>
     <meta name="keywords" content="戒色, 戒邪淫, 养生, 修行"/>
     <meta
             name="description"
             content="欢迎来到博友圈，这里是独立博客人的专属朋友圈！在这里可以发布您的独立博客，获取一个免费的流量入口，也可以与志同道合的博主交朋友，还可以获取海量的博客更新和博主动态！"
     />
-    <link th:href="@{/assets/css/custom.css}" rel="stylesheet"/>
-    <link th:href="@{/assets/css/stylesheet.min.css}" rel="preload stylesheet" as="style"/>
+    <link rel="stylesheet" href="./static/assets/css/custom.css"/>
+    <link
+            crossorigin="anonymous"
+            href="/static/assets/css/stylesheet.min.css"
+            integrity="sha256-fBrkrc3ep0qs8C1GufauwiK/Vd7kRrU/PROSSP3yW3Y="
+            rel="preload stylesheet"
+            as="style"
+    />
     <noscript>
         <style>
         #theme-toggle,
         .top-link {
           display: none;
         }
-
-
-
-
-
-
-
-
         </style>
         <style>
         @media (prefers-color-scheme: dark) {
@@ -49,14 +47,6 @@
             border-color: var(--theme);
           }
         }
-
-
-
-
-
-
-
-
         </style>
     </noscript>
 </head>
@@ -69,20 +59,12 @@
       } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
         document.body.classList.add("dark");
       }
-
-
-
-
-
-
-
-
 </script>
 <header class="header">
     <nav class="nav">
         <div class="logo">
             <a
-                    href="https://www.boyouquan.com/"
+                    href="https://www.buzhuse.com/"
                     accesskey="h"
                     title="博友圈 (Alt + H)"
             >博友圈</a
@@ -149,34 +131,44 @@
             <p></p>
         </div>
     </article>
-    <article th:each="blogPost, iterstat: ${blogPosts}" class="post-entry">
+    <article class="post-entry">
         <header class="entry-header">
-            <h2 th:text="${blogPost.title}"></h2>
+            <h2>${postTitle}</h2>
         </header>
         <div class="entry-content">
-            <p th:text="${blogPost.description}"></p>
+            <p>
+                ${postContent}
+            </p>
         </div>
         <footer class="entry-footer">
-            <a th:text="${blogPost.blogName}" th:href="${blogPost.blogAddress}"></a> 发布于 <span th:text="${blogPost.createdAt}"></span>
+            <span title="2023-06-16 08:00:00 +0800 +0800">2023年6月16日</span>
         </footer>
-        <a class="entry-link" th:href="${blogPost.link}"></a>
+        <a
+                class="entry-link"
+                aria-label="post link to 邪淫让我现在人不像人，你还敢吗？"
+                href="https://www.buzhuse.com/posts/weihai/2023/ren-bu-xiang-ren/"
+        ></a>
     </article>
     <footer class="page-footer">
         <nav class="pagination">
-            <a class="next" href="/home?page=2">下一页 »</a>
+            <a class="next" href="https://www.buzhuse.com/page/2/">下一页 »</a>
         </nav>
     </footer>
 </main>
 <div align="center" style="font-size: 16px">
-    意见或建议等请联系：<a href="mailto:contact@boyouquan.com"
->contact@boyouquan.com</a
+    投稿、纠错、投诉、合作等请联系：<a href="mailto:contact@buzhuse.com"
+>contact@buzhuse.com</a
 >
 </div>
 <footer class="footer">
-    <span>© 2023 <a href="https://www.boyouquan.com/">博友圈</a></span>
+      <span
+      >Made with <a href="https://gohugo.io/">Hugo</a> | Theme
+        <a href="https://github.com/adityatelange/hugo-PaperMod">PaperMod</a> |
+      </span>
+    <span>© 2023 <a href="https://www.buzhuse.com/">不住色</a></span>
 </footer>
 <a
-        href="/home#top"
+        href="https://www.buzhuse.com/#top"
         aria-label="go to top"
         title="Go to Top (Alt + G)"
         class="top-link"
@@ -222,14 +214,6 @@
           }
         });
       });
-
-
-
-
-
-
-
-
 </script>
 <script type="text/javascript">
       var mybutton = document.getElementById("top-link");
@@ -245,14 +229,6 @@
           mybutton.style.opacity = "0";
         }
       };
-
-
-
-
-
-
-
-
 </script>
 <script type="text/javascript">
       document.getElementById("theme-toggle").addEventListener("click", () => {
@@ -264,14 +240,6 @@
           localStorage.setItem("pref-theme", "dark");
         }
       });
-
-
-
-
-
-
-
-
 </script>
 </body>
 </html>
