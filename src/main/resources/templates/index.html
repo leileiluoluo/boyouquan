@@ -150,7 +150,7 @@
             <p></p>
         </div>
     </article>
-    <article th:each="blogPost, iterstat: ${blogPosts}" class="post-entry">
+    <article th:each="blogPost, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
             <h2 th:text="${blogPost.title}"></h2>
         </header>
@@ -164,7 +164,8 @@
     </article>
     <footer class="page-footer">
         <nav class="pagination">
-            <a class="next" href="/home?page=2">下一页 »</a>
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home?page=' + ${pagination.pageNo - 1}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home?page=' + ${pagination.pageNo + 1}">下一页 »</a>
         </nav>
     </footer>
 </main>

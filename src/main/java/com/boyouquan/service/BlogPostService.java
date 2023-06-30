@@ -5,6 +5,8 @@ import com.boyouquan.util.Pagination;
 
 public interface BlogPostService {
 
-    Pagination<BlogPost> listAllPosts();
+    Pagination<BlogPost> listBlogPosts(int page, int size);
+
+    void saveBlogPost(BlogPost blogPost);
 
 }
