@@ -3,3 +3,15 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.logo a {
+    font-size: 26px !important;
+}
+
+.first-entry .entry-header h1 {
+    font-size: 20px !important;
+}
+
+.entry-header h2 {
+    font-size: 18px !important;
+}

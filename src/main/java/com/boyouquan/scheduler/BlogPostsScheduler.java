@@ -26,7 +26,7 @@ public class BlogPostsScheduler {
     private BlogPostService blogPostService;
 
     @Async
-    @Scheduled(cron = "0 */5 * * * ?", initialDelay = 5 * 1000)
+    @Scheduled(cron = "0 0 0/1 * * ?")
     public void crawlingBlogPosts() {
         System.out.println("scheduler started!");
         readAndSaveAllBlogs();
