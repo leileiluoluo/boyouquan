@@ -3,7 +3,7 @@ name: BoYouQuan CI/CD Pipeline
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   build-deploy:
