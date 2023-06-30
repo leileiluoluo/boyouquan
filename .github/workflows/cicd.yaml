@@ -42,6 +42,10 @@ jobs:
           target: '/usr/app/new/'
       - name: Start Service
         uses: appleboy/ssh-action@v0.1.4
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_USER: ${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
@@ -53,9 +57,10 @@ jobs:
             ps -ef | grep java | grep -v grep | awk '{print $2}' | xargs kill -9
             rm /usr/app/old/boyouquan-1.0-SNAPSHOT.jar
             mv /usr/app/new/target/boyouquan-1.0-SNAPSHOT.jar /usr/app/old/
-            export DATABASE_URL=${{ secrets.DATABASE_URL }}
-            export DATABASE_USER=${{ secrets.DATABASE_USER }}
-            export DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+            export DATABASE_URL=$DATABASE_URL
+            echo $DATABASE_URL
+            export DATABASE_USER=$DATABASE_USER
+            export DATABASE_PASSWORD=$DATABASE_PASSWORD
             nohup java -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar > /tmp/server.log 2>&1 &
             sleep 1
             while ! grep -m1 'Started BoYouQuanWebApplication' < /tmp/server.log; do
