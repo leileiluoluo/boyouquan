@@ -1,0 +1,5 @@
+.first-entry .entry-header {
+  background-image: linear-gradient(to right, #cb2e58, #470bd5, #9f4245);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -21,8 +21,8 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           source: './target/boyouquan-1.0-SNAPSHOT.jar'
           target: '/usr/app/'
@@ -30,9 +30,9 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
           script: |
             sudo /etc/init.d/my-app start
             rm ~/source/my-app-old.jar
