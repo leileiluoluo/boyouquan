@@ -9,4 +9,6 @@ public interface BlogPostService {
 
     void saveBlogPost(BlogPost blogPost);
 
+    void deleteBlogPostByBlogAddress(String blogAddress);
+
 }

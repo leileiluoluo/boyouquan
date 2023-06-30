@@ -34,4 +34,9 @@
         #{createdAt}
         )
     </insert>
+    <delete id="deleteBlogPostByBlogAddress">
+        DELETE
+        FROM blog_post
+        WHERE blog_address=#{blogAddress}
+    </delete>
 </mapper>
