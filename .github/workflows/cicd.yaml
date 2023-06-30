@@ -1,0 +1,57 @@
+name: BoYouQuan CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Maven
+        run: mvn clean package
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Maven
+        run: mvn clean package
+      - name: Copy file via ssh key
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          source: './target/boyouquan-1.0-SNAPSHOT.jar'
+          target: '/usr/app/new/'
+      - name: Start Service
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd /usr/app/
+            source /etc/profile
+            ps -ef | grep java | grep -v grep | awk '{print $2}' |xargs kill -9
+            rm /usr/app/old/boyouquan-1.0-SNAPSHOT.jar
+            mv /usr/app/new/target/boyouquan-1.0-SNAPSHOT.jar /usr/app/old/
+            java -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar &
+            sleep 60
+            ps -ef | grep java | grep -v grep

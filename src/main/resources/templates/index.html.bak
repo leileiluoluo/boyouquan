@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>博友圈 - 独立博客人的专属朋友圈！</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description"
+          content="欢迎来到博友圈，这里是独立博客人的专属朋友圈！在这里可以发布您的独立博客，获取一个免费的流量入口，也可以与志同道合的博主交朋友，还可以获取海量的博客更新和博主动态！"/>
+</head>
+<body>
+<div th:if="${session.user} != null">
+    Hi，<a th:text="${session.user.nickname}" th:href="@{/user/center}"></a>
+    <form th:action="@{/user/logout-action}" method="post">
+        <input type="submit" value="退出登录"/>
+    </form>
+</div>
+<div th:unless="${session.user} != null">
+    <a th:href="@{/user/login}">登录</a>
+    <a th:href="@{/user/register}">注册</a>
+</div>
+
+<p>
+    欢迎来到博友圈，这里是独立博客人的专属朋友圈！在这里可以发布您的独立博客，获取一个免费的流量入口，也可以与志同道合的博主交朋友，还可以获取海量的博客更新和博主动态！</p>
+</body>
+</html>

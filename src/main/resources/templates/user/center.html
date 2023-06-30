@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>个人中心 - 博友圈</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form th:object="${userInfo}">
+    <div>
+        <label>邮箱：</label>
+        <input type="text" th:field="*{email}"/>
+    </div>
+    <div>
+        <label>昵称：</label>
+        <input type="text" th:field="*{nickname}"/>
+    </div>
+</form>
+</body>
+</html>
