@@ -37,4 +37,4 @@ jobs:
             ps -ef | grep java | grep -v grep | awk '{print $2}' |xargs kill -9
             rm /usr/app/old/boyouquan-1.0-SNAPSHOT.jar
             mv /usr/app/new/target/boyouquan-1.0-SNAPSHOT.jar /usr/app/old/
-            java -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar
+            java -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar &
