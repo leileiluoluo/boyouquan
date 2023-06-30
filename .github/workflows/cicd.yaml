@@ -53,7 +53,7 @@ jobs:
             ps -ef | grep java | grep -v grep | awk '{print $2}' | xargs kill -9
             rm /usr/app/old/boyouquan-1.0-SNAPSHOT.jar
             mv /usr/app/new/target/boyouquan-1.0-SNAPSHOT.jar /usr/app/old/
-            java -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar > /tmp/server.log &
+            nohup java -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar > /tmp/server.log 2>&1 &
             sleep 1
             while ! grep -m1 'Started BoYouQuanWebApplication' < /tmp/server.log; do
               sleep 1
