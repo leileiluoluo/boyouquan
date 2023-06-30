@@ -7,6 +7,7 @@ import com.boyouquan.util.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -29,7 +30,16 @@ public class BlogPostServiceImpl implements BlogPostService {
 
     @Override
     public void saveBlogPost(BlogPost blogPost) {
-        blogPostDaoMapper.saveBlogPost(blogPost);
+        try {
+            blogPostDaoMapper.saveBlogPost(blogPost);
+        } catch (Exception e) {
+            System.out.printf("error occurred: %s\n", e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteBlogPostByBlogAddress(String blogAddress) {
+        blogPostDaoMapper.deleteBlogPostByBlogAddress(blogAddress);
     }
 
 }

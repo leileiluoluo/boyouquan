@@ -13,4 +13,6 @@ public interface BlogPostDaoMapper {
 
     void saveBlogPost(BlogPost blogPost);
 
+    void deleteBlogPostByBlogAddress(@Param("blogAddress") String blogAddress);
+
 }
