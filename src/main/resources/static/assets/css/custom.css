@@ -6,6 +6,12 @@
 
 .logo a {
     font-size: 26px !important;
+    font-weight: 450 !important;
+}
+
+.first-entry {
+    margin: 10px !important;
+    min-height: 20px !important;
 }
 
 .first-entry .entry-header h1 {
@@ -14,4 +20,5 @@
 
 .entry-header h2 {
     font-size: 18px !important;
+    font-weight: 450 !important;
 }
