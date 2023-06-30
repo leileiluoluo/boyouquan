@@ -23,7 +23,7 @@ jobs:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
+          password: ${{ secrets.PASSWORD }}
           source: './target/boyouquan-1.0-SNAPSHOT.jar'
           target: '/usr/app/'
       - name: Start Service
@@ -32,7 +32,7 @@ jobs:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
+          password: ${{ secrets.PASSWORD }}
           script: |
             sudo /etc/init.d/my-app start
             rm ~/source/my-app-old.jar
