@@ -25,7 +25,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
 
         URL feedSource = null;
         try {
-            feedSource = new URL("https://leileiluoluo.com/index.xml");
+            feedSource = new URL(feedURL);
             SyndFeed feed = new SyndFeedInput().build(new XmlReader(feedSource));
             String blogName = feed.getTitle();
             String blogAddress = feed.getLink();
@@ -35,8 +35,12 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                 String title = entry.getTitle();
                 SyndContent descriptionContent = entry.getDescription();
                 String description = descriptionContent.getValue();
+                description = splitAndFilterString(description, 100);
                 String link = entry.getUri();
                 Date createdAt = entry.getPublishedDate();
+                if (null == createdAt) {
+                    createdAt = entry.getUpdatedDate();
+                }
 
                 BlogPost blogPost = new BlogPost();
                 blogPost.setBlogName(blogName);
@@ -55,6 +59,24 @@ public class RSSReaderServiceImpl implements RSSReaderService {
         }
 
         return blogPosts;
+    }
+
+    public static String splitAndFilterString(String input, int length) {
+        if (input == null || input.trim().equals("")) {
+            return "";
+        }
+        // 去掉所有html元素,
+        String str = input.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll(
+                "<[^>]*>", "");
+        str = str.replaceAll("[(/>)<]", "");
+        int len = str.length();
+        if (len <= length) {
+            return str;
+        } else {
+            str = str.substring(0, length);
+            str += "...";
+        }
+        return str;
     }
 
 }
