@@ -5,19 +5,17 @@ import java.util.List;
 
 public class Pagination<T> {
 
-    private int pageNo;
-    private int pageSize;
+    private int pageNo = 0;
+    private int pageSize = 0;
+    private int total = 0;
 
     private List<T> results = new ArrayList<>();
 
-    private static class PaginationBuilder<T> {
-        private int pageNo;
-        private int pageSize;
-
-        private List<T> results = new ArrayList<>();
+    public static <T> Pagination<T> builder() {
+        return new Pagination<>();
     }
 
-    public static <T> Pagination<T> newBuilder() {
+    public static <T> Pagination<T> buildEmptyResults() {
         return new Pagination<>();
     }
 
@@ -31,9 +29,26 @@ public class Pagination<T> {
         return this;
     }
 
+    public Pagination<T> total(int total) {
+        this.total = total;
+        return this;
+    }
+
     public Pagination<T> results(List<T> results) {
         this.results = results;
         return this;
+    }
+
+    public int getPageNo() {
+        return this.pageNo;
+    }
+
+    public boolean hasNextPage() {
+        return total > (pageNo * pageSize);
+    }
+
+    public List<T> getResults() {
+        return this.results;
     }
 
 }
