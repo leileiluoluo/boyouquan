@@ -59,7 +59,6 @@ jobs:
             rm /usr/app/old/boyouquan-1.0-SNAPSHOT.jar
             mv /usr/app/new/target/boyouquan-1.0-SNAPSHOT.jar /usr/app/old/
             export DATABASE_URL=$DATABASE_URL
-            echo $DATABASE_URL
             export DATABASE_USER=$DATABASE_USER
             export DATABASE_PASSWORD=$DATABASE_PASSWORD
             nohup java -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar > /tmp/server.log 2>&1 &
