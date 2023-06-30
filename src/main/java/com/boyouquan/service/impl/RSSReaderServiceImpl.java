@@ -2,15 +2,13 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.model.BlogPost;
 import com.boyouquan.service.RSSReaderService;
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedInput;
-import com.sun.syndication.io.XmlReader;
+import com.rometools.rome.feed.synd.SyndContent;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,11 +22,11 @@ public class RSSReaderServiceImpl implements RSSReaderService {
     @Override
     public List<BlogPost> read(String feedURL) {
         List<BlogPost> blogPosts = new ArrayList<>();
+
         URL feedSource = null;
         try {
             feedSource = new URL("https://leileiluoluo.com/index.xml");
-            SyndFeedInput input = new SyndFeedInput();
-            SyndFeed feed = input.build(new XmlReader(feedSource));
+            SyndFeed feed = new SyndFeedInput().build(new XmlReader(feedSource));
             String blogName = feed.getTitle();
             String blogAddress = feed.getLink();
 
@@ -51,11 +49,9 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             }
 
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (FeedException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return blogPosts;
