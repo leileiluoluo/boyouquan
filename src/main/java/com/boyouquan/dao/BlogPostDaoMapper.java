@@ -3,6 +3,7 @@ package com.boyouquan.dao;
 import com.boyouquan.model.BlogPost;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BlogPostDaoMapper {
@@ -13,6 +14,6 @@ public interface BlogPostDaoMapper {
 
     void saveBlogPost(BlogPost blogPost);
 
-    void deleteBlogPostByBlogAddress(@Param("blogAddress") String blogAddress);
+    void deleteLaterBlogPostsByAddressAndDate(@Param("blogAddress") String blogAddress, @Param("datePoint") Date datePoint);
 
 }
