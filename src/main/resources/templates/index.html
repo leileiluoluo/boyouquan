@@ -129,13 +129,13 @@
     </article>
     <article th:each="blogPost, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
-            <a th:href="${blogPost.link}"><h2 th:text="${blogPost.title}"></h2></a>
+            <a th:href="'/go?link=' + ${blogPost.link}"><h2 th:text="${blogPost.title}"></h2></a>
         </header>
         <div class="entry-content">
             <p th:text="${blogPost.description}"></p>
         </div>
         <footer class="entry-footer">
-            <a th:text="${blogPost.blogName}" th:href="${blogPost.blogAddress}"></a> 发布于 <span th:text="${#dates.format(blogPost.createdAt, 'yyyy年M月d日')}"></span>
+            <a th:text="${blogPost.blogName}" th:href="'/go?link=' + ${blogPost.blogAddress}"></a> · <span th:text="${#dates.format(blogPost.createdAt, 'yyyy年M月d日')}"></span> · <span th:text="${@blogAccessHelper.countBlogAccessByLink(blogPost.link)}"></span>次浏览
         </footer>
     </article>
     <footer class="page-footer">
