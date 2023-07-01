@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+
+# self defined
+boyouquan:
+  blogs:
+    - https://www.xiaowuleyi.com/feed
+    - https://weiyexing.ml/rss.xml
+    - https://tianxianzi.me/atom.xml
+    - https://www.macin.org/atom.xml
+    - http://rushihu.com/feed
+    - https://atpx.com/feed.xml
+    - https://www.typemylife.com/feed/
+    - https://owlswims.com/feed/
