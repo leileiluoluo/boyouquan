@@ -7,6 +7,7 @@ import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -33,9 +34,19 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             for (Iterator iter = feed.getEntries().iterator(); iter.hasNext(); ) {
                 SyndEntry entry = (SyndEntry) iter.next();
                 String title = entry.getTitle();
-                SyndContent descriptionContent = entry.getDescription();
-                String description = descriptionContent.getValue();
-                description = splitAndFilterString(description, 100);
+
+                // content
+                String description = "";
+                List<SyndContent> contents = entry.getContents();
+                if (null != contents && !contents.isEmpty()) {
+                    description = contents.get(0).getValue();
+                } else {
+                    SyndContent descriptionContent = entry.getDescription();
+                    description = descriptionContent.getValue();
+                }
+                description = parseAndTruncateHtml2Text(description, 160);
+
+                // link
                 String link = entry.getUri();
                 Date createdAt = entry.getPublishedDate();
                 if (null == createdAt) {
@@ -61,22 +72,16 @@ public class RSSReaderServiceImpl implements RSSReaderService {
         return blogPosts;
     }
 
-    public static String splitAndFilterString(String input, int length) {
-        if (input == null || input.trim().equals("")) {
-            return "";
-        }
-        // 去掉所有html元素,
-        String str = input.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll(
-                "<[^>]*>", "");
-        str = str.replaceAll("[(/>)<]", "");
-        int len = str.length();
-        if (len <= length) {
-            return str;
+    private static String parseAndTruncateHtml2Text(String html, int length) {
+        String text = Jsoup.parse(html).text();
+
+        if (text.length() <= length) {
+            return text;
         } else {
-            str = str.substring(0, length);
-            str += "...";
+            text = text.substring(0, length);
+            text += "...";
         }
-        return str;
+        return text;
     }
 
 }

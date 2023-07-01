@@ -58,6 +58,12 @@
             <version>2.1.0</version>
         </dependency>
 
+        <!-- html parse -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.16.1</version>
+        </dependency>
 
         <!-- testing -->
         <dependency>
