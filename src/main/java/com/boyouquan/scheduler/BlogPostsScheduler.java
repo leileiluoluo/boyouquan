@@ -11,6 +11,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -37,8 +39,9 @@ public class BlogPostsScheduler {
         for (String blog : blogs) {
             List<BlogPost> blogPosts = rssReaderService.read(blog);
             if (!blogPosts.isEmpty()) {
+                Date minCreatedAt = blogPosts.stream().min(Comparator.comparing(BlogPost::getCreatedAt)).get().getCreatedAt();
                 String blogAddress = blogPosts.get(0).getBlogAddress();
-                blogPostService.deleteBlogPostByBlogAddress(blogAddress);
+                blogPostService.deleteLaterBlogPostsByAddressAndDate(blogAddress, minCreatedAt);
                 System.out.printf("%d old blogs deleted for address: %s\n", blogPosts.size(), blogAddress);
                 save(blogPosts);
                 System.out.printf("%d new blogs saved for address: %s\n", blogPosts.size(), blogAddress);

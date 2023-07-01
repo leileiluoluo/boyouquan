@@ -34,9 +34,10 @@
         #{createdAt}
         )
     </insert>
-    <delete id="deleteBlogPostByBlogAddress">
+    <delete id="deleteLaterBlogPostsByAddressAndDate">
         DELETE
         FROM blog_post
         WHERE blog_address=#{blogAddress}
+        AND created_at>=#{datePoint}
     </delete>
 </mapper>
