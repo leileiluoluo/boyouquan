@@ -7,6 +7,7 @@ import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
@@ -40,11 +41,15 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                 List<SyndContent> contents = entry.getContents();
                 if (null != contents && !contents.isEmpty()) {
                     description = contents.get(0).getValue();
-                } else {
-                    SyndContent descriptionContent = entry.getDescription();
-                    description = descriptionContent.getValue();
                 }
-                description = parseAndTruncateHtml2Text(description, 160);
+
+                SyndContent descriptionContent = entry.getDescription();
+                String summary = descriptionContent.getValue();
+                if (StringUtils.isNotBlank(summary) && summary.length() > 20) {
+                    description = summary;
+                }
+
+                description = parseAndTruncateHtml2Text(description, 200);
 
                 // link
                 String link = entry.getUri();
@@ -73,8 +78,11 @@ public class RSSReaderServiceImpl implements RSSReaderService {
     }
 
     private static String parseAndTruncateHtml2Text(String html, int length) {
-        String text = Jsoup.parse(html).text();
+        if (StringUtils.isBlank(html)) {
+            return "...";
+        }
 
+        String text = Jsoup.parse(html).text();
         if (text.length() <= length) {
             return text;
         } else {
