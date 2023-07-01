@@ -19,14 +19,6 @@
         .top-link {
           display: none;
         }
-
-
-
-
-
-
-
-
         </style>
         <style>
         @media (prefers-color-scheme: dark) {
@@ -51,14 +43,6 @@
             border-color: var(--theme);
           }
         }
-
-
-
-
-
-
-
-
         </style>
     </noscript>
 </head>
@@ -71,14 +55,6 @@
       } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
         document.body.classList.add("dark");
       }
-
-
-
-
-
-
-
-
 </script>
 <header class="header">
     <nav class="nav">
@@ -161,7 +137,6 @@
         <footer class="entry-footer">
             <a th:text="${blogPost.blogName}" th:href="${blogPost.blogAddress}"></a> 发布于 <span th:text="${#dates.format(blogPost.createdAt, 'yyyy年M月d日')}"></span>
         </footer>
-<!--        <a class="entry-link" th:href="${blogPost.link}"></a>-->
     </article>
     <footer class="page-footer">
         <nav class="pagination">
@@ -226,14 +201,6 @@
           }
         });
       });
-
-
-
-
-
-
-
-
 </script>
 <script type="text/javascript">
       var mybutton = document.getElementById("top-link");
@@ -249,14 +216,6 @@
           mybutton.style.opacity = "0";
         }
       };
-
-
-
-
-
-
-
-
 </script>
 <script type="text/javascript">
       document.getElementById("theme-toggle").addEventListener("click", () => {
