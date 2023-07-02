@@ -129,25 +129,25 @@
     </article>
     <article th:each="blogPost, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
-            <a th:href="'/go?link=' + ${blogPost.link}"><h2 th:text="${blogPost.title}"></h2></a>
+            <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.link)}"><h2 th:text="${blogPost.title}"></h2></a>
         </header>
         <div class="entry-content">
             <p th:text="${blogPost.description}"></p>
         </div>
         <footer class="entry-footer">
             <div class="flex-item">
-                <a th:href="'/go?link=' + ${blogPost.blogAddress}">
-                    <img th:src="${@blogAccessHelper.getBlogAdminImageURLByAddress(blogPost.blogAddress)}"/>
+                <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.blogAddress)}">
+                    <img th:src="${@thymeLeafTemplateHelper.getBlogAdminImageURLByAddress(blogPost.blogAddress)}"/>
                 </a>
             </div>
             <div class="flex-item">
-                <a th:text="${blogPost.blogName}" th:href="'/go?link=' + ${blogPost.blogAddress}"></a>
+                <a th:text="${blogPost.blogName}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.blogAddress)}"></a>
             </div>
             <div class="flex-item">
-                · <span th:text="${@blogAccessHelper.dateFriendlyDisplay(blogPost.createdAt)}"></span>
+                · <span th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogPost.createdAt)}"></span>
             </div>
             <div class="flex-item">
-                · <span th:text="${@blogAccessHelper.countBlogAccessByLink(blogPost.link)}"></span>次浏览
+                · <span th:text="${@thymeLeafTemplateHelper.countBlogAccessByLink(blogPost.link)}"></span>次浏览
             </div>
         </footer>
     </article>
