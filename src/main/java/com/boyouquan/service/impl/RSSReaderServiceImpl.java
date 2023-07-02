@@ -41,12 +41,9 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                 List<SyndContent> contents = entry.getContents();
                 if (null != contents && !contents.isEmpty()) {
                     description = contents.get(0).getValue();
-                }
-
-                SyndContent descriptionContent = entry.getDescription();
-                String summary = descriptionContent.getValue();
-                if (StringUtils.isNotBlank(summary) && summary.length() > 20) {
-                    description = summary;
+                } else {
+                    SyndContent descriptionContent = entry.getDescription();
+                    description = descriptionContent.getValue();
                 }
 
                 description = parseAndTruncateHtml2Text(description, 200);
