@@ -20,3 +20,17 @@
 .entry-header h2 {
     font-size: 18px !important;
 }
+
+.entry-footer {
+    display: flex;
+}
+
+.entry-footer .flex-item {
+    margin: 2px 0 0 2px;
+}
+
+.entry-footer img {
+    width: 20px;
+    height: 20px;
+    margin-right: 2px;
+}

@@ -9,12 +9,4 @@ mybatis:
 
 # self defined
 boyouquan:
-  blogs:
-    - https://www.xiaowuleyi.com/feed
-    - https://weiyexing.ml/rss.xml
-    - https://tianxianzi.me/atom.xml
-    - https://www.macin.org/atom.xml
-    - http://rushihu.com/feed
-    - https://atpx.com/feed.xml
-    - https://www.typemylife.com/feed/
-    - https://owlswims.com/feed/
+
