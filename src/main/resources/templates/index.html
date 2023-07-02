@@ -135,7 +135,20 @@
             <p th:text="${blogPost.description}"></p>
         </div>
         <footer class="entry-footer">
-            <a th:text="${blogPost.blogName}" th:href="'/go?link=' + ${blogPost.blogAddress}"></a> · <span th:text="${#dates.format(blogPost.createdAt, 'yyyy年M月d日')}"></span> · <span th:text="${@blogAccessHelper.countBlogAccessByLink(blogPost.link)}"></span>次浏览
+            <div class="flex-item">
+                <a th:href="'/go?link=' + ${blogPost.blogAddress}">
+                    <img th:src="${@blogAccessHelper.getBlogAdminImageURLByAddress(blogPost.blogAddress)}"/>
+                </a>
+            </div>
+            <div class="flex-item">
+                <a th:text="${blogPost.blogName}" th:href="'/go?link=' + ${blogPost.blogAddress}"></a>
+            </div>
+            <div class="flex-item">
+                · <span th:text="${#dates.format(blogPost.createdAt, 'yyyy年M月d日')}"></span>
+            </div>
+            <div class="flex-item">
+                · <span th:text="${@blogAccessHelper.countBlogAccessByLink(blogPost.link)}"></span>次浏览
+            </div>
         </footer>
     </article>
     <footer class="page-footer">

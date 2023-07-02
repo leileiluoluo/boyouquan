@@ -1,6 +1,7 @@
 package com.boyouquan.scheduler;
 
 import com.boyouquan.config.BoYouQuanConfig;
+import com.boyouquan.enumeration.BlogEnums;
 import com.boyouquan.model.BlogPost;
 import com.boyouquan.service.BlogPostService;
 import com.boyouquan.service.RSSReaderService;
@@ -35,7 +36,7 @@ public class BlogPostsScheduler {
     }
 
     private void readAndSaveAllBlogs() {
-        List<String> blogs = boYouQuanConfig.getBlogs();
+        List<String> blogs = BlogEnums.getAllFeedAddresses();
         for (String blog : blogs) {
             List<BlogPost> blogPosts = rssReaderService.read(blog);
             if (!blogPosts.isEmpty()) {
