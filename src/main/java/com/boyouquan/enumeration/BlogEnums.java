@@ -23,7 +23,9 @@ public enum BlogEnums {
     MUXER("i@lms.im", "https://muxer.cn/feed"),
     STEPHENLENG("lengge86@gmail.com", "https://stephenleng.com/feed/"),
     FENG("mypen@163.com", "https://feng.pub/feed"),
-    SUBNOOC("nooc@nooc.ink", "https://subnooc.com/rss.xml");
+    SUBNOOC("nooc@nooc.ink", "https://subnooc.com/rss.xml"),
+    JINGFENGSHUO("i@jingfengshuo.com", "https://www.jingfengshuo.com/feed"),
+    ORDCHAOS("orderchaos@ordchaos.com", "https://www.ordchaos.com/atom.xml");
 
     private final String email;
     private final String feedAddress;
