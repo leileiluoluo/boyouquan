@@ -9,13 +9,13 @@ public enum BlogEnums {
 
     LEILEILUOLUO("leileiluoluo@leileiluoluo.com", "https://leileiluoluo.com/index.xml"),
     XIAOWULEYI("0471666@gmail.com", "https://www.xiaowuleyi.com/feed"),
-    WEIYEXING("weiyexing1@gmail.com", "https://weiyexing.ml/rss.xml"),
+    WEIYEXING("weiyexing1@gmail.com", "https://aaronnick.github.io/rss.xml"),
     TIANXIANZI("mimismeoww@gmail.com", "https://tianxianzi.me/atom.xml"),
-    MACIN("leileiluoluo@leileiluoluo.com", "https://www.macin.org/atom.xml"),
-    RUSHIHU("leileiluoluo@leileiluoluo.com", "http://rushihu.com/feed"),
-    ATPX("leileiluoluo@leileiluoluo.com", "https://atpx.com/feed.xml"),
-    TYPEMYLIFE("leileiluoluo@leileiluoluo.com", "https://www.typemylife.com/feed/"),
-    OWLSWIMS("leileiluoluo@leileiluoluo.com", "https://owlswims.com/feed/");
+    MACIN("hi@macin.org", "https://www.macin.org/atom.xml"),
+    RUSHIHU("notfound@rushihu.com", "http://rushihu.com/feed"),
+    ATPX("hello@atpx.com", "https://atpx.com/feed.xml"),
+    TYPEMYLIFE("zhang@typemylife.com", "https://www.typemylife.com/feed/"),
+    OWLSWIMS("heyday.misses_0l@icloud.com", "https://owlswims.com/feed/");
 
     private final String email;
     private final String feedAddress;
