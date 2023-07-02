@@ -158,6 +158,13 @@
         </nav>
     </footer>
 </main>
+<div class="footer-summary">
+    <p th:text="'收录网站：' + ${totalBlogs} + '个'"></p>
+    <p>·</p>
+    <p th:text="'收录文章：' + ${totalBlogPosts} + '篇'"></p>
+    <p>·</p>
+    <p th:text="'浏览总数：' + ${accessTotal} + '次'"></p>
+</div>
 <div align="center" style="font-size: 16px">
     意见或建议等请联系：<a href="mailto:contact@boyouquan.com"
 >contact@boyouquan.com</a
