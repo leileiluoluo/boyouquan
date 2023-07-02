@@ -6,12 +6,14 @@ import com.boyouquan.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import static com.boyouquan.util.CommonUtils.md5;
 
 @Component
-public class BlogAccessHelper {
+public class ThymeLeafTemplateHelper {
 
     @Autowired
     private BlogAccessService blogAccessService;
@@ -28,6 +30,10 @@ public class BlogAccessHelper {
 
     public String dateFriendlyDisplay(Date date) {
         return CommonUtils.dateFriendlyDisplay(date);
+    }
+
+    public String urlEncode(String url) {
+        return URLEncoder.encode(url, StandardCharsets.UTF_8);
     }
 
 }
