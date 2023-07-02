@@ -144,7 +144,7 @@
                 <a th:text="${blogPost.blogName}" th:href="'/go?link=' + ${blogPost.blogAddress}"></a>
             </div>
             <div class="flex-item">
-                · <span th:text="${#dates.format(blogPost.createdAt, 'yyyy年M月d日')}"></span>
+                · <span th:text="${@blogAccessHelper.dateFriendlyDisplay(blogPost.createdAt)}"></span>
             </div>
             <div class="flex-item">
                 · <span th:text="${@blogAccessHelper.countBlogAccessByLink(blogPost.link)}"></span>次浏览

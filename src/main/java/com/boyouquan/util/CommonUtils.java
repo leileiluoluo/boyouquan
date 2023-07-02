@@ -5,8 +5,38 @@ import com.boyouquan.enumeration.BlogEnums;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CommonUtils {
+
+    public static String dateFriendlyDisplay(Date date) {
+        final long halfAHour = 30 * 60 * 1000;
+        final long oneHour = 60 * 60 * 1000;
+        final long oneDay = 24 * 60 * 60 * 1000;
+        final long tenDay = 10 * 24 * 60 * 60 * 1000;
+
+        SimpleDateFormat commonPattern = new SimpleDateFormat("yyyy年M月d日");
+        long now = System.currentTimeMillis();
+        long past = date.getTime();
+        if (past >= now) {
+            return commonPattern.format(past);
+        }
+
+        long timeDiff = now - past;
+        if (timeDiff < halfAHour) {
+            return "刚刚";
+        } else if (timeDiff < oneHour) {
+            return "半小时前";
+        } else if (timeDiff < oneDay) {
+            int hours = (int) (timeDiff / oneHour);
+            return String.format("%d小时前", hours);
+        } else if (timeDiff < tenDay) {
+            int days = (int) (timeDiff / oneDay);
+            return String.format("%d天前", days);
+        }
+        return commonPattern.format(past);
+    }
 
     public static String md5(String str) {
         StringBuilder md5 = new StringBuilder();
