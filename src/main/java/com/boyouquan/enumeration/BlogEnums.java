@@ -15,7 +15,15 @@ public enum BlogEnums {
     RUSHIHU("notfound@rushihu.com", "http://rushihu.com/feed"),
     ATPX("hello@atpx.com", "https://atpx.com/feed.xml"),
     TYPEMYLIFE("zhang@typemylife.com", "https://www.typemylife.com/feed/"),
-    OWLSWIMS("heyday.misses_0l@icloud.com", "https://owlswims.com/feed/");
+    OWLSWIMS("heyday.misses_0l@icloud.com", "https://owlswims.com/feed/"),
+    SI_ON("me@si-on.top", "https://blog.si-on.top/atom.xml"),
+    QNCD("376977443@qq.com", "http://www.qncd.com/?feed=rss2"),
+    CHANGHAI("lu_changhai@yahoo.com", "https://www.changhai.org/feed.xml"),
+    MMBKZ("notfound@mmbkz.cn", "https://www.mmbkz.cn/feed/"),
+    MUXER("i@lms.im", "https://muxer.cn/feed"),
+    STEPHENLENG("lengge86@gmail.com", "https://stephenleng.com/feed/"),
+    FENG("mypen@163.com", "https://feng.pub/feed"),
+    SUBNOOC("nooc@nooc.ink", "https://subnooc.com/rss.xml");
 
     private final String email;
     private final String feedAddress;
