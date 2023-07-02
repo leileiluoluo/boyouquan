@@ -60,7 +60,7 @@
     <nav class="nav">
         <div class="logo">
             <a
-                    href="https://www.boyouquan.com/"
+                    href="/home"
                     accesskey="h"
                     title="博友圈 (Alt + H)"
             >博友圈</a
@@ -153,17 +153,27 @@
     </article>
     <footer class="page-footer">
         <nav class="pagination">
-            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home?page=' + ${pagination.pageNo - 1}">« 上一页</a>
-            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home?page=' + ${pagination.pageNo + 1}">下一页 »</a>
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1}">下一页 »</a>
         </nav>
     </footer>
 </main>
 <div class="footer-summary">
-    <p th:text="'收录博客：' + ${totalBlogs} + '个'"></p>
-    <p>·</p>
-    <p th:text="'收录文章：' + ${totalBlogPosts} + '篇'"></p>
-    <p>·</p>
-    <p th:text="'浏览总数：' + ${accessTotal} + '次'"></p>
+    <div class="flex-item">
+        <p>收录博客</p><strong style="color: #cb2e58;" th:text="${totalBlogs}"></strong><p>个</p>
+    </div>
+    <div class="flex-item">
+        <p>·</p>
+    </div>
+    <div class="flex-item">
+        <p>收录文章</p><strong style="color: #cb2e58;" th:text="${totalBlogPosts}"></strong><p>篇</p>
+    </div>
+    <div class="flex-item">
+        <p>·</p>
+    </div>
+    <div class="flex-item">
+        <p>浏览文章</p><strong style="color: #cb2e58;" th:text="${accessTotal}"></strong><p>次</p>
+    </div>
 </div>
 <div align="center" style="font-size: 16px">
     意见或建议等请联系：<a href="mailto:contact@boyouquan.com"
