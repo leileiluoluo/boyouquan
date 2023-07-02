@@ -42,6 +42,10 @@
     font-size: 16px
 }
 
-.footer-summary p {
+.footer-summary .flex-item {
     margin-right: 8px;
+}
+
+.footer-summary .flex-item p {
+    display: inline;
 }
