@@ -32,4 +32,9 @@ public class BlogAccessServiceImpl implements BlogAccessService {
         }
     }
 
+    @Override
+    public Long totalCount() {
+        return blogAccessDaoMapper.countTotal();
+    }
+
 }

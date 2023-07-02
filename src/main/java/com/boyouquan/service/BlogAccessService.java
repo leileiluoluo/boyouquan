@@ -8,4 +8,6 @@ public interface BlogAccessService {
 
     void saveBlogAccess(BlogAccess blogAccess);
 
+    Long totalCount();
+
 }

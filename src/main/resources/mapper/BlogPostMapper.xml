@@ -40,4 +40,9 @@
         WHERE blog_address=#{blogAddress}
         AND created_at>=#{datePoint}
     </delete>
+    <select id="countBlogs" resultType="java.lang.Long">
+        SELECT
+        count(distinct blog_address)
+        FROM blog_post
+    </select>
 </mapper>

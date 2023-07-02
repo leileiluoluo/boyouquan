@@ -13,4 +13,8 @@ public interface BlogPostService {
 
     void deleteLaterBlogPostsByAddressAndDate(String address, Date datePoint);
 
+    Long countBlogs();
+
+    int countPosts();
+
 }

@@ -8,4 +8,6 @@ public interface BlogAccessDaoMapper {
 
     void save(BlogAccess blogAccess);
 
+    Long countTotal();
+
 }

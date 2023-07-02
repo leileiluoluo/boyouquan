@@ -2,6 +2,7 @@ package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.BlogPost;
+import com.boyouquan.service.BlogAccessService;
 import com.boyouquan.service.BlogPostService;
 import com.boyouquan.util.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,17 @@ public class HomeController {
 
     @Autowired
     private BlogPostService blogPostService;
+    @Autowired
+    private BlogAccessService blogAccessService;
 
     @GetMapping("")
     public String index(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
         Pagination<BlogPost> pagination = blogPostService.listBlogPosts(page, CommonConstants.DEFAULT_PAGE_SIZE);
         model.addAttribute("pagination", pagination);
+
+        model.addAttribute("totalBlogs", blogPostService.countBlogs());
+        model.addAttribute("totalBlogPosts", blogPostService.countPosts());
+        model.addAttribute("accessTotal", blogAccessService.totalCount());
         return "index";
     }
 

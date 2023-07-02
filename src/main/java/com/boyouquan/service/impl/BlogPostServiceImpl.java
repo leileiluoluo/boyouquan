@@ -42,4 +42,14 @@ public class BlogPostServiceImpl implements BlogPostService {
         blogPostDaoMapper.deleteLaterBlogPostsByAddressAndDate(address, datePoint);
     }
 
+    @Override
+    public Long countBlogs() {
+        return blogPostDaoMapper.countBlogs();
+    }
+
+    @Override
+    public int countPosts() {
+        return blogPostDaoMapper.countBlogPosts();
+    }
+
 }

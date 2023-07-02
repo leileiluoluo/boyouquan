@@ -1,5 +1,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boyouquan.dao.BlogAccessDaoMapper">
+    <select id="countTotal" resultType="java.lang.Long">
+        SELECT
+        count(1)
+        FROM blog_access
+    </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
         count(1)
