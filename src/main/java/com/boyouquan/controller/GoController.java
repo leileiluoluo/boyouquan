@@ -20,7 +20,7 @@ public class GoController {
     private BlogAccessService blogAccessService;
 
     @GetMapping("")
-    public void index(@RequestParam("link") String link, HttpServletRequest request, HttpServletResponse response) {
+    public void go(@RequestParam("link") String link, HttpServletRequest request, HttpServletResponse response) {
         String ip = request.getRemoteAddr();
         try {
             saveAccessInfo(ip, link);

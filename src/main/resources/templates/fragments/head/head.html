@@ -1,10 +1,10 @@
-<head th:fragment="head" xmlns="http://www.w3.org/1999/xhtml"
+<head th:fragment="head(title, keywords, description)" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <title>博友圈 · 博客人的朋友圈！</title>
-    <meta name="keywords" content="博客, 博友, 博客圈, 博友圈, 朋友圈"/>
+    <title th:text="${title}"></title>
+    <meta name="keywords" th:content="${keywords}"/>
     <meta
             name="description"
-            content="欢迎来到博友圈，这里是独立博客人的专属朋友圈！在这里可以发布您的独立博客，获取一个免费的流量入口，也可以与志同道合的博主交朋友，还可以获取海量的博客更新和博主动态！"
+            th:content="${description}"
     />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
