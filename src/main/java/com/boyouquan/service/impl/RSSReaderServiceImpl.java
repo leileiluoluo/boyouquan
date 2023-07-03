@@ -55,16 +55,20 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                     createdAt = entry.getUpdatedDate();
                 }
 
-                BlogPost blogPost = new BlogPost();
-                blogPost.setBlogName(blogName);
-                blogPost.setBlogAddress(blogAddress);
-                blogPost.setTitle(title);
-                blogPost.setDescription(description);
-                blogPost.setLink(link);
-                blogPost.setCreatedAt(createdAt);
-                blogPosts.add(blogPost);
+                // FIXME
+                if (StringUtils.isNotBlank(blogName) && StringUtils.isNotBlank(blogAddress)
+                        && StringUtils.isNotBlank(title) && StringUtils.isNotBlank(link)
+                        && null != createdAt) {
+                    BlogPost blogPost = new BlogPost();
+                    blogPost.setBlogName(blogName);
+                    blogPost.setBlogAddress(blogAddress);
+                    blogPost.setTitle(title);
+                    blogPost.setDescription(description);
+                    blogPost.setLink(link);
+                    blogPost.setCreatedAt(createdAt);
+                    blogPosts.add(blogPost);
+                }
             }
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (Exception e) {
