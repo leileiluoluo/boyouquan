@@ -1,4 +1,5 @@
-<main th:fragment="main" class="main">
+<main th:fragment="main" class="main" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
     <article th:replace="/fragments/home/home-info::home-info"></article>
     <article th:each="blogPost, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
