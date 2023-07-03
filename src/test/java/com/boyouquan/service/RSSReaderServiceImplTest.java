@@ -20,7 +20,7 @@ public class RSSReaderServiceImplTest {
 
     @Test
     public void testRead() {
-        List<BlogPost> blogPosts = rssReaderService.read("https://suiyan.cc/rss.xml");
+        List<BlogPost> blogPosts = rssReaderService.read("https://pythoncat.top/rss.xml");
 //        save(blogPosts);
     }
 

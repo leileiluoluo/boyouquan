@@ -48,7 +48,18 @@ public enum BlogEnums {
     TORTORSE("hello@tortorse.com", "https://www.tortorse.com/atom.xml"),
     IZZNAN("2461306899@qq.com", "https://blog.izznan.cn/feed"),
     BKRYOFU("unscientific_kappa@outlook.com", "https://bkryofu.xyz/atom.xml"),
-    HIN("892599923@qq.com", "https://hin.cool/atom.xml");
+    HIN("892599923@qq.com", "https://hin.cool/atom.xml"),
+    IXIQIN("bestony@linux.com", "https://www.ixiqin.com/feed/"),
+    LYCHEE("notfound@notfound.com", "https://lychee.love/feed/"),
+    JAVIS("notfound@notfound.com", "https://www.javis.me/feed"),
+    SUITHINK("suithink.su@gmail.com", "https://suithink.me/feed/"),
+    ZHHEO("notfound@notfound.com", "https://blog.zhheo.com/rss.xml"),
+    NUOEA("notfound@notfound.com", "https://nuoea.com/atom.xml"),
+    OLDJ("hi@oldj.net", "https://oldj.net/feed/"),
+    EASYF12("notfound@notfound.com", "https://easyf12.top/atom.xml"),
+    LUOLEI("i@luolei.org", "https://luolei.org/feed/"),
+    PYTHONCAT("chinesehuazhou@gmail.com", "https://pythoncat.top/rss.xml");
+
     private final String email;
     private final String feedAddress;
 
