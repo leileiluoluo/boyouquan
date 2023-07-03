@@ -1,7 +1,5 @@
 package com.boyouquan.util;
 
-import com.boyouquan.enumeration.BlogEnums;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,8 +11,8 @@ public class CommonUtils {
     public static String dateFriendlyDisplay(Date date) {
         final long halfAHour = 30 * 60 * 1000;
         final long oneHour = 60 * 60 * 1000;
-        final long oneDay = 24 * 60 * 60 * 1000;
-        final long tenDay = 10 * 24 * 60 * 60 * 1000;
+        final long oneDay = 24 * oneHour;
+        final long tenDay = 10 * oneDay;
 
         SimpleDateFormat commonPattern = new SimpleDateFormat("yyyy年M月d日");
         long now = System.currentTimeMillis();

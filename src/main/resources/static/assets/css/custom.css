@@ -65,3 +65,7 @@
 .post-content dl, .post-content ol, .post-content p, .post-content figure, .post-content ul {
     margin-bottom: 12px !important;
 }
+
+.footer, .top-link {
+    font-size: 14px !important;
+}
