@@ -25,8 +25,31 @@ public enum BlogEnums {
     FENG("mypen@163.com", "https://feng.pub/feed"),
     SUBNOOC("nooc@nooc.ink", "https://subnooc.com/rss.xml"),
     JINGFENGSHUO("i@jingfengshuo.com", "https://www.jingfengshuo.com/feed"),
-    ORDCHAOS("orderchaos@ordchaos.com", "https://www.ordchaos.com/atom.xml");
-
+    ORDCHAOS("orderchaos@ordchaos.com", "https://www.ordchaos.com/atom.xml"),
+    LILLIANWHO("ciwiehenfan@sina.com", "https://lillianwho.com/atom.xml"),
+    ZUOFEI("huhexian0206gmail.com", "https://zuofei.net/feed"),
+    ONOJYUN("notfound@notfound.com", "https://onojyun.com/feed/"),
+    SKYUE("skyue.hu@gmail.com", "https://www.skyue.com/feed/"),
+    JUSTGOIDEA("notfound@notfound.com", "https://www.justgoidea.com/feed"),
+    OWENYOUNG("owen@owenyoung.com", "https://www.owenyoung.com/atom.xml"),
+    SOGOLA("high@sogola.com", "https://sogola.com/index.xml"),
+    OURAI("ourairyu@gmail.com", "https://ourai.ws/rss.xml"),
+    SUIYAN("285911@gmail.com", "https://suiyan.cc/rss.xml"),
+    CATCODING("notfound@notfound.com", "https://catcoding.me/atom.xml"),
+    HANYU("hi@hanyu.life", "https://hanyu.life/blog/index.xml"),
+    TIANHEG("me@tianhegao.com", "https://tianheg.xyz/atom.xml"),
+    YESHU("xdlrt0111@163.com", "https://yeshu.cloud/rss.xml"),
+    ELIZEN("notfound@notfound.com", "https://elizen.me/index.xml"),
+    YIPAI("notfound@notfound.com", "https://yipai.me/feed"),
+    KAIX("dimlau@kaix.in", "https://kaix.in/subscribe/"),
+    SHIYU("im@shiyu.dev", "https://shiyu.dev/feed/"),
+    IMMMMM("notfound@notfound.com", "https://immmmm.com/atom.xml"),
+    ANOTHERDAYU("notfound@notfound.com", "https://anotherdayu.com/feed/"),
+    LAOZHANG("notfound@notfound.com", "https://laozhang.org/feed/"),
+    TORTORSE("hello@tortorse.com", "https://www.tortorse.com/atom.xml"),
+    IZZNAN("2461306899@qq.com", "https://blog.izznan.cn/feed"),
+    BKRYOFU("unscientific_kappa@outlook.com", "https://bkryofu.xyz/atom.xml"),
+    HIN("892599923@qq.com", "https://hin.cool/atom.xml");
     private final String email;
     private final String feedAddress;
 
