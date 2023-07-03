@@ -49,3 +49,7 @@
 .footer-summary .flex-item p {
     display: inline;
 }
+
+.post-title {
+    font-size: 22px !important;
+}
