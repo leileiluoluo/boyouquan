@@ -1,7 +1,5 @@
 package com.boyouquan.util;
 
-import com.boyouquan.enumeration.BlogEnums;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
