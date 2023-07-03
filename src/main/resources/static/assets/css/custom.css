@@ -53,3 +53,15 @@
 .post-title {
     font-size: 22px !important;
 }
+
+.post-content h3 {
+    font-size: 20px !important;
+}
+
+.post-content img {
+    margin: 0 0 !important;
+}
+
+.post-content dl, .post-content ol, .post-content p, .post-content figure, .post-content ul {
+    margin-bottom: 12px !important;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head/head::head('v1.0 版本说明 - 博友圈 · 博客人的朋友圈！', '博友圈, 版本说明, v1.0', '博友圈 v1.0 版本说明')"></head>
+<body class="list" id="top">
+<!--        <script th:src="@{/assets/js/theme.js}" type="text/javascript"></script>-->
+<header th:replace="fragments/header/header::header"></header>
+<main class="main">
+    <article class="post-single">
+        <header class="post-header">
+            <h1 class="post-title">
+                v1.0 版本说明
+            </h1>
+        </header>
+        <div class="post-content">
+            <h3>1 功能说明</h3>
+                <p>博友圈于 2023 年 7 月 3 日发布了 v1.0 版本！该版本是博友圈建站以来的第一个版本，主要关注网站的基本功能，即博客搜集与文章展示。</p>
+                <p>该版本收录的博客名单由网站维护者手动更新，后台会每隔 1 小时自动对名单中的博客根据 RSS 协议抓取一次最新文章。</p>
+                <p>该版本只包含一个 Home 页，用于对所抓取的博客文章按发布时间倒序展示。</p>
+                <p>Home 页的功能特性如下：</p>
+                <p>
+                    <ul>
+                        <li>按博客发布时间由新到旧分页展示文章条目；</li>
+                        <li>每个文章条目包含标题、描述、博主头像、发布时间和浏览次数；</li>
+                        <li>页面底部展示收录的博客总数、文章总数和浏览总数。</li>
+                    </ul>
+                </p>
+            <h3>2 页面截图</h3>
+            <p>Home 页</p>
+            <p><img border="1" th:src="@{/assets/images/sites/release_notes/screenshot_v1.0.png}"></p>
+        </div>
+    </article>
+</main>
+<div th:replace="fragments/footer/contact::contact"></div>
+<footer th:replace="fragments/footer/footer_site_info::footer_site_info"></footer>
+<div th:insert="fragments/plugin/go_to_top::go_to_top"></div>
+<script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/theme.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/tongji.js}" type="text/javascript"></script>
+</body>
+</html>
