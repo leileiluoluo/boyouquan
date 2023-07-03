@@ -1,0 +1,46 @@
+<head th:fragment="head">
+    <title>博友圈 · 博客人的朋友圈！</title>
+    <meta name="keywords" content="博客, 博友, 博客圈, 博友圈, 朋友圈"/>
+    <meta
+            name="description"
+            content="欢迎来到博友圈，这里是独立博客人的专属朋友圈！在这里可以发布您的独立博客，获取一个免费的流量入口，也可以与志同道合的博主交朋友，还可以获取海量的博客更新和博主动态！"
+    />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" th:href="@{/assets/images/favicon.ico}" type="image/x-icon"/>
+    <link th:href="@{/assets/css/custom.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/stylesheet.min.css}" rel="preload stylesheet" as="style"/>
+    <noscript>
+        <style>
+        #theme-toggle,
+        .top-link {
+          display: none;
+        }
+        </style>
+        <style>
+        @media (prefers-color-scheme: dark) {
+          :root {
+            --theme: rgb(29, 30, 32);
+            --entry: rgb(46, 46, 51);
+            --primary: rgb(218, 218, 219);
+            --secondary: rgb(155, 156, 157);
+            --tertiary: rgb(65, 66, 68);
+            --content: rgb(196, 196, 197);
+            --hljs-bg: rgb(46, 46, 51);
+            --code-bg: rgb(55, 56, 62);
+            --border: rgb(51, 51, 51);
+          }
+          .list {
+            background: var(--theme);
+          }
+          .list:not(.dark)::-webkit-scrollbar-track {
+            background: 0 0;
+          }
+          .list:not(.dark)::-webkit-scrollbar-thumb {
+            border-color: var(--theme);
+          }
+        }
+        </style>
+    </noscript>
+</head>

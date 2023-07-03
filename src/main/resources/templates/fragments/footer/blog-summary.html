@@ -1,0 +1,17 @@
+<div th:fragment="blog-summary" class="footer-summary">
+    <div class="flex-item">
+        <p>收录博客</p><strong style="color: #cb2e58;" th:text="${totalBlogs}"></strong><p>个</p>
+    </div>
+    <div class="flex-item">
+        <p>·</p>
+    </div>
+    <div class="flex-item">
+        <p>收录文章</p><strong style="color: #cb2e58;" th:text="${totalBlogPosts}"></strong><p>篇</p>
+    </div>
+    <div class="flex-item">
+        <p>·</p>
+    </div>
+    <div class="flex-item">
+        <p>浏览文章</p><strong style="color: #cb2e58;" th:text="${accessTotal}"></strong><p>次</p>
+    </div>
+</div>
