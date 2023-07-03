@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head/head::head('关于本站 - 博友圈 · 博客人的朋友圈！', '博客, 博友, 博客圈, 博友圈, 朋友圈', '欢迎来到博友圈，这里是独立博客人的专属朋友圈！在这里可以发布您的独立博客，获取一个免费的流量入口，也可以与志同道合的博主交朋友，还可以获取海量的博客更新和博主动态！')"></head>
     <body class="list" id="top">
-        <script th:src="@{/assets/js/theme.js}" type="text/javascript"></script>
+<!--        <script th:src="@{/assets/js/theme.js}" type="text/javascript"></script>-->
         <header th:replace="fragments/header/header::header"></header>
         <main class="main">
             <article class="post-single">
@@ -20,8 +20,8 @@
             </article>
         </main>
         <div th:replace="fragments/footer/contact::contact"></div>
-        <footer th:replace="fragments/footer/footer-site-info::footer-site-info"></footer>
-        <div th:insert="fragments/plugin/go-to-top::go-to-top"></div>
+        <footer th:replace="fragments/footer/footer_site_info::footer_site_info"></footer>
+        <div th:insert="fragments/plugin/go_to_top::go_to_top"></div>
         <script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
         <script th:src="@{/assets/js/theme.js}" type="text/javascript"></script>
         <script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>

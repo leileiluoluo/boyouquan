@@ -1,6 +1,6 @@
 <main th:fragment="main(pagination)" class="main" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <article th:replace="fragments/home/home-info::home-info"></article>
+    <article th:replace="fragments/home/home_info::home_info"></article>
     <article th:each="blogPost, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
             <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.link)}"><h2 th:text="${blogPost.title}"></h2></a>
