@@ -28,6 +28,10 @@ public class ThymeLeafTemplateHelper {
         return "https://seccdn.libravatar.org/gravatarproxy/" + md5(email) + "?s=20";
     }
 
+    public static String dateCommonFormatDisplay(Date date) {
+        return CommonUtils.dateCommonFormatDisplay(date);
+    }
+
     public String dateFriendlyDisplay(Date date) {
         return CommonUtils.dateFriendlyDisplay(date);
     }

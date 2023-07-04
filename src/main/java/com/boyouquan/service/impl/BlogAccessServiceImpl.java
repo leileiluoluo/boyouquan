@@ -13,6 +13,17 @@ public class BlogAccessServiceImpl implements BlogAccessService {
     private BlogAccessDaoMapper blogAccessDaoMapper;
 
     @Override
+    public Long countBlogAccessByLinkPrefix(String linkPrefix) {
+        try {
+            return blogAccessDaoMapper.countByLink(linkPrefix);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0L;
+    }
+
+    @Override
     public Long countBlogAccessByLink(String link) {
         try {
             return blogAccessDaoMapper.countByLink(link);
