@@ -44,7 +44,7 @@
                 </footer>
             </article>
         </div>
-        <footer class="page-footer">
+        <footer class="page-footer blog-footer">
             <nav class="pagination">
                 <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blog/page/' + ${pagination.pageNo - 1}">« 上一页</a>
                 <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blog/page/' + ${pagination.pageNo + 1}">下一页 »</a>
