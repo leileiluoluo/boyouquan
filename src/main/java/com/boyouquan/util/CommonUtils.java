@@ -8,17 +8,22 @@ import java.util.Date;
 
 public class CommonUtils {
 
+    private static final SimpleDateFormat COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy年M月d日");
+
+    public static String dateCommonFormatDisplay(Date date) {
+        return COMMON_DATE_PATTERN.format(date);
+    }
+
     public static String dateFriendlyDisplay(Date date) {
         final long halfAHour = 30 * 60 * 1000;
         final long oneHour = 60 * 60 * 1000;
         final long oneDay = 24 * oneHour;
         final long tenDay = 10 * oneDay;
 
-        SimpleDateFormat commonPattern = new SimpleDateFormat("yyyy年M月d日");
         long now = System.currentTimeMillis();
         long past = date.getTime();
         if (past >= now) {
-            return commonPattern.format(past);
+            return COMMON_DATE_PATTERN.format(past);
         }
 
         long timeDiff = now - past;
@@ -33,7 +38,7 @@ public class CommonUtils {
             int days = (int) (timeDiff / oneDay);
             return String.format("%d天前", days);
         }
-        return commonPattern.format(past);
+        return COMMON_DATE_PATTERN.format(past);
     }
 
     public static String md5(String str) {

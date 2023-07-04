@@ -1,5 +1,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boyouquan.dao.BlogPostDaoMapper">
+    <select id="listBlogsOrderByPostDate" resultType="com.boyouquan.model.BlogAggregate">
+        SELECT
+        max(blog_name) as name,
+        max(blog_address) as address,
+        max(created_at) as latestUpdatedAt,
+        count(link) as postCount
+        FROM blog_post
+        GROUP BY blog_address
+        ORDER by latestUpdatedAt DESC
+        LIMIT #{offset}, #{rows}
+    </select>
+    <select id="listLatestBlogPostsByAddress" resultType="com.boyouquan.model.BlogPost">
+        SELECT
+        blog_name as blogName,
+        blog_address as blogAddress,
+        title,
+        description,
+        link,
+        created_at as createdAt
+        FROM blog_post
+        WHERE blog_address=#{address}
+        ORDER BY createdAt DESC
+        LIMIT #{offset}, #{rows}
+    </select>
+    <select id="countBlogPostsByAddress" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM blog_post
+        WHERE blog_address=#{address}
+    </select>
     <select id="listBlogPosts" resultType="com.boyouquan.model.BlogPost">
         SELECT
         blog_name as blogName,
