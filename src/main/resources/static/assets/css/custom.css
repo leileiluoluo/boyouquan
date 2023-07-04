@@ -77,13 +77,13 @@
 
 .blog-entry {
     position: relative;
-    margin: 0.5%;
+    margin: 1%;
     padding: var(--gap);
     background: var(--entry);
     border-radius: var(--radius);
     transition: transform .1s;
     border: 1px solid var(--border);
-    width: 49%;
+    width: 48%;
 }
 
 .blog-entry .icon-and-title {
