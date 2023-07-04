@@ -78,7 +78,7 @@
 
 .blog-entry {
     position: relative;
-git s    padding: var(--gap);
+    padding: var(--gap);
     background: var(--entry);
     border-radius: var(--radius);
     transition: transform .1s;
