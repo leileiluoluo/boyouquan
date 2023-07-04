@@ -84,6 +84,7 @@
     transition: transform .1s;
     border: 1px solid var(--border);
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .blog-entry .icon-and-title {
@@ -160,7 +161,7 @@
 }
 
 footer.page-footer.blog-footer {
-    margin-top: 16px;
+    margin-top: 6px;
 }
 
 @media (min-width: 800px) {
@@ -173,5 +174,9 @@ footer.page-footer.blog-footer {
     .blog-entry {
         margin: 1%;
         width: 48%;
+    }
+
+    footer.page-footer.blog-footer {
+        margin-top: 16px;
     }
 }
