@@ -73,17 +73,17 @@
 .blog-container {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .blog-entry {
     position: relative;
-    margin: 1%;
-    padding: var(--gap);
+git s    padding: var(--gap);
     background: var(--entry);
     border-radius: var(--radius);
     transition: transform .1s;
     border: 1px solid var(--border);
-    width: 48%;
+    width: 100%;
 }
 
 .blog-entry .icon-and-title {
@@ -161,4 +161,17 @@
 
 footer.page-footer.blog-footer {
     margin-top: 16px;
+}
+
+@media (min-width: 800px) {
+    .blog-container {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    .blog-entry {
+        margin: 1%;
+        width: 48%;
+    }
 }
