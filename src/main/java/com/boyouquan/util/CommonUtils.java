@@ -24,9 +24,6 @@ public class CommonUtils {
 
         long now = System.currentTimeMillis();
         long past = date.getTime();
-        if (past >= now) {
-            return COMMON_DATE_PATTERN.format(past);
-        }
 
         long timeDiff = now - past;
         if (timeDiff < halfAHour) {
