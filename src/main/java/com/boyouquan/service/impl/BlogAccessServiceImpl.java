@@ -15,7 +15,7 @@ public class BlogAccessServiceImpl implements BlogAccessService {
     @Override
     public Long countBlogAccessByLinkPrefix(String linkPrefix) {
         try {
-            return blogAccessDaoMapper.countByLink(linkPrefix);
+            return blogAccessDaoMapper.countBlogAccessByLinkPrefix(linkPrefix);
         } catch (Exception e) {
             e.printStackTrace();
         }
