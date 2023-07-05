@@ -180,3 +180,8 @@ footer.page-footer.blog-footer {
         margin-top: 16px;
     }
 }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
