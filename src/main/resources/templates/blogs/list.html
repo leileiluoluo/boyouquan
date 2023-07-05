@@ -38,7 +38,7 @@
                 <footer class="latest-posts">
                     <p>最新文章</p>
                     <p th:each="blogPost, iterstat: ${blogInfo.latestPosts}">
-                        <text th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogPost.createdAt)}"></text>
+                        <text style="margin-right: 10px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogPost.createdAt)}"></text>
                         <a th:text="${blogPost.title}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.link)}"></a>
                     </p>
                 </footer>
