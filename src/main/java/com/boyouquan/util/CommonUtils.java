@@ -10,7 +10,7 @@ public class CommonUtils {
 
     private static final SimpleDateFormat COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy年M月d日");
 
-    private static final SimpleDateFormat MORE_COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy年MM月dd日");
+    private static final SimpleDateFormat MORE_COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy/MM/dd");
 
     public static String dateCommonFormatDisplay(Date date) {
         return MORE_COMMON_DATE_PATTERN.format(date);
