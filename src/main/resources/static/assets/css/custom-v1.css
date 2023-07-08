@@ -116,7 +116,7 @@
     margin-top: 8px;
     margin-bottom: 8px;
     font-size: 14px;
-    color: rgb(149 127 127);
+    color: var(--secondary);
     overflow: hidden;
     line-height: 1.5rem;
     -webkit-box-orient: vertical;
