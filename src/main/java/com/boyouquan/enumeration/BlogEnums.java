@@ -62,7 +62,21 @@ public enum BlogEnums {
     LUOLEI("i@luolei.org", "https://luolei.org/feed/", "我叫罗磊，来自中国深圳，程序员，说不定你还使用过我参与开发的产品。"),
     PYTHONCAT("chinesehuazhou@gmail.com", "https://pythoncat.top/rss.xml", "这个博客里大部分的文章都是豌豆花下猫创作的， 主题集中在 Python、编程思想、技术翻译、技术杂谈。"),
     WATCH_LIFE("iamxjb@gmail.com", "https://www.watch-life.net/feed", "70后中年大叔，写程序，读书，写字，跑步，关注每一天的生活和成长。"),
-    TUMUTANZI("contact@tumutanzi.com", "https://tumutanzi.com/feed", "博主从事领域为土木工程行业，钻研经年累月。未获高深学问，略懂营造法式皮毛。综合博主姓氏与所从事专业名称，自造名号：“土木坛子”，以此立于网络虚拟空间。");
+    TUMUTANZI("contact@tumutanzi.com", "https://tumutanzi.com/feed", "博主从事领域为土木工程行业，钻研经年累月。未获高深学问，略懂营造法式皮毛。综合博主姓氏与所从事专业名称，自造名号：“土木坛子”，以此立于网络虚拟空间。"),
+    BIGWHITE("bigwhite.cn@gmail.com", "https://tonybai.com/feed/", "Go程序员，C程序员，技术架构师，技术总监，技术讲师/培训师，技术撰稿人。先后供职于国内某大型软件公司和某创业型数据与基础设施服务公司。"),
+    CODINGNOW("cloudwu@gmail.com", "https://blog.codingnow.com/atom.xml", "思绪来得快去得也快，偶尔会在这里停留。"),
+    FLYSNOW("ls8707@gmail.com", "https://www.flysnow.org/index.xml", "专注于Android、Java、Go语言(golang)、移动互联网、项目管理、软件架构。"),
+    IEEVEE("hubottle@gmail.com", "https://ieevee.com/feed.xml", "已然三十而立，希望四十不惑。"),
+    ONEVCAT("onev@onevcat.com", "https://onevcat.com/feed.xml", "上善若水，人淡如菊。这里是王巍 (onevcat) 的博客，用来记录一些技术和想法，主要专注于 Swift 和 iOS 开发。"),
+    DRAVENESS("i@draveness.me", "https://draveness.me/feed.xml", "面向信仰编程，《Go 语言设计与实现》作者。"),
+    BYVOID("notfound@notfound.com", "https://byvoid.com/zht/feed.xml", "博客內容涵蓋遊記、語言學、經濟學、信息學競賽/ACM經驗、算法講解、技術知識以及我的生活軌蹟。"),
+    KQH("me@kqh.me", "https://kqh.me/index.xml", "本站是柯棋瀚的微型門戶網站，他希望將本站打造成文史學子共同維護的小苗圃。我們誠邀作者（並不太誠）！"),
+    WUSE("me@wuse.ink", "https://wuse.ink/feed.php", "对，我就是城南牧野，也可以叫我老曹或是大宇。但我还是喜欢城南牧野这个名字，虽然听起来有点像日本名。"),
+    MAGUANG("ma@maguang.net", "https://www.maguang.net/feed", "马光，暂无字无号。嗜读书，爱骑行与跑步，喜爱宁静大自然。不吸烟，偶小酌，乐于箪食瓢饮。"),
+    YILANJU("me@yilanju.com", "https://www.yilanju.com/feed/", "这个网站虽小也简陋，却也满载着我的希望。这是我休憩之地，云乐之土，也是我灵魂的小屋，这里充满我的欢笑，也收容我的哀伤。"),
+    ROWLING("ling.rowling.luo@gmail.com", "https://rowl1ng.com/feed.xml", "PhD Student in SketchX Lab, CVSSP, University of Surrey."),
+    XIATIAN("me@xiatian.name", "https://www.xiatian.name/feed", "某科研院，博士后。主要研究方向为，镍基粉末高温合金、先进粉末冶金技术、超细结构金属基纳米复合材料等。"),
+    SHANGLEI("eflyingxp@gmail.com", "https://shanglei.net/feed/", "历史文献专业硕士，曾在济南从事出版编辑相关工作，现从事公考培训相关工作，关注出版、历史、文化、博客、互联网等领域，希望通过这个博客积累和分享生活和工作中的点滴发现，结识更多朋友，互通有无。");
 
     private final String email;
     private final String feedAddress;
