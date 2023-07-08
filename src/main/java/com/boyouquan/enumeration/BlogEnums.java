@@ -58,7 +58,8 @@ public enum BlogEnums {
     OLDJ("hi@oldj.net", "https://oldj.net/feed/"),
     EASYF12("notfound@notfound.com", "https://easyf12.top/atom.xml"),
     LUOLEI("i@luolei.org", "https://luolei.org/feed/"),
-    PYTHONCAT("chinesehuazhou@gmail.com", "https://pythoncat.top/rss.xml");
+    PYTHONCAT("chinesehuazhou@gmail.com", "https://pythoncat.top/rss.xml"),
+    WATCH_LIFE("iamxjb@gmail.com", "https://www.watch-life.net/feed");
 
     private final String email;
     private final String feedAddress;
