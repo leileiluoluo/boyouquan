@@ -59,6 +59,20 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                 if (StringUtils.isNotBlank(blogName) && StringUtils.isNotBlank(blogAddress)
                         && StringUtils.isNotBlank(title) && StringUtils.isNotBlank(link)
                         && null != createdAt) {
+                    if (blogAddress.endsWith("/feed.xml")) {
+                        blogAddress = StringUtils.strip(blogAddress, "/feed.xml");
+                    } else if (blogAddress.endsWith("/feed")) {
+                        blogAddress = StringUtils.strip(blogAddress, "/feed");
+                    } else if (blogAddress.endsWith("/atom.xml")) {
+                        blogAddress = StringUtils.strip(blogAddress, "/atom.xml");
+                    } else if (blogAddress.endsWith("/index.xml")) {
+                        blogAddress = StringUtils.strip(blogAddress, "/index.xml");
+                    } else if (blogAddress.endsWith("/rss.xml")) {
+                        blogAddress = StringUtils.strip(blogAddress, "/rss.xml");
+                    } else if (blogAddress.endsWith("/rss")) {
+                        blogAddress = StringUtils.strip(blogAddress, "/rss");
+                    }
+
                     BlogPost blogPost = new BlogPost();
                     blogPost.setBlogName(blogName);
                     blogPost.setBlogAddress(blogAddress);
