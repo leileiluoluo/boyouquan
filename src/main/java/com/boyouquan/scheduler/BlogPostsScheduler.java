@@ -38,14 +38,20 @@ public class BlogPostsScheduler {
     private void readAndSaveAllBlogs() {
         List<String> blogs = BlogEnums.getAllFeedAddresses();
         for (String blog : blogs) {
-            List<BlogPost> blogPosts = rssReaderService.read(blog);
-            if (!blogPosts.isEmpty()) {
-                Date minCreatedAt = blogPosts.stream().min(Comparator.comparing(BlogPost::getCreatedAt)).get().getCreatedAt();
-                String blogAddress = blogPosts.get(0).getBlogAddress();
-                blogPostService.deleteLaterBlogPostsByAddressAndDate(blogAddress, minCreatedAt);
-                System.out.printf("%d old blogs deleted for address: %s\n", blogPosts.size(), blogAddress);
-                save(blogPosts);
-                System.out.printf("%d new blogs saved for address: %s\n", blogPosts.size(), blogAddress);
+            try {
+                System.out.printf("blog address: %s\n", blog);
+
+                List<BlogPost> blogPosts = rssReaderService.read(blog);
+                if (!blogPosts.isEmpty()) {
+                    Date minCreatedAt = blogPosts.stream().min(Comparator.comparing(BlogPost::getCreatedAt)).get().getCreatedAt();
+                    String blogAddress = blogPosts.get(0).getBlogAddress();
+                    blogPostService.deleteLaterBlogPostsByAddressAndDate(blogAddress, minCreatedAt);
+                    System.out.printf("%d old blogs deleted for address: %s\n", blogPosts.size(), blogAddress);
+                    save(blogPosts);
+                    System.out.printf("%d new blogs saved for address: %s\n", blogPosts.size(), blogAddress);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
