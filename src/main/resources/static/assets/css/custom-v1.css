@@ -4,6 +4,10 @@
   -webkit-text-fill-color: transparent;
 }
 
+.header #menu span {
+    font-weight: 460;
+}
+
 .logo a {
     font-size: 26px !important;
     font-weight: normal !important;

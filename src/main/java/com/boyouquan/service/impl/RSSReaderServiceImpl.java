@@ -29,6 +29,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             SyndFeed feed = new SyndFeedInput().build(new XmlReader(feedSource));
             String blogName = feed.getTitle();
 
+            // address
             List<SyndLink> links = feed.getLinks();
             if (null == links || 0 == links.size()) {
                 return Collections.emptyList();
@@ -39,6 +40,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             }
             String blogAddress = address.get().getHref();
 
+            // for
             for (Iterator iter = feed.getEntries().iterator(); iter.hasNext(); ) {
                 SyndEntry entry = (SyndEntry) iter.next();
                 String title = entry.getTitle();
@@ -66,23 +68,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                 if (StringUtils.isNotBlank(blogName) && StringUtils.isNotBlank(blogAddress)
                         && StringUtils.isNotBlank(title) && StringUtils.isNotBlank(link)
                         && null != createdAt) {
-                    if (blogAddress.endsWith("/feed.xml")) {
-                        blogAddress = StringUtils.strip(blogAddress, "/feed.xml");
-                    } else if (blogAddress.endsWith("/feed/")) {
-                        blogAddress = StringUtils.strip(blogAddress, "/feed/");
-                    } else if (blogAddress.endsWith("/feed")) {
-                        blogAddress = StringUtils.strip(blogAddress, "/feed");
-                    } else if (blogAddress.endsWith("/atom.xml")) {
-                        blogAddress = StringUtils.strip(blogAddress, "/atom.xml");
-                    } else if (blogAddress.endsWith("/index.xml")) {
-                        blogAddress = StringUtils.strip(blogAddress, "/index.xml");
-                    } else if (blogAddress.endsWith("/rss.xml")) {
-                        blogAddress = StringUtils.strip(blogAddress, "/rss.xml");
-                    } else if (blogAddress.endsWith("/rss/")) {
-                        blogAddress = StringUtils.strip(blogAddress, "/rss/");
-                    } else if (blogAddress.endsWith("/rss")) {
-                        blogAddress = StringUtils.strip(blogAddress, "/rss");
-                    }
+                    blogAddress = trimSuffix(blogAddress);
 
                     BlogPost blogPost = new BlogPost();
                     blogPost.setBlogName(blogName);
@@ -116,6 +102,28 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             text += "...";
         }
         return text;
+    }
+
+    private static String trimSuffix(String blogAddress) {
+        if (blogAddress.endsWith("/feed.xml")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed.xml".length());
+        } else if (blogAddress.endsWith("/feed/")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed/".length());
+        } else if (blogAddress.endsWith("/feed")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed".length());
+        } else if (blogAddress.endsWith("/atom.xml")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/atom.xml".length());
+        } else if (blogAddress.endsWith("/index.xml")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/index.xml".length());
+        } else if (blogAddress.endsWith("/rss.xml")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss.xml".length());
+        } else if (blogAddress.endsWith("/rss/")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss/".length());
+        } else if (blogAddress.endsWith("/rss")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss".length());
+        }
+
+        return blogAddress;
     }
 
 }
