@@ -1,6 +1,9 @@
 <main th:fragment="main(pagination)" class="main" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <article th:replace="~{fragments/home/home_info::home_info}"></article>
+    <div id="searchbox">
+        <input id="searchInput" autofocus="" placeholder="搜索文章 ↵" aria-label="search" type="search" autocomplete="off">
+    </div>
     <article th:each="blogPost, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
             <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.link)}"><h2 th:text="${blogPost.title}"></h2></a>
@@ -26,7 +29,13 @@
         </footer>
     </article>
     <footer class="page-footer">
-        <nav class="pagination">
+        <!-- if hasKeyword -->
+        <nav th:if="${hasKeyword}" class="pagination">
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1} + '?keyword=' + ${keyword}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1} + '?keyword=' + ${keyword}">下一页 »</a>
+        </nav>
+        <!-- else -->
+        <nav th:unless="${hasKeyword}" class="pagination">
             <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1}">« 上一页</a>
             <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1}">下一页 »</a>
         </nav>

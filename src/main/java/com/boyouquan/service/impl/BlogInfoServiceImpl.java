@@ -23,12 +23,12 @@ public class BlogInfoServiceImpl implements BlogInfoService {
     private BlogAccessService blogAccessService;
 
     @Override
-    public Pagination<BlogInfo> listBlogInfos(int page, int size) {
+    public Pagination<BlogInfo> listBlogInfos(String keyword, int page, int size) {
         List<BlogInfo> blogInfos = new ArrayList<>();
 
-        int total = blogPostService.countBlogs().intValue();
+        int total = blogPostService.countBlogs(keyword).intValue();
 
-        Pagination<BlogAggregate> pagination = blogPostService.listBlogsOrderByPostDate(page, size);
+        Pagination<BlogAggregate> pagination = blogPostService.listBlogsOrderByPostDate(keyword, page, size);
         pagination.getResults().forEach(blogAggregate -> {
             BlogInfo blogInfo = new BlogInfo();
             blogInfo.setName(blogAggregate.getName());

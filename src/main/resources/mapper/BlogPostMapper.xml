@@ -7,6 +7,10 @@
         max(created_at) as latestUpdatedAt,
         count(link) as postCount
         FROM blog_post
+        <if test="keyword != null and keyword !=''">
+            WHERE blog_name like concat('%', #{keyword}, '%')
+                OR blog_address like concat('%', #{keyword}, '%')
+        </if>
         GROUP BY blog_address
         ORDER by latestUpdatedAt DESC
         LIMIT #{offset}, #{rows}
@@ -39,6 +43,9 @@
         link,
         created_at as createdAt
         FROM blog_post
+        <if test="keyword != null and keyword !=''">
+            WHERE title like concat('%', #{keyword}, '%')
+        </if>
         ORDER BY createdAt DESC
         LIMIT #{offset}, #{rows}
     </select>
@@ -46,6 +53,9 @@
         SELECT
         count(1)
         FROM blog_post
+        <if test="keyword != null and keyword !=''">
+            WHERE title like concat('%', #{keyword}, '%')
+        </if>
     </select>
     <insert id="saveBlogPost">
         INSERT INTO blog_post (
@@ -74,5 +84,9 @@
         SELECT
         count(distinct blog_address)
         FROM blog_post
+        <if test="keyword != null and keyword !=''">
+            WHERE blog_name like concat('%', #{keyword}, '%')
+            OR blog_address like concat('%', #{keyword}, '%')
+        </if>
     </select>
 </mapper>

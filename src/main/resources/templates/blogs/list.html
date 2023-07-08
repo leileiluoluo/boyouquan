@@ -6,6 +6,9 @@
     <script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
     <header th:replace="~{fragments/header/header::header}"></header>
     <main class="main">
+        <div id="searchbox">
+            <input id="searchInput" autofocus="" placeholder="搜索博客 ↵" aria-label="search" type="search" autocomplete="off">
+        </div>
         <div class="blog-container">
             <article th:each="blogInfo, iterstat: ${pagination.results}" class="blog-entry">
                 <header class="icon-and-title">
@@ -45,7 +48,14 @@
             </article>
         </div>
         <footer class="page-footer blog-footer">
-            <nav class="pagination">
+            <!-- if hasKeyword -->
+            <nav th:if="${hasKeyword}" class="pagination">
+                <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blog/page/' + ${pagination.pageNo - 1} + '?keyword=' + ${keyword}">« 上一页</a>
+                <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blog/page/' + ${pagination.pageNo + 1} + '?keyword=' + ${keyword}">下一页 »</a>
+            </nav>
+
+            <!-- else -->
+            <nav th:unless="${hasKeyword}" class="pagination">
                 <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blog/page/' + ${pagination.pageNo - 1}">« 上一页</a>
                 <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blog/page/' + ${pagination.pageNo + 1}">下一页 »</a>
             </nav>
@@ -58,6 +68,7 @@
     <script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
     <script th:src="@{/assets/js/theme-listener.js}" type="text/javascript"></script>
     <script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>
+    <script th:src="@{/assets/js/blog-search.js}" type="text/javascript"></script>
     <script th:src="@{/assets/js/tongji.js}" type="text/javascript"></script>
     </body>
 </html>
