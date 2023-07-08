@@ -8,18 +8,18 @@ import java.util.Date;
 
 public interface BlogPostService {
 
-    Pagination<BlogAggregate> listBlogsOrderByPostDate(int page, int size);
+    Pagination<BlogAggregate> listBlogsOrderByPostDate(String keyword, int page, int size);
 
     Pagination<BlogPost> listLatestBlogPostsByAddress(String address, int page, int size);
 
-    Pagination<BlogPost> listBlogPosts(int page, int size);
+    Pagination<BlogPost> listBlogPosts(String keyword, int page, int size);
 
     void saveBlogPost(BlogPost blogPost);
 
     void deleteLaterBlogPostsByAddressAndDate(String address, Date datePoint);
 
-    Long countBlogs();
+    Long countBlogs(String keyword);
 
-    int countPosts();
+    int countPosts(String keyword);
 
 }

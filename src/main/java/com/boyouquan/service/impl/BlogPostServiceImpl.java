@@ -18,14 +18,14 @@ public class BlogPostServiceImpl implements BlogPostService {
     private BlogPostDaoMapper blogPostDaoMapper;
 
     @Override
-    public Pagination<BlogAggregate> listBlogsOrderByPostDate(int page, int size) {
+    public Pagination<BlogAggregate> listBlogsOrderByPostDate(String keyword, int page, int size) {
         if (page < 1 || size <= 0) {
             return Pagination.buildEmptyResults();
         }
 
         int offset = (page - 1) * size;
-        List<BlogAggregate> blogAggregates = blogPostDaoMapper.listBlogsOrderByPostDate(offset, size);
-        int total = blogPostDaoMapper.countBlogs().intValue();
+        List<BlogAggregate> blogAggregates = blogPostDaoMapper.listBlogsOrderByPostDate(keyword, offset, size);
+        int total = blogPostDaoMapper.countBlogs(keyword).intValue();
         return Pagination.<BlogAggregate>builder().pageNo(page).pageSize(size).total(total).results(blogAggregates);
     }
 
@@ -42,14 +42,14 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public Pagination<BlogPost> listBlogPosts(int page, int size) {
+    public Pagination<BlogPost> listBlogPosts(String keyword, int page, int size) {
         if (page < 1 || size <= 0) {
             return Pagination.buildEmptyResults();
         }
 
         int offset = (page - 1) * size;
-        List<BlogPost> blogPosts = blogPostDaoMapper.listBlogPosts(offset, size);
-        int total = blogPostDaoMapper.countBlogPosts();
+        List<BlogPost> blogPosts = blogPostDaoMapper.listBlogPosts(keyword, offset, size);
+        int total = blogPostDaoMapper.countBlogPosts(keyword);
         return Pagination.<BlogPost>builder().pageNo(page).pageSize(size).total(total).results(blogPosts);
     }
 
@@ -68,13 +68,13 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public Long countBlogs() {
-        return blogPostDaoMapper.countBlogs();
+    public Long countBlogs(String keyword) {
+        return blogPostDaoMapper.countBlogs(keyword);
     }
 
     @Override
-    public int countPosts() {
-        return blogPostDaoMapper.countBlogPosts();
+    public int countPosts(String keyword) {
+        return blogPostDaoMapper.countBlogPosts(keyword);
     }
 
 }

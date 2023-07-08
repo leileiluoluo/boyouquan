@@ -5,6 +5,6 @@ import com.boyouquan.util.Pagination;
 
 public interface BlogInfoService {
 
-    Pagination<BlogInfo> listBlogInfos(int page, int size);
+    Pagination<BlogInfo> listBlogInfos(String keyword, int page, int size);
 
 }

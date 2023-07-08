@@ -6,12 +6,14 @@ import com.boyouquan.service.BlogAccessService;
 import com.boyouquan.service.BlogPostService;
 import com.boyouquan.util.Pagination;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 
@@ -34,18 +36,25 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
-        return homeWithPagination(1, model);
+    public String home(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+        return homeWithPagination(keyword, 1, model);
     }
 
     @GetMapping("/home/page/{page}")
-    public String homeWithPagination(@PathVariable("page") int page, Model model) {
-        Pagination<BlogPost> pagination = blogPostService.listBlogPosts(page, CommonConstants.DEFAULT_PAGE_SIZE);
+    public String homeWithPagination(@RequestParam(value = "keyword", required = false) String keyword, @PathVariable("page") int page, Model model) {
+        if (null == keyword) {
+            keyword = "";
+        }
+        keyword = StringUtils.trim(keyword);
+
+        Pagination<BlogPost> pagination = blogPostService.listBlogPosts(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
 
         model.addAttribute("pagination", pagination);
-        model.addAttribute("totalBlogs", blogPostService.countBlogs());
-        model.addAttribute("totalBlogPosts", blogPostService.countPosts());
+        model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
+        model.addAttribute("totalBlogPosts", blogPostService.countPosts(keyword));
         model.addAttribute("accessTotal", blogAccessService.totalCount());
+        model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
+        model.addAttribute("keyword", keyword);
         return "home";
     }
 
