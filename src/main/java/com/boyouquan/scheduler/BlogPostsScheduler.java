@@ -41,7 +41,8 @@ public class BlogPostsScheduler {
             try {
                 System.out.printf("blog address: %s\n", blog);
 
-                List<BlogPost> blogPosts = rssReaderService.read(blog);
+                // only fetch the latest 10 posts
+                List<BlogPost> blogPosts = rssReaderService.read(blog).stream().limit(10L).toList();
                 if (!blogPosts.isEmpty()) {
                     Date minCreatedAt = blogPosts.stream().min(Comparator.comparing(BlogPost::getCreatedAt)).get().getCreatedAt();
                     String blogAddress = blogPosts.get(0).getBlogAddress();
