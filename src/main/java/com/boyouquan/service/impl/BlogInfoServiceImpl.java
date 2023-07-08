@@ -33,6 +33,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
             BlogInfo blogInfo = new BlogInfo();
             blogInfo.setName(blogAggregate.getName());
             blogInfo.setAddress(blogAggregate.getAddress());
+            blogInfo.setDescription(BlogEnums.getDescriptionByBlogAddress(blogAggregate.getAddress()));
             blogInfo.setLatestUpdatedAt(blogAggregate.getLatestUpdatedAt());
             blogInfo.setPostsCount(blogAggregate.getPostCount());
 

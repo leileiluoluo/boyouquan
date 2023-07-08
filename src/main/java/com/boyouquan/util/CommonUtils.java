@@ -1,5 +1,7 @@
 package com.boyouquan.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -61,6 +63,19 @@ public class CommonUtils {
             hex = "0" + hex;
         }
         return hex;
+    }
+
+    public static String trimHttpScheme(String address) {
+        if (StringUtils.isBlank(address)) {
+            return "";
+        }
+
+        if (address.startsWith("http://")) {
+            address = address.substring(7);
+        } else if (address.startsWith("https://")) {
+            address = address.substring(8);
+        }
+        return address;
     }
 
 }
