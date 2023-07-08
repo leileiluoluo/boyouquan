@@ -6,11 +6,16 @@
 
 .logo a {
     font-size: 26px !important;
+    font-weight: normal !important;
 }
 
 .first-entry {
     margin: 10px !important;
     min-height: 20px !important;
+}
+
+.post-entry {
+    margin-bottom: 14px !important;
 }
 
 .first-entry .entry-header h1 {
@@ -19,6 +24,7 @@
 
 .entry-header h2 {
     font-size: 18px !important;
+    font-weight: normal !important;
 }
 
 .entry-footer {
@@ -84,7 +90,7 @@
     transition: transform .1s;
     border: 1px solid var(--border);
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
 
 .blog-entry .icon-and-title {
@@ -98,6 +104,7 @@
 
 .blog-entry .icon-and-title .flex-item h2 {
     font-size: 18px !important;
+    font-weight: normal !important;
 }
 
 .blog-entry .description {
@@ -160,23 +167,15 @@
     font-size: 14px;
 }
 
-footer.page-footer.blog-footer {
-    margin-top: 6px;
-}
-
 @media (min-width: 800px) {
     .blog-container {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        justify-content: space-around;
     }
 
     .blog-entry {
-        margin: 1%;
         width: 48%;
-    }
-
-    footer.page-footer.blog-footer {
-        margin-top: 16px;
     }
 }
