@@ -51,7 +51,7 @@ public class HomeController {
 
         model.addAttribute("pagination", pagination);
         model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
-        model.addAttribute("totalBlogPosts", blogPostService.countPosts(keyword));
+        model.addAttribute("totalBlogPosts", blogPostService.countPosts(""));
         model.addAttribute("accessTotal", blogAccessService.totalCount());
         model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
         model.addAttribute("keyword", keyword);
