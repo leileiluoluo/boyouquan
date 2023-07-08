@@ -76,7 +76,12 @@ public enum BlogEnums {
     YILANJU("me@yilanju.com", "https://www.yilanju.com/feed/", "这个网站虽小也简陋，却也满载着我的希望。这是我休憩之地，云乐之土，也是我灵魂的小屋，这里充满我的欢笑，也收容我的哀伤。"),
     ROWLING("ling.rowling.luo@gmail.com", "https://rowl1ng.com/feed.xml", "PhD Student in SketchX Lab, CVSSP, University of Surrey."),
     XIATIAN("me@xiatian.name", "https://www.xiatian.name/feed", "某科研院，博士后。主要研究方向为，镍基粉末高温合金、先进粉末冶金技术、超细结构金属基纳米复合材料等。"),
-    SHANGLEI("eflyingxp@gmail.com", "https://shanglei.net/feed/", "历史文献专业硕士，曾在济南从事出版编辑相关工作，现从事公考培训相关工作，关注出版、历史、文化、博客、互联网等领域，希望通过这个博客积累和分享生活和工作中的点滴发现，结识更多朋友，互通有无。");
+    SHANGLEI("eflyingxp@gmail.com", "https://shanglei.net/feed/", "历史文献专业硕士，曾在济南从事出版编辑相关工作，现从事公考培训相关工作，关注出版、历史、文化、博客、互联网等领域，希望通过这个博客积累和分享生活和工作中的点滴发现，结识更多朋友，互通有无。"),
+    LIUQIRAN("liuqiran@protonmail.com", "https://www.liuqiran.com/zh/feed/", "Writing is supposed to be an essential part of life."),
+    KOSTYA("hello@kostya.club", "https://kostya.club/feed.xml", "西兰花的第不知道多少个站点，写得下去写不下去也不知道，反正就先试试看。"),
+    WANGYURUI("feng.pupu@qq.com", "https://wangyurui.com/feed.xml", "95后，男喜读书，RSS支持者，“Logseq+Notion+Heptabase”三神器护法喜欢独立思考，喜欢“孤独”，对新事物抱有强烈的好奇心和探索欲，什么都会点但又都不够精通的“杂人”。"),
+    HZ_CLUB("1078503@gmail.com", "https://blog.9hz.club/feed", "顾名思义，我就是一个喜欢逛的人，说不定什么时候就逛到你家了哟。主站作为博客以后可能就分享优秀的博文加上自己的理解，算是发散思维吧！偶尔写一点自己的随笔对某些事某些物说三道四一下！"),
+    BXAW("amaru@bxaw.name", "https://blog.bxaw.name/feed/", "十多年ACG圈，半个兽圈，没有兽设，只有名字。梦想是成为绘画大触，然而只是做白日梦。喜欢自己研究医学、物理学、哲学、神学，喜欢探讨法律。");
 
     private final String email;
     private final String feedAddress;
