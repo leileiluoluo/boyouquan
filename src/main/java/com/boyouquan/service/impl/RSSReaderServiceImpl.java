@@ -30,15 +30,14 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             String blogName = feed.getTitle();
 
             // address
+            String blogAddress = feed.getLink();
             List<SyndLink> links = feed.getLinks();
-            if (null == links || 0 == links.size()) {
-                return Collections.emptyList();
+            if (null != links) {
+                Optional<SyndLink> address = links.stream().filter(item -> item.getHref().contains("http")).findFirst();
+                if (address.isPresent()) {
+                    blogAddress = address.get().getHref();
+                }
             }
-            Optional<SyndLink> address = links.stream().filter(item -> item.getHref().contains("http")).findFirst();
-            if (address.isEmpty()) {
-                return Collections.emptyList();
-            }
-            String blogAddress = address.get().getHref();
 
             // for
             for (Iterator iter = feed.getEntries().iterator(); iter.hasNext(); ) {
