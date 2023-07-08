@@ -61,6 +61,8 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                         && null != createdAt) {
                     if (blogAddress.endsWith("/feed.xml")) {
                         blogAddress = StringUtils.strip(blogAddress, "/feed.xml");
+                    } else if (blogAddress.endsWith("/feed/")) {
+                        blogAddress = StringUtils.strip(blogAddress, "/feed/");
                     } else if (blogAddress.endsWith("/feed")) {
                         blogAddress = StringUtils.strip(blogAddress, "/feed");
                     } else if (blogAddress.endsWith("/atom.xml")) {
@@ -69,6 +71,8 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                         blogAddress = StringUtils.strip(blogAddress, "/index.xml");
                     } else if (blogAddress.endsWith("/rss.xml")) {
                         blogAddress = StringUtils.strip(blogAddress, "/rss.xml");
+                    } else if (blogAddress.endsWith("/rss/")) {
+                        blogAddress = StringUtils.strip(blogAddress, "/rss/");
                     } else if (blogAddress.endsWith("/rss")) {
                         blogAddress = StringUtils.strip(blogAddress, "/rss");
                     }

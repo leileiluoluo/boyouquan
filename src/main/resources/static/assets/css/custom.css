@@ -111,11 +111,15 @@
     margin-top: 8px;
     margin-bottom: 8px;
     font-size: 14px;
-    color: var(--secondary);
+    color: rgb(149 127 127);
     overflow: hidden;
-    display: -webkit-box;
+    line-height: 1.5rem;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    background-color: #fcf3f3;
+    padding: 0.2rem 0.2rem;
+    display: -webkit-box;
+    border-radius: calc(0.4rem);
 }
 
 .blog-entry .summary {

@@ -18,25 +18,25 @@
                         <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"><h2 th:text="${blogInfo.name}"></h2></a>
                     </div>
                 </header>
-<!--                <div class="description">-->
-<!--                    <p></p>-->
-<!--                </div>-->
+                <div class="description">
+                    <p th:text="${blogInfo.description}"></p>
+                </div>
                 <footer class="summary">
                     <div class="flex-item left">
-                        <p style="color: var(--secondary);">文章收录</p>
+                        <p style="font-size: 16px; color: var(--secondary);">文章收录</p>
                         <p th:text="${blogInfo.postsCount}"></p>
                     </div>
                     <div class="flex-item center">
-                        <p style="color: var(--secondary);">文章浏览</p>
+                        <p style="font-size: 16px; color: var(--secondary);">文章浏览</p>
                         <p th:text="${blogInfo.accessCount}"></p>
                     </div>
                     <div class="flex-item right">
-                        <p style="color: var(--secondary);">最近更新</p>
+                        <p style="font-size: 16px; color: var(--secondary);">最近更新</p>
                         <p th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogInfo.latestUpdatedAt)}"></p>
                     </div>
                 </footer>
                 <footer class="latest-posts">
-                    <p>最新文章</p>
+                    <p style="font-size: 16px;">最新文章</p>
                     <p th:each="blogPost, iterstat: ${blogInfo.latestPosts}">
                         <text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogPost.createdAt)}"></text>
                         <a th:text="${blogPost.title}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.link)}"></a>
