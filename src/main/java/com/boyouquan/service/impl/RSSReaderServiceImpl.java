@@ -5,6 +5,7 @@ import com.boyouquan.service.RSSReaderService;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.feed.synd.SyndLink;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import org.apache.commons.lang3.StringUtils;
@@ -13,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RSSReaderServiceImpl implements RSSReaderService {
@@ -30,7 +28,16 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             feedSource = new URL(feedURL);
             SyndFeed feed = new SyndFeedInput().build(new XmlReader(feedSource));
             String blogName = feed.getTitle();
-            String blogAddress = feed.getLink();
+
+            List<SyndLink> links = feed.getLinks();
+            if (null == links || 0 == links.size()) {
+                return Collections.emptyList();
+            }
+            Optional<SyndLink> address = links.stream().filter(item -> item.getHref().contains("http")).findFirst();
+            if (address.isEmpty()) {
+                return Collections.emptyList();
+            }
+            String blogAddress = address.get().getHref();
 
             for (Iterator iter = feed.getEntries().iterator(); iter.hasNext(); ) {
                 SyndEntry entry = (SyndEntry) iter.next();
