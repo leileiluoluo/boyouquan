@@ -61,7 +61,8 @@ public enum BlogEnums {
     EASYF12("notfound@notfound.com", "https://easyf12.top/atom.xml", "竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。这里是一蓑烟雨的博客。我是一蓑烟雨。建立这个小站，我的初衷是发表自己的文章，留下我的声音。"),
     LUOLEI("i@luolei.org", "https://luolei.org/feed/", "我叫罗磊，来自中国深圳，程序员，说不定你还使用过我参与开发的产品。"),
     PYTHONCAT("chinesehuazhou@gmail.com", "https://pythoncat.top/rss.xml", "这个博客里大部分的文章都是豌豆花下猫创作的， 主题集中在 Python、编程思想、技术翻译、技术杂谈。"),
-    WATCH_LIFE("iamxjb@gmail.com", "https://www.watch-life.net/feed", "70后中年大叔，写程序，读书，写字，跑步，关注每一天的生活和成长。");
+    WATCH_LIFE("iamxjb@gmail.com", "https://www.watch-life.net/feed", "70后中年大叔，写程序，读书，写字，跑步，关注每一天的生活和成长。"),
+    TUMUTANZI("contact@tumutanzi.com", "https://tumutanzi.com/feed", "博主从事领域为土木工程行业，钻研经年累月。未获高深学问，略懂营造法式皮毛。综合博主姓氏与所从事专业名称，自造名号：“土木坛子”，以此立于网络虚拟空间。");
 
     private final String email;
     private final String feedAddress;
