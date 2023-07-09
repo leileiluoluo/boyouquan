@@ -68,6 +68,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
 
                 // FIXME
                 if (StringUtils.isBlank(blogName) || StringUtils.isBlank(blogAddress)
+                        || !blogAddress.startsWith("http")
                         || StringUtils.isBlank(title) || StringUtils.isBlank(link)
                         || !link.startsWith("http")
                         || null == createdAt) {
