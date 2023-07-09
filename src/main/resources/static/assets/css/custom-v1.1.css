@@ -11,6 +11,9 @@
 .logo a {
     font-size: 26px !important;
     font-weight: normal !important;
+    background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .first-entry {
@@ -25,6 +28,10 @@
 
 .first-entry .entry-header h1 {
     font-size: 20px !important;
+}
+
+.first-entry .entry-content {
+    margin: 0 0 14px 0 !important;
 }
 
 .entry-header h2 {
@@ -59,10 +66,6 @@
 
 .footer-summary .flex-item p {
     display: inline;
-}
-
-.post-title {
-    font-size: 22px !important;
 }
 
 .post-content h3 {
@@ -195,4 +198,38 @@ div#searchbox {
 
 #searchbox input {
     font-weight: normal !important;
+}
+
+.post-single {
+    position: relative;
+    margin-bottom: var(--gap);
+    padding: var(--gap);
+    background: var(--entry);
+    border-radius: var(--radius);
+    transition: transform .1s;
+    border: 1px solid var(--border);
+}
+
+.post-header {
+    margin: 0 0 12px 0 !important;
+}
+
+.post-title {
+    font-size: 20px !important;
+    font-weight: normal;
+    margin-bottom: 16px !important;
+}
+
+.post-publish-date {
+    font-size: 14px;
+    color: var(--secondary);
+}
+
+.post-content {
+    font-size: 16px;
+}
+
+.post-content h4 {
+    font-size: 16px;
+    margin: 12px 0 12px 0 !important;
 }
