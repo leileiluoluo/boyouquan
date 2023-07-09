@@ -1,0 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background: radial-gradient(#000, #111), #000;
+  min-height: 100vh;
+}
+canvas {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+}

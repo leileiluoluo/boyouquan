@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>随机穿梭到一位博友的星球 - 博友圈 · 博客人的朋友圈！</title>
+    <meta name="keywords" content="星球穿梭, 博友圈,"/>
+    <meta name="description" content="博友圈星球穿梭，随机穿梭到一位博友的星球！"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/assets/css/planet-shuttle/style.css}">
+</head>
+<body>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js'></script>
+    <script th:src="@{/assets/js/planet-shuttle/index.js}"></script>
+    <a id="shuttle" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogAddress)}" th:text="'您即将穿梭到「' + ${blogName} + '」的星球！'" style="color: white; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-decoration: auto;"></a>
+    <script th:src="@{/assets/js/planet-shuttle/go.js}"></script>
+</body>
+</html>
