@@ -120,6 +120,10 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss/".length());
         } else if (blogAddress.endsWith("/rss")) {
             blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss".length());
+        } else if (blogAddress.endsWith("/feed.php")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed.php".length());
+        } else if (blogAddress.endsWith("/Feed.php")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/Feed.php".length());
         }
 
         return blogAddress;

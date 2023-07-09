@@ -80,7 +80,21 @@ public enum BlogEnums {
     KOSTYA("hello@kostya.club", "https://kostya.club/feed.xml", "西兰花的第不知道多少个站点，写得下去写不下去也不知道，反正就先试试看。"),
     WANGYURUI("feng.pupu@qq.com", "https://wangyurui.com/feed.xml", "95后，男喜读书，RSS支持者，“Logseq+Notion+Heptabase”三神器护法喜欢独立思考，喜欢“孤独”，对新事物抱有强烈的好奇心和探索欲，什么都会点但又都不够精通的“杂人”。"),
     HZ_CLUB("1078503@gmail.com", "https://blog.9hz.club/feed", "顾名思义，我就是一个喜欢逛的人，说不定什么时候就逛到你家了哟。主站作为博客以后可能就分享优秀的博文加上自己的理解，算是发散思维吧！偶尔写一点自己的随笔对某些事某些物说三道四一下！"),
-    BXAW("amaru@bxaw.name", "https://blog.bxaw.name/feed/", "十多年ACG圈，半个兽圈，没有兽设，只有名字。梦想是成为绘画大触，然而只是做白日梦。喜欢自己研究医学、物理学、哲学、神学，喜欢探讨法律。");
+    BXAW("amaru@bxaw.name", "https://blog.bxaw.name/feed/", "十多年ACG圈，半个兽圈，没有兽设，只有名字。梦想是成为绘画大触，然而只是做白日梦。喜欢自己研究医学、物理学、哲学、神学，喜欢探讨法律。"),
+    STUIT("notfound@notfound.com", "http://stuit.cn/Xiaolu/Feed.php", "非著名历史学爱好者。"),
+    ICHOV("wei@ichov.com", "https://ichov.com/feed", "江子渔，80后，籍贯重庆南川，退役平面设计师、前后端贫下码农、多年自由职业的大龄单身loser。"),
+    CHENER("i@chener.net", "https://www.chener.net/feed/", "网络、生活、我的主张。这个是小站的主题，也是小站的主要内容。"),
+    SYNYAN("notfound@notfound.com", "https://synyan.cn/feed", "器材党广角狗，博物馆爱好者，旅游点打卡员。"),
+    XLANDA("notfound@notfound.com", "http://www.xlanda.net/feed", "一个爱自由的人，就如我的星座，不喜欢管别人，但常常管了都不知道，但同时又不爱被人管，管我的人要不就被我看不起，不当一回事，要不就对他/她十分崇拜。"),
+    EZO("f@zen.cn", "https://ezo.biz/feed/", "80 后；中年欧吉桑；金融业；因为本身是沉闷性格的人，所以努力成为一个有趣的人。略懂 PHP 和 Python，业余喜欢编写小脚本做一些无聊的事情。"),
+    MAIE("notfound@notfound.com", "https://maie.name/feed", "学过抽烟，已经戒了；学过喝酒，一喝就倒；想学画画，没钱买颜料；学过电脑，只会上 QQ 打游戏；学过踢球，只能当替补。"),
+    XPTT("admin@xptt.com", "https://xptt.com/feed", "建立此博客，纯属爱好，在关注博客和互联网的同时，记录分享我的所见所闻，偶尔也聊聊网络IT那些事。"),
+    LANKA("notfound@notfound.com", "https://www.lanka.cn/feed/", "蓝卡是一个关注互联网的科技媒体，与您分享最新科技媒体资讯、独到的观点和前沿的科技产品信息。"),
+    HIWANNZ("42@hiwannz.com", "https://hiwannz.com/feed", "我是Wannz，94年生于甘肃兰州，在2014年初正式开始了我的互联网工作生涯。"),
+    JINBO123("notfound@notfound.com", "https://www.jinbo123.com/feed", "关注互联网、IT科技、智能手机、电子商务、网络营销等内容的个人博客。"),
+    PEWAE("lifishake@outlook.com", "https://pewae.com/feed", "这里是lifishake同学的blog，主要涉及他所关心的游戏、动漫、笑话以及其他话题。"),
+    FUEIS("i@fueis.com", "https://blog.fueis.com/feed", "目前生活状况就是上班的人妻一枚，博客里经常出现的 9 哥就是我先生。"),
+    SIRIT("sirit@163.com", "https://www.sirit.com.cn/feed/", "网站最初的名字是“大嘴狗的博客”，之后不允许使用博客当名字，又改为“大嘴狗的小空间”。现在又不能使用个人空间之类的字眼，那就改成“大嘴狗狗”吧。");
 
     private final String email;
     private final String feedAddress;
