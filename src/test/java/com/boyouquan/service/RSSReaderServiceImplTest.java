@@ -20,7 +20,7 @@ public class RSSReaderServiceImplTest {
 
     @Test
     public void testRead() {
-        List<BlogPost> blogPosts = rssReaderService.read("https://byvoid.com/zhs/feed.xml");
+        List<BlogPost> blogPosts = rssReaderService.read("https://blog.codingnow.com/atom.xml");
 //        save(blogPosts);
     }
 
