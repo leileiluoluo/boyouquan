@@ -233,3 +233,9 @@ div#searchbox {
     font-size: 16px;
     margin: 12px 0 12px 0 !important;
 }
+
+.post-content img {
+    border-radius: 4px;
+    margin: 1rem 0;
+    border: 1px solid var(--border);
+}
