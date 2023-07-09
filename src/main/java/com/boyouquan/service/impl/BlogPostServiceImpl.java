@@ -18,6 +18,11 @@ public class BlogPostServiceImpl implements BlogPostService {
     private BlogPostDaoMapper blogPostDaoMapper;
 
     @Override
+    public BlogAggregate getBlogByRandom() {
+        return blogPostDaoMapper.getBlogByRandom();
+    }
+
+    @Override
     public Pagination<BlogAggregate> listBlogsOrderByPostDate(String keyword, int page, int size) {
         if (page < 1 || size <= 0) {
             return Pagination.buildEmptyResults();

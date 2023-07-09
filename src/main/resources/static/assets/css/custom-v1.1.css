@@ -68,6 +68,12 @@
     display: inline;
 }
 
+.footer-summary .flex-item a {
+    background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .post-content h3 {
     font-size: 20px !important;
 }
