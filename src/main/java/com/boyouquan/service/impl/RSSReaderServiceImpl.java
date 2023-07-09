@@ -58,26 +58,33 @@ public class RSSReaderServiceImpl implements RSSReaderService {
 
                 // link
                 String link = entry.getUri();
+                if (StringUtils.isBlank(link) || !link.startsWith("http")) {
+                    link = entry.getLink();
+                }
                 Date createdAt = entry.getPublishedDate();
                 if (null == createdAt) {
                     createdAt = entry.getUpdatedDate();
                 }
 
                 // FIXME
-                if (StringUtils.isNotBlank(blogName) && StringUtils.isNotBlank(blogAddress)
-                        && StringUtils.isNotBlank(title) && StringUtils.isNotBlank(link)
-                        && null != createdAt) {
-                    blogAddress = trimSuffix(blogAddress);
-
-                    BlogPost blogPost = new BlogPost();
-                    blogPost.setBlogName(blogName);
-                    blogPost.setBlogAddress(blogAddress);
-                    blogPost.setTitle(title);
-                    blogPost.setDescription(description);
-                    blogPost.setLink(link);
-                    blogPost.setCreatedAt(createdAt);
-                    blogPosts.add(blogPost);
+                if (StringUtils.isBlank(blogName) || StringUtils.isBlank(blogAddress)
+                        || StringUtils.isBlank(title) || StringUtils.isBlank(link)
+                        || !link.startsWith("http")
+                        || null == createdAt) {
+                    System.out.printf("invalid entry, feedURL: %s", feedURL);
+                    break;
                 }
+
+                // add entry
+                blogAddress = trimSuffix(blogAddress);
+                BlogPost blogPost = new BlogPost();
+                blogPost.setBlogName(blogName);
+                blogPost.setBlogAddress(blogAddress);
+                blogPost.setTitle(title);
+                blogPost.setDescription(description);
+                blogPost.setLink(link);
+                blogPost.setCreatedAt(createdAt);
+                blogPosts.add(blogPost);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
