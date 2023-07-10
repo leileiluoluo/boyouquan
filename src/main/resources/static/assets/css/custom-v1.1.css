@@ -4,6 +4,10 @@
   -webkit-text-fill-color: transparent;
 }
 
+body {
+    -webkit-font-smoothing: antialiased;
+}
+
 .header #menu span {
     font-weight: 460;
 }
