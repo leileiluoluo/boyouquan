@@ -129,6 +129,23 @@ body {
     font-weight: normal !important;
 }
 
+.blog-entry .domain {
+    font-size: 14px;
+    margin-top: 8px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.blog-entry .domain .flex-item {
+    color: var(--secondary);
+}
+
+.blog-entry .domain a {
+    color: var(--primary)
+}
+
 .blog-entry .description {
     margin-top: 8px;
     margin-bottom: 8px;
@@ -142,6 +159,10 @@ body {
     padding: 0.2rem 0.2rem;
     display: -webkit-box;
     border-radius: calc(0.4rem);
+}
+
+.blog-entry .description:hover {
+   overflow: visible;
 }
 
 .blog-entry .summary {
