@@ -145,6 +145,9 @@ body {
 
 .blog-entry .icon-and-title .flex-item {
     margin-right: 6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .blog-entry .icon-and-title .flex-item h2 {

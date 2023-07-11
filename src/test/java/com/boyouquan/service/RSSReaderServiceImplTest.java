@@ -20,7 +20,7 @@ public class RSSReaderServiceImplTest {
 
     @Test
     public void testRead() {
-        List<BlogPost> blogPosts = rssReaderService.read("https://blog.fueis.com/feed");
+        List<BlogPost> blogPosts = rssReaderService.read("https://ltmltm.cn/feed");
 //        save(blogPosts);
     }
 
