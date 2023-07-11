@@ -17,9 +17,22 @@ public class BlogInfo {
     private String name;
     private String address;
     private String description;
+    private String createdAt;
     private Long postsCount;
     private Long accessCount;
     private Date latestUpdatedAt;
     private List<BlogPost> latestPosts;
+
+    public String getDomain() {
+        // scheme
+        if (address.startsWith("https://")) {
+            address = address.substring("https://".length());
+        } else if (address.startsWith("http://")) {
+            address = address.substring("http://".length());
+        }
+
+        // tail
+        return address.replace("/", "");
+    }
 
 }
