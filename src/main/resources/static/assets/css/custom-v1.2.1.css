@@ -60,9 +60,11 @@ body {
 .footer-block {
     max-width: calc(var(--main-width) + var(--gap) * 2);
     margin: auto;
-    padding-top: var(--gap);
+    padding-top: var(--gap)/2;
     font-size: 16px;
     text-align: center;
+    padding-left: var(--gap);
+    padding-right: var(--gap);
 }
 
 .footer-block .footer-summary {
