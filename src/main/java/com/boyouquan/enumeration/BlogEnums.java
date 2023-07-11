@@ -94,7 +94,14 @@ public enum BlogEnums {
     JINBO123("notfound@notfound.com", "https://www.jinbo123.com/feed", "关注互联网、IT科技、智能手机、电子商务、网络营销等内容的个人博客。", "2023/07/10"),
     PEWAE("lifishake@outlook.com", "https://pewae.com/feed", "这里是lifishake同学的blog，主要涉及他所关心的游戏、动漫、笑话以及其他话题。", "2023/07/10"),
     FUEIS("i@fueis.com", "https://blog.fueis.com/feed", "目前生活状况就是上班的人妻一枚，博客里经常出现的 9 哥就是我先生。", "2023/07/10"),
-    SIRIT("sirit@163.com", "https://www.sirit.com.cn/feed/", "网站最初的名字是“大嘴狗的博客”，之后不允许使用博客当名字，又改为“大嘴狗的小空间”。现在又不能使用个人空间之类的字眼，那就改成“大嘴狗狗”吧。", "2023/07/10");
+    SIRIT("sirit@163.com", "https://www.sirit.com.cn/feed/", "网站最初的名字是“大嘴狗的博客”，之后不允许使用博客当名字，又改为“大嘴狗的小空间”。现在又不能使用个人空间之类的字眼，那就改成“大嘴狗狗”吧。", "2023/07/10"),
+    MUNUE("maqingxi@gmail.com", "https://www.munue.com/feed", "我叫马庆喜，网络ID：maqingxi，是我名字的汉语拼音，所以也用它作为我个人网站的域名。我是74年生人，属虎，所以我选用了白虎图腾图案作为自己的 Gravatar 头像。", "2023/07/11"),
+    FXPAI("aiphes@qq.com", "https://fxpai.com/feed/", "这是一个由我个人懒散运营的独立博客，也是我顽固自留地、执念角斗场、自说自话的三角地。一个人要从属于一个派别（或将自己分为某类），则必然与其偏见和痼习为伍。", "2023/07/11"),
+    DNGZ("notfound@notfound.com", "http://blog.dngz.net/feed", "心灵博客，记录心静不下来的生活点滴，心灵博客2019再次启程。", "2023/07/11"),
+    LIHUAZHI("walltzlee@gmail.com", "https://lihuazhi.com/feed/", "活在这珍贵的人间 / 人类和植物一样幸福 / 爱情和雨水一样幸福。", "2023/07/11"),
+    LTMLTM("451713405@qq.com", "https://ltmltm.cn/feed", "做此网站是给自己一个记录生活和释放内心情感的地方，不求访问量，只希望以后看日记时能回忆起那曾经的美好。", "2023/07/11"),
+    CNBANG("bang590@gmail.com", "https://blog.cnbang.net/feed/", "Hi，我是bang，88年生于广东陆丰，毕业于华南师范大学，程序员，喜欢做东西。", "2023/07/11"),
+    LOYHOME("notfound@notfound.com", "https://www.loyhome.com/feed/", "喜欢人生一切美好的事物，无论是有形的还是无形的，所以像云一样漂荡四方。不知不觉，博客一写便是第 914个年头了）。", "2023/07/11");
 
     private final String email;
     private final String feedAddress;
