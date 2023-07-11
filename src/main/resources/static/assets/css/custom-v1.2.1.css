@@ -57,25 +57,41 @@ body {
     margin-right: 2px;
 }
 
-.footer-summary {
-    justify-content: center;
-    display: flex;
-    margin-bottom: 20px;
-    font-size: 16px
+.footer-block {
+    max-width: calc(var(--main-width) + var(--gap) * 2);
+    margin: auto;
+    padding-top: var(--gap);
+    font-size: 16px;
+    text-align: center;
 }
 
-.footer-summary .flex-item {
+.footer-block .footer-summary {
+    justify-content: center;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.footer-block .footer-contact {
+    margin-bottom: 10px;
+}
+
+.footer-block .footer-summary .flex-item {
     margin-right: 4px;
 }
 
-.footer-summary .flex-item p {
+.footer-block .footer-summary .flex-item p {
     display: inline;
 }
 
-.footer-summary .flex-item a {
+.footer-block .footer-summary .flex-item a {
     background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.footer-block .planet-shuttle {
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .post-content h3 {
