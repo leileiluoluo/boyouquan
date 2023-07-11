@@ -25,7 +25,9 @@
         </div>
     </article>
 </main>
-<div th:replace="~{fragments/footer/contact::contact}"></div>
+<footer class="footer-block">
+    <div th:replace="~{fragments/footer/contact::contact}"></div>
+</footer>
 <footer th:replace="~{fragments/footer/footer_site_info::footer_site_info}"></footer>
 <div th:insert="~{fragments/plugin/go_to_top::go_to_top}"></div>
 <script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
