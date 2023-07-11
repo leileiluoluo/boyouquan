@@ -71,6 +71,7 @@ body {
     justify-content: center;
     display: flex;
     margin-bottom: 10px;
+    flex-direction: column;
 }
 
 .footer-block .footer-contact {
@@ -78,7 +79,8 @@ body {
 }
 
 .footer-block .footer-summary .flex-item {
-    margin-right: 4px;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 
 .footer-block .footer-summary .flex-item p {
@@ -251,6 +253,10 @@ body {
 
     .blog-entry {
         width: 49%;
+    }
+
+    .footer-block .footer-summary {
+        flex-direction: row;
     }
 }
 
