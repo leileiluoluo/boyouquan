@@ -2,7 +2,9 @@ package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.BlogInfo;
+import com.boyouquan.service.BlogAccessService;
 import com.boyouquan.service.BlogInfoService;
+import com.boyouquan.service.BlogPostService;
 import com.boyouquan.util.Pagination;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class BlogController {
 
     @Autowired
     private BlogInfoService blogInfoService;
+    @Autowired
+    private BlogPostService blogPostService;
+    @Autowired
+    private BlogAccessService blogAccessService;
 
     @GetMapping("")
     public String list(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
@@ -36,6 +42,9 @@ public class BlogController {
         model.addAttribute("pagination", pagination);
         model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
         model.addAttribute("keyword", keyword);
+        model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
+        model.addAttribute("totalBlogPosts", blogPostService.countPosts(""));
+        model.addAttribute("accessTotal", blogAccessService.totalCount());
         return "blogs/list";
     }
 
