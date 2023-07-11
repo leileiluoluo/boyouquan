@@ -96,6 +96,11 @@ body {
     font-size: 14px;
 }
 
+.footer-block .cloud-promotion {
+    width: 80px;
+    margin: 0 auto;
+}
+
 .post-content h3 {
     font-size: 20px !important;
 }
