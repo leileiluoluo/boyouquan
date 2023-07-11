@@ -32,7 +32,10 @@ public class BlogInfo {
         }
 
         // tail
-        return address.replace("/", "");
+        if (address.endsWith("/")) {
+            address = address.substring(0, address.length() - 1);
+        }
+        return address;
     }
 
 }
