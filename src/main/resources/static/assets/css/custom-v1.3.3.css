@@ -8,6 +8,15 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+.header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header .nav {
+    line-height: normal !important;
+}
+
 .header #menu span {
     font-weight: 460;
 }
