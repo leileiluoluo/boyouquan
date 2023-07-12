@@ -307,3 +307,82 @@ div#searchbox {
     margin: 1rem 0;
     border: 1px solid var(--border);
 }
+
+:root {
+  --s: 6;
+  --h: 36;
+  --speed: 2s;
+}
+
+.latest-news {
+  margin-bottom: 26px;
+  height: calc(var(--h) * 1px);
+  line-height: calc(var(--h) * 1px);
+  background: var(--border);
+  border-radius: var(--radius);
+  border: 1px solid var(--tertiary);
+  overflow: hidden;
+  display: flex;
+}
+
+.latest-news .icon {
+    width: 22px;
+    margin-left: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.latest-news .content {
+    font-size: 14px;
+    color: #000;
+    overflow: hidden;
+}
+
+.latest-news .content li {
+    list-style:none;
+}
+
+.latest-news .content ul {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.latest-news .content ul li {
+    flex-shrink: 0;
+    width: 100%;
+    padding-left: 10px;
+    box-sizing: border-box;
+    background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.latest-news .content ul {
+    animation: move calc(var(--speed) * var(--s)) steps(var(--s)) infinite;
+}
+
+.latest-news .content ul li {
+    white-space: nowrap;
+    cursor: pointer;
+    animation: liMove calc(var(--speed)) infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, calc(var(--s) * var(--h) * -1px));
+  }
+}
+
+@keyframes liMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  80%,
+  100%  {
+    transform: translate(0, calc(var(--h) * -1px));
+  }
+}

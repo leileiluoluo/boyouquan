@@ -36,6 +36,18 @@
         ORDER BY createdAt DESC
         LIMIT #{offset}, #{rows}
     </select>
+    <select id="getBlogByAddress" resultType="com.boyouquan.model.BlogPost">
+        SELECT
+        blog_name as blogName,
+        blog_address as blogAddress,
+        title,
+        description,
+        link,
+        created_at as createdAt
+        FROM blog_post
+        WHERE blog_address like concat('%', #{address}, '%')
+        LIMIT 1
+    </select>
     <select id="countBlogPostsByAddress" resultType="java.lang.Integer">
         SELECT
         count(1)

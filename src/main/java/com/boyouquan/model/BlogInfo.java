@@ -1,5 +1,6 @@
 package com.boyouquan.model;
 
+import com.boyouquan.util.CommonUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,18 +25,7 @@ public class BlogInfo {
     private List<BlogPost> latestPosts;
 
     public String getDomain() {
-        // scheme
-        if (address.startsWith("https://")) {
-            address = address.substring("https://".length());
-        } else if (address.startsWith("http://")) {
-            address = address.substring("http://".length());
-        }
-
-        // tail
-        if (address.endsWith("/")) {
-            address = address.substring(0, address.length() - 1);
-        }
-        return address;
+        return CommonUtils.getDomain(address);
     }
 
 }

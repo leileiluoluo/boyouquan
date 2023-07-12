@@ -78,4 +78,45 @@ public class CommonUtils {
         return address;
     }
 
+    public static String trimFeedURLSuffix(String blogAddress) {
+        if (blogAddress.endsWith("/feed.xml")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed.xml".length());
+        } else if (blogAddress.endsWith("/feed/")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed/".length());
+        } else if (blogAddress.endsWith("/feed")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed".length());
+        } else if (blogAddress.endsWith("/atom.xml")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/atom.xml".length());
+        } else if (blogAddress.endsWith("/index.xml")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/index.xml".length());
+        } else if (blogAddress.endsWith("/rss.xml")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss.xml".length());
+        } else if (blogAddress.endsWith("/rss/")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss/".length());
+        } else if (blogAddress.endsWith("/rss")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss".length());
+        } else if (blogAddress.endsWith("/feed.php")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed.php".length());
+        } else if (blogAddress.endsWith("/Feed.php")) {
+            blogAddress = blogAddress.substring(0, blogAddress.length() - "/Feed.php".length());
+        }
+
+        return blogAddress;
+    }
+
+    public static String getDomain(String address) {
+        // scheme
+        if (address.startsWith("https://")) {
+            address = address.substring("https://".length());
+        } else if (address.startsWith("http://")) {
+            address = address.substring("http://".length());
+        }
+
+        // tail
+        if (address.endsWith("/")) {
+            address = address.substring(0, address.length() - 1);
+        }
+        return address;
+    }
+
 }
