@@ -1,5 +1,6 @@
 package com.boyouquan.service.impl;
 
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.BlogPost;
 import com.boyouquan.service.RSSReaderService;
 import com.boyouquan.util.CommonUtils;
@@ -28,9 +29,19 @@ public class RSSReaderServiceImpl implements RSSReaderService {
         try {
             feedSource = new URL(feedURL);
             SyndFeed feed = new SyndFeedInput().build(new XmlReader(feedSource));
-            String blogName = feed.getTitle();
 
-            // address
+            // blog name
+            String blogName = feed.getTitle().trim();
+            if (blogName.length() > CommonConstants.BLOG_NAME_MAX_LENGTH) {
+                int blankIndex = blogName.indexOf(" ");
+                if (blankIndex > 0) {
+                    blogName = blogName.substring(0, blankIndex);
+                } else {
+                    blogName = blogName.substring(0, CommonConstants.BLOG_NAME_MAX_LENGTH);
+                }
+            }
+
+            // blog address
             String blogAddress = feed.getLink();
             List<SyndLink> links = feed.getLinks();
             if (null != links) {
@@ -45,7 +56,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                 SyndEntry entry = (SyndEntry) iter.next();
                 String title = entry.getTitle();
 
-                // content
+                // description
                 String description = "";
                 List<SyndContent> contents = entry.getContents();
                 if (null != contents && !contents.isEmpty()) {

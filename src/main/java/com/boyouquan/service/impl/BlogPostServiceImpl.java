@@ -76,11 +76,6 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Override
     public void saveBlogPost(BlogPost blogPost) {
         try {
-            // FIXME
-            if (blogPost.getBlogName().length() >= 20) {
-                blogPost.setBlogName(blogPost.getBlogName().substring(0, 20));
-            }
-
             blogPostDaoMapper.saveBlogPost(blogPost);
         } catch (Exception e) {
             System.out.printf("error occurred: %s\n", e.getMessage());
