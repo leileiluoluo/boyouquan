@@ -83,6 +83,11 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
+    public List<BlogAggregate> listAllBlogs(String keyword) {
+        return blogPostDaoMapper.listAllBlogs(keyword);
+    }
+
+    @Override
     public Long countBlogs(String keyword) {
         return blogPostDaoMapper.countBlogs(keyword);
     }

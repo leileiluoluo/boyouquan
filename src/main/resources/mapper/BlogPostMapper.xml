@@ -69,6 +69,20 @@
         ORDER BY createdAt DESC
         LIMIT #{offset}, #{rows}
     </select>
+    <select id="listAllBlogs" resultType="com.boyouquan.model.BlogAggregate">
+        SELECT
+        max(blog_name) as name,
+        max(blog_address) as address,
+        max(created_at) as latestUpdatedAt,
+        count(link) as postCount
+        FROM blog_post
+        <if test="keyword != null and keyword !=''">
+            WHERE blog_name like concat('%', #{keyword}, '%')
+            OR blog_address like concat('%', #{keyword}, '%')
+        </if>
+        GROUP BY blog_address
+        ORDER by latestUpdatedAt DESC
+    </select>
     <select id="countBlogPosts" resultType="java.lang.Integer">
         SELECT
         count(1)
