@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Controller
 @RequestMapping("/go")
@@ -20,12 +22,17 @@ public class GoController {
     @Autowired
     private BlogAccessService blogAccessService;
 
+    ExecutorService executorService = Executors.newFixedThreadPool(4);
+
     @GetMapping("")
     public void go(@RequestParam("link") String link, HttpServletRequest request, HttpServletResponse response) {
-        String ip = IpUtil.getRealIp(request);
         try {
-            saveAccessInfo(ip, link);
+            String ip = IpUtil.getRealIp(request);
 
+            // async
+            executorService.execute(() -> saveAccessInfo(ip, link));
+
+            // redirect
             response.sendRedirect(link);
         } catch (IOException e) {
             e.printStackTrace();
