@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public enum BlogEnums {
 
-    LEILEILUOLUO("leileiluoluo@leileiluoluo.com", "https://leileiluoluo.com/index.xml", "记录日常工作中整理的技术知识和日常生活中的点滴感想。", false, "2023/07/03"),
+    LEILEILUOLUO("leileiluoluo@leileiluoluo.com", "https://leileiluoluo.com/index.xml", "记录日常工作中整理的技术知识和日常生活中的点滴感想。", false, "2023/07/01"),
     XIAOWULEYI("0471666@gmail.com", "https://www.xiaowuleyi.com/feed", "记录生活，记录人生感悟。", false, "2023/07/03"),
     WEIYEXING("weiyexing1@gmail.com", "https://aaronnick.github.io/rss.xml", "记录所思所想，所见所闻。因此，博客的第一读者首先是自己，然后是其他对此感兴趣的人。", false, "2023/07/03"),
     TIANXIANZI("mimismeoww@gmail.com", "https://tianxianzi.me/atom.xml", "这是我的个人主页，你可以叫我秦海碗。本站站名『天仙子』(Song of Hyoscyamus)，一作药引，一作词牌。", false, "2023/07/03"),
