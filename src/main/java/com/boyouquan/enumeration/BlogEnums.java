@@ -101,7 +101,8 @@ public enum BlogEnums {
     LIHUAZHI("walltzlee@gmail.com", "https://lihuazhi.com/feed/", "活在这珍贵的人间 / 人类和植物一样幸福 / 爱情和雨水一样幸福。", false, "2023/07/11"),
     LTMLTM("451713405@qq.com", "https://ltmltm.cn/feed", "做此网站是给自己一个记录生活和释放内心情感的地方，不求访问量，只希望以后看日记时能回忆起那曾经的美好。", false, "2023/07/11"),
     CNBANG("bang590@gmail.com", "https://blog.cnbang.net/feed/", "Hi，我是bang，88年生于广东陆丰，毕业于华南师范大学，程序员，喜欢做东西。", false, "2023/07/11"),
-    LOYHOME("notfound@notfound.com", "https://www.loyhome.com/feed/", "喜欢人生一切美好的事物，无论是有形的还是无形的，所以像云一样漂荡四方。不知不觉，博客一写便是第 914个年头了）。", false, "2023/07/11");
+    LOYHOME("notfound@notfound.com", "https://www.loyhome.com/feed/", "喜欢人生一切美好的事物，无论是有形的还是无形的，所以像云一样漂荡四方。不知不觉，博客一写便是第 914个年头了）。", false, "2023/07/11"),
+    USHIROMIYA("batora@ushiromiya.com", "https://batora.ushiromiya.com/feed", "热情，乐于帮助别人，善良。自我感觉三观正（自我感觉良好）。追求真理，对自己的奋斗目标不会放弃。", true, "2023/07/12");
 
     private final String email;
     private final String feedAddress;
