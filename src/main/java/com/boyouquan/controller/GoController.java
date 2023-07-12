@@ -1,7 +1,9 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.model.BlogAccess;
+import com.boyouquan.model.BlogPost;
 import com.boyouquan.service.BlogAccessService;
+import com.boyouquan.service.BlogPostService;
 import com.boyouquan.util.IpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,8 +23,10 @@ public class GoController {
 
     @Autowired
     private BlogAccessService blogAccessService;
+    @Autowired
+    private BlogPostService blogPostService;
 
-    ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @GetMapping("")
     public void go(@RequestParam("link") String link, HttpServletRequest request, HttpServletResponse response) {
@@ -40,10 +44,14 @@ public class GoController {
     }
 
     private void saveAccessInfo(String ip, String link) {
-        BlogAccess blogAccess = new BlogAccess();
-        blogAccess.setLink(link);
-        blogAccess.setIp(ip);
-        blogAccessService.saveBlogAccess(blogAccess);
+        BlogPost blogPost = blogPostService.getBlogByLink(link);
+        if (null != blogPost) {
+            BlogAccess blogAccess = new BlogAccess();
+            blogAccess.setBlogAddress(blogPost.getBlogAddress());
+            blogAccess.setLink(link);
+            blogAccess.setIp(ip);
+            blogAccessService.saveBlogAccess(blogAccess);
+        }
     }
 
 }

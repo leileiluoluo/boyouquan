@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface BlogPostService {
 
+    BlogAggregate getMostUpdatedBlogByLatestMonth();
+
     BlogAggregate getBlogByRandom();
 
     Pagination<BlogAggregate> listBlogsOrderByPostDate(String keyword, int page, int size);
@@ -18,6 +20,8 @@ public interface BlogPostService {
     Pagination<BlogPost> listBlogPosts(String keyword, int page, int size);
 
     BlogPost getBlogByAddress(String address);
+
+    BlogPost getBlogByLink(String link);
 
     void saveBlogPost(BlogPost blogPost);
 

@@ -2,6 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.dao.BlogAccessDaoMapper;
 import com.boyouquan.model.BlogAccess;
+import com.boyouquan.model.BlogAccessSummary;
 import com.boyouquan.service.BlogAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,11 @@ public class BlogAccessServiceImpl implements BlogAccessService {
 
     @Autowired
     private BlogAccessDaoMapper blogAccessDaoMapper;
+
+    @Override
+    public BlogAccessSummary getMostAccessedBlogByLatestMonth() {
+        return blogAccessDaoMapper.getMostAccessedBlogByLatestMonth();
+    }
 
     @Override
     public Long countBlogAccessByLinkPrefix(String linkPrefix) {
