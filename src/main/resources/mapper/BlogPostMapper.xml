@@ -1,5 +1,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boyouquan.dao.BlogPostDaoMapper">
+    <select id="getMostUpdatedBlogByLatestMonth" resultType="com.boyouquan.model.BlogAggregate">
+        SELECT
+        blog_address as address,
+        blog_name as name,
+        count(*) as postCount,
+        max(created_at) as latestUpdatedAt
+        FROM blog_post
+        WHERE date(created_at) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        GROUP BY blog_address
+        ORDER BY postCount DESC LIMIT 1
+    </select>
     <select id="getBlogByRandom" resultType="com.boyouquan.model.BlogAggregate">
         SELECT
         max(blog_name) as name,
@@ -46,6 +57,18 @@
         created_at as createdAt
         FROM blog_post
         WHERE blog_address like concat('%', #{address}, '%')
+        LIMIT 1
+    </select>
+    <select id="getBlogByLink" resultType="com.boyouquan.model.BlogPost">
+        SELECT
+        blog_name as blogName,
+        blog_address as blogAddress,
+        title,
+        description,
+        link,
+        created_at as createdAt
+        FROM blog_post
+        WHERE link=#{link}
         LIMIT 1
     </select>
     <select id="countBlogPostsByAddress" resultType="java.lang.Integer">

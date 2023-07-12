@@ -311,7 +311,7 @@ div#searchbox {
 :root {
   --s: 6;
   --h: 36;
-  --speed: 2s;
+  --speed: 3s;
 }
 
 .latest-news {

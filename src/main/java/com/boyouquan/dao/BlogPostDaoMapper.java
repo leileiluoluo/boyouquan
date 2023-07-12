@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface BlogPostDaoMapper {
 
+    BlogAggregate getMostUpdatedBlogByLatestMonth();
+
     BlogAggregate getBlogByRandom();
 
     List<BlogAggregate> listBlogsOrderByPostDate(String keyword, @Param("offset") int offset, @Param("rows") int rows);
@@ -20,6 +22,8 @@ public interface BlogPostDaoMapper {
     List<BlogPost> listBlogPosts(String keyword, @Param("offset") int offset, @Param("rows") int rows);
 
     BlogPost getBlogByAddress(String address);
+
+    BlogPost getBlogByLink(String link);
 
     int countBlogPosts(String keyword);
 

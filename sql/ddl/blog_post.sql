@@ -6,3 +6,5 @@ create table `blog_post` (
     link varchar(200) not null,
     created_at timestamp not null
 );
+
+create index blog_post_idx_address on `blog_post`(blog_address);

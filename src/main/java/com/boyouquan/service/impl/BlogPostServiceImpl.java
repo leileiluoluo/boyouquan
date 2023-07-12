@@ -18,6 +18,11 @@ public class BlogPostServiceImpl implements BlogPostService {
     private BlogPostDaoMapper blogPostDaoMapper;
 
     @Override
+    public BlogAggregate getMostUpdatedBlogByLatestMonth() {
+        return blogPostDaoMapper.getMostUpdatedBlogByLatestMonth();
+    }
+
+    @Override
     public BlogAggregate getBlogByRandom() {
         return blogPostDaoMapper.getBlogByRandom();
     }
@@ -61,6 +66,11 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Override
     public BlogPost getBlogByAddress(String address) {
         return blogPostDaoMapper.getBlogByAddress(address);
+    }
+
+    @Override
+    public BlogPost getBlogByLink(String link) {
+        return blogPostDaoMapper.getBlogByLink(link);
     }
 
     @Override
