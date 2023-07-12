@@ -6,7 +6,7 @@
     <script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
     <header th:replace="~{fragments/header/header::header}"></header>
     <main class="main">
-        <article th:replace="~{fragments/header/header_info::header_info('这里是博客广场，截止目前共收录' + ${totalBlogs} + '个博客，默认按最近更新时间依序展示，搜一搜有没有您的博客吧，没有的话就快来提交吧！')}"></article>
+        <article th:replace="~{fragments/head/head_info::head_info('这里是博客广场，截止目前共收录' + ${totalBlogs} + '个博客，按最近更新时间排序展示，搜一搜您的博客在不在里边吧，如果没有的话就快来提交吧！')}"></article>
         <div id="searchbox">
             <input id="searchInput" autofocus="" placeholder="搜索博客 ↵" aria-label="search" type="search" autocomplete="off">
         </div>
