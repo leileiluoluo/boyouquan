@@ -2,6 +2,7 @@ package com.boyouquan.controller;
 
 import com.boyouquan.model.BlogAccess;
 import com.boyouquan.service.BlogAccessService;
+import com.boyouquan.util.IpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class GoController {
 
     @GetMapping("")
     public void go(@RequestParam("link") String link, HttpServletRequest request, HttpServletResponse response) {
-        String ip = request.getRemoteAddr();
+        String ip = IpUtil.getRealIp(request);
         try {
             saveAccessInfo(ip, link);
 
