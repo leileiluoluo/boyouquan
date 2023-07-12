@@ -40,4 +40,8 @@ public class ThymeLeafTemplateHelper {
         return URLEncoder.encode(url, StandardCharsets.UTF_8);
     }
 
+    public String getDomain(String address) {
+        return CommonUtils.getDomain(address);
+    }
+
 }

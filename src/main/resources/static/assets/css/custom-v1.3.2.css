@@ -293,6 +293,10 @@ div#searchbox {
     color: var(--secondary);
 }
 
+.post-publish-date a {
+    margin-left: 4px;
+}
+
 .post-content {
     font-size: 16px;
 }
