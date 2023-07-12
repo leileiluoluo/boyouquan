@@ -59,6 +59,11 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
+    public BlogPost getBlogByAddress(String address) {
+        return blogPostDaoMapper.getBlogByAddress(address);
+    }
+
+    @Override
     public void saveBlogPost(BlogPost blogPost) {
         try {
             // FIXME

@@ -2,8 +2,10 @@ package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.BlogPost;
+import com.boyouquan.model.LatestNews;
 import com.boyouquan.service.BlogAccessService;
 import com.boyouquan.service.BlogPostService;
+import com.boyouquan.service.LatestNewsService;
 import com.boyouquan.util.Pagination;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("")
@@ -25,6 +28,8 @@ public class HomeController {
     private BlogPostService blogPostService;
     @Autowired
     private BlogAccessService blogAccessService;
+    @Autowired
+    private LatestNewsService latestNewsService;
 
     @GetMapping("")
     public void index(HttpServletResponse response) {
@@ -49,12 +54,18 @@ public class HomeController {
 
         Pagination<BlogPost> pagination = blogPostService.listBlogPosts(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
 
+        boolean hasLatestNews = false;
+        List<LatestNews> latestNews = latestNewsService.getLatestNews();
+        hasLatestNews = latestNews.size() > 1;
+
         model.addAttribute("pagination", pagination);
         model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
         model.addAttribute("totalBlogPosts", blogPostService.countPosts(""));
         model.addAttribute("accessTotal", blogAccessService.totalCount());
         model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
         model.addAttribute("keyword", keyword);
+        model.addAttribute("hasLatestNews", hasLatestNews);
+        model.addAttribute("latestNews", latestNews);
         return "home";
     }
 

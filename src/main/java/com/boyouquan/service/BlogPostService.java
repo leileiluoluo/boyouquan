@@ -16,6 +16,8 @@ public interface BlogPostService {
 
     Pagination<BlogPost> listBlogPosts(String keyword, int page, int size);
 
+    BlogPost getBlogByAddress(String address);
+
     void saveBlogPost(BlogPost blogPost);
 
     void deleteLaterBlogPostsByAddressAndDate(String address, Date datePoint);

@@ -2,6 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.model.BlogPost;
 import com.boyouquan.service.RSSReaderService;
+import com.boyouquan.util.CommonUtils;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -77,7 +78,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                 }
 
                 // add entry
-                blogAddress = trimSuffix(blogAddress);
+                blogAddress = CommonUtils.trimFeedURLSuffix(blogAddress);
                 BlogPost blogPost = new BlogPost();
                 blogPost.setBlogName(blogName);
                 blogPost.setBlogAddress(blogAddress);
@@ -109,32 +110,6 @@ public class RSSReaderServiceImpl implements RSSReaderService {
             text += "...";
         }
         return text;
-    }
-
-    private static String trimSuffix(String blogAddress) {
-        if (blogAddress.endsWith("/feed.xml")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed.xml".length());
-        } else if (blogAddress.endsWith("/feed/")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed/".length());
-        } else if (blogAddress.endsWith("/feed")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed".length());
-        } else if (blogAddress.endsWith("/atom.xml")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/atom.xml".length());
-        } else if (blogAddress.endsWith("/index.xml")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/index.xml".length());
-        } else if (blogAddress.endsWith("/rss.xml")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss.xml".length());
-        } else if (blogAddress.endsWith("/rss/")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss/".length());
-        } else if (blogAddress.endsWith("/rss")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/rss".length());
-        } else if (blogAddress.endsWith("/feed.php")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed.php".length());
-        } else if (blogAddress.endsWith("/Feed.php")) {
-            blogAddress = blogAddress.substring(0, blogAddress.length() - "/Feed.php".length());
-        }
-
-        return blogAddress;
     }
 
 }
