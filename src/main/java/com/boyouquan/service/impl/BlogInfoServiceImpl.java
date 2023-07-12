@@ -26,10 +26,16 @@ public class BlogInfoServiceImpl implements BlogInfoService {
     public Pagination<BlogInfo> listBlogInfos(String keyword, int page, int size) {
         List<BlogInfo> blogInfos = new ArrayList<>();
 
-        int total = blogPostService.countBlogs(keyword).intValue();
+        // FIXME
+        List<BlogAggregate> allBlogAggregates = blogPostService.listAllBlogs(keyword);
 
-        Pagination<BlogAggregate> pagination = blogPostService.listBlogsOrderByPostDate(keyword, page, size);
-        pagination.getResults().forEach(blogAggregate -> {
+        // FIXME, SORT: order by createdAt desc
+        List<BlogAggregate> blogAggregates = allBlogAggregates.stream()
+                .sorted((o1, o2) -> BlogEnums.getCreatedAtByBlogAddress(o2.getAddress()).compareTo(BlogEnums.getCreatedAtByBlogAddress(o1.getAddress())))
+                .skip((long) (page - 1) * size).limit(size).toList();
+
+        // assembling
+        blogAggregates.forEach(blogAggregate -> {
             BlogInfo blogInfo = new BlogInfo();
             blogInfo.setName(blogAggregate.getName());
             blogInfo.setAddress(blogAggregate.getAddress());
@@ -46,7 +52,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
             blogInfos.add(blogInfo);
         });
 
-        return Pagination.<BlogInfo>builder().pageNo(page).pageSize(size).total(total).results(blogInfos);
+        return Pagination.<BlogInfo>builder().pageNo(page).pageSize(size).total(allBlogAggregates.size()).results(blogInfos);
     }
 
 }

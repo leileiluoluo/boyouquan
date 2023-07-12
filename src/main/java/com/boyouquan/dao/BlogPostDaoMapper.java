@@ -27,6 +27,8 @@ public interface BlogPostDaoMapper {
 
     void deleteLaterBlogPostsByAddressAndDate(@Param("blogAddress") String blogAddress, @Param("datePoint") Date datePoint);
 
+    List<BlogAggregate> listAllBlogs(String keyword);
+
     Long countBlogs(String keyword);
 
 }
