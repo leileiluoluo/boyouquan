@@ -13,12 +13,12 @@
         </div>
         <footer class="entry-footer">
             <div class="flex-item">
-                <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.blogAddress)}">
+                <a th:href="'/blog?keyword=' + ${@thymeLeafTemplateHelper.getDomain(blogPost.blogAddress)}">
                     <img th:src="${@thymeLeafTemplateHelper.getBlogAdminImageURLByAddress(blogPost.blogAddress)}"/>
                 </a>
             </div>
             <div class="flex-item">
-                <a th:text="${blogPost.blogName}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.blogAddress)}"></a>
+                <a th:text="${blogPost.blogName}" th:href="'/blog?keyword=' + ${@thymeLeafTemplateHelper.getDomain(blogPost.blogAddress)}"></a>
             </div>
             <div class="flex-item">
                 · <span th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogPost.createdAt)}"></span>
