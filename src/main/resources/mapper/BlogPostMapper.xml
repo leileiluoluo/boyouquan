@@ -56,7 +56,7 @@
         link,
         created_at as createdAt
         FROM blog_post
-        WHERE blog_address like concat('%', #{address}, '%')
+        WHERE blog_address=#{address}
         LIMIT 1
     </select>
     <select id="getBlogByLink" resultType="com.boyouquan.model.BlogPost">

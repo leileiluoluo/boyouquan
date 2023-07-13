@@ -44,14 +44,24 @@ public class GoController {
     }
 
     private void saveAccessInfo(String ip, String link) {
+        // access blog post
         BlogPost blogPost = blogPostService.getBlogByLink(link);
-        if (null != blogPost) {
-            BlogAccess blogAccess = new BlogAccess();
-            blogAccess.setBlogAddress(blogPost.getBlogAddress());
-            blogAccess.setLink(link);
-            blogAccess.setIp(ip);
-            blogAccessService.saveBlogAccess(blogAccess);
+
+        // access blog home
+        if (null == blogPost) {
+            blogPost = blogPostService.getBlogByAddress(link);
         }
+
+        if (null == blogPost) {
+            System.out.printf("blog not found, link: %s", link);
+            return;
+        }
+
+        BlogAccess blogAccess = new BlogAccess();
+        blogAccess.setBlogAddress(blogPost.getBlogAddress());
+        blogAccess.setLink(link);
+        blogAccess.setIp(ip);
+        blogAccessService.saveBlogAccess(blogAccess);
     }
 
 }
