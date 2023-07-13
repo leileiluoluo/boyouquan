@@ -66,9 +66,7 @@ public class LatestNewsServiceImpl implements LatestNewsService {
                 LatestNews news = new LatestNews();
                 String title = String.format(CommonConstants.BLOG_ADDED_WELCOME_PATTERN, blogPost.getBlogName());
                 news.setTitle(title);
-                String domain = CommonUtils.getDomain(blogPost.getBlogAddress());
-                String link = String.format(CommonConstants.BLOG_ITEM_ADDRESS_PATTERN, domain);
-                news.setLink(link);
+                news.setLink(CommonConstants.BLOG_LIST_ADDRESS);
 
                 latestNews.add(news);
             }
