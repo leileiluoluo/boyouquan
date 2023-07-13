@@ -42,12 +42,12 @@ h4 {
 }
 
 .header #menu a {
-    font-size: 18px !important;
+    font-size: 16px !important;
 }
 
 .logo a {
     font-size: 28px !important;
-    font-weight: 480 !important;
+    font-weight: normal !important;
     letter-spacing: 1px;
     background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
     -webkit-background-clip: text;
@@ -93,8 +93,6 @@ h4 {
 }
 
 .footer-block .footer-summary {
-    color: var(--secondary);
-    font-weight: 480;
     justify-content: center;
     display: flex;
     margin-bottom: 10px;
@@ -121,7 +119,6 @@ h4 {
 }
 
 .footer-block .planet-shuttle {
-    font-weight: 480;
     margin-bottom: 10px;
 }
 
