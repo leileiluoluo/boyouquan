@@ -117,7 +117,7 @@ body {
 }
 
 .post-content img {
-    margin: 0 0 !important;
+    margin: 0 auto !important;
 }
 
 .post-content p {
