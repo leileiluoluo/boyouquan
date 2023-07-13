@@ -8,6 +8,26 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+h1 {
+    font-size: 22px !important;
+    font-weight: 480 !important;
+}
+
+h2 {
+    font-size: 20px !important;
+    font-weight: 480 !important;
+}
+
+h3 {
+    font-size: 18px !important;
+    font-weight: 480 !important;
+}
+
+h4 {
+    font-size: 16px !important;
+    font-weight: 480 !important;
+}
+
 .header {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -18,12 +38,17 @@ body {
 }
 
 .header #menu span {
-    font-weight: 460;
+    font-weight: 480 !important;
+}
+
+.header #menu a {
+    font-size: 18px !important;
 }
 
 .logo a {
-    font-size: 26px !important;
-    font-weight: normal !important;
+    font-size: 28px !important;
+    font-weight: 480 !important;
+    letter-spacing: 1px;
     background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -39,17 +64,8 @@ body {
     margin-bottom: 18px !important;
 }
 
-.first-entry .entry-header h1 {
-    font-size: 20px !important;
-}
-
 .first-entry .entry-content {
     margin: 0 0 14px 0 !important;
-}
-
-.entry-header h2 {
-    font-size: 18px !important;
-    font-weight: normal !important;
 }
 
 .entry-footer {
@@ -77,6 +93,8 @@ body {
 }
 
 .footer-block .footer-summary {
+    color: var(--secondary);
+    font-weight: 480;
     justify-content: center;
     display: flex;
     margin-bottom: 10px;
@@ -103,16 +121,13 @@ body {
 }
 
 .footer-block .planet-shuttle {
+    font-weight: 480;
     margin-bottom: 10px;
 }
 
 .footer-block .cloud-promotion {
     width: 80px;
     margin: 0 auto;
-}
-
-.post-content h3 {
-    font-size: 20px !important;
 }
 
 .post-content img {
@@ -158,11 +173,6 @@ body {
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
-}
-
-.blog-entry .icon-and-title .flex-item h2 {
-    font-size: 18px !important;
-    font-weight: normal !important;
 }
 
 .blog-entry .domain {
@@ -291,8 +301,6 @@ div#searchbox {
 }
 
 .post-title {
-    font-size: 20px !important;
-    font-weight: normal;
     margin-bottom: 8px !important;
 }
 
@@ -310,7 +318,6 @@ div#searchbox {
 }
 
 .post-content h4 {
-    font-size: 16px;
     margin: 12px 0 12px 0 !important;
 }
 
