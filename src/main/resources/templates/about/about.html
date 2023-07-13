@@ -23,11 +23,17 @@
             <p>博友圈的建站初衷即源于对独立博客坚守者的敬佩，秉持「不能让好的独立博客无人问津，更不能让它们在时光的长河中就此消亡」。博友圈致力于建立一个博客人的专属朋友圈，提供一个免费的平台，让各个领域的优质独立博客博主连接起来，让博主间有一个可以发现彼此、关注彼此、助力彼此的共同圈子。</p>
 
             <h4 id="提交博客">提交博客</h4>
-            <p>若您想推荐自己或者他人的博客被本站收录，可以通过发送邮件与我联系！（需提供 RSS 地址、博客描述和博主邮箱）</p>
-            <p>若您不想自己的博客被收录，也可以联系我进行删除！</p>
+            <p>若您想提交自己或者他人的博客被本站收录，请先确认您要提交的博客满足如下要求：</p>
+            <ul>
+                <li>基础要求：仅限个人独立博客，并且包含可访问的 RSS 地址；</li>
+                <li>内容要求：内容健康，且满足我国法律法规要求；</li>
+                <li>原创要求：原创文章不少于 5 篇。</li>
+            </ul>
+            <p>确认待提交博客满足如上要求后，则可以通过发送邮件的方式与我联系！（需提供 RSS 地址、博客描述和博主邮箱）</p>
             <ul>
                 <li>邮箱地址：<a href="mailto:contact@boyouquan.com?subject=申请博客收录&body=RSS地址：%0d%0a博客描述：%0d%0a博主邮箱：%0d%0a">contact@boyouquan.com</a></li>
             </ul>
+            <p>若博友圈收录了您的博客，而您不想其被收录，也可以联系我进行删除！</p>
 
             <h4 id="添加链接">添加链接</h4>
             <p>您可以本着自愿的原则，将本站链接添加到您博客的适当位置，以让更多的博客人发现我们这个小众的圈子！</p>
@@ -57,6 +63,7 @@
 </main>
 <footer class="footer-block">
     <div th:replace="~{fragments/footer/contact::contact}"></div>
+    <div th:replace="~{fragments/footer/shuttle::shuttle}"></div>
 </footer>
 <footer th:replace="~{fragments/footer/footer_site_info::footer_site_info}"></footer>
 <div th:insert="~{fragments/plugin/go_to_top::go_to_top}"></div>
