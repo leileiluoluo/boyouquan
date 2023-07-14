@@ -28,6 +28,12 @@ public class ThymeLeafTemplateHelper {
         return "https://seccdn.libravatar.org/gravatarproxy/" + md5(email) + "?s=20";
     }
 
+    public String getBlogAdminLargeImageURLByAddress(String blogAddress) {
+        String email = BlogEnums.getEmailByBlogAddress(blogAddress);
+        md5(email);
+        return "https://seccdn.libravatar.org/gravatarproxy/" + md5(email);
+    }
+
     public static String dateCommonFormatDisplay(Date date) {
         return CommonUtils.dateCommonFormatDisplay(date);
     }

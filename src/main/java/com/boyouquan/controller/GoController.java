@@ -1,12 +1,14 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.model.BlogAccess;
+import com.boyouquan.model.BlogAggregate;
 import com.boyouquan.model.BlogPost;
 import com.boyouquan.service.BlogAccessService;
 import com.boyouquan.service.BlogPostService;
 import com.boyouquan.util.IpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,21 +46,29 @@ public class GoController {
     }
 
     private void saveAccessInfo(String ip, String link) {
+        String address = link;
+
         // access blog post
         BlogPost blogPost = blogPostService.getBlogByLink(link);
 
         // access blog home
         if (null == blogPost) {
-            blogPost = blogPostService.getBlogByAddress(link);
+            BlogAggregate blogAggregate = blogPostService.getBlogByAddress(link);
+            if (null != blogAggregate) {
+                address = blogAggregate.getAddress();
+            }
+        } else {
+            address = blogPost.getBlogAddress();
         }
 
-        if (null == blogPost) {
+        if (StringUtils.isBlank(address)) {
             System.out.printf("blog not found, link: %s", link);
             return;
         }
 
+        // save
         BlogAccess blogAccess = new BlogAccess();
-        blogAccess.setBlogAddress(blogPost.getBlogAddress());
+        blogAccess.setBlogAddress(address);
         blogAccess.setLink(link);
         blogAccess.setIp(ip);
         blogAccessService.saveBlogAccess(blogAccess);

@@ -1,5 +1,6 @@
 package com.boyouquan.model;
 
+import com.boyouquan.util.CommonUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,5 +20,10 @@ public class BlogPost {
     private String description;
     private String link;
     private Date createdAt;
+
+    public String getDomain() {
+        return CommonUtils.getDomain(blogAddress);
+    }
+
 
 }

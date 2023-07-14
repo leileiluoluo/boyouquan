@@ -21,7 +21,9 @@ public interface BlogPostDaoMapper {
 
     List<BlogPost> listBlogPosts(String keyword, @Param("offset") int offset, @Param("rows") int rows);
 
-    BlogPost getBlogByAddress(String address);
+    BlogAggregate getBlogByAddress(String address);
+
+    BlogAggregate getBlogByDomain(String domain);
 
     BlogPost getBlogByLink(String link);
 
