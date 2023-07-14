@@ -505,3 +505,10 @@ div#searchbox {
 tr:nth-child(odd) {
     background-color: var(--code-bg);
 }
+
+.blog-detail-articles .articles-container td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
