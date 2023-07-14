@@ -120,7 +120,7 @@ h4 {
 
 .footer-block .planet-shuttle {
     margin-bottom: 10px;
-    font-size: 14px;
+    /*font-size: 14px;*/
 }
 
 .footer-block .cloud-promotion {
@@ -214,10 +214,12 @@ h4 {
     border-radius: calc(0.4rem);
 }
 
-#.blog-entry .description:hover {
-#   overflow: visible;
-#   display: block;
-#}
+/*
+.blog-entry .description:hover {
+   overflow: visible;
+   display: block;
+}
+*/
 
 .blog-entry .summary {
     margin-top: 8px;
