@@ -382,6 +382,7 @@ div#searchbox {
     background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-backface-visibility: hidden;
 }
 
 .latest-news .content ul {
