@@ -445,7 +445,7 @@ div#searchbox {
 }
 
 .blog-detail-header .description {
-    font-size: 14px;
+    font-size: 16px;
     overflow: hidden;
     -webkit-box-orient: vertical;
     background-color: var(--code-bg);
@@ -469,7 +469,7 @@ div#searchbox {
 }
 
 .blog-detail-summary .flex-item {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .blog-detail-charts {
@@ -492,9 +492,14 @@ div#searchbox {
 }
 
 .blog-detail-articles .articles-container {
+    margin-top: 16px;
     font-size: 16px;
     color: var(--secondary);
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+}
+
+tr:nth-child(odd) {
+    background-color: var(--code-bg);
 }

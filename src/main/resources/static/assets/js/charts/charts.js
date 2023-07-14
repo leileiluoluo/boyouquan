@@ -17,7 +17,7 @@
                     type: 'continuous',
                     seriesIndex: 0,
                     min: 0,
-                    max: 400
+                    max: 300
                   }
                 ],
                 title: [
