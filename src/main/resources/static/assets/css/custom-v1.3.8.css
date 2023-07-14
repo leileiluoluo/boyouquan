@@ -120,10 +120,11 @@ h4 {
 
 .footer-block .planet-shuttle {
     margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .footer-block .cloud-promotion {
-    width: 80px;
+    width: 60px;
     margin: 0 auto;
 }
 
