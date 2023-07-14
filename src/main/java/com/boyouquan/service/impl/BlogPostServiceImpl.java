@@ -64,8 +64,13 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public BlogPost getBlogByAddress(String address) {
+    public BlogAggregate getBlogByAddress(String address) {
         return blogPostDaoMapper.getBlogByAddress(address);
+    }
+
+    @Override
+    public BlogAggregate getBlogByDomain(String domain) {
+        return blogPostDaoMapper.getBlogByDomain(domain);
     }
 
     @Override

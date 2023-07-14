@@ -10,8 +10,6 @@ import java.util.Date;
 
 public class CommonUtils {
 
-    private static final SimpleDateFormat COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy年M月d日");
-
     private static final SimpleDateFormat MORE_COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy/MM/dd");
 
     public static String dateCommonFormatDisplay(Date date) {
@@ -39,7 +37,7 @@ public class CommonUtils {
             int days = (int) (timeDiff / oneDay);
             return String.format("%d天前", days);
         }
-        return COMMON_DATE_PATTERN.format(past);
+        return MORE_COMMON_DATE_PATTERN.format(past);
     }
 
     public static String md5(String str) {

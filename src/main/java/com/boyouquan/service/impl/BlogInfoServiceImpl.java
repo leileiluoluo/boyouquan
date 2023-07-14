@@ -1,6 +1,7 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.enumeration.BlogEnums;
+import com.boyouquan.model.BlogAccess;
 import com.boyouquan.model.BlogAggregate;
 import com.boyouquan.model.BlogInfo;
 import com.boyouquan.model.BlogPost;
@@ -53,6 +54,30 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         });
 
         return Pagination.<BlogInfo>builder().pageNo(page).pageSize(size).total(allBlogAggregates.size()).results(blogInfos);
+    }
+
+    @Override
+    public BlogInfo getBlogInfoByDomain(String domain) {
+        BlogAggregate blogAggregate = blogPostService.getBlogByDomain(domain);
+        if (null == blogAggregate) {
+            return null;
+        }
+
+        BlogInfo blogInfo = new BlogInfo();
+        blogInfo.setName(blogAggregate.getName());
+        blogInfo.setAddress(blogAggregate.getAddress());
+        blogInfo.setDescription(BlogEnums.getDescriptionByBlogAddress(blogAggregate.getAddress()));
+        blogInfo.setCreatedAt(BlogEnums.getCreatedAtByBlogAddress(blogAggregate.getAddress()));
+        blogInfo.setLatestUpdatedAt(blogAggregate.getLatestUpdatedAt());
+        blogInfo.setPostsCount(blogAggregate.getPostCount());
+
+        Long accessCount = blogAccessService.countBlogAccessByLinkPrefix(blogInfo.getAddress());
+        blogInfo.setAccessCount(accessCount);
+
+        Pagination<BlogPost> blogPosts = blogPostService.listLatestBlogPostsByAddress(blogAggregate.getAddress(), 1, 100);
+        blogInfo.setLatestPosts(blogPosts.getResults());
+
+        return blogInfo;
     }
 
 }

@@ -7,4 +7,6 @@ public interface BlogInfoService {
 
     Pagination<BlogInfo> listBlogInfos(String keyword, int page, int size);
 
+    BlogInfo getBlogInfoByDomain(String domain);
+
 }

@@ -61,10 +61,10 @@ public class LatestNewsServiceImpl implements LatestNewsService {
         blogs.forEach(blogEnums -> {
             String feedAddress = blogEnums.getFeedAddress();
             String blogAddress = CommonUtils.trimFeedURLSuffix(feedAddress);
-            BlogPost blogPost = blogPostService.getBlogByAddress(blogAddress);
-            if (null != blogPost) {
+            BlogAggregate blogAggregate = blogPostService.getBlogByAddress(blogAddress);
+            if (null != blogAggregate) {
                 LatestNews news = new LatestNews();
-                String title = String.format(CommonConstants.BLOG_ADDED_WELCOME_PATTERN, blogPost.getBlogName());
+                String title = String.format(CommonConstants.BLOG_ADDED_WELCOME_PATTERN, blogAggregate.getName());
                 news.setTitle(title);
                 news.setLink(CommonConstants.BLOG_LIST_ADDRESS);
 

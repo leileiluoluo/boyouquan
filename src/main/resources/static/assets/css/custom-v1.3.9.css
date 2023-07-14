@@ -214,10 +214,10 @@ h4 {
     border-radius: calc(0.4rem);
 }
 
-.blog-entry .description:hover {
-   overflow: visible;
-   display: block;
-}
+#.blog-entry .description:hover {
+#   overflow: visible;
+#   display: block;
+#}
 
 .blog-entry .summary {
     margin-top: 8px;
@@ -412,4 +412,89 @@ div#searchbox {
   100%  {
     transform: translate(0, calc(var(--h) * -1px));
   }
+}
+
+.blog-detail-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding: var(--gap);
+    border-radius: var(--radius);
+    transition: transform .1s;
+    border: 1px solid var(--border);
+    background: var(--entry);
+    margin-bottom: calc(var(--gap)/2);
+    background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background.jpeg);
+}
+
+.blog-detail-header .icon img {
+    width: 80px;
+}
+
+.blog-detail-header .title h2 {
+    color: rgb(31, 31, 31);
+}
+
+.blog-detail-header .domain {
+    font-size: 16px;
+}
+
+.blog-detail-header .domain a {
+    color: rgb(31, 31, 31);
+}
+
+.blog-detail-header .description {
+    font-size: 14px;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    background-color: var(--code-bg);
+    padding: 0.3rem 0.3rem;
+    display: -webkit-box;
+    border-radius: calc(0.4rem);
+}
+
+.blog-detail-summary {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--gap);
+    border-radius: var(--radius);
+    transition: transform .1s;
+    border: 1px solid var(--border);
+    background: var(--entry);
+    margin-bottom: calc(var(--gap)/2);
+}
+
+.blog-detail-summary .flex-item {
+    font-size: 14px;
+}
+
+.blog-detail-charts {
+    padding: var(--gap);
+    border-radius: var(--radius);
+    transition: transform .1s;
+    border: 1px solid var(--border);
+    background: var(--entry);
+    height: 300px;
+    margin-bottom: calc(var(--gap)/2);
+}
+
+.blog-detail-articles {
+    padding: var(--gap);
+    border-radius: var(--radius);
+    transition: transform .1s;
+    border: 1px solid var(--border);
+    background: var(--entry);
+    margin-bottom: var(--gap);
+}
+
+.blog-detail-articles .articles-container {
+    font-size: 16px;
+    color: var(--secondary);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }

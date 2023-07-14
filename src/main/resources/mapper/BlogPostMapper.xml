@@ -47,16 +47,28 @@
         ORDER BY createdAt DESC
         LIMIT #{offset}, #{rows}
     </select>
-    <select id="getBlogByAddress" resultType="com.boyouquan.model.BlogPost">
+    <select id="getBlogByAddress" resultType="com.boyouquan.model.BlogAggregate">
         SELECT
-        blog_name as blogName,
-        blog_address as blogAddress,
-        title,
-        description,
-        link,
-        created_at as createdAt
+        max(blog_name) as name,
+        max(blog_address) as address,
+        max(created_at) as latestUpdatedAt,
+        count(link) as postCount
         FROM blog_post
         WHERE blog_address like concat(#{address}, '%')
+        GROUP BY blog_address
+        ORDER by latestUpdatedAt DESC
+        LIMIT 1
+    </select>
+    <select id="getBlogByDomain" resultType="com.boyouquan.model.BlogAggregate">
+        SELECT
+        max(blog_name) as name,
+        max(blog_address) as address,
+        max(created_at) as latestUpdatedAt,
+        count(link) as postCount
+        FROM blog_post
+        WHERE blog_address like concat('%', #{domain}, '%')
+        GROUP BY blog_address
+        ORDER by latestUpdatedAt DESC
         LIMIT 1
     </select>
     <select id="getBlogByLink" resultType="com.boyouquan.model.BlogPost">

@@ -14,12 +14,12 @@
             <article th:each="blogInfo, iterstat: ${pagination.results}" class="blog-entry">
                 <header class="icon-and-title">
                     <div class="flex-item">
-                        <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
+                        <a th:href="'/blog-detail/' + ${blogInfo.getDomain()}">
                             <img th:src="${@thymeLeafTemplateHelper.getBlogAdminImageURLByAddress(blogInfo.address)}"/>
                         </a>
                     </div>
                     <div class="flex-item">
-                        <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"><h4 th:text="${blogInfo.name}"></h4></a>
+                        <a th:href="'/blog-detail/' + ${blogInfo.getDomain()}"><h3 th:text="${blogInfo.name}"></h3></a>
                     </div>
                 </header>
                 <div class="domain">
