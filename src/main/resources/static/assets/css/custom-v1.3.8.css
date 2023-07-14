@@ -135,6 +135,15 @@ h4 {
     text-indent: 0em !important;
 }
 
+.post-content pre code {
+    color: var(--primary) !important;
+    text-wrap: wrap !important;
+}
+
+.post-content code {
+    font-size: inherit !important;
+}
+
 .post-content dl, .post-content ol, .post-content p, .post-content figure, .post-content ul {
     margin-bottom: 12px !important;
 }
