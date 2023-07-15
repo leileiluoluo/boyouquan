@@ -1,5 +1,6 @@
 package com.boyouquan.helper;
 
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.enumeration.BlogEnums;
 import com.boyouquan.service.BlogAccessService;
 import com.boyouquan.util.CommonUtils;
@@ -22,16 +23,16 @@ public class ThymeLeafTemplateHelper {
         return blogAccessService.countBlogAccessByLink(link);
     }
 
-    public String getBlogAdminImageURLByAddress(String blogAddress) {
+    public String getBlogAdminSmallImageURLByAddress(String blogAddress) {
         String email = BlogEnums.getEmailByBlogAddress(blogAddress);
         md5(email);
-        return "https://seccdn.libravatar.org/gravatarproxy/" + md5(email) + "?s=20";
+        return String.format(CommonConstants.GRAVATAR_ADDRESS_SMALL_SIZE, md5(email));
     }
 
     public String getBlogAdminLargeImageURLByAddress(String blogAddress) {
         String email = BlogEnums.getEmailByBlogAddress(blogAddress);
         md5(email);
-        return "https://seccdn.libravatar.org/gravatarproxy/" + md5(email);
+        return String.format(CommonConstants.GRAVATAR_ADDRESS_LARGE_SIZE, md5(email));
     }
 
     public static String dateCommonFormatDisplay(Date date) {

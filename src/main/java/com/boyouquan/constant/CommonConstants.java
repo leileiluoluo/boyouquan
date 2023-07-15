@@ -1,5 +1,7 @@
 package com.boyouquan.constant;
 
+import static com.boyouquan.util.CommonUtils.md5;
+
 public class CommonConstants {
 
     public static final int DEFAULT_PAGE_SIZE = 10;
@@ -13,5 +15,8 @@ public class CommonConstants {
     public static final String MOST_UPDATED_BLOG_ANNOUNCE_PATTERN = "最近一个月更博最频繁的博友是「%s」，更博 %d 篇！";
     public static final String BLOG_LIST_ADDRESS = "/blog";
     public static final String BLOG_ITEM_ADDRESS_PATTERN = "/blog?keyword=%s";
+
+    public static final String GRAVATAR_ADDRESS_SMALL_SIZE = "https://seccdn.libravatar.org/gravatarproxy/%s?s=20";
+    public static final String GRAVATAR_ADDRESS_LARGE_SIZE = "https://seccdn.libravatar.org/gravatarproxy/%s?s=80";
 
 }
