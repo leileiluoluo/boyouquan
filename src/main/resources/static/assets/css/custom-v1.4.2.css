@@ -480,8 +480,11 @@ div#searchbox {
     transition: transform .1s;
     border: 1px solid var(--border);
     background: var(--entry);
-    height: 300px;
     margin-bottom: calc(var(--gap)/2);
+}
+
+.blog-detail-charts .charts-title {
+    margin-bottom: 16px;
 }
 
 .blog-detail-articles {

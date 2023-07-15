@@ -3,15 +3,23 @@ package com.boyouquan.service.impl;
 import com.boyouquan.dao.BlogAccessDaoMapper;
 import com.boyouquan.model.BlogAccess;
 import com.boyouquan.model.BlogAccessSummary;
+import com.boyouquan.model.DayAccess;
 import com.boyouquan.service.BlogAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BlogAccessServiceImpl implements BlogAccessService {
 
     @Autowired
     private BlogAccessDaoMapper blogAccessDaoMapper;
+
+    @Override
+    public List<DayAccess> getBlogAccessSeriesInLatestOneMonth(String blogAddress) {
+        return blogAccessDaoMapper.getBlogAccessSeriesInLatestOneMonth(blogAddress);
+    }
 
     @Override
     public BlogAccessSummary getMostAccessedBlogByLatestMonth() {

@@ -4,7 +4,7 @@
 <head th:replace="~{fragments/head/head::head(${blogInfo.name} + ' - 博友圈 · 博客人的朋友圈！', ${blogInfo.name}, '「' + ${blogInfo.name} + '」：' + ${blogInfo.description})}"></head>
 <body class="list" id="top">
 <script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>-->
+<script src="https://unpkg.com/frappe-charts@latest"></script>
 <header th:replace="~{fragments/header/header::header}"></header>
 <main class="main">
     <header class="blog-detail-header">
@@ -50,13 +50,16 @@
         </div>
     </footer>
 
-<!--    <div class="blog-detail-charts">-->
-<!--        <div id="charts" style="width: 100%; height: 400px"></div>-->
-<!--    </div>-->
+    <div class="blog-detail-charts">
+        <div class="charts-title">
+            <h4>浏览统计</h4>
+        </div>
+        <div id="charts"></div>
+    </div>
 
     <div class="blog-detail-articles">
         <div class="articles-title">
-            <h3>收录文章</h3>
+            <h4>收录文章</h4>
         </div>
         <div class="articles-container">
             <table style="display: table; table-layout: fixed;">
@@ -71,6 +74,7 @@
     </div>
 </main>
 <footer class="footer-block">
+    <div th:replace="~{fragments/footer/blog_summary::blog_summary(${totalBlogs}, ${totalBlogPosts}, ${accessTotal})}"></div>
     <div th:replace="~{fragments/footer/contact::contact}"></div>
     <div th:replace="~{fragments/footer/shuttle::shuttle}"></div>
 </footer>
@@ -81,6 +85,44 @@
 <script th:src="@{/assets/js/theme-listener.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/tongji.js}" type="text/javascript"></script>
-<!--<script th:src="@{/assets/js/charts/charts.js}" type="text/javascript"></script>-->
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+    let chart = new frappe.Chart( "#charts", { // or DOM element
+    data: {
+        labels: /*[[${monthlyAccessDataLabels}]]*/ 'default',
+
+        datasets: [
+          {
+            name: "次浏览", chartType: 'line',
+            values: /*[[${monthlyAccessDataValues}]]*/ 'default'
+          }
+        ],
+    },
+
+    title: "最近一个月浏览统计",
+    type: 'axis-mixed', // or 'bar', 'line', 'pie', 'percentage'
+    height: 200,
+    colors: ['rgb(72, 187, 116)'],
+
+    axisOptions: {
+        xIsSeries: true,   //default:false
+        xAxisMode: "tick",
+    },
+
+    lineOptions: {
+        hideDots: 1,   //default:0
+    },
+
+    tooltipOptions: {
+      formatTooltipX: d => (d + '').toUpperCase(),
+      formatTooltipY: d => d,
+    }
+    });
+
+/*]]>*/
+</script>
+
 </body>
 </html>
