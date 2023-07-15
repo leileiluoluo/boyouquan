@@ -64,6 +64,13 @@ h4 {
     margin-bottom: 18px !important;
 }
 
+.post-entry .entry-header {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
 .first-entry .entry-content {
     margin: 0 0 14px 0 !important;
 }
