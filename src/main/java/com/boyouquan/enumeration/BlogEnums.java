@@ -103,7 +103,8 @@ public enum BlogEnums {
     CNBANG("bang590@gmail.com", "https://blog.cnbang.net/feed/", "Hi，我是bang，88年生于广东陆丰，毕业于华南师范大学，程序员，喜欢做东西。", false, "2023/07/11"),
     LOYHOME("notfound@notfound.com", "https://www.loyhome.com/feed/", "喜欢人生一切美好的事物，无论是有形的还是无形的，所以像云一样漂荡四方。不知不觉，博客一写便是第 914个年头了）。", false, "2023/07/11"),
     USHIROMIYA("batora@ushiromiya.com", "https://batora.ushiromiya.com/feed", "热情，乐于帮助别人，善良。自我感觉三观正（自我感觉良好）。追求真理，对自己的奋斗目标不会放弃。", true, "2023/07/12"),
-    XYZBZ("songpanheng@foxmail.com", "https://xyzbz.cn/feed/", "一介草民，只为生活！", true, "2023/07/13");
+    XYZBZ("songpanheng@foxmail.com", "https://xyzbz.cn/feed/", "一介草民，只为生活！", true, "2023/07/13"),
+    ZUIFENGYUN("273250950@qq.com", "https://www.zuifengyun.com/feed", "醉风云博客建站于2012.7月初，是专注于探索生活经验、成长感悟、创业就业、网络资讯的原创博客。", false, "2023/07/15");
 
     private final String email;
     private final String feedAddress;
