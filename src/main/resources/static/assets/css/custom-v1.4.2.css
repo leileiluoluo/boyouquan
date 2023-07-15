@@ -426,7 +426,7 @@ div#searchbox {
 .blog-detail-header {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    /*gap: 10px; not work in safari, use margin-top instead in sub item*/
     align-items: center;
     padding: var(--gap);
     border-radius: var(--radius);
@@ -441,11 +441,16 @@ div#searchbox {
     width: 80px;
 }
 
+.blog-detail-header .title {
+    margin-top: 10px;
+}
+
 .blog-detail-header .title h2 {
     color: rgb(31, 31, 31);
 }
 
 .blog-detail-header .domain {
+    margin-top: 8px;
     font-size: 16px;
 }
 
@@ -454,6 +459,7 @@ div#searchbox {
 }
 
 .blog-detail-header .description {
+    margin-top: 8px;
     font-size: 16px;
     overflow: hidden;
     -webkit-box-orient: vertical;
