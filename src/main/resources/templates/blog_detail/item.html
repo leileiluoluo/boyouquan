@@ -14,7 +14,7 @@
             </a>
         </div>
         <div class="title">
-            <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"><h2 th:text="${blogInfo.name}"></h2></a>
+            <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"><h3 th:text="${blogInfo.name}"></h3></a>
         </div>
         <div class="domain">
             <a th:text="${blogInfo.getDomain()}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
