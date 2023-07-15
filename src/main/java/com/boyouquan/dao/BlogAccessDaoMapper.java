@@ -2,8 +2,13 @@ package com.boyouquan.dao;
 
 import com.boyouquan.model.BlogAccess;
 import com.boyouquan.model.BlogAccessSummary;
+import com.boyouquan.model.DayAccess;
+
+import java.util.List;
 
 public interface BlogAccessDaoMapper {
+
+    List<DayAccess> getBlogAccessSeriesInLatestOneMonth(String blogAddress);
 
     BlogAccessSummary getMostAccessedBlogByLatestMonth();
 

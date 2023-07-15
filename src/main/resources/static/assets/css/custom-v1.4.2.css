@@ -64,6 +64,13 @@ h4 {
     margin-bottom: 18px !important;
 }
 
+.post-entry .entry-header {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
 .first-entry .entry-content {
     margin: 0 0 14px 0 !important;
 }
@@ -480,8 +487,11 @@ div#searchbox {
     transition: transform .1s;
     border: 1px solid var(--border);
     background: var(--entry);
-    height: 300px;
     margin-bottom: calc(var(--gap)/2);
+}
+
+.blog-detail-charts .charts-title {
+    margin-bottom: 16px;
 }
 
 .blog-detail-articles {
