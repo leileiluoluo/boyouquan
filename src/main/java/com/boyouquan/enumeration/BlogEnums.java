@@ -104,7 +104,19 @@ public enum BlogEnums {
     LOYHOME("notfound@notfound.com", "https://www.loyhome.com/feed/", "喜欢人生一切美好的事物，无论是有形的还是无形的，所以像云一样漂荡四方。不知不觉，博客一写便是第 914个年头了）。", false, "2023/07/11"),
     USHIROMIYA("batora@ushiromiya.com", "https://batora.ushiromiya.com/feed", "热情，乐于帮助别人，善良。自我感觉三观正（自我感觉良好）。追求真理，对自己的奋斗目标不会放弃。", true, "2023/07/12"),
     XYZBZ("songpanheng@foxmail.com", "https://xyzbz.cn/feed/", "一介草民，只为生活！", true, "2023/07/13"),
-    ZUIFENGYUN("273250950@qq.com", "https://www.zuifengyun.com/feed", "醉风云博客建站于2012.7月初，是专注于探索生活经验、成长感悟、创业就业、网络资讯的原创博客。", false, "2023/07/15");
+    ZUIFENGYUN("273250950@qq.com", "https://www.zuifengyun.com/feed", "醉风云博客建站于2012.7月初，是专注于探索生活经验、成长感悟、创业就业、网络资讯的原创博客。", false, "2023/07/15"),
+    ONEINF("960543@qq.com", "https://oneinf.com/feed", "俍注是老俍的私人博客，创立于2007年，是记录与分享老俍个人及事业相关的内容。", false, "2023/07/16"),
+    HUTUSI("hutusi@outlook.com", "https://hutusi.com/feed", "现居上海，打杂为生，写字和编码为乐。", false, "2023/07/16"),
+    HIJOE("notfound@notfound.com", "https://hijoe.net/feed", "付出不亚于任何人的努力： 比任何人更多钻研，而且一心一意保持下去。如果有闲工夫抱怨不满，还不如努力前进、提高，即使只是一厘米。", false, "2023/07/16"),
+    XIANGSHITAN("i@xiangshitan.com", "https://www.xiangshitan.com/feed.php", "响石潭，记录活着，不住于相，无问西东。", false, "2023/07/16"),
+    ANJI66("339249397@qq.com", "https://www.anji66.net/rss.xml", "西枫里人博客专注于为安吉地区提供网站建设，系统开发，网站优化，互联网咨询的个人博客。", false, "2023/07/16"),
+    BWSKYER("notfound@notfound.com", "https://bwskyer.com/feed", "我有故事你带上酒。", false, "2023/07/16"),
+    MUGUAYUAN("csslog@gmail.com", "https://muguayuan.com/feed", "不积跬步，无以至千里；不积小流，无以成江海。", false, "2023/07/16"),
+    GONGZI("notfound@notfound.com", "https://www.gongzi.org/feed", "Every day can be extraordinary.", false, "2023/07/16"),
+    IYUREN("notfound@notfound.com", "https://www.iyuren.com/feed", "记录我的生活、所见、所闻、所想。", false, "2023/07/16"),
+    ITLU("jizhang.php@foxmail.com", "https://itlu.net/feed", "混迹独立博客圈14年且一事无成的老博主。", false, "2023/07/16"),
+    ESAYS("admin@esays.net", "https://esays.net/feed/", "中年石油工人。", false, "2023/07/16"),
+    WINEGROWER("winegrower@foxmail.com", "https://www.winegrower.cn/feed/", "我是一个来自农村的男孩，从小学-初中-高中-大学一步步走来，在家人和自己的努力下，从西部的一个小山村，来到了大都市。他经历过不同的社会，接触过不同的人群，学习了不同的知识，但由于他的悟性不足，努力不够，所以一直在路上。", false, "2023/07/16");
 
     private final String email;
     private final String feedAddress;
