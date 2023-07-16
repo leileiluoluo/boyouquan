@@ -460,7 +460,7 @@ div#searchbox {
 
 .blog-detail-header .description {
     margin-top: 8px;
-    font-size: 16px;
+    font-size: 14px;
     overflow: hidden;
     -webkit-box-orient: vertical;
     background-color: var(--code-bg);
