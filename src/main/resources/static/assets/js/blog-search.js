@@ -2,7 +2,7 @@ document.onkeydown = function() {
     var evt = window.event || arguments[0];
     if (evt && evt.keyCode == 13) {
         var input = document.getElementById('searchInput').value;
-        window.location = '/blog?keyword=' + encodeURIComponent(input);
+        window.location = '/blogs?keyword=' + encodeURIComponent(input);
     }
 }
 
