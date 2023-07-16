@@ -28,7 +28,7 @@ public enum BlogEnums {
     JINGFENGSHUO("i@jingfengshuo.com", "https://www.jingfengshuo.com/feed", "静风说，是一个生活类博客，记录日常生活和所思所想，包括读过的书、看过的电影、去过的地方、学到的知识，有时也会关注互联网、软件、WordPress。", false, "2023/07/03"),
     ORDCHAOS("orderchaos@ordchaos.com", "https://www.ordchaos.com/atom.xml", "如你所见，正在备战中考，我会继续努力的！", false, "2023/07/03"),
     LILLIANWHO("ciwiehenfan@sina.com", "https://lillianwho.com/atom.xml", "我是莉莉蒙（Lillian who），大家叫我莉莉。这是博主的个人博客，分享喜欢的软件、在读的好书，生活记录，以及思考。可以说是我的线上 commonplace book。", false, "2023/07/03"),
-    ZUOFEI("huhexian0206gmail.com", "https://zuofei.net/feed", "02年，大三在读学生，主修人力资源管理专业。崇尚朴素生活，高尚思考。", false, "2023/07/03"),
+    ZUOFEI("huhexian0206@gmail.com", "https://zuofei.net/feed", "02年，大三在读学生，主修人力资源管理专业。崇尚朴素生活，高尚思考。", false, "2023/07/03"),
     ONOJYUN("notfound@notfound.com", "https://onojyun.com/feed/", "博客取名莫比乌斯 / MOBIUS，是取自只有一个平面略带哲学意味的「莫比乌斯带」。写作也好、人生也好，兜兜转转也像是一个莫比乌斯带。", false, "2023/07/03"),
     SKYUE("skyue.hu@gmail.com", "https://www.skyue.com/feed/", "我叫「拾月」，英文 ID「SKYue」，在互联网行业做产品类工作。日常关注互联网、软件应用居多，也喜欢股票投资、社科历史，执着于掌控自己的数据，self-host 爱好者。", false, "2023/07/03"),
     JUSTGOIDEA("notfound@notfound.com", "https://www.justgoidea.com/feed", "槿呈Goidea，读书｜新知｜生活禅。", false, "2023/07/03"),
