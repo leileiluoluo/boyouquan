@@ -9,6 +9,8 @@ import com.boyouquan.util.IpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,8 @@ import java.util.concurrent.Executors;
 @Controller
 @RequestMapping("/go")
 public class GoController {
+
+    private final Logger logger = LoggerFactory.getLogger(GoController.class);
 
     @Autowired
     private BlogAccessService blogAccessService;
@@ -41,7 +45,7 @@ public class GoController {
             // redirect
             response.sendRedirect(link);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -62,7 +66,7 @@ public class GoController {
         }
 
         if (StringUtils.isBlank(address)) {
-            System.out.printf("blog not found, link: %s", link);
+            logger.info("blog not found, link: {}", link);
             return;
         }
 

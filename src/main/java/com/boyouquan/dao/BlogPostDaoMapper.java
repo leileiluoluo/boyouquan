@@ -13,8 +13,6 @@ public interface BlogPostDaoMapper {
 
     BlogAggregate getBlogByRandom();
 
-    List<BlogAggregate> listBlogsOrderByPostDate(String keyword, @Param("offset") int offset, @Param("rows") int rows);
-
     List<BlogPost> listLatestBlogPostsByAddress(String address, int offset, int rows);
 
     int countBlogPostsByAddress(String address);

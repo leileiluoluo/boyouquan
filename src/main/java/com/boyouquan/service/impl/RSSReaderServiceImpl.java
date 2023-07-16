@@ -17,7 +17,8 @@ import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ import java.util.*;
 
 @Service
 public class RSSReaderServiceImpl implements RSSReaderService {
+
+    private final Logger logger = LoggerFactory.getLogger(RSSReaderServiceImpl.class);
 
     @Override
     public List<BlogPost> read(String feedURL) {
@@ -75,7 +78,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                         description = descriptionContent.getValue();
                     }
 
-                    description = parseAndTruncateHtml2Text(description, 200);
+                    description = CommonUtils.parseAndTruncateHtml2Text(description, 200);
 
                     // link
                     String link = entry.getUri();
@@ -93,7 +96,7 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                             || StringUtils.isBlank(title) || StringUtils.isBlank(link)
                             || !link.startsWith("http")
                             || null == createdAt) {
-                        System.out.printf("invalid entry, feedURL: %s", feedURL);
+                        logger.info("invalid entry, feedURL: {}", feedURL);
                         break;
                     }
 
@@ -109,28 +112,13 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                     blogPosts.add(blogPost);
                 }
             } catch (FeedException e) {
-                System.out.printf("error occurred, error: %s\n", e.getMessage());
+                logger.error(e.getMessage(), e);
             }
         } catch (IOException e) {
-            System.out.printf("error occurred, error: %s\n", e.getMessage());
+            logger.error(e.getMessage(), e);
         }
 
         return blogPosts;
-    }
-
-    private static String parseAndTruncateHtml2Text(String html, int length) {
-        if (StringUtils.isBlank(html)) {
-            return "...";
-        }
-
-        String text = Jsoup.parse(html).text();
-        if (text.length() <= length) {
-            return text;
-        } else {
-            text = text.substring(0, length);
-            text += "...";
-        }
-        return text;
     }
 
 }

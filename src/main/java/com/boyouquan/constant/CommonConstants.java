@@ -1,7 +1,5 @@
 package com.boyouquan.constant;
 
-import static com.boyouquan.util.CommonUtils.md5;
-
 public class CommonConstants {
 
     public static final int DEFAULT_PAGE_SIZE = 10;

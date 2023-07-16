@@ -1,6 +1,5 @@
 package com.boyouquan.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SitemapController {
 
     @GetMapping(value = "/sitemap.xml", produces = MediaType.APPLICATION_XML_VALUE)
-    public String sitemap(HttpServletResponse response) {
+    public String sitemap() {
         return "sitemap/sitemap.xml";
     }
 
