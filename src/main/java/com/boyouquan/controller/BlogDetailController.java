@@ -34,6 +34,10 @@ public class BlogDetailController {
 
         // get blog info
         BlogInfo blogInfo = blogInfoService.getBlogInfoByDomain(domain);
+        if (null == blogInfo) {
+            return "error/404";
+        }
+
         model.addAttribute("blogInfo", blogInfo);
 
         // for charts
