@@ -1,10 +1,9 @@
 package com.boyouquan.controller;
 
-import com.boyouquan.model.BlogInfo;
 import com.boyouquan.model.DayAccess;
+import com.boyouquan.model.NewBlogInfo;
 import com.boyouquan.service.BlogAccessService;
-import com.boyouquan.service.BlogInfoService;
-import com.boyouquan.service.BlogPostService;
+import com.boyouquan.service.BlogService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,20 +19,18 @@ import java.util.List;
 public class BlogDetailController {
 
     @Autowired
-    private BlogInfoService blogInfoService;
-    @Autowired
-    private BlogPostService blogPostService;
+    private BlogService blogService;
     @Autowired
     private BlogAccessService blogAccessService;
 
-    @GetMapping("/{domain}/**")
-    public String list(@PathVariable("domain") String domain, Model model, HttpServletRequest request) {
+    @GetMapping("/{domainName}/**")
+    public String list(@PathVariable("domainName") String domainName, Model model, HttpServletRequest request) {
         // parse domain from request URL
         String requestURL = request.getRequestURL().toString();
-        domain = requestURL.split("/blogs/")[1];
+        domainName = requestURL.split("/blogs/")[1];
 
         // get blog info
-        BlogInfo blogInfo = blogInfoService.getBlogInfoByDomain(domain);
+        NewBlogInfo blogInfo = blogService.getBlogInfoByDomainName(domainName);
         if (null == blogInfo) {
             return "error/404";
         }
@@ -50,9 +47,10 @@ public class BlogDetailController {
         model.addAttribute("monthlyAccessDataValues", monthlyAccessDataValues);
 
         // for summary
-        model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
-        model.addAttribute("totalBlogPosts", blogPostService.countPosts(""));
-        model.addAttribute("accessTotal", blogAccessService.totalCount());
+        // FIXME
+        model.addAttribute("totalBlogs", 0L);
+        model.addAttribute("totalBlogPosts", 0L);
+        model.addAttribute("accessTotal", 0L);
 
         return "blog_detail/item";
     }

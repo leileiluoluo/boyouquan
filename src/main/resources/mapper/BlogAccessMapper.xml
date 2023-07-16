@@ -24,8 +24,12 @@
     <select id="getMostAccessedBlogByLatestMonth" resultType="com.boyouquan.model.BlogAccessSummary">
         SELECT
         blog_address as blogAddress,
-        (select blog_name from blog_post p where p.blog_address=a.blog_address limit 1) as blogName,
-        count(*) as accessCount
+        (SELECT
+        blog_name
+        FROM blog_post p
+        WHERE p.blog_address=a.blog_address
+        LIMIT 1) as blogName,
+        COUNT(*) as accessCount
         FROM blog_access a
         WHERE date(accessed_at) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
         GROUP BY blog_address
@@ -33,18 +37,18 @@
     </select>
     <select id="countTotal" resultType="java.lang.Long">
         SELECT
-        count(1)
+        COUNT(*)
         FROM blog_access
     </select>
     <select id="countBlogAccessByLinkPrefix" resultType="java.lang.Long">
         SELECT
-        count(1)
+        COUNT(*)
         FROM blog_access
-        WHERE link like concat(#{linkPrefix}, '%')
+        WHERE link LIKE CONCAT(#{linkPrefix}, '%')
     </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
-        count(1)
+        COUNT(*)
         FROM blog_access
         WHERE link=#{link}
     </select>

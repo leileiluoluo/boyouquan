@@ -1,0 +1,79 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.BlogDaoMapper">
+    <sql id="columns">
+        domain_name,
+        admin_email,
+        name,
+        address,
+        rss_address,
+        description,
+        self_submitted,
+        collected_at,
+        updated_at,
+        valid,
+        deleted
+    </sql>
+    <select id="countWithKeyword" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM blog
+        <if test="keyword != null and keyword !=''">
+            WHERE name LIKE CONCAT('%', #{keyword}, '%')
+            OR address LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+    <select id="listWithKeyWord" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="columns"/>
+        FROM blog
+        <if test="keyword != null and keyword !=''">
+            WHERE name LIKE CONCAT('%', #{keyword}, '%')
+            OR address LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        LIMIT #{offset}, #{rows}
+    </select>
+    <select id="getByDomainName" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="columns"/>
+        FROM blog
+        WHERE domain_name=#{domainName}
+    </select>
+    <insert id="save">
+        INSERT INTO blog (
+        <include refid="columns"/>
+        ) VALUES (
+        #{domainName},
+        #{adminEmail},
+        #{name},
+        #{address},
+        #{rssAddress},
+        #{description},
+        #{selfSubmitted},
+        now(),
+        now(),
+        true,
+        false
+        )
+    </insert>
+    <update id="update">
+        UPDATE blog
+        SET
+        domain_name=#{domainName},
+        admin_email=#{adminEmail},
+        name=#{name},
+        address=#{address},
+        rss_address=#rssAddress},
+        description=#{description},
+        self_submitted=#{selfSubmitted},
+        collected_at=#{collectedAt},
+        updated_at=now(),
+        valid=#{valid}
+        WHERE domain_name=#{domainName}
+    </update>
+    <update id="deleteByDomainName">
+        UPDATE blog
+        SET
+        deleted=true
+        WHERE domain_name=#{domainName}
+    </update>
+</mapper>
