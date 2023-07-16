@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/blog")
-public class BlogController {
+@RequestMapping("/blogs")
+public class BlogListController {
 
     @Autowired
     private BlogInfoService blogInfoService;
