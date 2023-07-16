@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/blog-detail")
+@RequestMapping("/blogs")
 public class BlogDetailController {
 
     @Autowired
@@ -30,10 +30,14 @@ public class BlogDetailController {
     public String list(@PathVariable("domain") String domain, Model model, HttpServletRequest request) {
         // parse domain from request URL
         String requestURL = request.getRequestURL().toString();
-        domain = requestURL.split("/blog-detail/")[1];
+        domain = requestURL.split("/blogs/")[1];
 
         // get blog info
         BlogInfo blogInfo = blogInfoService.getBlogInfoByDomain(domain);
+        if (null == blogInfo) {
+            return "error/404";
+        }
+
         model.addAttribute("blogInfo", blogInfo);
 
         // for charts
