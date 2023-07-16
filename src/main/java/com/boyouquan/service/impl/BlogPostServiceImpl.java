@@ -5,6 +5,8 @@ import com.boyouquan.model.BlogAggregate;
 import com.boyouquan.model.BlogPost;
 import com.boyouquan.service.BlogPostService;
 import com.boyouquan.util.Pagination;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Service
 public class BlogPostServiceImpl implements BlogPostService {
+
+    private final Logger logger = LoggerFactory.getLogger(BlogPostServiceImpl.class);
 
     @Autowired
     private BlogPostDaoMapper blogPostDaoMapper;
@@ -25,18 +29,6 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Override
     public BlogAggregate getBlogByRandom() {
         return blogPostDaoMapper.getBlogByRandom();
-    }
-
-    @Override
-    public Pagination<BlogAggregate> listBlogsOrderByPostDate(String keyword, int page, int size) {
-        if (page < 1 || size <= 0) {
-            return Pagination.buildEmptyResults();
-        }
-
-        int offset = (page - 1) * size;
-        List<BlogAggregate> blogAggregates = blogPostDaoMapper.listBlogsOrderByPostDate(keyword, offset, size);
-        int total = blogPostDaoMapper.countBlogs(keyword).intValue();
-        return Pagination.<BlogAggregate>builder().pageNo(page).pageSize(size).total(total).results(blogAggregates);
     }
 
     @Override
@@ -83,7 +75,7 @@ public class BlogPostServiceImpl implements BlogPostService {
         try {
             blogPostDaoMapper.saveBlogPost(blogPost);
         } catch (Exception e) {
-            System.out.printf("error occurred: %s\n", e.getMessage());
+            logger.error(e.getMessage(), e);
         }
     }
 

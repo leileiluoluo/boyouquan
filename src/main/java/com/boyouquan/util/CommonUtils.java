@@ -1,6 +1,7 @@
 package com.boyouquan.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -115,6 +116,21 @@ public class CommonUtils {
             address = address.substring(0, address.length() - 1);
         }
         return address;
+    }
+
+    public static String parseAndTruncateHtml2Text(String html, int length) {
+        if (StringUtils.isBlank(html)) {
+            return "...";
+        }
+
+        String text = Jsoup.parse(html).text();
+        if (text.length() <= length) {
+            return text;
+        } else {
+            text = text.substring(0, length);
+            text += "...";
+        }
+        return text;
     }
 
 }

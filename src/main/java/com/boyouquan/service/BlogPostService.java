@@ -13,8 +13,6 @@ public interface BlogPostService {
 
     BlogAggregate getBlogByRandom();
 
-    Pagination<BlogAggregate> listBlogsOrderByPostDate(String keyword, int page, int size);
-
     Pagination<BlogPost> listLatestBlogPostsByAddress(String address, int page, int size);
 
     Pagination<BlogPost> listBlogPosts(String keyword, int page, int size);

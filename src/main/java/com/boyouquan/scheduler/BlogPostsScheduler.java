@@ -5,6 +5,8 @@ import com.boyouquan.enumeration.BlogEnums;
 import com.boyouquan.model.BlogPost;
 import com.boyouquan.service.BlogPostService;
 import com.boyouquan.service.RSSReaderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -21,6 +23,8 @@ import java.util.List;
 @EnableAsync
 public class BlogPostsScheduler {
 
+    private final Logger logger = LoggerFactory.getLogger(BlogPostsScheduler.class);
+
     @Autowired
     private BoYouQuanConfig boYouQuanConfig;
     @Autowired
@@ -31,7 +35,8 @@ public class BlogPostsScheduler {
     @Async
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void crawlingBlogPosts() {
-        System.out.println("scheduler started!");
+        logger.info("scheduler started!");
+
         readAndSaveAllBlogs();
     }
 
@@ -39,7 +44,7 @@ public class BlogPostsScheduler {
         List<String> blogs = BlogEnums.getAllFeedAddresses();
         for (String blog : blogs) {
             try {
-                System.out.printf("blog address: %s\n", blog);
+                logger.info("blog address: {}", blog);
 
                 // only fetch the latest 10 posts
                 List<BlogPost> blogPosts = rssReaderService.read(blog).stream().limit(10L).toList();
@@ -47,12 +52,13 @@ public class BlogPostsScheduler {
                     Date minCreatedAt = blogPosts.stream().min(Comparator.comparing(BlogPost::getCreatedAt)).get().getCreatedAt();
                     String blogAddress = blogPosts.get(0).getBlogAddress();
                     blogPostService.deleteLaterBlogPostsByAddressAndDate(blogAddress, minCreatedAt);
-                    System.out.printf("%d old blogs deleted for address: %s\n", blogPosts.size(), blogAddress);
+
+                    logger.info("{} old blogs deleted for address: {}", blogPosts.size(), blogAddress);
                     save(blogPosts);
-                    System.out.printf("%d new blogs saved for address: %s\n", blogPosts.size(), blogAddress);
+                    logger.info("{} new blogs saved for address: {}", blogPosts.size(), blogAddress);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }

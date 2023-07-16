@@ -18,6 +18,7 @@ public class PlanetShuttleController {
     @GetMapping("")
     public String shuttle(Model model) {
         BlogAggregate blogAggregate = blogPostService.getBlogByRandom();
+
         model.addAttribute("blogName", blogAggregate.getName());
         model.addAttribute("blogAddress", blogAggregate.getAddress());
         return "planet_shuttle/planet_shuttle";
