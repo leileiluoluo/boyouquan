@@ -4,27 +4,27 @@
     <div id="searchbox">
         <input id="searchInput" autofocus="" placeholder="搜索文章 ↵" aria-label="search" type="search" autocomplete="off">
     </div>
-    <article th:each="blogPost, iterstat: ${pagination.results}" class="post-entry">
+    <article th:each="postInfo, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
-            <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.link)}"><h4 th:text="${blogPost.title}"></h4></a>
+            <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}"><h4 th:text="${postInfo.title}"></h4></a>
         </header>
         <div class="entry-content">
-            <p th:text="${blogPost.description}"></p>
+            <p th:text="${postInfo.description}"></p>
         </div>
         <footer class="entry-footer">
             <div class="flex-item">
-                <a th:href="'/blogs/' + ${blogPost.getDomain()}">
-                    <img th:src="${@thymeLeafTemplateHelper.getBlogAdminSmallImageURLByAddress(blogPost.blogAddress)}"/>
+                <a th:href="'/blogs/' + ${postInfo.blogDomainName}">
+                    <img th:src="${@thymeLeafTemplateHelper.getBlogAdminSmallImageURLByAddress(postInfo.blogAddress)}"/>
                 </a>
             </div>
             <div class="flex-item">
-                <a th:text="${blogPost.blogName}" th:href="'/blogs/' + ${blogPost.getDomain()}"></a>
+                <a th:text="${postInfo.blogName}" th:href="'/blogs/' + ${postInfo.blogDomainName}"></a>
             </div>
             <div class="flex-item">
-                · <span th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogPost.createdAt)}"></span>
+                · <span th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(postInfo.publishedAt)}"></span>
             </div>
             <div class="flex-item">
-                · <span th:text="${@thymeLeafTemplateHelper.countBlogAccessByLink(blogPost.link)}"></span>次浏览
+                · <span th:text="${postInfo.linkAccessCount}"></span>次浏览
             </div>
         </footer>
     </article>

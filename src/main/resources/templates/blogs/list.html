@@ -14,17 +14,17 @@
             <article th:each="blogInfo, iterstat: ${pagination.results}" class="blog-entry">
                 <header class="icon-and-title">
                     <div class="flex-item">
-                        <a th:href="'/blogs/' + ${blogInfo.getDomainName()}">
+                        <a th:href="'/blogs/' + ${blogInfo.domainName}">
                             <img th:src="${@thymeLeafTemplateHelper.getBlogAdminSmallImageURLByAddress(blogInfo.address)}"/>
                         </a>
                     </div>
                     <div class="flex-item">
-                        <a th:href="'/blogs/' + ${blogInfo.getDomainName()}"><h4 th:text="${blogInfo.name}"></h4></a>
+                        <a th:href="'/blogs/' + ${blogInfo.domainName}"><h4 th:text="${blogInfo.name}"></h4></a>
                     </div>
                 </header>
                 <div class="domain">
                     <div class="flex-item">
-                        <a th:text="${blogInfo.getDomainName()}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
+                        <a th:text="${blogInfo.domainName}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
                         <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
                             <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
                                 <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
@@ -56,7 +56,7 @@
                 </footer>
                 <footer class="latest-posts">
                     <p style="font-size: 16px;">最新文章</p>
-                    <p th:each="post, iterstat: ${blogInfo.latestPosts}">
+                    <p th:each="post, iterstat: ${blogInfo.posts}">
                         <text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text>
                         <a th:text="${post.title}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
                     </p>

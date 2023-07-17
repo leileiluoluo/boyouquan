@@ -1,9 +1,10 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.model.DayAccess;
-import com.boyouquan.model.NewBlogInfo;
-import com.boyouquan.service.BlogAccessService;
+import com.boyouquan.model.BlogInfo;
+import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
+import com.boyouquan.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,9 @@ public class BlogDetailController {
     @Autowired
     private BlogService blogService;
     @Autowired
-    private BlogAccessService blogAccessService;
+    private PostService postService;
+    @Autowired
+    private AccessService accessService;
 
     @GetMapping("/{domainName}/**")
     public String list(@PathVariable("domainName") String domainName, Model model, HttpServletRequest request) {
@@ -30,7 +33,7 @@ public class BlogDetailController {
         domainName = requestURL.split("/blogs/")[1];
 
         // get blog info
-        NewBlogInfo blogInfo = blogService.getBlogInfoByDomainName(domainName);
+        BlogInfo blogInfo = blogService.getBlogInfoByDomainName(domainName);
         if (null == blogInfo) {
             return "error/404";
         }
@@ -38,19 +41,17 @@ public class BlogDetailController {
         model.addAttribute("blogInfo", blogInfo);
 
         // for charts
-        List<DayAccess> dayAccessList = blogAccessService.getBlogAccessSeriesInLatestOneMonth(blogInfo.getAddress());
+        List<DayAccess> dayAccessList = accessService.getBlogAccessSeriesInLatestOneMonth(blogInfo.getDomainName());
         String[] monthlyAccessDataLabels = dayAccessList.stream().map(DayAccess::getDay).toArray(String[]::new);
-
         Integer[] monthlyAccessDataValues = dayAccessList.stream().map(DayAccess::getCount).toArray(Integer[]::new);
 
         model.addAttribute("monthlyAccessDataLabels", monthlyAccessDataLabels);
         model.addAttribute("monthlyAccessDataValues", monthlyAccessDataValues);
 
         // for summary
-        // FIXME
-        model.addAttribute("totalBlogs", 0L);
-        model.addAttribute("totalBlogPosts", 0L);
-        model.addAttribute("accessTotal", 0L);
+        model.addAttribute("totalBlogs", blogService.countAll());
+        model.addAttribute("totalBlogPosts", postService.countAll());
+        model.addAttribute("accessTotal", accessService.countAll());
 
         return "blog_detail/item";
     }

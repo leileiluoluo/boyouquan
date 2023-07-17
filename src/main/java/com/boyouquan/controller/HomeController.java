@@ -1,16 +1,15 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.BlogPost;
-import com.boyouquan.model.LatestNews;
-import com.boyouquan.service.BlogAccessService;
-import com.boyouquan.service.BlogPostService;
-import com.boyouquan.service.LatestNewsService;
+import com.boyouquan.model.*;
+import com.boyouquan.service.*;
 import com.boyouquan.util.Pagination;
+import com.boyouquan.util.PaginationBuilder;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,9 +29,11 @@ public class HomeController {
     private final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
-    private BlogPostService blogPostService;
+    private BlogService blogService;
     @Autowired
-    private BlogAccessService blogAccessService;
+    private PostService postService;
+    @Autowired
+    private AccessService accessService;
     @Autowired
     private LatestNewsService latestNewsService;
 
@@ -56,20 +58,41 @@ public class HomeController {
         }
         keyword = StringUtils.trim(keyword);
 
-        Pagination<BlogPost> pagination = blogPostService.listBlogPosts(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        // posts
+        Pagination<Post> postPagination = postService.listWithKeyWord(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        List<PostInfo> postInfos = new ArrayList<>();
+        for (Post post : postPagination.getResults()) {
+            PostInfo postInfo = new PostInfo();
+            BeanUtils.copyProperties(post, postInfo);
+
+            Blog blog = blogService.getByDomainName(post.getBlogDomainName());
+            postInfo.setBlogName(blog.getName());
+            postInfo.setBlogAddress(blog.getAddress());
+
+            Long linkAccessCount = accessService.countByLink(post.getLink());
+            postInfo.setLinkAccessCount(linkAccessCount);
+            postInfos.add(postInfo);
+        }
+
+        Pagination<PostInfo> postInfoPagination = PaginationBuilder.<PostInfo>newBuilder()
+                .pageNo(page)
+                .pageSize(postPagination.getPageSize())
+                .total(postPagination.getTotal())
+                .results(postInfos).build();
 
         boolean hasLatestNews = false;
         List<LatestNews> latestNews = latestNewsService.getLatestNews();
         hasLatestNews = latestNews.size() > 1;
 
-        model.addAttribute("pagination", pagination);
-        model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
-        model.addAttribute("totalBlogPosts", blogPostService.countPosts(""));
-        model.addAttribute("accessTotal", blogAccessService.totalCount());
+        model.addAttribute("pagination", postInfoPagination);
+        model.addAttribute("totalBlogs", blogService.countAll());
+        model.addAttribute("totalBlogPosts", postService.countAll());
+        model.addAttribute("accessTotal", accessService.countAll());
         model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
         model.addAttribute("keyword", keyword);
         model.addAttribute("hasLatestNews", hasLatestNews);
         model.addAttribute("latestNews", latestNews);
+
         return "home";
     }
 

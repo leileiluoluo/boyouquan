@@ -1,13 +1,15 @@
 package com.boyouquan.service.impl;
 
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.BlogDaoMapper;
 import com.boyouquan.model.Blog;
-import com.boyouquan.model.NewBlogInfo;
+import com.boyouquan.model.BlogInfo;
 import com.boyouquan.model.Post;
+import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PostService;
-import com.boyouquan.util.NewPagination;
-import com.boyouquan.util.NewPaginationBuilder;
+import com.boyouquan.util.Pagination;
+import com.boyouquan.util.PaginationBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,18 @@ public class BlogServiceImpl implements BlogService {
     private BlogDaoMapper blogDaoMapper;
     @Autowired
     private PostService postService;
+    @Autowired
+    private AccessService accessService;
+
+    @Override
+    public Blog getByRandom() {
+        return blogDaoMapper.getByRandom();
+    }
+
+    @Override
+    public Long countAll() {
+        return blogDaoMapper.countAll();
+    }
 
     @Override
     public List<Blog> listAll() {
@@ -31,53 +45,37 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public NewBlogInfo getBlogInfoByDomainName(String domainName) {
+    public List<Blog> listRecentCollected(int limit) {
+        return blogDaoMapper.listRecentCollected(limit);
+    }
+
+    @Override
+    public BlogInfo getBlogInfoByDomainName(String domainName) {
         Blog blog = getByDomainName(domainName);
         if (null == blog) {
             return null;
         }
 
-        // assembling
-        // common fields
-        NewBlogInfo blogInfo = new NewBlogInfo();
-        BeanUtils.copyProperties(blog, blogInfo);
-
-        // other fields
-        // FIXME, call service
-        blogInfo.setPostCount(10L);
-        blogInfo.setAccessCount(10L);
-        blogInfo.setLatestPublishedAt(new Date());
-
-        return blogInfo;
+        // assemble
+        return assembleBlogInfo(blog, CommonConstants.ALL_POST_COUNT_LIMIT);
     }
 
     @Override
-    public NewPagination<NewBlogInfo> listBlogInfosWithKeyWord(String keyword, int page, int size) {
+    public Pagination<BlogInfo> listBlogInfosWithKeyWord(String keyword, int page, int size) {
         if (page < 1 || size <= 0) {
-            return NewPaginationBuilder.buildEmptyResults();
+            return PaginationBuilder.buildEmptyResults();
         }
 
         // list
-        List<NewBlogInfo> blogInfos = new ArrayList<>();
-        NewPagination<Blog> blogPagination = listWithKeyWord(keyword, page, size);
+        List<BlogInfo> blogInfos = new ArrayList<>();
+        Pagination<Blog> blogPagination = listWithKeyWord(keyword, page, size);
         for (Blog blog : blogPagination.getResults()) {
-            NewBlogInfo blogInfo = new NewBlogInfo();
-            BeanUtils.copyProperties(blog, blogInfo);
-
-            // FIXME
-            String blogDomainName = blog.getDomainName();
-            Long count = postService.countByBlogDomainName(blogDomainName);
-            blogInfo.setPostCount(count);
-            Date latestUpdatedAt = postService.getLatestPublishedAtByBlogDomainName(blogDomainName);
-            blogInfo.setAccessCount(0L);
-            blogInfo.setLatestPublishedAt(latestUpdatedAt);
-
-            List<Post> latestPosts = postService.listByBlogDomainName(blog.getDomainName(), 3);
-            blogInfo.setLatestPosts(latestPosts);
+            // assemble
+            BlogInfo blogInfo = assembleBlogInfo(blog, CommonConstants.LATEST_POST_COUNT_LIMIT);
             blogInfos.add(blogInfo);
         }
         long total = blogPagination.getTotal();
-        return NewPaginationBuilder.<NewBlogInfo>newBuilder()
+        return PaginationBuilder.<BlogInfo>newBuilder()
                 .pageNo(page)
                 .pageSize(size)
                 .total(total)
@@ -85,15 +83,15 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public NewPagination<Blog> listWithKeyWord(String keyword, int page, int size) {
+    public Pagination<Blog> listWithKeyWord(String keyword, int page, int size) {
         if (page < 1 || size <= 0) {
-            return NewPaginationBuilder.buildEmptyResults();
+            return PaginationBuilder.buildEmptyResults();
         }
 
         int offset = (page - 1) * size;
         List<Blog> blogs = blogDaoMapper.listWithKeyWord(keyword, offset, size);
         Long total = blogDaoMapper.countWithKeyword(keyword);
-        return NewPaginationBuilder.<Blog>newBuilder()
+        return PaginationBuilder.<Blog>newBuilder()
                 .pageNo(page)
                 .pageSize(size)
                 .total(total)
@@ -108,6 +106,11 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog getByDomainName(String domainName) {
         return blogDaoMapper.getByDomainName(domainName);
+    }
+
+    @Override
+    public Blog getByAddress(String address) {
+        return blogDaoMapper.getByAddress(address);
     }
 
     @Override
@@ -126,6 +129,24 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void deleteByDomainName(String domainName) {
         blogDaoMapper.deleteByDomainName(domainName);
+    }
+
+    private BlogInfo assembleBlogInfo(Blog blog, int postCountLimit) {
+        BlogInfo blogInfo = new BlogInfo();
+        BeanUtils.copyProperties(blog, blogInfo);
+
+        String blogDomainName = blog.getDomainName();
+        Long count = postService.countByBlogDomainName(blogDomainName);
+        blogInfo.setPostCount(count);
+        Date latestUpdatedAt = postService.getLatestPublishedAtByBlogDomainName(blogDomainName);
+        Long accessCount = accessService.countByBlogDomainName(blogDomainName);
+        blogInfo.setAccessCount(accessCount);
+        blogInfo.setLatestPublishedAt(latestUpdatedAt);
+
+        List<Post> latestPosts = postService.listByBlogDomainName(blog.getDomainName(), postCountLimit);
+        blogInfo.setPosts(latestPosts);
+
+        return blogInfo;
     }
 
 }

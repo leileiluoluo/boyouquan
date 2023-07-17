@@ -1,14 +1,10 @@
 package com.boyouquan.controller;
 
-import com.boyouquan.model.BlogAccess;
-import com.boyouquan.model.BlogAggregate;
-import com.boyouquan.model.BlogPost;
-import com.boyouquan.service.BlogAccessService;
-import com.boyouquan.service.BlogPostService;
+import com.boyouquan.model.*;
+import com.boyouquan.service.*;
 import com.boyouquan.util.IpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +24,11 @@ public class GoController {
     private final Logger logger = LoggerFactory.getLogger(GoController.class);
 
     @Autowired
-    private BlogAccessService blogAccessService;
+    private BlogService blogService;
     @Autowired
-    private BlogPostService blogPostService;
+    private PostService postService;
+    @Autowired
+    private AccessService accessService;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
@@ -50,32 +48,25 @@ public class GoController {
     }
 
     private void saveAccessInfo(String ip, String link) {
-        String address = link;
-
-        // access blog post
-        BlogPost blogPost = blogPostService.getBlogByLink(link);
-
-        // access blog home
-        if (null == blogPost) {
-            BlogAggregate blogAggregate = blogPostService.getBlogByAddress(link);
-            if (null != blogAggregate) {
-                address = blogAggregate.getAddress();
-            }
+        Post post = postService.getByLink(link);
+        if (null != post) {
+            // save
+            Access access = new Access();
+            access.setLink(link);
+            access.setBlogDomainName(post.getBlogDomainName());
+            access.setIp(ip);
+            accessService.save(access);
         } else {
-            address = blogPost.getBlogAddress();
+            Blog blog = blogService.getByAddress(link);
+            if (null != blog) {
+                // save
+                Access access = new Access();
+                access.setLink(link);
+                access.setBlogDomainName(blog.getDomainName());
+                access.setIp(ip);
+                accessService.save(access);
+            }
         }
-
-        if (StringUtils.isBlank(address)) {
-            logger.info("blog not found, link: {}", link);
-            return;
-        }
-
-        // save
-        BlogAccess blogAccess = new BlogAccess();
-        blogAccess.setBlogAddress(address);
-        blogAccess.setLink(link);
-        blogAccess.setIp(ip);
-        blogAccessService.saveBlogAccess(blogAccess);
     }
 
 }

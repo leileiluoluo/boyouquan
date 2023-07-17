@@ -9,10 +9,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BlogAccessSummary {
+public class BlogDomainNamePublish {
 
-    private String blogName;
-    private String blogAddress;
-    private Long accessCount;
+    private String blogDomainName;
+    private Long postCount;
 
 }

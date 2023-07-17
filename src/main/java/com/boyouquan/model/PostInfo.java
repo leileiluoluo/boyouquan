@@ -5,17 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
-
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class BlogAggregate {
+public class PostInfo extends Post {
 
-    private String name;
-    private String address;
-    private Date latestUpdatedAt;
-    private Long postCount;
+    private String blogName;
+    private String blogAddress;
+    private Long linkAccessCount;
 
 }

@@ -1,24 +1,32 @@
 package com.boyouquan.service;
 
 import com.boyouquan.model.Blog;
-import com.boyouquan.model.NewBlogInfo;
-import com.boyouquan.util.NewPagination;
+import com.boyouquan.model.BlogInfo;
+import com.boyouquan.util.Pagination;
 
 import java.util.List;
 
 public interface BlogService {
 
+    Blog getByRandom();
+
+    Long countAll();
+
     List<Blog> listAll();
 
-    NewBlogInfo getBlogInfoByDomainName(String domainName);
+    List<Blog> listRecentCollected(int limit);
 
-    NewPagination<NewBlogInfo> listBlogInfosWithKeyWord(String keyword, int page, int size);
+    BlogInfo getBlogInfoByDomainName(String domainName);
 
-    NewPagination<Blog> listWithKeyWord(String keyword, int page, int size);
+    Pagination<BlogInfo> listBlogInfosWithKeyWord(String keyword, int page, int size);
+
+    Pagination<Blog> listWithKeyWord(String keyword, int page, int size);
 
     boolean existsByDomainName(String domainName);
 
     Blog getByDomainName(String domainName);
+
+    Blog getByAddress(String address);
 
     void save(Blog blog);
 

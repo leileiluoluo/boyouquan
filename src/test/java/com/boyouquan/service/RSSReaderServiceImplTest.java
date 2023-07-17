@@ -1,7 +1,6 @@
 package com.boyouquan.service;
 
 import com.boyouquan.config.BoYouQuanConfig;
-import com.boyouquan.model.BlogPost;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -6,7 +6,13 @@ import java.util.List;
 
 public interface BlogDaoMapper {
 
+    Blog getByRandom();
+
+    Long countAll();
+
     List<Blog> listAll();
+
+    List<Blog> listRecentCollected(int limit);
 
     Long countWithKeyword(String keyword);
 
@@ -15,6 +21,8 @@ public interface BlogDaoMapper {
     boolean existsByDomainName(String domainName);
 
     Blog getByDomainName(String domainName);
+
+    Blog getByAddress(String address);
 
     void save(Blog blog);
 

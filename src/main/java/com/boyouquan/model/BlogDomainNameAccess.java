@@ -5,17 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
-
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class BlogAccess {
+public class BlogDomainNameAccess {
 
-    private String blogAddress;
-    private String link;
-    private String ip;
-    private Date accessedAt;
+    private String blogDomainName;
+    private Long accessCount;
 
 }

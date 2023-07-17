@@ -16,6 +16,41 @@
         published_at as publishedAt,
         deleted
     </sql>
+    <select id="getMostPublishedInLatestOneMonth" resultType="com.boyouquan.model.BlogDomainNamePublish">
+        SELECT
+        blog_domain_name as blogDomainName,
+        COUNT(*) as postCount
+        FROM post
+        WHERE date(published_at) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        GROUP BY blog_domain_name
+        ORDER BY postCount DESC LIMIT 1
+    </select>
+    <select id="countWithKeyWord" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM post
+        WHERE deleted=false
+        <if test="keyword != null and keyword !=''">
+            AND title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+    <select id="listWithKeyWord" resultType="com.boyouquan.model.Post">
+        SELECT
+        <include refid="select_columns"/>
+        FROM post
+        WHERE deleted=false
+        <if test="keyword != null and keyword !=''">
+            AND title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        ORDER BY published_at DESC
+        LIMIT #{offset}, #{rows}
+    </select>
+    <select id="countAll" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM post
+        WHERE deleted=false
+    </select>
     <select id="getLatestPublishedAtByBlogDomainName" resultType="java.util.Date">
         SELECT
         MAX(published_at)
@@ -39,6 +74,12 @@
         AND blog_domain_name=#{blogDomainName}
         ORDER BY published_at DESC
         LIMIT #{limit}
+    </select>
+    <select id="getByLink" resultType="com.boyouquan.model.Post">
+        SELECT
+        <include refid="select_columns"/>
+        FROM post
+        WHERE link=#{link}
     </select>
     <select id="existsByLink" resultType="boolean">
         SELECT

@@ -18,5 +18,7 @@ public class CommonConstants {
     public static final String GRAVATAR_ADDRESS_LARGE_SIZE = "https://seccdn.libravatar.org/gravatarproxy/%s?s=80";
 
     public static final int RSS_POST_COUNT_READ_LIMIT = 10;
+    public static final int LATEST_POST_COUNT_LIMIT = 3;
+    public static final int ALL_POST_COUNT_LIMIT = 100;
 
 }
