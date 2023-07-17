@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class BlogCrawlerServiceImplTest {
+public class BlogCrawlerServiceTest {
 
     @Autowired
     private BlogCrawlerService blogCrawlerService;
