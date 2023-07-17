@@ -6,7 +6,6 @@ public enum BlogEnums {
     XIAOWULEYI("0471666@gmail.com", "https://www.xiaowuleyi.com/feed", "记录生活，记录人生感悟。", false, "2023/07/03"),
     WEIYEXING("weiyexing1@gmail.com", "https://aaronnick.github.io/rss.xml", "记录所思所想，所见所闻。因此，博客的第一读者首先是自己，然后是其他对此感兴趣的人。", false, "2023/07/03"),
     TIANXIANZI("mimismeoww@gmail.com", "https://tianxianzi.me/atom.xml", "这是我的个人主页，你可以叫我秦海碗。本站站名『天仙子』(Song of Hyoscyamus)，一作药引，一作词牌。", false, "2023/07/03"),
-    MACIN("hi@macin.org", "https://www.macin.org/atom.xml", "诸位少侠，在下是曾让江湖人闻风丧胆的筷子小手。退隐以后，我开始关注活色生香的生活。酝酿与众不同的视角，企图让更多人了解腥风血雨以外的江湖，从此沦为吃喝玩乐的顽徒。", false, "2023/07/03"),
     RUSHIHU("notfound@rushihu.com", "http://rushihu.com/feed", "原本想要安心写博客，坚持了七八年，在今年的三月份将纬八路售出，申请了如是乎，重新备案。", false, "2023/07/03"),
     ATPX("hello@atpx.com", "https://atpx.com/feed.xml", "关于的话，向来是不想写的，一来没人看，二来是三两句也说不清，硬要写的话，大概是今天天气不错。", false, "2023/07/03"),
     TYPEMYLIFE("zhang@typemylife.com", "https://www.typemylife.com/feed/", "产品经理（偏中后台，目前带团队为主，曾经历过支付、物流/货运、在线教育、家政O2O等行业），连续经历行业动荡、公司倒闭后，目前在一家小公司苟着。", false, "2023/07/03"),
