@@ -71,7 +71,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void batchSave(List<Post> posts) {
-        postDaoMapper.batchSave(posts);
+        if (!posts.isEmpty()) {
+            postDaoMapper.batchSave(posts);
+        }
     }
 
 }

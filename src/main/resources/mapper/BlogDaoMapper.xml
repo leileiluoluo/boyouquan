@@ -86,6 +86,12 @@
         SELECT 1 FROM blog WHERE domain_name=#{domainName}
         )
     </select>
+    <select id="existsByRssAddress" resultType="boolean">
+        SELECT
+        EXISTS (
+        SELECT 1 FROM blog WHERE rss_address=#{rssAddress}
+        )
+    </select>
     <select id="getByDomainName" resultType="com.boyouquan.model.Blog">
         SELECT
         <include refid="select_columns"/>

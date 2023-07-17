@@ -20,6 +20,8 @@ public interface BlogDaoMapper {
 
     boolean existsByDomainName(String domainName);
 
+    boolean existsByRssAddress(String rssAddress);
+
     Blog getByDomainName(String domainName);
 
     Blog getByAddress(String address);

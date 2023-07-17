@@ -32,16 +32,26 @@ public class BlogScheduler implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        for (BlogEnums e : BlogEnums.values()) {
-            String rssAddress = e.getFeedAddress();
-            RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(rssAddress, CommonConstants.RSS_POST_COUNT_READ_LIMIT);
-            if (null == rssInfo) {
-                logger.error("rss info read failed, rssAddress: {}", rssAddress);
-                continue;
-            }
+        logger.info("blog scheduler started!");
 
-            // save blog
-            saveBlog(e, rssInfo);
+        try {
+            for (BlogEnums e : BlogEnums.values()) {
+                String rssAddress = e.getFeedAddress();
+
+                boolean exists = blogService.existsByRssAddress(rssAddress);
+                if (!exists) {
+                    RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(rssAddress, CommonConstants.RSS_POST_COUNT_READ_LIMIT);
+                    if (null == rssInfo) {
+                        logger.error("rss info read failed, rssAddress: {}", rssAddress);
+                        continue;
+                    }
+
+                    // save blog
+                    saveBlog(e, rssInfo);
+                }
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
     }
 

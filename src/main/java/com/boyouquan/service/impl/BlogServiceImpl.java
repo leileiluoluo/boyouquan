@@ -99,6 +99,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public boolean existsByRssAddress(String rssAddress) {
+        return blogDaoMapper.existsByRssAddress(rssAddress);
+    }
+
+    @Override
     public boolean existsByDomainName(String domainName) {
         return blogDaoMapper.existsByDomainName(domainName);
     }

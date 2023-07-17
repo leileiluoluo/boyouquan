@@ -22,6 +22,8 @@ public interface BlogService {
 
     Pagination<Blog> listWithKeyWord(String keyword, int page, int size);
 
+    boolean existsByRssAddress(String rssAddress);
+
     boolean existsByDomainName(String domainName);
 
     Blog getByDomainName(String domainName);

@@ -22,9 +22,9 @@ import java.util.List;
 @Component
 @EnableScheduling
 @EnableAsync
-public class PostsScheduler {
+public class PostScheduler {
 
-    private final Logger logger = LoggerFactory.getLogger(PostsScheduler.class);
+    private final Logger logger = LoggerFactory.getLogger(PostScheduler.class);
 
     @Autowired
     private BlogService blogService;
@@ -36,7 +36,7 @@ public class PostsScheduler {
     @Async
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void crawlingBlogPosts() {
-        logger.info("posts scheduler started!");
+        logger.info("post scheduler started!");
 
         savePosts();
     }
