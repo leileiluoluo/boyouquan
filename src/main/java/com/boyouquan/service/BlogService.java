@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface BlogService {
 
+    String getBlogAdminSmallImageURLByDomainName(String blogDomainName);
+
+    String getBlogAdminLargeImageURLByDomainName(String blogDomainName);
+
     Blog getByRandom();
 
     Long countAll();

@@ -10,7 +10,7 @@
     <header class="blog-detail-header">
         <div class="icon">
             <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
-                <img th:src="${@thymeLeafTemplateHelper.getBlogAdminLargeImageURLByAddress(blogInfo.address)}"/>
+                <img th:src="${blogInfo.blogAdminLargeImageURL}"/>
             </a>
         </div>
         <div class="title">

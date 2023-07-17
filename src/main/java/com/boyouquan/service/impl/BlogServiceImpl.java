@@ -8,6 +8,7 @@ import com.boyouquan.model.Post;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PostService;
+import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +29,26 @@ public class BlogServiceImpl implements BlogService {
     private PostService postService;
     @Autowired
     private AccessService accessService;
+
+    @Override
+    public String getBlogAdminSmallImageURLByDomainName(String blogDomainName) {
+        Blog blog = getByDomainName(blogDomainName);
+        if (null == blog) {
+            return "";
+        }
+
+        return String.format(CommonConstants.GRAVATAR_ADDRESS_SMALL_SIZE, CommonUtils.md5(blog.getAdminEmail()));
+    }
+
+    @Override
+    public String getBlogAdminLargeImageURLByDomainName(String blogDomainName) {
+        Blog blog = getByDomainName(blogDomainName);
+        if (null == blog) {
+            return "";
+        }
+
+        return String.format(CommonConstants.GRAVATAR_ADDRESS_LARGE_SIZE, CommonUtils.md5(blog.getAdminEmail()));
+    }
 
     @Override
     public Blog getByRandom() {
@@ -147,6 +168,12 @@ public class BlogServiceImpl implements BlogService {
         Long accessCount = accessService.countByBlogDomainName(blogDomainName);
         blogInfo.setAccessCount(accessCount);
         blogInfo.setLatestPublishedAt(latestUpdatedAt);
+
+        String blogAdminSmallImageURL = getBlogAdminSmallImageURLByDomainName(blogDomainName);
+        blogInfo.setBlogAdminSmallImageURL(blogAdminSmallImageURL);
+
+        String blogAdminLargeImageURL = getBlogAdminLargeImageURLByDomainName(blogDomainName);
+        blogInfo.setBlogAdminLargeImageURL(blogAdminLargeImageURL);
 
         List<Post> latestPosts = postService.listByBlogDomainName(blog.getDomainName(), postCountLimit);
         blogInfo.setPosts(latestPosts);

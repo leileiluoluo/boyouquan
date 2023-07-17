@@ -19,5 +19,7 @@ public class BlogInfo extends Blog {
     private Long accessCount;
     private Date latestPublishedAt;
     private List<Post> posts = Collections.emptyList();
+    private String blogAdminSmallImageURL;
+    private String blogAdminLargeImageURL;
 
 }

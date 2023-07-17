@@ -15,7 +15,7 @@
                 <header class="icon-and-title">
                     <div class="flex-item">
                         <a th:href="'/blogs/' + ${blogInfo.domainName}">
-                            <img th:src="${@thymeLeafTemplateHelper.getBlogAdminSmallImageURLByAddress(blogInfo.address)}"/>
+                            <img th:src="${blogInfo.blogAdminSmallImageURL}"/>
                         </a>
                     </div>
                     <div class="flex-item">

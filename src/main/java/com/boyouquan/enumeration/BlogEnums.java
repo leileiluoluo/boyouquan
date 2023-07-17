@@ -1,11 +1,5 @@
 package com.boyouquan.enumeration;
 
-import com.boyouquan.util.CommonUtils;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public enum BlogEnums {
 
     LEILEILUOLUO("leileiluoluo@leileiluoluo.com", "https://leileiluoluo.com/index.xml", "记录日常工作中整理的技术知识和日常生活中的点滴感想。", false, "2023/07/01"),
@@ -117,26 +111,26 @@ public enum BlogEnums {
     ESAYS("admin@esays.net", "https://esays.net/feed/", "中年石油工人。", false, "2023/07/16"),
     WINEGROWER("winegrower@foxmail.com", "https://www.winegrower.cn/feed/", "我是一个来自农村的男孩，从小学-初中-高中-大学一步步走来，在家人和自己的努力下，从西部的一个小山村，来到了大都市。他经历过不同的社会，接触过不同的人群，学习了不同的知识，但由于他的悟性不足，努力不够，所以一直在路上。", false, "2023/07/16");
 
-    private final String email;
-    private final String feedAddress;
+    private final String adminEmail;
+    private final String rssAddress;
     private final String description;
     private final Boolean selfSubmitted;
-    private final String createdAt;
+    private final String collectedAt;
 
-    BlogEnums(String email, String feedAddress, String description, Boolean selfSubmitted, String createdAt) {
-        this.email = email;
-        this.feedAddress = feedAddress;
+    BlogEnums(String adminEmail, String rssAddress, String description, Boolean selfSubmitted, String collectedAt) {
+        this.adminEmail = adminEmail;
+        this.rssAddress = rssAddress;
         this.description = description;
         this.selfSubmitted = selfSubmitted;
-        this.createdAt = createdAt;
+        this.collectedAt = collectedAt;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getAdminEmail() {
+        return this.adminEmail;
     }
 
-    public String getFeedAddress() {
-        return this.feedAddress;
+    public String getRssAddress() {
+        return this.rssAddress;
     }
 
     public String getDescription() {
@@ -147,43 +141,8 @@ public enum BlogEnums {
         return this.selfSubmitted;
     }
 
-    public String getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public static List<String> getAllFeedAddresses() {
-        return Arrays.stream(BlogEnums.values()).map(BlogEnums::getFeedAddress).collect(Collectors.toList());
-    }
-
-    public static String getEmailByBlogAddress(String blogAddress) {
-        for (BlogEnums e : BlogEnums.values()) {
-            if (e.getFeedAddress().contains(blogAddress)) {
-                return e.getEmail();
-            }
-        }
-        return "notfound@notfound.com";
-    }
-
-    public static String getDescriptionByBlogAddress(String blogAddress) {
-        String address = CommonUtils.trimHttpScheme(blogAddress);
-
-        for (BlogEnums e : BlogEnums.values()) {
-            if (e.getFeedAddress().contains(address)) {
-                return e.getDescription();
-            }
-        }
-        return "";
-    }
-
-    public static String getCreatedAtByBlogAddress(String blogAddress) {
-        String address = CommonUtils.trimHttpScheme(blogAddress);
-
-        for (BlogEnums e : BlogEnums.values()) {
-            if (e.getFeedAddress().contains(address)) {
-                return e.getCreatedAt();
-            }
-        }
-        return "2023/07/03";
+    public String getCollectedAt() {
+        return this.collectedAt;
     }
 
 }
