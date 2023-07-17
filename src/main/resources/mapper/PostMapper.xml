@@ -1,0 +1,64 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.PostDaoMapper">
+    <sql id="insert_columns">
+        link,
+        blog_domain_name,
+        title,
+        description,
+        published_at,
+        deleted
+    </sql>
+    <sql id="select_columns">
+        link,
+        blog_domain_name as blogDomainName,
+        title,
+        description,
+        published_at as publishedAt,
+        deleted
+    </sql>
+    <select id="getLatestPublishedAtByBlogDomainName" resultType="java.util.Date">
+        SELECT
+        MAX(published_at)
+        FROM post
+        WHERE deleted=false
+        AND blog_domain_name=#{blogDomainName}
+        ORDER BY published_at DESC
+    </select>
+    <select id="countByBlogDomainName" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM post
+        WHERE deleted=false
+        AND blog_domain_name=#{blogDomainName}
+    </select>
+    <select id="listByBlogDomainName" resultType="com.boyouquan.model.Post">
+        SELECT
+        <include refid="select_columns"/>
+        FROM post
+        WHERE deleted=false
+        AND blog_domain_name=#{blogDomainName}
+        ORDER BY published_at DESC
+        LIMIT #{limit}
+    </select>
+    <select id="existsByLink" resultType="boolean">
+        SELECT
+        EXISTS (
+        SELECT 1 FROM post WHERE link=#{link}
+        )
+    </select>
+    <insert id="batchSave" parameterType="java.util.List">
+        INSERT INTO post (
+        <include refid="insert_columns"/>
+        ) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.link},
+            #{item.blogDomainName},
+            #{item.title},
+            #{item.description},
+            #{item.publishedAt},
+            false
+            )
+        </foreach>
+    </insert>
+</mapper>

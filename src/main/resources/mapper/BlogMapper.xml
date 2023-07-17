@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boyouquan.dao.BlogDaoMapper">
-    <sql id="columns">
+    <sql id="insert_columns">
         domain_name,
         admin_email,
         name,
@@ -13,34 +13,68 @@
         valid,
         deleted
     </sql>
+    <sql id="select_columns">
+        domain_name as domainName,
+        admin_email as adminEmail,
+        name,
+        address,
+        rss_address as rssAddress,
+        description,
+        self_submitted as selfSubmitted,
+        collected_at as collectedAt,
+        updated_at as updatedAt,
+        valid,
+        deleted
+    </sql>
+    <select id="listAll" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        WHERE deleted=false
+    </select>
     <select id="countWithKeyword" resultType="java.lang.Long">
         SELECT
         COUNT(*)
         FROM blog
+        WHERE deleted=false
         <if test="keyword != null and keyword !=''">
-            WHERE name LIKE CONCAT('%', #{keyword}, '%')
+            AND
+            (
+            name LIKE CONCAT('%', #{keyword}, '%')
             OR address LIKE CONCAT('%', #{keyword}, '%')
+            )
         </if>
     </select>
     <select id="listWithKeyWord" resultType="com.boyouquan.model.Blog">
         SELECT
-        <include refid="columns"/>
+        <include refid="select_columns"/>
         FROM blog
+        WHERE deleted=false
         <if test="keyword != null and keyword !=''">
-            WHERE name LIKE CONCAT('%', #{keyword}, '%')
+            AND
+            (
+            name LIKE CONCAT('%', #{keyword}, '%')
             OR address LIKE CONCAT('%', #{keyword}, '%')
+            )
         </if>
+        ORDER BY collected_at DESC
         LIMIT #{offset}, #{rows}
+    </select>
+    <select id="existsByDomainName" resultType="boolean">
+        SELECT
+        EXISTS (
+        SELECT 1 FROM blog WHERE domain_name=#{domainName}
+        )
     </select>
     <select id="getByDomainName" resultType="com.boyouquan.model.Blog">
         SELECT
-        <include refid="columns"/>
+        <include refid="select_columns"/>
         FROM blog
         WHERE domain_name=#{domainName}
     </select>
     <insert id="save">
         INSERT INTO blog (
-        <include refid="columns"/>
+        <include refid="insert_columns"/>
         ) VALUES (
         #{domainName},
         #{adminEmail},
@@ -49,8 +83,8 @@
         #{rssAddress},
         #{description},
         #{selfSubmitted},
-        now(),
-        now(),
+        #{collectedAt},
+        #{updatedAt},
         true,
         false
         )
@@ -65,7 +99,6 @@
         rss_address=#rssAddress},
         description=#{description},
         self_submitted=#{selfSubmitted},
-        collected_at=#{collectedAt},
         updated_at=now(),
         valid=#{valid}
         WHERE domain_name=#{domainName}

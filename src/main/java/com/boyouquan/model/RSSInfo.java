@@ -22,6 +22,7 @@ public class RSSInfo {
     @Getter
     @Setter
     public static class Post {
+        private String link;
         private String title;
         private String description;
         private Date publishedAt;

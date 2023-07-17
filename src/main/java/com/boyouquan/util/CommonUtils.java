@@ -18,6 +18,10 @@ public class CommonUtils {
     }
 
     public static String dateFriendlyDisplay(Date date) {
+        if (null == date) {
+            return "";
+        }
+
         final long halfAHour = 30 * 60 * 1000;
         final long oneHour = 60 * 60 * 1000;
         final long oneDay = 24 * oneHour;

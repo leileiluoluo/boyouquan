@@ -15,10 +15,10 @@ import java.util.List;
 @ToString
 public class NewBlogInfo extends Blog {
 
-    private Long postsCount;
+    private Long postCount;
     private Long accessCount;
-    private Date latestUpdatedAt;
-    private List<BlogPost> latestPosts = Collections.emptyList();
-    private List<BlogPost> posts = Collections.emptyList();
+    private Date latestPublishedAt;
+    private List<Post> latestPosts = Collections.emptyList();
+    private List<Post> allPosts = Collections.emptyList();
 
 }

@@ -4,6 +4,6 @@ import com.boyouquan.model.RSSInfo;
 
 public interface BlogCrawlerService {
 
-    RSSInfo getRSSInfoByRSSAddress(String rssAddress);
+    RSSInfo getRSSInfoByRSSAddress(String rssAddress, int postsLimit);
 
 }

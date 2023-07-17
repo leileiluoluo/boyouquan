@@ -1,11 +1,9 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.BlogInfo;
-import com.boyouquan.service.BlogAccessService;
-import com.boyouquan.service.BlogInfoService;
-import com.boyouquan.service.BlogPostService;
-import com.boyouquan.util.Pagination;
+import com.boyouquan.model.NewBlogInfo;
+import com.boyouquan.service.*;
+import com.boyouquan.util.NewPagination;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,11 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BlogListController {
 
     @Autowired
-    private BlogInfoService blogInfoService;
-    @Autowired
-    private BlogPostService blogPostService;
-    @Autowired
-    private BlogAccessService blogAccessService;
+    private BlogService blogService;
 
     @GetMapping("")
     public String list(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
@@ -38,13 +32,13 @@ public class BlogListController {
         }
         keyword = StringUtils.trim(keyword);
 
-        Pagination<BlogInfo> pagination = blogInfoService.listBlogInfos(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
-        model.addAttribute("pagination", pagination);
+        NewPagination<NewBlogInfo> blogInfoPagination = blogService.listBlogInfosWithKeyWord(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        model.addAttribute("pagination", blogInfoPagination);
         model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
         model.addAttribute("keyword", keyword);
-        model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
-        model.addAttribute("totalBlogPosts", blogPostService.countPosts(""));
-        model.addAttribute("accessTotal", blogAccessService.totalCount());
+        model.addAttribute("totalBlogs", 0);
+        model.addAttribute("totalBlogPosts", 0);
+        model.addAttribute("accessTotal", 0);
         return "blogs/list";
     }
 

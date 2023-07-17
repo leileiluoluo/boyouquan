@@ -31,11 +31,14 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
     private final Logger logger = LoggerFactory.getLogger(BlogCrawlerServiceImpl.class);
 
     private final CloseableHttpClient customClient = HttpClients.custom()
+            .setConnectionManagerShared(true)
             .setUserAgent(CommonConstants.DATA_SPIDER_USER_AGENT)
             .build();
 
     @Override
-    public RSSInfo getRSSInfoByRSSAddress(String rssAddress) {
+    public RSSInfo getRSSInfoByRSSAddress(String rssAddress, int postsLimit) {
+        int postCount = 0;
+
         try (CloseableHttpClient client = customClient) {
             HttpUriRequest request = new HttpGet(rssAddress);
             try (CloseableHttpResponse response = client.execute(request); InputStream stream = response.getEntity().getContent()) {
@@ -115,17 +118,21 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                     blogAddress = CommonUtils.trimFeedURLSuffix(blogAddress);
 
                     RSSInfo.Post post = new RSSInfo.Post();
+                    post.setLink(link);
                     post.setTitle(title);
                     post.setDescription(description);
                     post.setPublishedAt(publishedAt);
                     posts.add(post);
+
+                    postCount++;
+                    if (postCount >= postsLimit) {
+                        return rssInfo;
+                    }
                 }
 
                 return rssInfo;
-            } catch (FeedException e) {
-                logger.error(e.getMessage(), e);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
 

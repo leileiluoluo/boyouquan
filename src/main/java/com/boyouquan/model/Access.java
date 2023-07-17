@@ -11,12 +11,11 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class BlogCandidate {
+public class Access {
 
-    private String adminEmail;
-    private String rssAddress;
-    private String description;
-    private Boolean selfSubmitted;
-    private Date collected;
+    private String link;
+    private String blogDomainName;
+    private String ip;
+    private Date accessedAt;
 
 }
