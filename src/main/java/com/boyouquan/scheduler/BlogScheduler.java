@@ -38,10 +38,10 @@ public class BlogScheduler implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         logger.info("blog scheduler started!");
 
-        try {
-            for (BlogEnums e : BlogEnums.values()) {
-                String rssAddress = e.getRssAddress();
+        for (BlogEnums blogEnum : BlogEnums.values()) {
+            String rssAddress = blogEnum.getRssAddress();
 
+            try {
                 boolean exists = blogService.existsByRssAddress(rssAddress);
                 if (!exists) {
                     logger.info("start to crawl: {}", rssAddress);
@@ -53,12 +53,14 @@ public class BlogScheduler implements ApplicationRunner {
                     }
 
                     // save blog and posts
-                    saveBlogAndPosts(e, rssInfo);
+                    saveBlogAndPosts(blogEnum, rssInfo);
                 }
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
         }
+
+        logger.info("blog scheduler end!");
     }
 
     private void saveBlogAndPosts(BlogEnums blogEnum, RSSInfo rssInfo) throws ParseException {
@@ -79,13 +81,16 @@ public class BlogScheduler implements ApplicationRunner {
             blog.setUpdatedAt(collectedAt);
 
             // save posts
-            int count = postHelper.savePosts(blogDomainName, rssInfo);
-            if (count > 0) {
-                // save blog
-                blogService.save(blog);
+            boolean success = postHelper.savePosts(blogDomainName, rssInfo);
+            if (!success) {
+                logger.error("posts save failed, blogDomainName: {}", blogDomainName);
+                return;
             }
 
-            logger.info("blog and posts saved, blogDomainName: {}, postCount: {}", blog.getDomainName(), count);
+            // save blog
+            blogService.save(blog);
+
+            logger.info("blog and posts saved, blogDomainName: {}", blog.getDomainName());
         }
     }
 

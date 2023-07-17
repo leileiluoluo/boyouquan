@@ -19,8 +19,7 @@ public class PostHelper {
     @Autowired
     private PostService postService;
 
-    public int savePosts(String blogDomainName, RSSInfo rssInfo) {
-        int count = 0;
+    public boolean savePosts(String blogDomainName, RSSInfo rssInfo) {
         if (null != rssInfo) {
             // save posts
             List<Post> posts = new ArrayList<>();
@@ -36,15 +35,14 @@ public class PostHelper {
                     post.setBlogDomainName(blogDomainName);
 
                     posts.add(post);
-                    count++;
                 }
             }
 
             // batch save
-            postService.batchSave(posts);
+            return postService.batchSave(posts);
         }
 
-        return count;
+        return false;
     }
 
 }
