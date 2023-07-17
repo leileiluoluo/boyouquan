@@ -12,3 +12,5 @@ CREATE TABLE blog (
     valid BOOLEAN DEFAULT TRUE,
     deleted BOOLEAN DEFAULT FALSE
 );
+
+CREATE INDEX idx_blog_domain_name ON blog (domain_name);

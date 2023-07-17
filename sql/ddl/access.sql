@@ -5,3 +5,5 @@ CREATE TABLE access (
     ip VARCHAR(100) NOT NULL,
     accessed_at TIMESTAMP NOT NULL
 );
+
+CREATE INDEX idx_access_domain_name ON access (blog_domain_name);

@@ -85,7 +85,7 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                 RSSInfo rssInfo = new RSSInfo();
                 List<RSSInfo.Post> posts = new ArrayList<>();
 
-                rssInfo.setBlogName(blogName);
+                rssInfo.setBlogName(blogName.trim());
                 rssInfo.setBlogAddress(blogAddress);
                 rssInfo.setBlogPosts(posts);
 
