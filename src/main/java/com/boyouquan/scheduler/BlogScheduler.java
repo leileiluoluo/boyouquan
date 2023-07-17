@@ -2,6 +2,7 @@ package com.boyouquan.scheduler;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.enumeration.BlogEnums;
+import com.boyouquan.helper.PostHelper;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.RSSInfo;
 import com.boyouquan.service.BlogCrawlerService;
@@ -15,6 +16,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -29,6 +31,8 @@ public class BlogScheduler implements ApplicationRunner {
     private BlogService blogService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private PostHelper postHelper;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -46,8 +50,8 @@ public class BlogScheduler implements ApplicationRunner {
                         continue;
                     }
 
-                    // save blog
-                    saveBlog(e, rssInfo);
+                    // save blog and posts
+                    saveBlogAndPosts(e, rssInfo);
                 }
             }
         } catch (Exception e) {
@@ -55,30 +59,30 @@ public class BlogScheduler implements ApplicationRunner {
         }
     }
 
-    private void saveBlog(BlogEnums blogEnum, RSSInfo rssInfo) {
-        try {
-            String blogDomainName = CommonUtils.getDomain(rssInfo.getBlogAddress());
-            boolean exists = blogService.existsByDomainName(blogDomainName);
-            if (!exists && !rssInfo.getBlogPosts().isEmpty()) {
-                Blog blog = new Blog();
-                Date collectedAt = new SimpleDateFormat("yyyy/MM/dd").parse(blogEnum.getCreatedAt());
-                blog.setDomainName(blogDomainName);
-                blog.setAdminEmail(blogEnum.getEmail());
-                blog.setName(rssInfo.getBlogName());
-                blog.setAddress(rssInfo.getBlogAddress());
-                blog.setRssAddress(blogEnum.getFeedAddress());
-                blog.setDescription(blogEnum.getDescription());
-                blog.setSelfSubmitted(blogEnum.getSelfSubmitted());
-                blog.setCollectedAt(collectedAt);
-                blog.setUpdatedAt(collectedAt);
+    private void saveBlogAndPosts(BlogEnums blogEnum, RSSInfo rssInfo) throws ParseException {
+        String blogDomainName = CommonUtils.getDomain(rssInfo.getBlogAddress());
 
-                // save
-                blogService.save(blog);
+        boolean exists = blogService.existsByDomainName(blogDomainName);
+        if (!exists && !rssInfo.getBlogPosts().isEmpty()) {
+            Blog blog = new Blog();
+            Date collectedAt = new SimpleDateFormat("yyyy/MM/dd").parse(blogEnum.getCreatedAt());
+            blog.setDomainName(blogDomainName);
+            blog.setAdminEmail(blogEnum.getEmail());
+            blog.setName(rssInfo.getBlogName());
+            blog.setAddress(rssInfo.getBlogAddress());
+            blog.setRssAddress(blogEnum.getFeedAddress());
+            blog.setDescription(blogEnum.getDescription());
+            blog.setSelfSubmitted(blogEnum.getSelfSubmitted());
+            blog.setCollectedAt(collectedAt);
+            blog.setUpdatedAt(collectedAt);
 
-                logger.info("blog saved, blogDomainName: {}", blog.getDomainName());
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            // save blog
+            blogService.save(blog);
+
+            // save posts
+            postHelper.savePosts(blogDomainName, rssInfo);
+
+            logger.info("blog and posts saved, blogDomainName: {}, postCount: {}", blog.getDomainName(), rssInfo.getBlogPosts().size());
         }
     }
 

@@ -95,7 +95,6 @@ public enum BlogEnums {
     FUEIS("i@fueis.com", "https://blog.fueis.com/feed", "目前生活状况就是上班的人妻一枚，博客里经常出现的 9 哥就是我先生。", false, "2023/07/10"),
     SIRIT("sirit@163.com", "https://www.sirit.com.cn/feed/", "网站最初的名字是“大嘴狗的博客”，之后不允许使用博客当名字，又改为“大嘴狗的小空间”。现在又不能使用个人空间之类的字眼，那就改成“大嘴狗狗”吧。", false, "2023/07/10"),
     EASYF12("yjh20090703@outlook.com", "https://easyf12.top/atom.xml", "竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。", true, "2023/07/10"),
-    MUNUE("maqingxi@gmail.com", "https://www.munue.com/feed", "我叫马庆喜，网络ID：maqingxi，是我名字的汉语拼音，所以也用它作为我个人网站的域名。我是74年生人，属虎，所以我选用了白虎图腾图案作为自己的 Gravatar 头像。", false, "2023/07/11"),
     FXPAI("aiphes@qq.com", "https://fxpai.com/feed/", "这是一个由我个人懒散运营的独立博客，也是我顽固自留地、执念角斗场、自说自话的三角地。一个人要从属于一个派别（或将自己分为某类），则必然与其偏见和痼习为伍。", false, "2023/07/11"),
     DNGZ("notfound@notfound.com", "http://blog.dngz.net/feed", "心灵博客，记录心静不下来的生活点滴，心灵博客2019再次启程。", false, "2023/07/11"),
     LIHUAZHI("walltzlee@gmail.com", "https://lihuazhi.com/feed/", "活在这珍贵的人间 / 人类和植物一样幸福 / 爱情和雨水一样幸福。", false, "2023/07/11"),
