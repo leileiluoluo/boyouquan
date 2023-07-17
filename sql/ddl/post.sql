@@ -7,3 +7,5 @@ CREATE TABLE post (
     published_at TIMESTAMP NOT NULL,
     deleted BOOLEAN DEFAULT FALSE
 );
+
+CREATE INDEX idx_post_domain_name ON post (blog_domain_name);
