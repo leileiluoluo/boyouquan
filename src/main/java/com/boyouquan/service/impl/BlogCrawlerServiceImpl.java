@@ -13,9 +13,11 @@ import com.rometools.rome.io.XmlReader;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
+import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.util.Timeout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,13 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
     public RSSInfo getRSSInfoByRSSAddress(String rssAddress, int postsLimit) {
         int postCount = 0;
 
+        RequestConfig defaultRequestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(Timeout.ofMinutes(1))
+                .setResponseTimeout(Timeout.ofMinutes(1))
+                .build();
+
         final CloseableHttpClient customClient = HttpClients.custom()
+                .setDefaultRequestConfig(defaultRequestConfig)
                 .setUserAgent(CommonConstants.DATA_SPIDER_USER_AGENT)
                 .build();
 

@@ -51,7 +51,13 @@ public class PostScheduler {
                 RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(blog.getRssAddress(), CommonConstants.RSS_POST_COUNT_READ_LIMIT);
 
                 // save posts
-                postHelper.savePosts(blog.getDomainName(), rssInfo);
+                boolean success = postHelper.savePosts(blog.getDomainName(), rssInfo);
+                if (!success) {
+                    logger.error("posts save failed, blogDomainName: {}", blog.getDomainName());
+                    return;
+                }
+
+                logger.error("posts save success, blogDomainName: {}", blog.getDomainName());
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }

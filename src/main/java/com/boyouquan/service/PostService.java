@@ -25,6 +25,6 @@ public interface PostService {
 
     Post getByLink(String link);
 
-    void batchSave(List<Post> posts);
+    boolean batchSave(List<Post> posts);
 
 }

@@ -6,6 +6,8 @@ import com.boyouquan.model.Post;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
+
+    private final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
     @Autowired
     private PostDaoMapper postDaoMapper;
@@ -70,10 +74,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void batchSave(List<Post> posts) {
-        if (!posts.isEmpty()) {
-            postDaoMapper.batchSave(posts);
+    public boolean batchSave(List<Post> posts) {
+        try {
+            if (null != posts && !posts.isEmpty()) {
+                postDaoMapper.batchSave(posts);
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error("batch save failed!", e);
         }
+        return false;
     }
 
 }
