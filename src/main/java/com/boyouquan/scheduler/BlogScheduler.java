@@ -44,6 +44,8 @@ public class BlogScheduler implements ApplicationRunner {
 
                 boolean exists = blogService.existsByRssAddress(rssAddress);
                 if (!exists) {
+                    logger.info("start to crawl: {}", rssAddress);
+
                     RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(rssAddress, CommonConstants.RSS_POST_COUNT_READ_LIMIT);
                     if (null == rssInfo) {
                         logger.error("rss info read failed, rssAddress: {}", rssAddress);
