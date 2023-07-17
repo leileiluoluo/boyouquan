@@ -52,11 +52,16 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                 // blog name
                 String blogName = feed.getTitle().trim();
                 if (blogName.length() > CommonConstants.BLOG_NAME_MAX_LENGTH) {
-                    int blankIndex = blogName.indexOf(" ");
-                    if (blankIndex > 0) {
-                        blogName = blogName.substring(0, blankIndex);
+                    int dashIndex = blogName.indexOf("-");
+                    if (dashIndex > 0) {
+                        blogName = blogName.substring(0, dashIndex);
                     } else {
-                        blogName = blogName.substring(0, CommonConstants.BLOG_NAME_MAX_LENGTH);
+                        int blankIndex = blogName.indexOf(" ");
+                        if (blankIndex > 0) {
+                            blogName = blogName.substring(0, blankIndex);
+                        } else {
+                            blogName = blogName.substring(0, CommonConstants.BLOG_NAME_MAX_LENGTH);
+                        }
                     }
                 }
 
