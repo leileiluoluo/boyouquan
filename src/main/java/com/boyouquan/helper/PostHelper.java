@@ -19,11 +19,11 @@ public class PostHelper {
     @Autowired
     private PostService postService;
 
-    public void savePosts(String blogDomainName, RSSInfo rssInfo) {
+    public int savePosts(String blogDomainName, RSSInfo rssInfo) {
+        int count = 0;
         if (null != rssInfo) {
             // save posts
             List<Post> posts = new ArrayList<>();
-            int count = 0;
             for (RSSInfo.Post rssPost : rssInfo.getBlogPosts()) {
                 String link = rssPost.getLink();
                 boolean exists = postService.existsByLink(link);
@@ -42,8 +42,9 @@ public class PostHelper {
 
             // batch save
             postService.batchSave(posts);
-            logger.info("{} posts saved, blogDomainName: {}", count, blogDomainName);
         }
+
+        return count;
     }
 
 }

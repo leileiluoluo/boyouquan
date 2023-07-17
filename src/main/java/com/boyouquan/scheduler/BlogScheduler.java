@@ -78,13 +78,14 @@ public class BlogScheduler implements ApplicationRunner {
             blog.setCollectedAt(collectedAt);
             blog.setUpdatedAt(collectedAt);
 
-            // save blog
-            blogService.save(blog);
-
             // save posts
-            postHelper.savePosts(blogDomainName, rssInfo);
+            int count = postHelper.savePosts(blogDomainName, rssInfo);
+            if (count > 0) {
+                // save blog
+                blogService.save(blog);
+            }
 
-            logger.info("blog and posts saved, blogDomainName: {}, postCount: {}", blog.getDomainName(), rssInfo.getBlogPosts().size());
+            logger.info("blog and posts saved, blogDomainName: {}, postCount: {}", blog.getDomainName(), count);
         }
     }
 

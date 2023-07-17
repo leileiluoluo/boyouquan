@@ -8,7 +8,6 @@ import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndLink;
-import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
@@ -30,14 +28,13 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
 
     private final Logger logger = LoggerFactory.getLogger(BlogCrawlerServiceImpl.class);
 
-    private final CloseableHttpClient customClient = HttpClients.custom()
-            .setConnectionManagerShared(true)
-            .setUserAgent(CommonConstants.DATA_SPIDER_USER_AGENT)
-            .build();
-
     @Override
     public RSSInfo getRSSInfoByRSSAddress(String rssAddress, int postsLimit) {
         int postCount = 0;
+
+        final CloseableHttpClient customClient = HttpClients.custom()
+                .setUserAgent(CommonConstants.DATA_SPIDER_USER_AGENT)
+                .build();
 
         try (CloseableHttpClient client = customClient) {
             HttpUriRequest request = new HttpGet(rssAddress);
