@@ -68,6 +68,8 @@ public class HomeController {
             Blog blog = blogService.getByDomainName(post.getBlogDomainName());
             postInfo.setBlogName(blog.getName());
             postInfo.setBlogAddress(blog.getAddress());
+            String blogAdminSmallImageURL = blogService.getBlogAdminSmallImageURLByDomainName(blog.getDomainName());
+            postInfo.setBlogAdminSmallImageURL(blogAdminSmallImageURL);
 
             Long linkAccessCount = accessService.countByLink(post.getLink());
             postInfo.setLinkAccessCount(linkAccessCount);

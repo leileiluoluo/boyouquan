@@ -14,7 +14,7 @@
         <footer class="entry-footer">
             <div class="flex-item">
                 <a th:href="'/blogs/' + ${postInfo.blogDomainName}">
-                    <img th:src="${@thymeLeafTemplateHelper.getBlogAdminSmallImageURLByAddress(postInfo.blogAddress)}"/>
+                    <img th:src="${postInfo.blogAdminSmallImageURL}"/>
                 </a>
             </div>
             <div class="flex-item">

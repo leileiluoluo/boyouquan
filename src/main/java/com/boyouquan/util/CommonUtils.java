@@ -68,19 +68,6 @@ public class CommonUtils {
         return hex;
     }
 
-    public static String trimHttpScheme(String address) {
-        if (StringUtils.isBlank(address)) {
-            return "";
-        }
-
-        if (address.startsWith("http://")) {
-            address = address.substring(7);
-        } else if (address.startsWith("https://")) {
-            address = address.substring(8);
-        }
-        return address;
-    }
-
     public static String trimFeedURLSuffix(String blogAddress) {
         if (blogAddress.endsWith("/feed.xml")) {
             blogAddress = blogAddress.substring(0, blogAddress.length() - "/feed.xml".length());

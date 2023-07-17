@@ -40,7 +40,7 @@ public class BlogScheduler implements ApplicationRunner {
 
         try {
             for (BlogEnums e : BlogEnums.values()) {
-                String rssAddress = e.getFeedAddress();
+                String rssAddress = e.getRssAddress();
 
                 boolean exists = blogService.existsByRssAddress(rssAddress);
                 if (!exists) {
@@ -65,12 +65,12 @@ public class BlogScheduler implements ApplicationRunner {
         boolean exists = blogService.existsByDomainName(blogDomainName);
         if (!exists && !rssInfo.getBlogPosts().isEmpty()) {
             Blog blog = new Blog();
-            Date collectedAt = new SimpleDateFormat("yyyy/MM/dd").parse(blogEnum.getCreatedAt());
+            Date collectedAt = new SimpleDateFormat("yyyy/MM/dd").parse(blogEnum.getCollectedAt());
             blog.setDomainName(blogDomainName);
-            blog.setAdminEmail(blogEnum.getEmail());
+            blog.setAdminEmail(blogEnum.getAdminEmail());
             blog.setName(rssInfo.getBlogName());
             blog.setAddress(rssInfo.getBlogAddress());
-            blog.setRssAddress(blogEnum.getFeedAddress());
+            blog.setRssAddress(blogEnum.getRssAddress());
             blog.setDescription(blogEnum.getDescription());
             blog.setSelfSubmitted(blogEnum.getSelfSubmitted());
             blog.setCollectedAt(collectedAt);
