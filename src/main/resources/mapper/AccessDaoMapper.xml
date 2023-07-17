@@ -1,11 +1,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.boyouquan.dao.BlogAccessDaoMapper">
+<mapper namespace="com.boyouquan.dao.AccessDaoMapper">
+    <sql id="insert_columns">
+        link,
+        blog_domain_name,
+        ip,
+        accessed_at
+    </sql>
+    <select id="countAll" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM access
+    </select>
+    <select id="getMostAccessedBlogDomainNameInLatestOneMonth" resultType="com.boyouquan.model.BlogDomainNameAccess">
+        SELECT
+        blog_domain_name as blogDomainName,
+        COUNT(*) as accessCount
+        FROM access
+        WHERE date(accessed_at) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        GROUP BY blog_domain_name
+        ORDER BY accessCount DESC LIMIT 1
+    </select>
     <select id="getBlogAccessSeriesInLatestOneMonth" resultType="com.boyouquan.model.DayAccess">
         SELECT DATE_FORMAT(date,'%m/%d') AS day,IFNULL(data.num, 0) AS count
         FROM (
         SELECT @days := DATE_ADD(@days, INTERVAL - 1 DAY) AS date
         FROM (SELECT @days := DATE_ADD(CURDATE(), INTERVAL + 1 DAY)
-        FROM blog_access
+        FROM access
         ) day
         WHERE DATE_FORMAT(@days, '%m/%d') >=
         DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 29 DAY), '%m/%d')
@@ -13,50 +33,32 @@
         ) dates
         LEFT JOIN (
         SELECT COUNT(1) AS num, DATE(accessed_at) AS time
-        FROM blog_access
-        WHERE blog_address=#{blogAddress}
+        FROM access
+        WHERE blog_domain_name=#{blogDomainName}
         AND DATE_FORMAT(accessed_at, '%m/%d %H:%i:%S') >=
         DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 30 DAY), '%m/%d %H:%i:%S')
         GROUP BY DATE(accessed_at)
         ) data ON DATE(time) = date
         ORDER BY date
     </select>
-    <select id="getMostAccessedBlogByLatestMonth" resultType="com.boyouquan.model.BlogAccessSummary">
+    <select id="countByBlogDomainName" resultType="java.lang.Long">
         SELECT
-        blog_address as blogAddress,
-        (select blog_name from blog_post p where p.blog_address=a.blog_address limit 1) as blogName,
-        count(*) as accessCount
-        FROM blog_access a
-        WHERE date(accessed_at) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
-        GROUP BY blog_address
-        ORDER BY accessCount DESC LIMIT 1
-    </select>
-    <select id="countTotal" resultType="java.lang.Long">
-        SELECT
-        count(1)
-        FROM blog_access
-    </select>
-    <select id="countBlogAccessByLinkPrefix" resultType="java.lang.Long">
-        SELECT
-        count(1)
-        FROM blog_access
-        WHERE link like concat(#{linkPrefix}, '%')
+        COUNT(*)
+        FROM access
+        WHERE blog_domain_name=#{blogDomainName}
     </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
-        count(1)
-        FROM blog_access
+        COUNT(*)
+        FROM access
         WHERE link=#{link}
     </select>
     <insert id="save">
-        INSERT INTO blog_access (
-        blog_address,
-        link,
-        ip,
-        accessed_at
+        INSERT INTO access (
+        <include refid="insert_columns"/>
         ) VALUES (
-        #{blogAddress},
         #{link},
+        #{blogDomainName},
         #{ip},
         now()
         )

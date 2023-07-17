@@ -11,10 +11,10 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class BlogAccess {
+public class Access {
 
-    private String blogAddress;
     private String link;
+    private String blogDomainName;
     private String ip;
     private Date accessedAt;
 

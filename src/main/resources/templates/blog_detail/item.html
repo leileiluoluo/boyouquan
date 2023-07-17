@@ -17,7 +17,7 @@
             <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"><h3 th:text="${blogInfo.name}"></h3></a>
         </div>
         <div class="domain">
-            <a th:text="${blogInfo.getDomain()}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
+            <a th:text="${blogInfo.domainName}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
             <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
                 <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
                     <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
@@ -34,7 +34,7 @@
     <footer class="blog-detail-summary">
         <div class="flex-item one">
             <p style="font-size: 16px; color: var(--secondary);">文章收录</p>
-            <p th:text="${blogInfo.postsCount}"></p>
+            <p th:text="${blogInfo.postCount}"></p>
         </div>
         <div class="flex-item two">
             <p style="font-size: 16px; color: var(--secondary);">文章浏览</p>
@@ -42,11 +42,11 @@
         </div>
         <div class="flex-item three">
             <p style="font-size: 16px; color: var(--secondary);">最近更新</p>
-            <p th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogInfo.latestUpdatedAt)}"></p>
+            <p th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogInfo.latestPublishedAt)}"></p>
         </div>
         <div class="flex-item four">
             <p style="font-size: 16px; color: var(--secondary);">收录时间</p>
-            <p th:text="${blogInfo.createdAt}"></p>
+            <p th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogInfo.collectedAt)}"></p>
         </div>
     </footer>
 
@@ -64,9 +64,9 @@
         <div class="articles-container">
             <table style="display: table; table-layout: fixed;">
                 <tbody>
-                    <tr th:each="blogPost, iterstat: ${blogInfo.latestPosts}">
-                        <td style="width: 20%"><text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogPost.createdAt)}"></text></td>
-                        <td style="width: 80%"><a th:text="${blogPost.title}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogPost.link)}"></a></td>
+                    <tr th:each="post, iterstat: ${blogInfo.posts}">
+                        <td style="width: 20%"><text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text></td>
+                        <td style="width: 80%"><a th:text="${post.title}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a></td>
                     </tr>
                 </tbody>
             </table>

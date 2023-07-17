@@ -46,7 +46,7 @@ h4 {
 }
 
 .logo a {
-    font-size: 28px !important;
+    font-size: 26px !important;
     font-weight: normal !important;
     letter-spacing: 1px;
     background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
@@ -135,7 +135,7 @@ h4 {
 }
 
 .footer-block .cloud-promotion {
-    width: 60px;
+    width: 70px;
     margin: 0 auto;
 }
 

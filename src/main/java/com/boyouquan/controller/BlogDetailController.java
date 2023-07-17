@@ -1,10 +1,10 @@
 package com.boyouquan.controller;
 
-import com.boyouquan.model.BlogInfo;
 import com.boyouquan.model.DayAccess;
-import com.boyouquan.service.BlogAccessService;
-import com.boyouquan.service.BlogInfoService;
-import com.boyouquan.service.BlogPostService;
+import com.boyouquan.model.BlogInfo;
+import com.boyouquan.service.AccessService;
+import com.boyouquan.service.BlogService;
+import com.boyouquan.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,20 +20,20 @@ import java.util.List;
 public class BlogDetailController {
 
     @Autowired
-    private BlogInfoService blogInfoService;
+    private BlogService blogService;
     @Autowired
-    private BlogPostService blogPostService;
+    private PostService postService;
     @Autowired
-    private BlogAccessService blogAccessService;
+    private AccessService accessService;
 
-    @GetMapping("/{domain}/**")
-    public String list(@PathVariable("domain") String domain, Model model, HttpServletRequest request) {
+    @GetMapping("/{domainName}/**")
+    public String list(@PathVariable("domainName") String domainName, Model model, HttpServletRequest request) {
         // parse domain from request URL
         String requestURL = request.getRequestURL().toString();
-        domain = requestURL.split("/blogs/")[1];
+        domainName = requestURL.split("/blogs/")[1];
 
         // get blog info
-        BlogInfo blogInfo = blogInfoService.getBlogInfoByDomain(domain);
+        BlogInfo blogInfo = blogService.getBlogInfoByDomainName(domainName);
         if (null == blogInfo) {
             return "error/404";
         }
@@ -41,18 +41,17 @@ public class BlogDetailController {
         model.addAttribute("blogInfo", blogInfo);
 
         // for charts
-        List<DayAccess> dayAccessList = blogAccessService.getBlogAccessSeriesInLatestOneMonth(blogInfo.getAddress());
+        List<DayAccess> dayAccessList = accessService.getBlogAccessSeriesInLatestOneMonth(blogInfo.getDomainName());
         String[] monthlyAccessDataLabels = dayAccessList.stream().map(DayAccess::getDay).toArray(String[]::new);
-
         Integer[] monthlyAccessDataValues = dayAccessList.stream().map(DayAccess::getCount).toArray(Integer[]::new);
 
         model.addAttribute("monthlyAccessDataLabels", monthlyAccessDataLabels);
         model.addAttribute("monthlyAccessDataValues", monthlyAccessDataValues);
 
         // for summary
-        model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
-        model.addAttribute("totalBlogPosts", blogPostService.countPosts(""));
-        model.addAttribute("accessTotal", blogAccessService.totalCount());
+        model.addAttribute("totalBlogs", blogService.countAll());
+        model.addAttribute("totalBlogPosts", postService.countAll());
+        model.addAttribute("accessTotal", accessService.countAll());
 
         return "blog_detail/item";
     }

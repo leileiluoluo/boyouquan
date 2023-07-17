@@ -1,8 +1,8 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.BlogPost;
-import com.boyouquan.service.RSSReaderService;
+import com.boyouquan.model.RSSInfo;
+import com.boyouquan.service.BlogCrawlerService;
 import com.boyouquan.util.CommonUtils;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -26,22 +26,24 @@ import java.io.InputStream;
 import java.util.*;
 
 @Service
-public class RSSReaderServiceImpl implements RSSReaderService {
+public class BlogCrawlerServiceImpl implements BlogCrawlerService {
 
-    private final Logger logger = LoggerFactory.getLogger(RSSReaderServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(BlogCrawlerServiceImpl.class);
+
+    private final CloseableHttpClient customClient = HttpClients.custom()
+            .setConnectionManagerShared(true)
+            .setUserAgent(CommonConstants.DATA_SPIDER_USER_AGENT)
+            .build();
 
     @Override
-    public List<BlogPost> read(String feedURL) {
-        List<BlogPost> blogPosts = new ArrayList<>();
-
-        CloseableHttpClient customClient = HttpClients.custom()
-                .setUserAgent(CommonConstants.DATA_SPIDER_USER_AGENT)
-                .build();
+    public RSSInfo getRSSInfoByRSSAddress(String rssAddress, int postsLimit) {
+        int postCount = 0;
 
         try (CloseableHttpClient client = customClient) {
-            HttpUriRequest request = new HttpGet(feedURL);
+            HttpUriRequest request = new HttpGet(rssAddress);
             try (CloseableHttpResponse response = client.execute(request); InputStream stream = response.getEntity().getContent()) {
                 SyndFeed feed = new SyndFeedInput().build(new XmlReader(stream));
+
                 // blog name
                 String blogName = feed.getTitle().trim();
                 if (blogName.length() > CommonConstants.BLOG_NAME_MAX_LENGTH) {
@@ -62,6 +64,20 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                         blogAddress = address.get().getHref();
                     }
                 }
+
+                // FIXME
+                if (StringUtils.isBlank(blogName) || StringUtils.isBlank(blogAddress)
+                        || !blogAddress.startsWith("http")) {
+                    logger.info("invalid rssAddress: {}", rssAddress);
+                    return null;
+                }
+
+                RSSInfo rssInfo = new RSSInfo();
+                List<RSSInfo.Post> posts = new ArrayList<>();
+
+                rssInfo.setBlogName(blogName);
+                rssInfo.setBlogAddress(blogAddress);
+                rssInfo.setBlogPosts(posts);
 
                 // for
                 for (Iterator iter = feed.getEntries().iterator(); iter.hasNext(); ) {
@@ -85,40 +101,42 @@ public class RSSReaderServiceImpl implements RSSReaderService {
                     if (StringUtils.isBlank(link) || !link.startsWith("http")) {
                         link = entry.getLink();
                     }
-                    Date createdAt = entry.getPublishedDate();
-                    if (null == createdAt) {
-                        createdAt = entry.getUpdatedDate();
+                    Date publishedAt = entry.getPublishedDate();
+                    if (null == publishedAt) {
+                        publishedAt = entry.getUpdatedDate();
                     }
 
                     // FIXME
-                    if (StringUtils.isBlank(blogName) || StringUtils.isBlank(blogAddress)
-                            || !blogAddress.startsWith("http")
-                            || StringUtils.isBlank(title) || StringUtils.isBlank(link)
+                    if (StringUtils.isBlank(title) || StringUtils.isBlank(link)
                             || !link.startsWith("http")
-                            || null == createdAt) {
-                        logger.info("invalid entry, feedURL: {}", feedURL);
+                            || null == publishedAt) {
+                        logger.info("invalid entry, rssAddress: {}", rssAddress);
                         break;
                     }
 
                     // add entry
                     blogAddress = CommonUtils.trimFeedURLSuffix(blogAddress);
-                    BlogPost blogPost = new BlogPost();
-                    blogPost.setBlogName(blogName);
-                    blogPost.setBlogAddress(blogAddress);
-                    blogPost.setTitle(title);
-                    blogPost.setDescription(description);
-                    blogPost.setLink(link);
-                    blogPost.setCreatedAt(createdAt);
-                    blogPosts.add(blogPost);
+
+                    RSSInfo.Post post = new RSSInfo.Post();
+                    post.setLink(link);
+                    post.setTitle(title);
+                    post.setDescription(description);
+                    post.setPublishedAt(publishedAt);
+                    posts.add(post);
+
+                    postCount++;
+                    if (postCount >= postsLimit) {
+                        return rssInfo;
+                    }
                 }
-            } catch (FeedException e) {
-                logger.error(e.getMessage(), e);
+
+                return rssInfo;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
 
-        return blogPosts;
+        return null;
     }
 
 }

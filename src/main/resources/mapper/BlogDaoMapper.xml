@@ -1,0 +1,144 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.BlogDaoMapper">
+    <sql id="insert_columns">
+        domain_name,
+        admin_email,
+        name,
+        address,
+        rss_address,
+        description,
+        self_submitted,
+        collected_at,
+        updated_at,
+        valid,
+        deleted
+    </sql>
+    <sql id="select_columns">
+        domain_name as domainName,
+        admin_email as adminEmail,
+        name,
+        address,
+        rss_address as rssAddress,
+        description,
+        self_submitted as selfSubmitted,
+        collected_at as collectedAt,
+        updated_at as updatedAt,
+        valid,
+        deleted
+    </sql>
+    <select id="getByRandom" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        ORDER BY RAND() LIMIT 1
+    </select>
+    <select id="countAll" resultType="java.lang.Long">
+        SELECT
+        COUNT(1)
+        FROM blog
+        WHERE deleted=false
+    </select>
+    <select id="listAll" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        WHERE deleted=false
+    </select>
+    <select id="listRecentCollected" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        WHERE deleted=false
+        ORDER BY collected_at DESC
+        LIMIT #{limit}
+    </select>
+    <select id="countWithKeyword" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM blog
+        WHERE deleted=false
+        <if test="keyword != null and keyword !=''">
+            AND
+            (
+            name LIKE CONCAT('%', #{keyword}, '%')
+            OR address LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+    </select>
+    <select id="listWithKeyWord" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        WHERE deleted=false
+        <if test="keyword != null and keyword !=''">
+            AND
+            (
+            name LIKE CONCAT('%', #{keyword}, '%')
+            OR address LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        ORDER BY collected_at DESC
+        LIMIT #{offset}, #{rows}
+    </select>
+    <select id="existsByDomainName" resultType="boolean">
+        SELECT
+        EXISTS (
+        SELECT 1 FROM blog WHERE domain_name=#{domainName}
+        )
+    </select>
+    <select id="existsByRssAddress" resultType="boolean">
+        SELECT
+        EXISTS (
+        SELECT 1 FROM blog WHERE rss_address=#{rssAddress}
+        )
+    </select>
+    <select id="getByDomainName" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        WHERE domain_name=#{domainName}
+    </select>
+    <select id="getByAddress" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        WHERE address=#{address}
+    </select>
+    <insert id="save">
+        INSERT INTO blog (
+        <include refid="insert_columns"/>
+        ) VALUES (
+        #{domainName},
+        #{adminEmail},
+        #{name},
+        #{address},
+        #{rssAddress},
+        #{description},
+        #{selfSubmitted},
+        #{collectedAt},
+        #{updatedAt},
+        true,
+        false
+        )
+    </insert>
+    <update id="update">
+        UPDATE blog
+        SET
+        domain_name=#{domainName},
+        admin_email=#{adminEmail},
+        name=#{name},
+        address=#{address},
+        rss_address=#rssAddress},
+        description=#{description},
+        self_submitted=#{selfSubmitted},
+        updated_at=now(),
+        valid=#{valid}
+        WHERE domain_name=#{domainName}
+    </update>
+    <update id="deleteByDomainName">
+        UPDATE blog
+        SET
+        deleted=true
+        WHERE domain_name=#{domainName}
+    </update>
+</mapper>

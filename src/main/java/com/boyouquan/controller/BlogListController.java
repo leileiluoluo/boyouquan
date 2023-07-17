@@ -2,9 +2,7 @@ package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.BlogInfo;
-import com.boyouquan.service.BlogAccessService;
-import com.boyouquan.service.BlogInfoService;
-import com.boyouquan.service.BlogPostService;
+import com.boyouquan.service.*;
 import com.boyouquan.util.Pagination;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BlogListController {
 
     @Autowired
-    private BlogInfoService blogInfoService;
+    private BlogService blogService;
     @Autowired
-    private BlogPostService blogPostService;
+    private PostService postService;
     @Autowired
-    private BlogAccessService blogAccessService;
+    private AccessService accessService;
 
     @GetMapping("")
     public String list(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
@@ -38,13 +36,13 @@ public class BlogListController {
         }
         keyword = StringUtils.trim(keyword);
 
-        Pagination<BlogInfo> pagination = blogInfoService.listBlogInfos(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
-        model.addAttribute("pagination", pagination);
+        Pagination<BlogInfo> blogInfoPagination = blogService.listBlogInfosWithKeyWord(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        model.addAttribute("pagination", blogInfoPagination);
         model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
         model.addAttribute("keyword", keyword);
-        model.addAttribute("totalBlogs", blogPostService.countBlogs(""));
-        model.addAttribute("totalBlogPosts", blogPostService.countPosts(""));
-        model.addAttribute("accessTotal", blogAccessService.totalCount());
+        model.addAttribute("totalBlogs", blogService.countAll());
+        model.addAttribute("totalBlogPosts", postService.countAll());
+        model.addAttribute("accessTotal", accessService.countAll());
         return "blogs/list";
     }
 

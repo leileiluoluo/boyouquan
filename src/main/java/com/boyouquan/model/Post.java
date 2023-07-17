@@ -11,11 +11,12 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class BlogAggregate {
+public class Post {
 
-    private String name;
-    private String address;
-    private Date latestUpdatedAt;
-    private Long postCount;
+    private String link;
+    private String blogDomainName;
+    private String title;
+    private String description;
+    private Date publishedAt;
 
 }
