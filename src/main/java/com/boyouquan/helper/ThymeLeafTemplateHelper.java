@@ -15,6 +15,10 @@ public class ThymeLeafTemplateHelper {
         return CommonUtils.dateCommonFormatDisplay(date);
     }
 
+    public static String dateHourCommonFormatDisplay(Date date) {
+        return CommonUtils.dateHourCommonFormatDisplay(date);
+    }
+
     public String dateFriendlyDisplay(Date date) {
         return CommonUtils.dateFriendlyDisplay(date);
     }

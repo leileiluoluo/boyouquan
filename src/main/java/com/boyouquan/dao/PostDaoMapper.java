@@ -28,4 +28,6 @@ public interface PostDaoMapper {
 
     void batchSave(List<Post> posts);
 
+    void batchUpdateDraftByBlogDomainName(String blogDomainName, boolean draft);
+
 }

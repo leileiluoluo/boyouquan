@@ -518,7 +518,7 @@ div#searchbox {
     -webkit-box-orient: vertical;
 }
 
-tr:nth-child(odd) {
+tr:nth-child(even) {
     background-color: var(--code-bg);
 }
 
@@ -528,3 +528,78 @@ tr:nth-child(odd) {
     text-overflow: ellipsis;
 }
 
+
+.blog-requests {
+    padding: var(--gap);
+    border-radius: var(--radius);
+    transition: transform .1s;
+    border: 1px solid var(--border);
+    background: var(--entry);
+    margin-bottom: var(--gap);
+}
+
+
+.blog-requests .requests-container {
+    font-size: 16px;
+    color: var(--secondary);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.blog-requests .requests-container td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.blog-requests span {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.blog-requests .requests-form-container {
+
+}
+
+.blog-requests .requests-form-container .key-value-entry {
+    margin-bottom: 6px;
+}
+
+.blog-requests .requests-form-container .key-value-entry .field {
+    padding: 2px 4px 2px 4px;
+    border: 2px solid var(--border);
+}
+
+.blog-requests .requests-form-container .key-value-entry .label {
+    display: flex;
+    font-size: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-items: center;
+}
+
+.blog-requests .requests-form-container .key-value-entry .field {
+    font-size: 16px;
+    color: var(--secondary);
+}
+
+.blog-requests .requests-form-container .key-value-entry input {
+    width: 100%;
+}
+
+.blog-requests .requests-form-container .key-value-entry textarea {
+    width: 100%;
+}
+
+.blog-requests .requests-form-container .key-value-entry input[type="submit"] {
+    margin-top: 10px;
+    font-size: 16px;
+    width: 80px !important;
+    color: var(--theme);
+    line-height: 30px;
+    background: var(--primary);
+    border-radius: 16px;
+    padding: 0 16px;
+}

@@ -11,6 +11,7 @@
         collected_at,
         updated_at,
         valid,
+        draft,
         deleted
     </sql>
     <sql id="select_columns">
@@ -24,31 +25,37 @@
         collected_at as collectedAt,
         updated_at as updatedAt,
         valid,
+        draft,
         deleted
     </sql>
     <select id="getByRandom" resultType="com.boyouquan.model.Blog">
         SELECT
         <include refid="select_columns"/>
         FROM blog
+        WHERE draft=false
+        AND deleted=false
         ORDER BY RAND() LIMIT 1
     </select>
     <select id="countAll" resultType="java.lang.Long">
         SELECT
         COUNT(1)
         FROM blog
-        WHERE deleted=false
+        WHERE draft=false
+        AND deleted=false
     </select>
     <select id="listAll" resultType="com.boyouquan.model.Blog">
         SELECT
         <include refid="select_columns"/>
         FROM blog
-        WHERE deleted=false
+        WHERE draft=false
+        AND deleted=false
     </select>
     <select id="listRecentCollected" resultType="com.boyouquan.model.Blog">
         SELECT
         <include refid="select_columns"/>
         FROM blog
-        WHERE deleted=false
+        WHERE draft=false
+        AND deleted=false
         ORDER BY collected_at DESC
         LIMIT #{limit}
     </select>
@@ -56,7 +63,8 @@
         SELECT
         COUNT(*)
         FROM blog
-        WHERE deleted=false
+        WHERE draft=false
+        AND deleted=false
         <if test="keyword != null and keyword !=''">
             AND
             (
@@ -69,7 +77,8 @@
         SELECT
         <include refid="select_columns"/>
         FROM blog
-        WHERE deleted=false
+        WHERE draft=false
+        AND deleted=false
         <if test="keyword != null and keyword !=''">
             AND
             (
@@ -104,6 +113,12 @@
         FROM blog
         WHERE address=#{address}
     </select>
+    <select id="getByRSSAddress" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        WHERE rss_address=#{rssAddress}
+    </select>
     <insert id="save">
         INSERT INTO blog (
         <include refid="insert_columns"/>
@@ -118,21 +133,22 @@
         #{collectedAt},
         #{updatedAt},
         true,
+        #{draft},
         false
         )
     </insert>
     <update id="update">
         UPDATE blog
         SET
-        domain_name=#{domainName},
         admin_email=#{adminEmail},
         name=#{name},
         address=#{address},
-        rss_address=#rssAddress},
+        rss_address=#{rssAddress},
         description=#{description},
         self_submitted=#{selfSubmitted},
         updated_at=now(),
-        valid=#{valid}
+        valid=#{valid},
+        draft=#{draft}
         WHERE domain_name=#{domainName}
     </update>
     <update id="deleteByDomainName">

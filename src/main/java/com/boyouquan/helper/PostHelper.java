@@ -19,7 +19,7 @@ public class PostHelper {
     @Autowired
     private PostService postService;
 
-    public boolean savePosts(String blogDomainName, RSSInfo rssInfo) {
+    public boolean savePosts(String blogDomainName, RSSInfo rssInfo, boolean draft) {
         if (null != rssInfo) {
             // save posts
             List<Post> posts = new ArrayList<>();
@@ -33,6 +33,7 @@ public class PostHelper {
                     post.setDescription(rssPost.getDescription());
                     post.setPublishedAt(rssPost.getPublishedAt());
                     post.setBlogDomainName(blogDomainName);
+                    post.setDraft(draft);
 
                     posts.add(post);
                 }

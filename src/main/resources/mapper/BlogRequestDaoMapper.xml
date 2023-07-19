@@ -1,0 +1,90 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.BlogRequestDaoMapper">
+    <sql id="insert_columns">
+        rss_address,
+        admin_email,
+        name,
+        description,
+        self_submitted,
+        requested_at,
+        updated_at,
+        status,
+        reason,
+        deleted
+    </sql>
+    <sql id="select_columns">
+        id,
+        rss_address as rssAddress,
+        admin_email as adminEmail,
+        name,
+        description,
+        self_submitted as selfSubmitted,
+        requested_at as requestedAt,
+        updated_at as updatedAt,
+        status,
+        reason,
+        deleted
+    </sql>
+    <select id="listByStatuses" resultType="com.boyouquan.model.BlogRequest">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog_request
+        WHERE status in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY requested_at DESC
+    </select>
+    <select id="listByStatus" resultType="com.boyouquan.model.BlogRequest">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog_request
+        WHERE status=#{status}
+        ORDER BY requested_at DESC
+    </select>
+    <select id="getById" resultType="com.boyouquan.model.BlogRequest">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog_request
+        WHERE id=#{id}
+    </select>
+    <select id="getByRssAddress" resultType="com.boyouquan.model.BlogRequest">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog_request
+        WHERE rss_address=#{rssAddress}
+    </select>
+    <update id="update">
+        UPDATE blog_request
+        SET
+        admin_email=#{adminEmail},
+        name=#{name},
+        description=#{description},
+        updated_at=now(),
+        status=#{status},
+        reason=#{reason}
+        WHERE rss_address=#{rssAddress}
+    </update>
+    <insert id="submit">
+        INSERT INTO blog_request (
+        <include refid="insert_columns"/>
+        ) VALUES (
+        #{rssAddress},
+        #{adminEmail},
+        #{name},
+        #{description},
+        #{selfSubmitted},
+        now(),
+        now(),
+        'submitted',
+        #{reason},
+        false
+        )
+    </insert>
+    <update id="deleteByRssAddress">
+        UPDATE blog_request
+        SET
+        deleted=true
+        WHERE rss_address=#{rssAddress}
+    </update>
+</mapper>

@@ -18,5 +18,6 @@ public class Post {
     private String title;
     private String description;
     private Date publishedAt;
+    private Boolean draft = false;
 
 }
