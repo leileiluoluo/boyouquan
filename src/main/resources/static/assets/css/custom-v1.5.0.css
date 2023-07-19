@@ -558,8 +558,8 @@ tr:nth-child(even) {
     font-weight: bold;
 }
 
-.blog-requests .requests-form-container {
-
+.blog-requests .requests-header {
+    margin-bottom: 20px;
 }
 
 .blog-requests .requests-form-container .key-value-entry {

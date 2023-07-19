@@ -1,19 +1,15 @@
 package com.boyouquan.controller;
 
+import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.BlogRequest;
 import com.boyouquan.model.BlogRequestForm;
 import com.boyouquan.model.BlogRequestInfo;
 import com.boyouquan.service.BlogRequestService;
-import com.boyouquan.util.EmailUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +22,8 @@ public class AdminController {
 
     @Autowired
     private BlogRequestService blogRequestService;
+    @Autowired
+    private BlogRequestFormHelper requestFormHelper;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
@@ -38,54 +36,32 @@ public class AdminController {
                         BlogRequest.Status.approved,
                         BlogRequest.Status.rejected));
 
-        model.addAttribute("blogRequests", blogRequests);
+        model.addAttribute("blogRequestInfos", blogRequests);
 
         return "admin/blog_requests/list";
     }
 
+    @GetMapping("/blog-requests/{id}")
+    public String getBlogRequestById(@PathVariable("id") Long id, Model model) {
+        BlogRequestInfo blogRequestInfo = blogRequestService.getBlogRequestInfoById(id);
+
+        model.addAttribute("blogRequestInfo", blogRequestInfo);
+
+        return "admin/blog_requests/item";
+    }
+
     @GetMapping("/blog-requests/add")
     public String addBlogRequestForm(BlogRequestForm blogRequestForm) {
-        return "admin/blog_requests/add-form";
+        return "admin/blog_requests/form";
     }
 
     @PostMapping("/blog-requests/add")
     public String addBlogRequest(BlogRequestForm blogRequestForm, Errors errors, Model model) {
-        // name
-        if (StringUtils.isBlank(blogRequestForm.getName())) {
-            errors.rejectValue("name", "fields.invalid", "博客名称不能为空");
-        } else if (blogRequestForm.getName().length() > 20) {
-            errors.rejectValue("name", "fields.invalid", "博客名称不能大于20个字");
-        }
-
-        // description
-        if (StringUtils.isBlank(blogRequestForm.getDescription())) {
-            errors.rejectValue("description", "fields.invalid", "博客描述不能为空");
-        } else if (blogRequestForm.getDescription().length() < 10) {
-            errors.rejectValue("description", "fields.invalid", "博客描述不能少于10个字");
-        }
-
-        // rss address
-        if (StringUtils.isBlank(blogRequestForm.getRssAddress())) {
-            errors.rejectValue("rssAddress", "fields.invalid", "RSS地址不能为空");
-        } else if (!blogRequestForm.getRssAddress().startsWith("http")) {
-            errors.rejectValue("rssAddress", "fields.invalid", "RSS地址不正确");
-        }
-
-        // email
-        if (StringUtils.isBlank(blogRequestForm.getAdminEmail())) {
-            errors.rejectValue("adminEmail", "fields.invalid", "博主邮箱不能为空");
-        } else if (!EmailUtil.isEmailValid(blogRequestForm.getAdminEmail())) {
-            errors.rejectValue("adminEmail", "fields.invalid", "邮箱格式不正确");
-        }
-
-
-        // exists?
-        if (null != blogRequestService.getByRssAddress(blogRequestForm.getRssAddress())) {
-            errors.rejectValue("rssAddress", "fields.invalid", "您要提交的博客已存在！");
-        }
+        // params validation
+        requestFormHelper.paramsValidation(blogRequestForm, errors);
 
         if (errors.getErrorCount() > 0) {
-            return "admin/blog_requests/add-form";
+            return "admin/blog_requests/form";
         }
 
         // submit
