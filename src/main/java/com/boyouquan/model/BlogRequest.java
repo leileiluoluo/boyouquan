@@ -11,19 +11,26 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Blog {
+public class BlogRequest {
 
-    private String domainName;
+    private Long id;
+    private String rssAddress;
     private String adminEmail;
     private String name;
-    private String address;
-    private String rssAddress;
     private String description;
     private Boolean selfSubmitted;
-    private Date collectedAt;
+    private Date requestedAt;
     private Date updatedAt;
-    private Boolean draft;
-    private Boolean valid;
-    protected Boolean deleted;
+    private Status status;
+    private String reason;
+    private Boolean deleted;
+
+    public enum Status {
+        submitted,
+        system_check_valid,
+        system_check_invalid,
+        approved,
+        rejected
+    }
 
 }

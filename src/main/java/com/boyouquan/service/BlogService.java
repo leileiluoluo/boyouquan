@@ -34,6 +34,8 @@ public interface BlogService {
 
     Blog getByAddress(String address);
 
+    Blog getByRSSAddress(String rssAddress);
+
     void save(Blog blog);
 
     void update(Blog blog);

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -63,6 +64,9 @@ public class LatestNewsServiceImpl implements LatestNewsService {
     private List<LatestNews> getMostAccessedBlogsNews() {
         BlogDomainNameAccess blogDomainNameAccess = accessService.getMostAccessedBlogDomainNameInLatestOneMonth();
         Blog blog = blogService.getByDomainName(blogDomainNameAccess.getBlogDomainName());
+        if (null == blog) {
+            return Collections.emptyList();
+        }
 
         String title = String.format(CommonConstants.MOST_ACCESSED_BLOG_ANNOUNCE_PATTERN, blog.getName(), blogDomainNameAccess.getAccessCount());
         String domain = CommonUtils.getDomain(blog.getAddress());
@@ -77,6 +81,9 @@ public class LatestNewsServiceImpl implements LatestNewsService {
 
     private List<LatestNews> getMostUpdatedBlogsNews() {
         BlogDomainNamePublish blogDomainNamePublish = postService.getMostPublishedInLatestOneMonth();
+        if (null == blogDomainNamePublish) {
+            return Collections.emptyList();
+        }
         Blog blog = blogService.getByDomainName(blogDomainNamePublish.getBlogDomainName());
 
         String title = String.format(CommonConstants.MOST_UPDATED_BLOG_ANNOUNCE_PATTERN, blog.getName(), blogDomainNamePublish.getPostCount());

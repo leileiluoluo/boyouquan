@@ -26,6 +26,8 @@ public interface BlogDaoMapper {
 
     Blog getByAddress(String address);
 
+    Blog getByRSSAddress(String rssAddress);
+
     void save(Blog blog);
 
     void update(Blog blog);

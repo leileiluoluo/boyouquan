@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head/head::head('提交博客 - 博友圈 · 博客人的朋友圈！', '提交博客', '提交博客。')}"></head>
+<body class="list" id="top">
+<script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
+<header th:replace="~{fragments/header/header::header}"></header>
+<main class="main">
+    <header class="post-header">
+        <h3 class="post-title">
+            提交博客
+        </h3>
+    </header>
+    <div class="blog-requests">
+        <form th:action="@{/blog-requests/add}" th:object="${blogRequestForm}" method="post">
+            <div class="requests-form-container">
+                <div class="key-value-entry">
+                    <div class="label">
+                        <span>博客名称</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+                    </div>
+                    <div class="field">
+                        <input name="name" th:field="*{name}" />
+                    </div>
+                </div>
+                <div class="key-value-entry">
+                    <div class="label">
+                        <span>RSS地址</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('rssAddress')}" th:errors="*{rssAddress}" />
+                    </div>
+                    <div class="field">
+                        <input name="rssAddress" th:field="*{rssAddress}" />
+                    </div>
+                </div>
+                <div class="key-value-entry">
+                    <div class="label">
+                        <span>博主邮箱</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" />
+                    </div>
+                    <div class="field">
+                        <input name="adminEmail" th:field="*{adminEmail}" />
+                    </div>
+                </div>
+                <div class="key-value-entry">
+                    <div class="label">
+                        <span>博客描述</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
+                    </div>
+                    <div class="field">
+                        <textarea name="description" th:field="*{description}"/>
+                    </div>
+                </div>
+
+                <div class="key-value-entry">
+                    <input type="submit" value="提交"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+<footer class="footer-block">
+    <div th:replace="~{fragments/footer/contact::contact}"></div>
+    <div th:replace="~{fragments/footer/shuttle::shuttle}"></div>
+</footer>
+<footer th:replace="~{fragments/footer/footer_site_info::footer_site_info}"></footer>
+<div th:insert="~{fragments/plugin/go_to_top::go_to_top}"></div>
+<script th:src="@{/assets/js/highlight-menu.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/theme-listener.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/tongji.js}" type="text/javascript"></script>
+</body>
+</html>

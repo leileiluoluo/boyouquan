@@ -37,12 +37,14 @@ public class PostScheduler {
     @Async
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void crawlingBlogPosts() {
-        logger.info("post scheduler started!");
+        logger.info("post scheduler start!");
 
         savePosts();
+
+        logger.info("post scheduler end!");
     }
 
-    private void savePosts() {
+    public void savePosts() {
         List<Blog> blogs = blogService.listAll();
         for (Blog blog : blogs) {
             try {
@@ -51,13 +53,13 @@ public class PostScheduler {
                 RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(blog.getRssAddress(), CommonConstants.RSS_POST_COUNT_READ_LIMIT);
 
                 // save posts
-                boolean success = postHelper.savePosts(blog.getDomainName(), rssInfo);
+                boolean success = postHelper.savePosts(blog.getDomainName(), rssInfo, false);
                 if (!success) {
                     logger.error("posts save failed, blogDomainName: {}", blog.getDomainName());
-                    return;
+                    continue;
                 }
 
-                logger.error("posts save success, blogDomainName: {}", blog.getDomainName());
+                logger.info("posts save success, blogDomainName: {}", blog.getDomainName());
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }

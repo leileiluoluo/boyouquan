@@ -27,4 +27,6 @@ public interface PostService {
 
     boolean batchSave(List<Post> posts);
 
+    boolean batchUpdateDraftByBlogDomainName(String blogDomainName, boolean draft);
+
 }

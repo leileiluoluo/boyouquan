@@ -86,4 +86,15 @@ public class PostServiceImpl implements PostService {
         return false;
     }
 
+    @Override
+    public boolean batchUpdateDraftByBlogDomainName(String blogDomainName, boolean draft) {
+        try {
+            postDaoMapper.batchUpdateDraftByBlogDomainName(blogDomainName, draft);
+            return true;
+        } catch (Exception e) {
+            logger.error("batch save failed!", e);
+        }
+        return false;
+    }
+
 }

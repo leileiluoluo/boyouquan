@@ -140,6 +140,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Blog getByRSSAddress(String rssAddress) {
+        return blogDaoMapper.getByRSSAddress(rssAddress);
+    }
+
+    @Override
     public void save(Blog blog) {
         blogDaoMapper.save(blog);
     }

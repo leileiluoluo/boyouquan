@@ -12,9 +12,14 @@ import java.util.Date;
 public class CommonUtils {
 
     private static final SimpleDateFormat MORE_COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy/MM/dd");
+    private static final SimpleDateFormat MORE_COMMON_DATE_HOUR_PATTERN = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
     public static String dateCommonFormatDisplay(Date date) {
         return MORE_COMMON_DATE_PATTERN.format(date);
+    }
+
+    public static String dateHourCommonFormatDisplay(Date date) {
+        return MORE_COMMON_DATE_HOUR_PATTERN.format(date);
     }
 
     public static String dateFriendlyDisplay(Date date) {

@@ -9,6 +9,7 @@ CREATE TABLE blog (
     self_submitted BOOLEAN DEFAULT FALSE,
     collected_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
+    draft BOOLEAN DEFAULT FALSE,
     valid BOOLEAN DEFAULT TRUE,
     deleted BOOLEAN DEFAULT FALSE
 );

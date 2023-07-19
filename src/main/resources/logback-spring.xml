@@ -17,7 +17,6 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-
     <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/debug.log</file>
         <encoder>
