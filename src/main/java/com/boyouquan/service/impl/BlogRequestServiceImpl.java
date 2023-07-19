@@ -86,6 +86,18 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     }
 
     @Override
+    public List<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses) {
+        List<BlogRequestInfo> blogRequestInfos = new ArrayList<>();
+
+        List<BlogRequest> blogRequests = blogRequestDaoMapper.listBySelfSubmittedAndStatuses(selfSubmitted, statuses);
+        for (BlogRequest blogRequest : blogRequests) {
+            blogRequestInfos.add(assembleBlogRequestInfo(blogRequest));
+        }
+
+        return blogRequestInfos;
+    }
+
+    @Override
     public List<BlogRequestInfo> listBlogRequestInfosByStatuses(List<BlogRequest.Status> statuses) {
         List<BlogRequestInfo> blogRequestInfos = new ArrayList<>();
 

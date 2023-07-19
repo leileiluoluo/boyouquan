@@ -9,6 +9,8 @@ public interface BlogRequestService {
 
     void processNewRequest(String rssAddress);
 
+    List<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses);
+
     List<BlogRequestInfo> listBlogRequestInfosByStatuses(List<BlogRequest.Status> statuses);
 
     BlogRequestInfo getBlogRequestInfoById(Long id);

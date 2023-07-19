@@ -31,7 +31,7 @@ public class BlogRequestController {
 
     @GetMapping("")
     public String listBlogRequests(Model model) {
-        List<BlogRequestInfo> blogRequestInfos = blogRequestService.listBlogRequestInfosByStatuses(
+        List<BlogRequestInfo> blogRequestInfos = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(true,
                 Arrays.asList(BlogRequest.Status.submitted,
                         BlogRequest.Status.system_check_valid,
                         BlogRequest.Status.system_check_invalid,

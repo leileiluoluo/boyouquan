@@ -24,8 +24,8 @@ public class BlogScheduler {
     private BlogRequestService blogRequestService;
 
     @Async
-    @Scheduled(cron = "0 0/10 * * * ?")
-    public void crawlingBlogPosts() {
+    @Scheduled(cron = "0 0 0/2 * * ?")
+    public void processBlogs() {
         logger.info("blog scheduler start!");
 
         processSubmittedBlog();
