@@ -25,12 +25,23 @@
         reason,
         deleted
     </sql>
+    <select id="listBySelfSubmittedAndStatuses" resultType="com.boyouquan.model.BlogRequest">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog_request
+        WHERE self_submitted=#{selfSubmitted}
+        AND status IN
+        <foreach collection="statuses" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY requested_at DESC
+    </select>
     <select id="listByStatuses" resultType="com.boyouquan.model.BlogRequest">
         SELECT
         <include refid="select_columns"/>
         FROM blog_request
-        WHERE status in
-        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+        WHERE status IN
+        <foreach collection="statuses" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
         ORDER BY requested_at DESC
