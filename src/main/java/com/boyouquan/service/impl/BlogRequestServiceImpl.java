@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class BlogRequestServiceImpl implements BlogRequestService {
@@ -32,6 +34,8 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     private PostHelper postHelper;
     @Autowired
     private EmailService emailService;
+
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     public void processNewRequest(String rssAddress) {
@@ -178,12 +182,15 @@ public class BlogRequestServiceImpl implements BlogRequestService {
         blogRequestDaoMapper.submit(blogRequest);
 
         // send email
-        if (blogRequest.getSelfSubmitted()) {
-            BlogRequest blogRequestStored = getByRssAddress(blogRequest.getRssAddress());
-            if (null != blogRequestStored) {
-                emailService.sendBlogRequestSubmittedNotice(blogRequestStored);
+        executorService.execute(() -> {
+            // send email
+            if (blogRequest.getSelfSubmitted()) {
+                BlogRequest blogRequestStored = getByRssAddress(blogRequest.getRssAddress());
+                if (null != blogRequestStored) {
+                    emailService.sendBlogRequestSubmittedNotice(blogRequestStored);
+                }
             }
-        }
+        });
     }
 
     @Override
