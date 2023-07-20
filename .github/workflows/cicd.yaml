@@ -46,8 +46,10 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_USER: ${{ secrets.DATABASE_USER }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_ENABLE: ${{ secrets.EMAIL_ENABLE }}
         with:
-          envs: DATABASE_URL,DATABASE_USER,DATABASE_PASSWORD
+          envs: DATABASE_URL,DATABASE_USER,DATABASE_PASSWORD,EMAIL_PASSWORD,EMAIL_ENABLE
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
@@ -61,6 +63,8 @@ jobs:
             export DATABASE_URL=$DATABASE_URL
             export DATABASE_USER=$DATABASE_USER
             export DATABASE_PASSWORD=$DATABASE_PASSWORD
+            export EMAIL_PASSWORD=$EMAIL_PASSWORD
+            export EMAIL_ENABLE=$EMAIL_ENABLE
             nohup java -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar > /tmp/server.log 2>&1 &
             sleep 1
             while ! grep -m1 'Started BoYouQuanWebApplication' < /tmp/server.log; do

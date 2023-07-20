@@ -1,6 +1,5 @@
-package com.boyouquan.service.impl;
+package com.boyouquan.service;
 
-import com.boyouquan.service.BlogCrawlerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

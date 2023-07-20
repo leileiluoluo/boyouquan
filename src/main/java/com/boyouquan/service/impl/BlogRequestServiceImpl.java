@@ -4,10 +4,7 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.BlogRequestDaoMapper;
 import com.boyouquan.helper.PostHelper;
 import com.boyouquan.model.*;
-import com.boyouquan.service.BlogCrawlerService;
-import com.boyouquan.service.BlogRequestService;
-import com.boyouquan.service.BlogService;
-import com.boyouquan.service.PostService;
+import com.boyouquan.service.*;
 import com.boyouquan.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +30,8 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     private PostService postService;
     @Autowired
     private PostHelper postHelper;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public void processNewRequest(String rssAddress) {
@@ -146,6 +145,11 @@ public class BlogRequestServiceImpl implements BlogRequestService {
 
                 postService.batchUpdateDraftByBlogDomainName(blog.getDomainName(), false);
             }
+
+            // send email
+            if (blogRequest.getSelfSubmitted()) {
+                emailService.sendBlogRequestApprovedNotice(blogRequest);
+            }
         }
     }
 
@@ -156,6 +160,11 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             blogRequest.setStatus(BlogRequest.Status.rejected);
             blogRequest.setReason(reason);
             update(blogRequest);
+
+            // send email
+            if (blogRequest.getSelfSubmitted()) {
+                emailService.sendBlogRequestRejectNotice(blogRequest);
+            }
         }
     }
 

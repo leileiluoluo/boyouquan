@@ -3,6 +3,24 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  mail:
+    host: smtp.exmail.qq.com
+    port: 465
+    username: contact@boyouquan.com
+    password: ${EMAIL_PASSWORD:fake}
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          timeout: 10000
+          auth: true
+          starttls:
+            required: true
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USER}
@@ -13,4 +31,6 @@ mybatis:
 
 # self defined
 boyouquan:
+  email:
+    enable: ${EMAIL_ENABLE:false}
 
