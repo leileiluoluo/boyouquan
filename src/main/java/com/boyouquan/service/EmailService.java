@@ -4,6 +4,8 @@ import com.boyouquan.model.BlogRequest;
 
 public interface EmailService {
 
+    void sendBlogRequestSubmittedNotice(BlogRequest blogRequest);
+
     void sendBlogRequestApprovedNotice(BlogRequest blogRequest);
 
     void sendBlogRequestRejectNotice(BlogRequest blogRequest);

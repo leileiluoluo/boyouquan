@@ -33,6 +33,33 @@ public class EmailServiceImpl implements EmailService {
     private BlogService blogService;
 
     @Override
+    public void sendBlogRequestSubmittedNotice(BlogRequest blogRequest) {
+        if (!boYouQuanConfig.getEmailEnabled()) {
+            return;
+        }
+
+        if (null != blogRequest) {
+            String siteManagerEmail = "contact@boyouquan.com";
+            String subject = String.format("[博友圈] 新提交的博客「%s」需要审核！", blogRequest.getName());
+
+            Context context = new Context();
+            BlogRequestInfo blogRequestInfo = new BlogRequestInfo();
+            BeanUtils.copyProperties(blogRequest, blogRequestInfo);
+            Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
+            if (null != blog) {
+                blogRequestInfo.setDomainName(blog.getDomainName());
+            }
+
+            context.setVariable("blogRequestInfo", blogRequestInfo);
+
+            String text = templateEngine.process("email/blog_request_template_add", context);
+
+            // send
+            send(siteManagerEmail, subject, text, true);
+        }
+    }
+
+    @Override
     public void sendBlogRequestApprovedNotice(BlogRequest blogRequest) {
         if (!boYouQuanConfig.getEmailEnabled()) {
             return;

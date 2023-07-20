@@ -176,6 +176,14 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     @Override
     public void submit(BlogRequest blogRequest) {
         blogRequestDaoMapper.submit(blogRequest);
+
+        // send email
+        if (blogRequest.getSelfSubmitted()) {
+            BlogRequest blogRequestStored = getByRssAddress(blogRequest.getRssAddress());
+            if (null != blogRequestStored) {
+                emailService.sendBlogRequestSubmittedNotice(blogRequestStored);
+            }
+        }
     }
 
     @Override
