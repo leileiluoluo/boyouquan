@@ -119,6 +119,7 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                     // FIXME
                     if (StringUtils.isBlank(title) || StringUtils.isBlank(link)
                             || !link.startsWith("http")
+                            || StringUtils.isBlank(description)
                             || null == publishedAt) {
                         logger.info("invalid entry, rssAddress: {}", rssAddress);
                         break;
@@ -128,9 +129,9 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                     blogAddress = CommonUtils.trimFeedURLSuffix(blogAddress);
 
                     RSSInfo.Post post = new RSSInfo.Post();
-                    post.setLink(link);
-                    post.setTitle(title);
-                    post.setDescription(description);
+                    post.setLink(link.trim());
+                    post.setTitle(title.trim());
+                    post.setDescription(description.trim());
                     post.setPublishedAt(publishedAt);
                     posts.add(post);
 
