@@ -6,6 +6,17 @@
 <script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
 <header th:replace="~{fragments/header/header::header}"></header>
 <main class="main">
+    <article class="first-entry home-info">
+        <div class="entry-content">
+            <p></p>
+            <ul>
+                <li>
+                    <strong>欢迎在这里提交您的博客，提交前请先仔细阅读「<a href="/about#submit-blog">博客需满足的要求</a>」，以减少被驳回的可能。确认满足要求后，请使用下方表单提交，一般在 24 小时之内会得到审核！</strong>
+                </li>
+            </ul>
+            <p></p>
+        </div>
+    </article>
     <header class="post-header">
         <h3 class="post-title">
             提交博客
@@ -16,7 +27,7 @@
             <div class="requests-form-container">
                 <div class="key-value-entry">
                     <div class="label">
-                        <span>博客名称</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+                        <p>博客名称</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
                     </div>
                     <div class="field">
                         <input name="name" th:field="*{name}" />
@@ -24,7 +35,7 @@
                 </div>
                 <div class="key-value-entry">
                     <div class="label">
-                        <span>RSS地址</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('rssAddress')}" th:errors="*{rssAddress}" />
+                        <p>RSS地址</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('rssAddress')}" th:errors="*{rssAddress}" />
                     </div>
                     <div class="field">
                         <input name="rssAddress" th:field="*{rssAddress}" />
@@ -32,7 +43,7 @@
                 </div>
                 <div class="key-value-entry">
                     <div class="label">
-                        <span>博主邮箱</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" />
+                        <p>博主邮箱</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" />
                     </div>
                     <div class="field">
                         <input name="adminEmail" th:field="*{adminEmail}" />
@@ -40,7 +51,7 @@
                 </div>
                 <div class="key-value-entry">
                     <div class="label">
-                        <span>博客描述</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
+                        <p>博客描述</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
                     </div>
                     <div class="field">
                         <textarea name="description" th:field="*{description}"/>
