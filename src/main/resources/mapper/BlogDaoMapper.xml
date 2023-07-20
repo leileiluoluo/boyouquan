@@ -105,7 +105,9 @@
         SELECT
         <include refid="select_columns"/>
         FROM blog
-        WHERE domain_name=#{domainName}
+        WHERE draft=false
+        AND deleted=false
+        AND domain_name=#{domainName}
     </select>
     <select id="getByAddress" resultType="com.boyouquan.model.Blog">
         SELECT
@@ -151,10 +153,9 @@
         draft=#{draft}
         WHERE domain_name=#{domainName}
     </update>
-    <update id="deleteByDomainName">
-        UPDATE blog
-        SET
-        deleted=true
+    <delete id="deleteByDomainName">
+        DELETE
+        FROM blog
         WHERE domain_name=#{domainName}
-    </update>
+    </delete>
 </mapper>

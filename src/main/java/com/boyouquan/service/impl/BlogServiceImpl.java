@@ -180,7 +180,7 @@ public class BlogServiceImpl implements BlogService {
         String blogAdminLargeImageURL = getBlogAdminLargeImageURLByDomainName(blogDomainName);
         blogInfo.setBlogAdminLargeImageURL(blogAdminLargeImageURL);
 
-        List<Post> latestPosts = postService.listByBlogDomainName(blog.getDomainName(), postCountLimit);
+        List<Post> latestPosts = postService.listByDraftAndBlogDomainName(false, blog.getDomainName(), postCountLimit);
         blogInfo.setPosts(latestPosts);
 
         return blogInfo;

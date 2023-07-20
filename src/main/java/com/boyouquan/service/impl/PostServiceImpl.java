@@ -59,8 +59,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> listByBlogDomainName(String blogDomainName, int limit) {
-        return postDaoMapper.listByBlogDomainName(blogDomainName, limit);
+    public List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int limit) {
+        return postDaoMapper.listByDraftAndBlogDomainName(draft, blogDomainName, limit);
     }
 
     @Override
@@ -95,6 +95,11 @@ public class PostServiceImpl implements PostService {
             logger.error("batch save failed!", e);
         }
         return false;
+    }
+
+    @Override
+    public void deleteByBlogDomainName(String blogDomainName) {
+        postDaoMapper.deleteByBlogDomainName(blogDomainName);
     }
 
 }

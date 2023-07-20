@@ -1,10 +1,15 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.helper.BlogRequestFormHelper;
-import com.boyouquan.model.BlogRequest;
-import com.boyouquan.model.BlogRequestForm;
-import com.boyouquan.model.BlogRequestInfo;
+import com.boyouquan.model.*;
 import com.boyouquan.service.BlogRequestService;
+import com.boyouquan.service.UserService;
+import com.boyouquan.util.PermissionUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +29,20 @@ public class AdminController {
     private BlogRequestService blogRequestService;
     @Autowired
     private BlogRequestFormHelper requestFormHelper;
+    @Autowired
+    private UserService userService;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @GetMapping("/blog-requests")
-    public String blogRequests(Model model) {
+    public String blogRequests(Model model, HttpServletRequest request, HttpSession session) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "redirect:/admin/login";
+        }
+
+        // list
         List<BlogRequestInfo> blogRequests = blogRequestService.listBlogRequestInfosByStatuses(
                 Arrays.asList(BlogRequest.Status.submitted,
                         BlogRequest.Status.system_check_valid,
@@ -38,11 +52,21 @@ public class AdminController {
 
         model.addAttribute("blogRequestInfos", blogRequests);
 
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user", user);
+
         return "admin/blog_requests/list";
     }
 
     @GetMapping("/blog-requests/{id}")
-    public String getBlogRequestById(@PathVariable("id") Long id, Model model) {
+    public String getBlogRequestById(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // get
         BlogRequestInfo blogRequestInfo = blogRequestService.getBlogRequestInfoById(id);
 
         model.addAttribute("blogRequestInfo", blogRequestInfo);
@@ -50,13 +74,42 @@ public class AdminController {
         return "admin/blog_requests/item";
     }
 
+    @DeleteMapping("/blog-requests/{id}")
+    public String deleteBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // get
+        BlogRequest blogRequest = blogRequestService.getById(id);
+        if (null != blogRequest) {
+            blogRequestService.deleteByRssAddress(blogRequest.getRssAddress());
+        }
+
+        return "redirect:/admin/blog-requests";
+    }
+
     @GetMapping("/blog-requests/add")
-    public String addBlogRequestForm(BlogRequestForm blogRequestForm) {
+    public String addBlogRequestForm(BlogRequestForm blogRequestForm, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
         return "admin/blog_requests/form";
     }
 
     @PostMapping("/blog-requests/add")
-    public String addBlogRequest(BlogRequestForm blogRequestForm, Errors errors, Model model) {
+    public String addBlogRequest(BlogRequestForm blogRequestForm, Errors errors, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
         // params validation
         requestFormHelper.paramsValidation(blogRequestForm, errors);
 
@@ -78,9 +131,79 @@ public class AdminController {
         return "redirect:/admin/blog-requests";
     }
 
-    @GetMapping("/blog-requests/approve")
-    public String addBlogRequestForm(@RequestParam("rssAddress") String rssAddress) {
-        blogRequestService.approve(rssAddress);
+    @GetMapping("/blog-requests/approve/{id}")
+    public String approveBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // approve
+        blogRequestService.approveById(id);
+        return "redirect:/admin/blog-requests";
+    }
+
+    @PostMapping("/blog-requests/reject/{id}")
+    public String rejectBlogRequestById(@PathVariable("id") Long id, BlogRequestRejectForm blogRequestRejectForm, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // reject
+        if (StringUtils.isNotBlank(blogRequestRejectForm.getReason())) {
+            blogRequestService.rejectById(id, blogRequestRejectForm.getReason());
+        }
+
+        return "redirect:/admin/blog-requests";
+    }
+
+    @GetMapping("/login")
+    public String adminLoginForm(AdminLoginForm adminLoginForm) {
+        return "admin/login/form";
+    }
+
+    @PostMapping("/login")
+    public String adminLogin(AdminLoginForm adminLoginForm, Errors errors, HttpSession session) {
+        // name
+        if (StringUtils.isBlank(adminLoginForm.getUsername())) {
+            errors.rejectValue("username", "fields.invalid", "账号不能为空");
+        }
+        if (StringUtils.isBlank(adminLoginForm.getPassword())) {
+            errors.rejectValue("password", "fields.invalid", "密码不能为空");
+        }
+
+        // check user
+        User user = userService.getUserByUsername(adminLoginForm.getUsername());
+        boolean isUserValid = userService.isUsernamePasswordValid(adminLoginForm.getUsername(), adminLoginForm.getPassword());
+        if (!isUserValid) {
+            errors.rejectValue("username", "fields.invalid", "账号或密码无效！");
+            errors.rejectValue("password", "fields.invalid", "账号或密码无效！");
+        }
+
+        if (errors.getErrorCount() > 0) {
+            return "admin/login/form";
+        }
+
+        // set session
+        session.setAttribute("user", user);
+
+        return "redirect:/admin/blog-requests";
+    }
+
+    @GetMapping("/logout")
+    public String adminLogout(HttpServletRequest request, HttpSession session) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // set session
+        session.removeAttribute("user");
+
         return "redirect:/admin/blog-requests";
     }
 

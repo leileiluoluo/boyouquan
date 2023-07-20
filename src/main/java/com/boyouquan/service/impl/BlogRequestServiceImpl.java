@@ -3,10 +3,7 @@ package com.boyouquan.service.impl;
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.BlogRequestDaoMapper;
 import com.boyouquan.helper.PostHelper;
-import com.boyouquan.model.Blog;
-import com.boyouquan.model.BlogRequest;
-import com.boyouquan.model.BlogRequestInfo;
-import com.boyouquan.model.RSSInfo;
+import com.boyouquan.model.*;
 import com.boyouquan.service.BlogCrawlerService;
 import com.boyouquan.service.BlogRequestService;
 import com.boyouquan.service.BlogService;
@@ -135,14 +132,14 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     }
 
     @Override
-    public void approve(String rssAddress) {
-        BlogRequest blogRequest = getByRssAddress(rssAddress);
+    public void approveById(Long id) {
+        BlogRequest blogRequest = getById(id);
         if (null != blogRequest) {
             blogRequest.setStatus(BlogRequest.Status.approved);
             update(blogRequest);
 
             // change draft to false
-            Blog blog = blogService.getByRSSAddress(rssAddress);
+            Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
             if (null != blog) {
                 blog.setDraft(false);
                 blogService.update(blog);
@@ -153,10 +150,11 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     }
 
     @Override
-    public void reject(String rssAddress, String reason) {
-        BlogRequest blogRequest = getByRssAddress(rssAddress);
+    public void rejectById(Long id, String reason) {
+        BlogRequest blogRequest = getById(id);
         if (null != blogRequest) {
             blogRequest.setStatus(BlogRequest.Status.rejected);
+            blogRequest.setReason(reason);
             update(blogRequest);
         }
     }
@@ -173,6 +171,19 @@ public class BlogRequestServiceImpl implements BlogRequestService {
 
     @Override
     public void deleteByRssAddress(String rssAddress) {
+        BlogRequest blogRequest = getByRssAddress(rssAddress);
+        if (null != blogRequest) {
+            Blog blog = blogService.getByRSSAddress(rssAddress);
+            if (null != blog) {
+                // delete blogs
+                blogService.deleteByDomainName(blog.getDomainName());
+
+                // delete posts
+                postService.deleteByBlogDomainName(blog.getDomainName());
+            }
+        }
+
+        // delete blog requests
         blogRequestDaoMapper.deleteByRssAddress(rssAddress);
     }
 
@@ -224,9 +235,9 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             blogRequestInfo.setStatusInfo("通过");
         }
 
+        Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
         blogRequestInfo.setApproved(BlogRequest.Status.approved.equals(blogRequest.getStatus()));
         if (BlogRequest.Status.approved.equals(blogRequest.getStatus())) {
-            Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
             if (null != blog) {
                 blogRequestInfo.setDomainName(blog.getDomainName());
             }
@@ -237,6 +248,12 @@ public class BlogRequestServiceImpl implements BlogRequestService {
         String emailPart1 = email.split("@")[0];
         String emailPart2 = email.split("@")[1];
         blogRequestInfo.setAdminEmail(emailPart1.charAt(0) + "****@" + emailPart2);
+
+        // posts
+        if (null != blog) {
+            List<Post> posts = postService.listByDraftAndBlogDomainName(true, blog.getDomainName(), 10);
+            blogRequestInfo.setPosts(posts);
+        }
 
         return blogRequestInfo;
     }

@@ -14,6 +14,10 @@
     <div class="blog-requests">
         <div class="requests-header">
             <h4 style="color: red;"><a href="/admin/blog-requests/add">提交博客 - 管理页面</a></h4>
+            <div style="display: flex; font-size: 14px;">
+                <p th:text="${user.username}"></p>
+                <p><a href="/admin/logout"> 退出登录</a></p>
+            </div>
         </div>
         <div class="requests-container">
             <table style="display: table; table-layout: fixed;">
@@ -29,12 +33,15 @@
                 <tbody>
                 <tr th:each="blogRequestInfo, iterstat: ${blogRequestInfos}">
                     <td>
-                        <p><a th:href="'/admin/blog-requests/' + ${blogRequestInfo.id}" th:text="${blogRequestInfo.name}"></a></p>
+                        <p><a th:href="'/admin/blog-requests/' + ${blogRequestInfo.id}"
+                              th:text="${blogRequestInfo.name}"></a></p>
                     </td>
 
                     <td><p th:text="${blogRequestInfo.adminEmail}"></p></td>
                     <td><p th:text="${blogRequestInfo.selfSubmitted}"></p></td>
-                    <td><p th:text="${@thymeLeafTemplateHelper.dateHourCommonFormatDisplay(blogRequestInfo.requestedAt)}"></p></td>
+                    <td>
+                        <p th:text="${@thymeLeafTemplateHelper.dateHourCommonFormatDisplay(blogRequestInfo.requestedAt)}"></p>
+                    </td>
                     <td><p th:text="${blogRequestInfo.status}"></p></td>
                 </tr>
                 </tbody>
