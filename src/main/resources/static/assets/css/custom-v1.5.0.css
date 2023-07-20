@@ -547,12 +547,6 @@ tr:nth-child(even) {
     -webkit-box-orient: vertical;
 }
 
-.blog-requests .requests-container td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .blog-requests span {
     color: var(--primary);
     font-weight: bold;
