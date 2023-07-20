@@ -1,11 +1,11 @@
-<div class="latest-news" th:fragment="latest_news(latestNews, latestNewsCount)">
+<div class="latest-news" th:fragment="latest_news(hasLatestNews, latestNews)">
     <div class="icon">
         <img th:src="@{/assets/images/sites/latest_news/icon.png}">
     </div>
     <div class="content">
         <ul th:style="'--s: ' + ${#lists.size(latestNews)}">
             <li th:each="item, iterstat: ${latestNews}"><a th:text="${item.title}" th:href="${item.link}"></a></li>
-            <li><a th:text="${latestNews[0].title}" th:href="${latestNews[0].link}"></a></li>
+            <li th:if="${hasLatestNews}"><a th:text="${latestNews[0].title}" th:href="${latestNews[0].link}"></a></li>
         </ul>
     </div>
 </div>

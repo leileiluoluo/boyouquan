@@ -22,6 +22,8 @@ public interface PostDaoMapper {
 
     List<Post> listByBlogDomainName(String blogDomainName, int limit);
 
+    List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int limit);
+
     Post getByLink(String link);
 
     boolean existsByLink(String link);
@@ -29,5 +31,7 @@ public interface PostDaoMapper {
     void batchSave(List<Post> posts);
 
     void batchUpdateDraftByBlogDomainName(String blogDomainName, boolean draft);
+
+    void deleteByBlogDomainName(String blogDomainName);
 
 }

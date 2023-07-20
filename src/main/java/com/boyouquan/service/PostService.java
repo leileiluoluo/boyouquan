@@ -19,7 +19,7 @@ public interface PostService {
 
     Long countByBlogDomainName(String blogDomainName);
 
-    List<Post> listByBlogDomainName(String blogDomainName, int limit);
+    List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int limit);
 
     boolean existsByLink(String link);
 
@@ -28,5 +28,7 @@ public interface PostService {
     boolean batchSave(List<Post> posts);
 
     boolean batchUpdateDraftByBlogDomainName(String blogDomainName, boolean draft);
+
+    void deleteByBlogDomainName(String blogDomainName);
 
 }

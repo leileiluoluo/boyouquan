@@ -75,12 +75,12 @@
         AND deleted=false
         AND blog_domain_name=#{blogDomainName}
     </select>
-    <select id="listByBlogDomainName" resultType="com.boyouquan.model.Post">
+    <select id="listByDraftAndBlogDomainName" resultType="com.boyouquan.model.Post">
         SELECT
         <include refid="select_columns"/>
         FROM post
-        WHERE draft=false
-        AND deleted=false
+        WHERE deleted=false
+        AND draft=#{draft}
         AND blog_domain_name=#{blogDomainName}
         ORDER BY published_at DESC
         LIMIT #{limit}
@@ -118,4 +118,9 @@
         SET draft=#{draft}
         WHERE blog_domain_name=#{blogDomainName}
     </update>
+    <delete id="deleteByBlogDomainName">
+        DELETE
+        FROM post
+        WHERE blog_domain_name=#{blogDomainName}
+    </delete>
 </mapper>

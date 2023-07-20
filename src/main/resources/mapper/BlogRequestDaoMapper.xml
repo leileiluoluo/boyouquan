@@ -92,10 +92,9 @@
         false
         )
     </insert>
-    <update id="deleteByRssAddress">
-        UPDATE blog_request
-        SET
-        deleted=true
+    <delete id="deleteByRssAddress">
+        DELETE
+        FROM blog_request
         WHERE rss_address=#{rssAddress}
-    </update>
+    </delete>
 </mapper>

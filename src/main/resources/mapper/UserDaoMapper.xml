@@ -1,0 +1,16 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.UserDaoMapper">
+    <sql id="select_columns">
+        username,
+        md5password as md5Password,
+        role,
+        deleted
+    </sql>
+    <select id="getUserByUsername" resultType="com.boyouquan.model.User">
+        SELECT
+        <include refid="select_columns"/>
+        FROM user
+        WHERE deleted=false
+        AND username=#{username}
+    </select>
+</mapper>

@@ -27,7 +27,7 @@ public class BlogDetailController {
     private AccessService accessService;
 
     @GetMapping("/{domainName}/**")
-    public String list(@PathVariable("domainName") String domainName, Model model, HttpServletRequest request) {
+    public String getBlogByDomainName(@PathVariable("domainName") String domainName, Model model, HttpServletRequest request) {
         // parse domain from request URL
         String requestURL = request.getRequestURL().toString();
         domainName = requestURL.split("/blogs/")[1];

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head/head::head('博客提交成功 - 博友圈 · 博客人的朋友圈！', '博客提交成功', '博客提交成功。')}"></head>
+<head th:replace="~{fragments/head/head::head('权限不足 - 博友圈 · 博客人的朋友圈！', '权限不足', '博友圈权限不足页面。')}"></head>
 <body class="list" id="top">
 <script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
 <header th:replace="~{fragments/header/header::header}"></header>
 <main class="main">
-    <header class="post-header">
-        <h1 class="post-title">
-            博客提交成功！
-        </h1>
-    </header>
+    <article class="post-single">
+        <div class="post-content">
+            <h3 style="text-align: center">权限不足！</h3>
+
+            <p style="text-align: center; font-size: 100px">权限不足</p>
+        </div>
+    </article>
 </main>
 <footer class="footer-block">
     <div th:replace="~{fragments/footer/contact::contact}"></div>

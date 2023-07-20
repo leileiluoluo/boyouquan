@@ -21,9 +21,9 @@ public interface BlogRequestService {
 
     BlogRequest getByRssAddress(String rssAddress);
 
-    void approve(String rssAddress);
+    void approveById(Long id);
 
-    void reject(String rssAddress, String reason);
+    void rejectById(Long id, String reason);
 
     void update(BlogRequest blogRequest);
 
