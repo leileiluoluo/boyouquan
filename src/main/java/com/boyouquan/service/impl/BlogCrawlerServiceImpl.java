@@ -107,9 +107,9 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                     description = CommonUtils.parseAndTruncateHtml2Text(description, 200);
 
                     // link
-                    String link = entry.getUri();
+                    String link = entry.getLink();
                     if (StringUtils.isBlank(link) || !link.startsWith("http")) {
-                        link = entry.getLink();
+                        link = entry.getUri();
                     }
                     Date publishedAt = entry.getPublishedDate();
                     if (null == publishedAt) {
