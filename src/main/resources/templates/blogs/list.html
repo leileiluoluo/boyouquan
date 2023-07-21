@@ -61,6 +61,10 @@
                         <a th:text="${post.title}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
                     </p>
                 </footer>
+                <footer class="submitted-info">
+                    <img th:src="@{/assets/images/sites/blog_detail/info-icon.png}">
+                    <p th:text="${blogInfo.submittedInfo}"></p>
+                </footer>
             </article>
         </div>
         <footer class="page-footer blog-footer">

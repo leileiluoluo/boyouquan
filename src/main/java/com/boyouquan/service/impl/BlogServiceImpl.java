@@ -183,6 +183,8 @@ public class BlogServiceImpl implements BlogService {
         List<Post> latestPosts = postService.listByDraftAndBlogDomainName(false, blog.getDomainName(), postCountLimit);
         blogInfo.setPosts(latestPosts);
 
+        blogInfo.setSubmittedInfo(blog.getSelfSubmitted() ? "自行提交" : "系统收录");
+
         return blogInfo;
     }
 
