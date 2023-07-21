@@ -48,6 +48,8 @@
             <version>1.18.28</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- validator -->
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
@@ -72,11 +74,11 @@
             <version>3.0.2</version>
         </dependency>
 
-        <!-- http client -->
+        <!-- ok http -->
         <dependency>
-            <groupId>org.apache.httpcomponents.client5</groupId>
-            <artifactId>httpclient5</artifactId>
-            <version>5.2.1</version>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>5.0.0-alpha.11</version>
         </dependency>
 
         <!-- rss reader -->

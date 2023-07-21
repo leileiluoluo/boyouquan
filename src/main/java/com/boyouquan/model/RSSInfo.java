@@ -14,7 +14,6 @@ import java.util.List;
 @ToString
 public class RSSInfo {
 
-    private String blogName;
     private String blogAddress;
     private List<Post> blogPosts;
 
