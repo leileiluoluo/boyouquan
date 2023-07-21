@@ -30,7 +30,7 @@
                     </td>
 
                     <td width="35%"><p th:text="${blogRequestInfo.adminEmail}"></p></td>
-                    <td width="20%"><p th:text="${@thymeLeafTemplateHelper.dateHourCommonFormatDisplay(blogRequestInfo.requestedAt)}"></p></td>
+                    <td width="20%"><p th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogRequestInfo.requestedAt)}"></p></td>
                     <td width="10%">
                         <p th:if="${blogRequestInfo.approved}"><a th:text="${blogRequestInfo.statusInfo}" th:href="'/blogs/' + ${blogRequestInfo.domainName}"></a></p>
                         <p th:unless="${blogRequestInfo.approved}" th:text="${blogRequestInfo.statusInfo}"></p>
