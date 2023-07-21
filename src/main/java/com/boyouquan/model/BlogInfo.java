@@ -21,5 +21,6 @@ public class BlogInfo extends Blog {
     private List<Post> posts = Collections.emptyList();
     private String blogAdminSmallImageURL;
     private String blogAdminLargeImageURL;
+    private String submittedInfo;
 
 }

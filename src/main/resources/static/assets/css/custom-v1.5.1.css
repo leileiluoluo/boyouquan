@@ -281,6 +281,21 @@ h4 {
     font-size: 14px;
 }
 
+.blog-entry .submitted-info {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 12px;
+    color: var(--secondary);
+}
+
+.blog-entry .submitted-info img {
+    margin-right: 2px;
+    width: 14px;
+    display: block;
+}
+
 @media (min-width: 800px) {
     .blog-container {
         display: flex;
@@ -427,21 +442,38 @@ div#searchbox {
   }
 }
 
+.blog-detail-main {
+    display: flex;
+    flex-direction: column;
+    transition: transform .1s;
+    border: 1px solid var(--border);
+    background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background.jpeg);
+    padding: calc(var(--gap)/2) var(--gap) calc(var(--gap)) var(--gap);
+    border-radius: var(--radius);
+    margin-bottom: calc(var(--gap)/2);
+}
+
+.blog-detail-main .submitted-info {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 12px;
+    color: var(--secondary);
+}
+
+.blog-detail-main .submitted-info img {
+    margin-right: 2px;
+    width: 14px;
+    display: block;
+}
+
 .blog-detail-header {
     display: flex;
     flex-direction: column;
-    /*gap: 10px; not work in safari, use margin-top instead in sub item*/
     align-items: center;
-    padding: var(--gap);
-    border-radius: var(--radius);
-    transition: transform .1s;
-    border: 1px solid var(--border);
-    background: var(--entry);
-    margin-bottom: calc(var(--gap)/2);
-    background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background.jpeg);
 }
 
-.dark .blog-detail-header {
+.dark .blog-detail-main {
     background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background-dark.jpeg);
 }
 
