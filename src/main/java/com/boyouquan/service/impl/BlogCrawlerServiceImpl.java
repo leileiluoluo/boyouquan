@@ -30,7 +30,7 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
 
     private static final OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(Duration.ofMinutes(1))
-            .readTimeout(Duration.ofMillis(1))
+            .readTimeout(Duration.ofMinutes(1))
             .callTimeout(Duration.ofMinutes(2))
             .build();
 
@@ -67,13 +67,13 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
             // parse posts
             for (SyndEntry entry : feed.getEntries()) {
                 // title
-                String title = entry.getTitle();
+                String title = entry.getTitle().trim();
 
                 // description
-                String description = parseDescription(entry);
+                String description = parseDescription(entry).trim();
 
                 // link
-                String link = parseLink(entry);
+                String link = parseLink(entry).trim();
 
                 // publishedAt
                 Date publishedAt = parsePublishedAt(entry);
@@ -91,9 +91,9 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                 blogAddress = CommonUtils.trimFeedURLSuffix(blogAddress);
 
                 RSSInfo.Post post = new RSSInfo.Post();
-                post.setLink(link.trim());
-                post.setTitle(title.trim());
-                post.setDescription(description.trim());
+                post.setLink(link);
+                post.setTitle(title);
+                post.setDescription(description);
                 post.setPublishedAt(publishedAt);
                 posts.add(post);
 
@@ -134,6 +134,12 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
         }
 
         description = CommonUtils.parseAndTruncateHtml2Text(description, CommonConstants.RSS_BLOG_DESCRIPTION_LENGTH_LIMIT);
+
+        // important, replacing blank spaces
+        if (StringUtils.isNotBlank(description)) {
+            String regexp = "[　*|\\s*]*";
+            description = description.replaceFirst(regexp, "");
+        }
         return description;
     }
 
