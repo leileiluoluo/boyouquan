@@ -6,6 +6,8 @@ import com.boyouquan.helper.PostHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.*;
 import com.boyouquan.util.CommonUtils;
+import com.boyouquan.util.Pagination;
+import com.boyouquan.util.PaginationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -86,27 +88,45 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     }
 
     @Override
-    public List<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses) {
-        List<BlogRequestInfo> blogRequestInfos = new ArrayList<>();
+    public Pagination<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses, int page, int size) {
+        if (page < 1 || size <= 0) {
+            return PaginationBuilder.buildEmptyResults();
+        }
 
-        List<BlogRequest> blogRequests = blogRequestDaoMapper.listBySelfSubmittedAndStatuses(selfSubmitted, statuses);
+        int offset = (page - 1) * size;
+        List<BlogRequest> blogRequests = blogRequestDaoMapper.listBySelfSubmittedAndStatuses(selfSubmitted, statuses, offset, size);
+        List<BlogRequestInfo> blogRequestInfos = new ArrayList<>();
         for (BlogRequest blogRequest : blogRequests) {
             blogRequestInfos.add(assembleBlogRequestInfo(blogRequest));
         }
 
-        return blogRequestInfos;
+        Long total = blogRequestDaoMapper.countBySelfSubmittedAndStatuses(selfSubmitted, statuses);
+        return PaginationBuilder.<BlogRequestInfo>newBuilder()
+                .pageNo(page)
+                .pageSize(size)
+                .total(total)
+                .results(blogRequestInfos).build();
     }
 
     @Override
-    public List<BlogRequestInfo> listBlogRequestInfosByStatuses(List<BlogRequest.Status> statuses) {
-        List<BlogRequestInfo> blogRequestInfos = new ArrayList<>();
+    public Pagination<BlogRequestInfo> listBlogRequestInfosByStatuses(List<BlogRequest.Status> statuses, int page, int size) {
+        if (page < 1 || size <= 0) {
+            return PaginationBuilder.buildEmptyResults();
+        }
 
-        List<BlogRequest> blogRequests = blogRequestDaoMapper.listByStatuses(statuses);
+        int offset = (page - 1) * size;
+        List<BlogRequest> blogRequests = blogRequestDaoMapper.listByStatuses(statuses, offset, size);
+        List<BlogRequestInfo> blogRequestInfos = new ArrayList<>();
         for (BlogRequest blogRequest : blogRequests) {
             blogRequestInfos.add(assembleBlogRequestInfo(blogRequest));
         }
 
-        return blogRequestInfos;
+        Long total = blogRequestDaoMapper.countByStatuses(statuses);
+        return PaginationBuilder.<BlogRequestInfo>newBuilder()
+                .pageNo(page)
+                .pageSize(size)
+                .total(total)
+                .results(blogRequestInfos).build();
     }
 
     @Override

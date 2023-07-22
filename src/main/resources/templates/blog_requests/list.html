@@ -24,7 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="blogRequestInfo, iterstat: ${blogRequestInfos}">
+                <tr th:each="blogRequestInfo, iterstat: ${pagination.results}">
                     <td width="35%">
                         <p><a th:href="'/blog-requests/' + ${blogRequestInfo.id}" th:text="${blogRequestInfo.name}"></a></p>
                     </td>
@@ -40,6 +40,15 @@
             </table>
         </div>
     </div>
+
+    <footer class="page-footer blog-footer">
+        <nav class="pagination">
+            <a class="pre" th:if="${pagination.pageNo} > 1"
+               th:href="'/blog-requests/page/' + ${pagination.pageNo - 1}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}"
+               th:href="'/blog-requests/page/' + ${pagination.pageNo + 1}">下一页 »</a>
+        </nav>
+    </footer>
 </main>
 <footer class="footer-block">
     <div th:replace="~{fragments/footer/contact::contact}"></div>

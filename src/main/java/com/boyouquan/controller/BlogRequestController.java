@@ -1,10 +1,12 @@
 package com.boyouquan.controller;
 
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.BlogRequest;
 import com.boyouquan.model.BlogRequestForm;
 import com.boyouquan.model.BlogRequestInfo;
 import com.boyouquan.service.BlogRequestService;
+import com.boyouquan.util.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,14 +34,21 @@ public class BlogRequestController {
 
     @GetMapping("")
     public String listBlogRequests(Model model) {
-        List<BlogRequestInfo> blogRequestInfos = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(true,
-                Arrays.asList(BlogRequest.Status.submitted,
-                        BlogRequest.Status.system_check_valid,
-                        BlogRequest.Status.system_check_invalid,
-                        BlogRequest.Status.approved,
-                        BlogRequest.Status.rejected));
+        return listBlogRequests(1, model);
+    }
 
-        model.addAttribute("blogRequestInfos", blogRequestInfos);
+    @GetMapping("/page/{page}")
+    public String listBlogRequests(@PathVariable("page") int page, Model model) {
+        List<BlogRequest.Status> statuses = Arrays.asList(BlogRequest.Status.submitted,
+                BlogRequest.Status.system_check_valid,
+                BlogRequest.Status.system_check_invalid,
+                BlogRequest.Status.approved,
+                BlogRequest.Status.rejected);
+
+        Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(true,
+                statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+
+        model.addAttribute("pagination", pagination);
 
         return "blog_requests/list";
     }

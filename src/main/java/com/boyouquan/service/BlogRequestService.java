@@ -2,6 +2,7 @@ package com.boyouquan.service;
 
 import com.boyouquan.model.BlogRequest;
 import com.boyouquan.model.BlogRequestInfo;
+import com.boyouquan.util.Pagination;
 
 import java.util.List;
 
@@ -9,9 +10,9 @@ public interface BlogRequestService {
 
     void processNewRequest(String rssAddress);
 
-    List<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses);
+    Pagination<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses, int page, int size);
 
-    List<BlogRequestInfo> listBlogRequestInfosByStatuses(List<BlogRequest.Status> statuses);
+    Pagination<BlogRequestInfo> listBlogRequestInfosByStatuses(List<BlogRequest.Status> statuses, int page, int size);
 
     BlogRequestInfo getBlogRequestInfoById(Long id);
 
