@@ -1,7 +1,6 @@
 package com.boyouquan.dao;
 
 import com.boyouquan.model.BlogRequest;
-import com.boyouquan.model.BlogRequestInfo;
 
 import java.util.List;
 
