@@ -35,6 +35,17 @@
             #{item}
         </foreach>
         ORDER BY requested_at DESC
+        LIMIT #{offset}, #{rows}
+    </select>
+    <select id="countBySelfSubmittedAndStatuses" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM blog_request
+        WHERE self_submitted=#{selfSubmitted}
+        AND status IN
+        <foreach collection="statuses" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
     <select id="listByStatuses" resultType="com.boyouquan.model.BlogRequest">
         SELECT
@@ -45,6 +56,16 @@
             #{item}
         </foreach>
         ORDER BY requested_at DESC
+        LIMIT #{offset}, #{rows}
+    </select>
+    <select id="countByStatuses" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM blog_request
+        WHERE status IN
+        <foreach collection="statuses" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
     <select id="listByStatus" resultType="com.boyouquan.model.BlogRequest">
         SELECT

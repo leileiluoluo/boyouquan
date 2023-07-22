@@ -21,7 +21,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BlogCrawlerServiceImpl implements BlogCrawlerService {

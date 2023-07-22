@@ -1,14 +1,14 @@
 package com.boyouquan.controller;
 
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.BlogRequestService;
 import com.boyouquan.service.UserService;
+import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PermissionUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +35,12 @@ public class AdminController {
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @GetMapping("/blog-requests")
-    public String blogRequests(Model model, HttpServletRequest request, HttpSession session) {
+    public String listBlogRequests(Model model, HttpServletRequest request) {
+        return listBlogRequests(1, model, request);
+    }
+
+    @GetMapping("/blog-requests/page/{page}")
+    public String listBlogRequests(@PathVariable("page") int page, Model model, HttpServletRequest request) {
         // permission check
         boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
         if (!hasAdminPermission) {
@@ -43,15 +48,18 @@ public class AdminController {
         }
 
         // list
-        List<BlogRequestInfo> blogRequests = blogRequestService.listBlogRequestInfosByStatuses(
-                Arrays.asList(BlogRequest.Status.submitted,
-                        BlogRequest.Status.system_check_valid,
-                        BlogRequest.Status.system_check_invalid,
-                        BlogRequest.Status.approved,
-                        BlogRequest.Status.rejected));
+        List<BlogRequest.Status> statuses = Arrays.asList(BlogRequest.Status.submitted,
+                BlogRequest.Status.system_check_valid,
+                BlogRequest.Status.system_check_invalid,
+                BlogRequest.Status.approved,
+                BlogRequest.Status.rejected);
 
-        model.addAttribute("blogRequestInfos", blogRequests);
+        Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosByStatuses(
+                statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
 
+        model.addAttribute("pagination", pagination);
+
+        // user
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
 

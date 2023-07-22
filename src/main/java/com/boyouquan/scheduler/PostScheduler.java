@@ -55,11 +55,11 @@ public class PostScheduler {
                 // save posts
                 boolean success = postHelper.savePosts(blog.getDomainName(), rssInfo, false);
                 if (!success) {
-                    logger.error("posts save failed, blogDomainName: {}", blog.getDomainName());
+                    logger.info("no new posts saved, blogDomainName: {}", blog.getDomainName());
                     continue;
                 }
 
-                logger.info("posts save success, blogDomainName: {}", blog.getDomainName());
+                logger.info("posts saved success, blogDomainName: {}", blog.getDomainName());
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
