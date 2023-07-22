@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -26,7 +27,13 @@ public class PostHelper {
             for (RSSInfo.Post rssPost : rssInfo.getBlogPosts()) {
                 String link = rssPost.getLink();
                 boolean exists = postService.existsByLink(link);
-                if (!exists) {
+
+                Date publishedAt = rssPost.getPublishedAt();
+                Date latestPublishedAt = postService.getLatestPublishedAtByBlogDomainName(blogDomainName);
+
+                boolean isNewPost = (null == latestPublishedAt || publishedAt.after(latestPublishedAt));
+
+                if (!exists && isNewPost) {
                     Post post = new Post();
                     post.setLink(rssPost.getLink());
                     post.setTitle(rssPost.getTitle());

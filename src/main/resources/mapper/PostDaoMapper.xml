@@ -65,7 +65,6 @@
         WHERE draft=false
         AND deleted=false
         AND blog_domain_name=#{blogDomainName}
-        ORDER BY published_at DESC
     </select>
     <select id="countByBlogDomainName" resultType="java.lang.Long">
         SELECT

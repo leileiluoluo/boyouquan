@@ -4,9 +4,9 @@ public class CommonConstants {
 
     public static final int DEFAULT_PAGE_SIZE = 10;
 
-    public static final int BLOG_NAME_MAX_LENGTH = 16;
-
     public static final String DATA_SPIDER_USER_AGENT = "Mozilla/5.0 (compatible; Boyouquanspider/1.0; +https://www.boyouquan.com/about#data-spider)";
+    public static final String HEADER_USER_AGENT = "User-Agent";
+    public static final String SCHEME_HTTP = "http";
 
     public static final String BLOG_ADDED_WELCOME_PATTERN = "恭喜「%s」被本站收录！";
     public static final String MOST_ACCESSED_BLOG_ANNOUNCE_PATTERN = "最近一个月浏览最多的博客是「%s」，浏览 %d 次！";
@@ -18,6 +18,7 @@ public class CommonConstants {
     public static final String GRAVATAR_ADDRESS_LARGE_SIZE = "https://seccdn.libravatar.org/gravatarproxy/%s?s=80";
 
     public static final int RSS_POST_COUNT_READ_LIMIT = 10;
+    public static final int RSS_BLOG_DESCRIPTION_LENGTH_LIMIT = 200;
     public static final int LATEST_POST_COUNT_LIMIT = 3;
     public static final int ALL_POST_COUNT_LIMIT = 100;
 
