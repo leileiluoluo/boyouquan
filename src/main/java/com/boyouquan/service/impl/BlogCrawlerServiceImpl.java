@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.*;
 
 @Service
@@ -27,7 +28,11 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
 
     private final Logger logger = LoggerFactory.getLogger(BlogCrawlerServiceImpl.class);
 
-    private static OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client = new OkHttpClient.Builder()
+            .connectTimeout(Duration.ofMinutes(1))
+            .readTimeout(Duration.ofMillis(1))
+            .callTimeout(Duration.ofMinutes(2))
+            .build();
 
     @Override
     public RSSInfo getRSSInfoByRSSAddress(String rssAddress, int postsLimit) {
