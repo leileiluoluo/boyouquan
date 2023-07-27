@@ -31,7 +31,7 @@
     </select>
     <select id="countWithKeyWord" resultType="java.lang.Long">
         SELECT
-        COUNT(*)
+        COUNT(DISTINCT blog_domain_name)
         FROM post
         WHERE draft=false
         AND deleted=false
@@ -48,6 +48,7 @@
         <if test="keyword != null and keyword !=''">
             AND title LIKE CONCAT('%', #{keyword}, '%')
         </if>
+        GROUP BY blog_domain_name
         ORDER BY published_at DESC
         LIMIT #{offset}, #{rows}
     </select>
