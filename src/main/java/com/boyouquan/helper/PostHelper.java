@@ -31,9 +31,9 @@ public class PostHelper {
                 Date publishedAt = rssPost.getPublishedAt();
                 Date latestPublishedAt = postService.getLatestPublishedAtByBlogDomainName(blogDomainName);
 
-                boolean isNewPost = (null == latestPublishedAt || publishedAt.after(latestPublishedAt));
+                boolean isValidNewPost = isValidNewPost(publishedAt, latestPublishedAt);
 
-                if (!exists && isNewPost) {
+                if (!exists && isValidNewPost) {
                     Post post = new Post();
                     post.setLink(rssPost.getLink());
                     post.setTitle(rssPost.getTitle());
@@ -51,6 +51,21 @@ public class PostHelper {
         }
 
         return false;
+    }
+
+    private boolean isValidNewPost(Date publishedAt, Date latestPublishedAt) {
+        boolean isValidNewPost = false;
+        Date now = new Date();
+        if (null == latestPublishedAt) {
+            if (publishedAt.before(now)) {
+                isValidNewPost = true;
+            }
+        } else {
+            if (publishedAt.before(now) && publishedAt.after(latestPublishedAt)) {
+                isValidNewPost = true;
+            }
+        }
+        return isValidNewPost;
     }
 
 }
