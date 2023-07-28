@@ -19,10 +19,10 @@ public interface PostDaoMapper {
     Date getLatestPublishedAtByBlogDomainName(String blogDomainName);
 
     Long countByBlogDomainName(String blogDomainName);
+    
+    Long countByDraftAndBlogDomainName(boolean draft, String blogDomainName);
 
-    List<Post> listByBlogDomainName(String blogDomainName, int limit);
-
-    List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int limit);
+    List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int offset, int rows);
 
     Post getByLink(String link);
 

@@ -114,6 +114,14 @@
         AND deleted=false
         AND blog_domain_name=#{blogDomainName}
     </select>
+    <select id="countByDraftAndBlogDomainName" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM post
+        WHERE deleted=false
+        AND draft=#{draft}
+        AND blog_domain_name=#{blogDomainName}
+    </select>
     <select id="listByDraftAndBlogDomainName" resultType="com.boyouquan.model.Post">
         SELECT
         <include refid="select_columns"/>
@@ -122,7 +130,7 @@
         AND draft=#{draft}
         AND blog_domain_name=#{blogDomainName}
         ORDER BY published_at DESC
-        LIMIT #{limit}
+        LIMIT #{offset}, #{rows}
     </select>
     <select id="getByLink" resultType="com.boyouquan.model.Post">
         SELECT

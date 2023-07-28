@@ -180,8 +180,8 @@ public class BlogServiceImpl implements BlogService {
         String blogAdminLargeImageURL = getBlogAdminLargeImageURLByDomainName(blogDomainName);
         blogInfo.setBlogAdminLargeImageURL(blogAdminLargeImageURL);
 
-        List<Post> latestPosts = postService.listByDraftAndBlogDomainName(false, blog.getDomainName(), postCountLimit);
-        blogInfo.setPosts(latestPosts);
+        Pagination<Post> latestPostsPagination = postService.listByDraftAndBlogDomainName(false, blog.getDomainName(), 1, postCountLimit);
+        blogInfo.setPosts(latestPostsPagination.getResults());
 
         blogInfo.setSubmittedInfo(blog.getSelfSubmitted() ? "自行提交" : "系统收录");
 
