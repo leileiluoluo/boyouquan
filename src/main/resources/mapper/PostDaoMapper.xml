@@ -41,10 +41,19 @@
             </when>
             <otherwise>
                 SELECT
-                COUNT(DISTINCT blog_domain_name)
+                COUNT(*)
+                FROM post p1
+                INNER JOIN (
+                SELECT
+                blog_domain_name as unique_blog_domain_name,
+                MAX(published_at) as latest_published_at
                 FROM post
-                WHERE draft=false
-                AND deleted=false
+                GROUP BY blog_domain_name
+                ) p2
+                ON p1.blog_domain_name = p2.unique_blog_domain_name
+                AND p1.published_at = p2.latest_published_at
+                AND p1.draft=false
+                AND p1.deleted=false
             </otherwise>
         </choose>
     </select>
@@ -65,11 +74,19 @@
             <otherwise>
                 SELECT
                 <include refid="select_columns"/>
-                FROM post
-                WHERE draft=false
-                AND deleted=false
-                GROUP BY blog_domain_name
-                ORDER BY published_at DESC
+                FROM post p1
+                INNER JOIN (
+                    SELECT
+                    blog_domain_name as unique_blog_domain_name,
+                    MAX(published_at) as latest_published_at
+                    FROM post
+                    GROUP BY blog_domain_name
+                ) p2
+                ON p1.blog_domain_name = p2.unique_blog_domain_name
+                AND p1.published_at = p2.latest_published_at
+                AND p1.draft=false
+                AND p1.deleted=false
+                ORDER BY p1.published_at DESC
                 LIMIT #{offset}, #{rows}
             </otherwise>
         </choose>
