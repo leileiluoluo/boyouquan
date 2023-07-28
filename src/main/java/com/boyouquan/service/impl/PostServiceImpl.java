@@ -59,8 +59,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int limit) {
-        return postDaoMapper.listByDraftAndBlogDomainName(draft, blogDomainName, limit);
+    public Pagination<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int page, int size) {
+        if (page < 1 || size <= 0) {
+            return PaginationBuilder.buildEmptyResults();
+        }
+
+        int offset = (page - 1) * size;
+        List<Post> posts = postDaoMapper.listByDraftAndBlogDomainName(draft, blogDomainName, offset, size);
+        Long total = postDaoMapper.countByDraftAndBlogDomainName(draft, blogDomainName);
+        return PaginationBuilder.<Post>newBuilder()
+                .pageNo(page)
+                .pageSize(size)
+                .total(total)
+                .results(posts).build();
     }
 
     @Override

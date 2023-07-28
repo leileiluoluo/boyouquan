@@ -295,8 +295,8 @@ public class BlogRequestServiceImpl implements BlogRequestService {
 
         // posts
         if (null != blog) {
-            List<Post> posts = postService.listByDraftAndBlogDomainName(true, blog.getDomainName(), 10);
-            blogRequestInfo.setPosts(posts);
+            Pagination<Post> pagination = postService.listByDraftAndBlogDomainName(true, blog.getDomainName(), 1, CommonConstants.DEFAULT_PAGE_SIZE);
+            blogRequestInfo.setPosts(pagination.getResults());
         }
 
         return blogRequestInfo;
