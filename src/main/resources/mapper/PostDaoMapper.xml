@@ -30,26 +30,49 @@
         ORDER BY postCount DESC LIMIT 1
     </select>
     <select id="countWithKeyWord" resultType="java.lang.Long">
-        SELECT
-        COUNT(*)
-        FROM post
-        WHERE draft=false
-        AND deleted=false
-        <if test="keyword != null and keyword !=''">
-            AND title LIKE CONCAT('%', #{keyword}, '%')
-        </if>
+        <choose>
+            <when test="keyword != null and keyword !=''">
+                SELECT
+                COUNT(*)
+                FROM post
+                WHERE draft=false
+                AND deleted=false
+                AND title LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <otherwise>
+                SELECT
+                COUNT(DISTINCT blog_domain_name)
+                FROM post
+                WHERE draft=false
+                AND deleted=false
+            </otherwise>
+        </choose>
     </select>
     <select id="listWithKeyWord" resultType="com.boyouquan.model.Post">
-        SELECT
-        <include refid="select_columns"/>
-        FROM post
-        WHERE draft=false
-        AND deleted=false
-        <if test="keyword != null and keyword !=''">
-            AND title LIKE CONCAT('%', #{keyword}, '%')
-        </if>
-        ORDER BY published_at DESC
-        LIMIT #{offset}, #{rows}
+        <choose>
+            <when test="keyword != null and keyword !=''">
+                SELECT
+                <include refid="select_columns"/>
+                FROM post
+                WHERE draft=false
+                AND deleted=false
+                <if test="keyword != null and keyword !=''">
+                    AND title LIKE CONCAT('%', #{keyword}, '%')
+                </if>
+                ORDER BY published_at DESC
+                LIMIT #{offset}, #{rows}
+            </when>
+            <otherwise>
+                SELECT
+                <include refid="select_columns"/>
+                FROM post
+                WHERE draft=false
+                AND deleted=false
+                GROUP BY blog_domain_name
+                ORDER BY published_at DESC
+                LIMIT #{offset}, #{rows}
+            </otherwise>
+        </choose>
     </select>
     <select id="countAll" resultType="java.lang.Long">
         SELECT
