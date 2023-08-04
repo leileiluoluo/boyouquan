@@ -1,3 +1,11 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: *
+  endpoint:
+    threaddump:
+      enabled: true
 spring:
   mvc:
     hiddenmethod:
