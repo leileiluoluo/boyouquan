@@ -30,7 +30,7 @@ public class BlogRequestController {
     @Autowired
     private BlogRequestFormHelper blogRequestFormHelper;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @GetMapping("")
     public String listBlogRequests(Model model) {
@@ -39,14 +39,9 @@ public class BlogRequestController {
 
     @GetMapping("/page/{page}")
     public String listBlogRequests(@PathVariable("page") int page, Model model) {
-        List<BlogRequest.Status> statuses = Arrays.asList(BlogRequest.Status.submitted,
-                BlogRequest.Status.system_check_valid,
-                BlogRequest.Status.system_check_invalid,
-                BlogRequest.Status.approved,
-                BlogRequest.Status.rejected);
+        List<BlogRequest.Status> statuses = Arrays.asList(BlogRequest.Status.submitted, BlogRequest.Status.system_check_valid, BlogRequest.Status.system_check_invalid, BlogRequest.Status.approved, BlogRequest.Status.rejected);
 
-        Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(true,
-                statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(true, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
 
         model.addAttribute("pagination", pagination);
 
@@ -91,3 +86,4 @@ public class BlogRequestController {
     }
 
 }
+
