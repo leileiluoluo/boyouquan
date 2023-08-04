@@ -34,7 +34,7 @@ public class GoController {
     @Autowired
     private AccessService accessService;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     @GetMapping("")
     public void go(@RequestParam("link") String link, HttpServletRequest request, HttpServletResponse response) {
@@ -74,3 +74,4 @@ public class GoController {
     }
 
 }
+

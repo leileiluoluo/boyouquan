@@ -10,10 +10,7 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.feed.synd.SyndLink;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +45,15 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
 
         Call call = client.newCall(request);
 
-        try (Response response = call.execute(); InputStream stream = response.body().byteStream()) {
-            SyndFeed feed = new SyndFeedInput().build(new XmlReader(stream));
+        Response response = null;
+        ResponseBody responseBody = null;
+        InputStream inputStream = null;
+
+        try {
+            response = call.execute();
+            responseBody = response.body();
+            inputStream = responseBody.byteStream();
+            SyndFeed feed = new SyndFeedInput().build(new XmlReader(inputStream));
 
             // blog address
             String blogAddress = parseBlogAddress(feed);
@@ -110,6 +114,20 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
         } catch (Exception e) {
             logger.error("error in crawling blog", e);
             return null;
+        } finally {
+            try {
+                if (null != inputStream) {
+                    inputStream.close();
+                }
+                if (null != responseBody) {
+                    responseBody.close();
+                }
+                if (null != response) {
+                    response.close();
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 

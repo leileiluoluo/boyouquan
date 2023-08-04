@@ -10,8 +10,6 @@ import com.boyouquan.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,7 +18,6 @@ import java.util.List;
 
 @Component
 @EnableScheduling
-@EnableAsync
 public class PostScheduler {
 
     private final Logger logger = LoggerFactory.getLogger(PostScheduler.class);
@@ -34,7 +31,6 @@ public class PostScheduler {
     @Autowired
     private PostHelper postHelper;
 
-    @Async
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void crawlingBlogPosts() {
         logger.info("post scheduler start!");
@@ -67,3 +63,4 @@ public class PostScheduler {
     }
 
 }
+
