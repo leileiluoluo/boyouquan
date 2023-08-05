@@ -576,6 +576,12 @@ tr:nth-child(even) {
     text-overflow: ellipsis;
 }
 
+.articles-footer {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--secondary);
+    text-align: end;
+}
 
 .blog-requests {
     padding: var(--gap);
