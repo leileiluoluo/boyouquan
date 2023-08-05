@@ -23,17 +23,21 @@
                     </div>
                 </header>
                 <div class="domain">
-                    <div class="flex-item">
-                        <a th:text="${blogInfo.domainName}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
-                        <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
-                            <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
-                                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
-                                <path d="M15 3h6v6"></path>
-                                <path d="M10 14L21 3"></path>
-                            </svg>
-                        </a>
+                    <div class="flex-item-left">
+                        <div class="domain-name">
+                            <a th:text="${blogInfo.domainName}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
+                        </div>
+                        <div class="link">
+                            <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
+                                <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                    <path d="M15 3h6v6"></path>
+                                    <path d="M10 14L21 3"></path>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                    <div class="flex-item">
+                    <div class="flex-item-right">
                         <p th:text="'收录于 ' + ${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogInfo.collectedAt)}"></p>
                     </div>
                 </div>
@@ -42,20 +46,32 @@
                 </div>
                 <footer class="summary">
                     <div class="flex-item left">
-                        <p style="font-size: 16px; color: var(--secondary);">文章收录</p>
-                        <p th:text="${blogInfo.postCount}"></p>
+                        <div class="title">
+                            <p>文章收录</p>
+                        </div>
+                        <div class="count">
+                            <p th:text="${blogInfo.postCount}"></p>
+                        </div>
                     </div>
                     <div class="flex-item center">
-                        <p style="font-size: 16px; color: var(--secondary);">文章浏览</p>
-                        <p th:text="${blogInfo.accessCount}"></p>
+                        <div class="title">
+                            <p>文章浏览</p>
+                        </div>
+                        <div class="count">
+                            <p th:text="${blogInfo.accessCount}"></p>
+                        </div>
                     </div>
                     <div class="flex-item right">
-                        <p style="font-size: 16px; color: var(--secondary);">最近更新</p>
-                        <p th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogInfo.latestPublishedAt)}"></p>
+                        <div class="title">
+                            <p>最近更新</p>
+                        </div>
+                        <div class="count">
+                            <p th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogInfo.latestPublishedAt)}"></p>
+                        </div>
                     </div>
                 </footer>
                 <footer class="latest-posts">
-                    <p style="font-size: 16px;">最新文章</p>
+                    <p>最新文章</p>
                     <p th:each="post, iterstat: ${blogInfo.posts}">
                         <text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text>
                         <a th:text="${post.title}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
