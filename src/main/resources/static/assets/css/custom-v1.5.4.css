@@ -202,8 +202,28 @@ h4 {
     justify-content: space-between;
 }
 
-.blog-entry .domain .flex-item {
+.blog-entry .domain .flex-item-left {
+    display: flex;
+    overflow: hidden;
+    margin-right: 8px;
+}
+
+.blog-entry .domain .flex-item-left .domain-name {
     color: var(--secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.blog-entry .domain .flex-item-left .link {
+    flex: 0 0 auto;
+    margin-left: 2px;
+}
+
+.blog-entry .domain .flex-item-right {
+    color: var(--secondary);
+    white-space: nowrap;
+    flex: 0 0 auto;
 }
 
 .blog-entry .domain a {
@@ -218,7 +238,7 @@ h4 {
     overflow: hidden;
     line-height: 1.5rem;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     background-color: var(--code-bg);
     padding: 0.3rem 0.3rem;
     display: -webkit-box;
@@ -255,18 +275,14 @@ h4 {
     font-size: 14px;
 }
 
-.blog-entry .summary .flex-item h5 {
-    color: darkgray;
-    font-size: 14px;
+.blog-entry .summary .flex-item .title {
+    color: var(--secondary);
 }
 
 .blog-entry .latest-posts {
     margin-top: 8px;
     font-size: 14px;
     color: var(--secondary);
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 
 .blog-entry .latest-posts p {
@@ -543,7 +559,7 @@ div#searchbox {
 
 .blog-detail-articles .articles-container {
     margin-top: 16px;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--secondary);
     overflow: hidden;
     display: -webkit-box;
