@@ -91,6 +91,7 @@ h4 {
     width: 20px;
     height: 20px;
     margin-right: 2px;
+    border-radius: 50%;
 }
 
 .footer-block {
@@ -191,6 +192,10 @@ h4 {
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+}
+
+.blog-entry .icon-and-title .flex-item img {
+    border-radius: 50%;
 }
 
 .blog-entry .domain {
@@ -495,6 +500,7 @@ div#searchbox {
 
 .blog-detail-header .icon img {
     width: 80px;
+    border-radius: 50%;
 }
 
 .blog-detail-header .title {
