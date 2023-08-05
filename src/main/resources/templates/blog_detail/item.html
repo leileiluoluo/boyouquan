@@ -77,7 +77,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="articles-footer">
+        <div class="articles-footer" th:if="${blogInfo.postCount == 100}">
             <p>* 仅展示最近100条数据</p>
         </div>
     </div>
