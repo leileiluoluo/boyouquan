@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
@@ -28,53 +29,85 @@ public class GravatarServiceImpl implements GravatarService {
 
     @Override
     public byte[] getImage(String md5Email, int size) {
-        return getFromLocalStore(md5Email, size);
-    }
-
-    private byte[] getFromLocalStore(String md5Email, int size) {
-        String localPath = String.format(CommonConstants.GRAVATAR_STORE_FOLDER, md5Email);
-        Path folderPath = Path.of(localPath);
-        Path filePath = Path.of(localPath, String.format("%d.jpg", size));
-
         try {
-            // not exists
-            if (Files.notExists(filePath)) {
-                byte[] bytes = getFromGravatarSource(md5Email, size, false);
-
-                // get default image
-                if (0 == bytes.length) {
-                    bytes = getDefaultGravatarFromLocalStore(size);
-                }
-
-                Files.createDirectories(folderPath);
-                Files.write(filePath, bytes);
-
-                return bytes;
+            if (existsInLocalStore(md5Email, size)) {
+                return getFromLocalStore(md5Email, size);
             }
 
-            return Files.readAllBytes(filePath);
+            byte[] bytes = getFromGravatarSource(md5Email, size, false);
+
+            // get default image
+            if (0 == bytes.length) {
+                bytes = getDefaultGravatarFromLocalStore(size);
+            }
+
+            // write to local store
+            writeToLocalStore(md5Email, size, bytes);
+
+            return bytes;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new byte[]{};
         }
     }
 
-    private byte[] getDefaultGravatarFromLocalStore(int size) {
-        Path defaultImageFolderPath = Path.of(CommonConstants.GRAVATAR_DEFAULT_IMAGE_STORE_FOLDER);
-        Path defaultImageFilePath = Path.of(CommonConstants.GRAVATAR_DEFAULT_IMAGE_STORE_FOLDER, String.format("%d.jpg", size));
+    @Override
+    public void refreshLocalImage(String md5Email, int size) {
+        try {
+            byte[] localBytes = getFromLocalStore(md5Email, size);
+
+            if (localBytes.length > 0) {
+                byte[] bytes = getFromGravatarSource(md5Email, size, false);
+                if (bytes.length > 0
+                        && bytes.length != localBytes.length) {
+                    writeToLocalStore(md5Email, size, bytes);
+
+                    logger.info("local image refreshed, previousLength: {}, currentLength: {}", localBytes.length, bytes.length);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("image refresh failed", e);
+        }
+    }
+
+    private byte[] getFromLocalStore(String md5Email, int size) {
+        Path filePath = getGravatarFilePath(md5Email, size);
 
         try {
-            if (Files.notExists(defaultImageFilePath)) {
-                byte[] bytes = getFromGravatarSource(CommonConstants.GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL, size, true);
-
-                if (bytes.length > 0) {
-                    Files.createDirectories(defaultImageFolderPath);
-                    Files.write(defaultImageFilePath, bytes);
-                }
-
-                return bytes;
+            if (existsInLocalStore(md5Email, size)) {
+                return Files.readAllBytes(filePath);
             }
-            return Files.readAllBytes(defaultImageFilePath);
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return new byte[]{};
+    }
+
+    private void writeToLocalStore(String md5Email, int size, byte[] bytes) {
+        Path folderPath = getGravatarFolderPath(md5Email, size);
+        Path filePath = getGravatarFilePath(md5Email, size);
+
+        try {
+            Files.createDirectories(folderPath);
+            Files.write(filePath, bytes);
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    private byte[] getDefaultGravatarFromLocalStore(int size) {
+        try {
+            if (existsInLocalStore(CommonConstants.GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL, size)) {
+                return getFromLocalStore(CommonConstants.GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL, size);
+            }
+
+            byte[] bytes = getFromGravatarSource(CommonConstants.GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL, size, true);
+            if (bytes.length > 0) {
+                writeToLocalStore(CommonConstants.GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL, size, bytes);
+            }
+
+            return bytes;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return new byte[]{};
@@ -107,6 +140,20 @@ public class GravatarServiceImpl implements GravatarService {
             logger.error(e.getMessage(), e);
             return new byte[]{};
         }
+    }
+
+    private boolean existsInLocalStore(String md5Email, int size) {
+        return Files.exists(getGravatarFilePath(md5Email, size));
+    }
+
+    private Path getGravatarFolderPath(String md5Email, int size) {
+        String localPath = String.format(CommonConstants.GRAVATAR_STORE_FOLDER, md5Email);
+        return Path.of(localPath);
+    }
+
+    private Path getGravatarFilePath(String md5Email, int size) {
+        String localPath = String.format(CommonConstants.GRAVATAR_STORE_FOLDER, md5Email);
+        return Path.of(localPath, String.format("%d.jpg", size));
     }
 
 }

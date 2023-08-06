@@ -1,6 +1,7 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.config.BoYouQuanConfig;
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogRequest;
 import com.boyouquan.model.BlogRequestInfo;
@@ -83,6 +84,35 @@ public class EmailServiceImpl implements EmailService {
 
             // send
             send(adminEmail, subject, text, true);
+        }
+    }
+
+    @Override
+    public void sendBlogSystemCollectedNotice(BlogRequest blogRequest) {
+        if (!boYouQuanConfig.getEmailEnabled()) {
+            return;
+        }
+
+        if (null != blogRequest) {
+            String adminEmail = blogRequest.getAdminEmail();
+            if (!CommonConstants.FAKE_BLOG_ADMIN_EMAIL.equals(adminEmail)) {
+                String subject = String.format("[博友圈] 恭喜您！您的博客「%s」已被博友圈收录！", blogRequest.getName());
+
+                Context context = new Context();
+                BlogRequestInfo blogRequestInfo = new BlogRequestInfo();
+                BeanUtils.copyProperties(blogRequest, blogRequestInfo);
+                Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
+                if (null != blog) {
+                    blogRequestInfo.setDomainName(blog.getDomainName());
+                }
+
+                context.setVariable("blogRequestInfo", blogRequestInfo);
+
+                String text = templateEngine.process("email/blog_request_template_collected", context);
+
+                // send
+                send(adminEmail, subject, text, true);
+            }
         }
     }
 

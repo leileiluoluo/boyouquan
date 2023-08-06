@@ -8,6 +8,8 @@ public interface EmailService {
 
     void sendBlogRequestApprovedNotice(BlogRequest blogRequest);
 
+    void sendBlogSystemCollectedNotice(BlogRequest blogRequest);
+
     void sendBlogRequestRejectNotice(BlogRequest blogRequest);
 
     void send(String to, String subject, String content, boolean html);
