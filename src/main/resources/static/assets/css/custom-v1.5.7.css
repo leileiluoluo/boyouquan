@@ -35,6 +35,11 @@ h4 {
 
 .header .nav {
     line-height: normal !important;
+    align-items: center;
+}
+
+.header .nav .menu {
+    margin-bottom: 12px !important;
 }
 
 .header #menu span {
@@ -43,6 +48,10 @@ h4 {
 
 .header #menu a {
     font-size: 16px !important;
+}
+
+.logo {
+    margin-bottom: 12px !important;
 }
 
 .logo a {
@@ -56,6 +65,10 @@ h4 {
 
 .dark .logo a {
     background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
+}
+
+.main {
+    padding: calc(var(--gap)/4) var(--gap) var(--gap) var(--gap) !important;
 }
 
 .first-entry {
