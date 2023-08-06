@@ -14,8 +14,12 @@ public class CommonConstants {
     public static final String BLOG_LIST_ADDRESS = "/blogs";
     public static final String BLOG_ITEM_ADDRESS_PATTERN = "/blogs?keyword=%s";
 
-    public static final String GRAVATAR_ADDRESS_SMALL_SIZE = "https://seccdn.libravatar.org/gravatarproxy/%s?s=20";
-    public static final String GRAVATAR_ADDRESS_LARGE_SIZE = "https://seccdn.libravatar.org/gravatarproxy/%s?s=80";
+    public static final String GRAVATAR_SOURCE_ADDRESS = "https://seccdn.libravatar.org/gravatarproxy/%s?s=%d";
+    public static final String GRAVATAR_STORE_FOLDER = "gravatar/%s/";
+    public static final String GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    public static final String GRAVATAR_DEFAULT_IMAGE_STORE_FOLDER = String.format(GRAVATAR_STORE_FOLDER, GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL);
+    public static final String GRAVATAR_ADDRESS_SMALL_SIZE = "/gravatar/%s?size=20";
+    public static final String GRAVATAR_ADDRESS_LARGE_SIZE = "/gravatar/%s?size=80";
 
     public static final int RSS_POST_COUNT_READ_LIMIT = 10;
     public static final int RSS_BLOG_DESCRIPTION_LENGTH_LIMIT = 200;
