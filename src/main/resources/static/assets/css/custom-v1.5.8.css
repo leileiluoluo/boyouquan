@@ -8,6 +8,13 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+body#top {
+    background-image: url(/assets/images/sites/background/background.svg);
+    background-position: center center, center center;
+    background-size: cover,cover;
+    background-repeat: no-repeat, no-repeat;
+}
+
 h1 {
     font-size: 22px !important;
     font-weight: 480 !important;
@@ -190,7 +197,7 @@ h4 {
     background: var(--entry);
     border-radius: var(--radius);
     transition: transform .1s;
-    border: 1px solid var(--border);
+    border: 1px solid var(--entry);
     width: 100%;
     margin-bottom: 18px;
 }
@@ -362,7 +369,7 @@ div#searchbox {
     background: var(--entry);
     border-radius: var(--radius);
     transition: transform .1s;
-    border: 1px solid var(--border);
+    border: 1px solid var(--entry);
 }
 
 .post-header {
@@ -393,7 +400,7 @@ div#searchbox {
 .post-content img {
     border-radius: 4px;
     margin: 1rem 0;
-    border: 1px solid var(--border);
+    border: 1px solid var(--entry);
 }
 
 :root {
@@ -406,7 +413,7 @@ div#searchbox {
   margin-bottom: 26px;
   height: calc(var(--h) * 1px);
   line-height: calc(var(--h) * 1px);
-  background: var(--border);
+  background: var(--entry);
   border-radius: var(--radius);
   border: 1px solid var(--tertiary);
   overflow: hidden;
@@ -480,7 +487,7 @@ div#searchbox {
     display: flex;
     flex-direction: column;
     transition: transform .1s;
-    border: 1px solid var(--border);
+    border: 1px solid var(--entry);
     background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background.jpeg);
     padding: calc(var(--gap)/2) var(--gap) calc(var(--gap)) var(--gap);
     border-radius: var(--radius);
@@ -545,7 +552,7 @@ div#searchbox {
     padding: var(--gap);
     border-radius: var(--radius);
     transition: transform .1s;
-    border: 1px solid var(--border);
+    border: 1px solid var(--entry);
     background: var(--entry);
     margin-bottom: calc(var(--gap)/2);
 }
@@ -558,7 +565,7 @@ div#searchbox {
     padding: var(--gap);
     border-radius: var(--radius);
     transition: transform .1s;
-    border: 1px solid var(--border);
+    border: 1px solid var(--entry);
     background: var(--entry);
     margin-bottom: calc(var(--gap)/2);
 }
@@ -571,7 +578,7 @@ div#searchbox {
     padding: var(--gap);
     border-radius: var(--radius);
     transition: transform .1s;
-    border: 1px solid var(--border);
+    border: 1px solid var(--entry);
     background: var(--entry);
     margin-bottom: var(--gap);
 }
@@ -606,7 +613,7 @@ tr:nth-child(even) {
     padding: var(--gap);
     border-radius: var(--radius);
     transition: transform .1s;
-    border: 1px solid var(--border);
+    border: 1px solid var(--entry);
     background: var(--entry);
     margin-bottom: var(--gap);
 }
