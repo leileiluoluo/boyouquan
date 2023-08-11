@@ -86,6 +86,7 @@ h4 {
 
 .post-entry {
     margin-bottom: 18px !important;
+    border: 1px solid var(--entry) !important;
 }
 
 .post-entry .entry-header {
@@ -413,7 +414,7 @@ div#searchbox {
   margin-bottom: 26px;
   height: calc(var(--h) * 1px);
   line-height: calc(var(--h) * 1px);
-  background: var(--entry);
+  /*background: var(--entry);*/
   border-radius: var(--radius);
   border: 1px solid var(--tertiary);
   overflow: hidden;
