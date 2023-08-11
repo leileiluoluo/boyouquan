@@ -487,7 +487,6 @@ div#searchbox {
     display: flex;
     flex-direction: column;
     transition: transform .1s;
-    border: 1px solid var(--entry);
     background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background.jpeg);
     padding: calc(var(--gap)/2) var(--gap) calc(var(--gap)) var(--gap);
     border-radius: var(--radius);
