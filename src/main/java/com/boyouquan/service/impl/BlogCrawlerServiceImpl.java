@@ -151,7 +151,9 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
             description = contents.get(0).getValue();
         } else {
             SyndContent descriptionContent = entry.getDescription();
-            description = descriptionContent.getValue();
+            if (null != descriptionContent) {
+                description = descriptionContent.getValue();
+            }
         }
 
         description = CommonUtils.parseAndTruncateHtml2Text(description, CommonConstants.RSS_BLOG_DESCRIPTION_LENGTH_LIMIT);
