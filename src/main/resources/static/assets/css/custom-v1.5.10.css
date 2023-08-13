@@ -643,7 +643,7 @@ tr:nth-child(even) {
 
 .blog-requests .requests-form-container .key-value-entry .field {
     padding: 2px 4px 2px 4px;
-    border: 2px solid var(--border);
+    border: 2px solid var(--tertiary);
 }
 
 .blog-requests .requests-form-container .key-value-entry .label {
@@ -653,6 +653,7 @@ tr:nth-child(even) {
     white-space: nowrap;
     text-overflow: ellipsis;
     align-items: center;
+    margin-bottom: 2px;
 }
 
 .blog-requests .requests-form-container .key-value-entry .field {
@@ -662,10 +663,12 @@ tr:nth-child(even) {
 
 .blog-requests .requests-form-container .key-value-entry input {
     width: 100%;
+    caret-color: var(--content);
 }
 
 .blog-requests .requests-form-container .key-value-entry textarea {
     width: 100%;
+    height: 100px;
 }
 
 .blog-requests .requests-form-container .key-value-entry input[type="submit"] {
