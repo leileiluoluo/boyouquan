@@ -670,6 +670,8 @@ tr:nth-child(even) {
 .blog-requests .requests-form-container .key-value-entry textarea {
     width: 100%;
     height: 100px;
+    caret-color: var(--content);
+    color: var(--content);
 }
 
 .blog-requests .requests-form-container .key-value-entry input[type="submit"] {
