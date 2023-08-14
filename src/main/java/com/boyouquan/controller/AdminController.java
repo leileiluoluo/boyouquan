@@ -1,6 +1,7 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.helper.AdminLoginFormHelper;
 import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.BlogRequestService;
@@ -29,6 +30,8 @@ public class AdminController {
     private BlogRequestService blogRequestService;
     @Autowired
     private BlogRequestFormHelper requestFormHelper;
+    @Autowired
+    private AdminLoginFormHelper adminLoginFormHelper;
     @Autowired
     private UserService userService;
 
@@ -175,27 +178,15 @@ public class AdminController {
 
     @PostMapping("/login")
     public String adminLogin(AdminLoginForm adminLoginForm, Errors errors, HttpSession session) {
-        // name
-        if (StringUtils.isBlank(adminLoginForm.getUsername())) {
-            errors.rejectValue("username", "fields.invalid", "账号不能为空");
-        }
-        if (StringUtils.isBlank(adminLoginForm.getPassword())) {
-            errors.rejectValue("password", "fields.invalid", "密码不能为空");
-        }
-
-        // check user
-        User user = userService.getUserByUsername(adminLoginForm.getUsername());
-        boolean isUserValid = userService.isUsernamePasswordValid(adminLoginForm.getUsername(), adminLoginForm.getPassword());
-        if (!isUserValid) {
-            errors.rejectValue("username", "fields.invalid", "账号或密码无效！");
-            errors.rejectValue("password", "fields.invalid", "账号或密码无效！");
-        }
+        // params validation
+        adminLoginFormHelper.paramsValidation(adminLoginForm, errors);
 
         if (errors.getErrorCount() > 0) {
             return "admin/login/form";
         }
 
         // set session
+        User user = userService.getUserByUsername(adminLoginForm.getUsername());
         session.setAttribute("user", user);
 
         return "redirect:/admin/blog-requests";
