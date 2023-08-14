@@ -370,7 +370,7 @@ div#searchbox {
     background: var(--entry);
     border-radius: var(--radius);
     transition: transform .1s;
-    border: 1px solid var(--entry);
+    border: 1px solid var(--tertiary);
 }
 
 .post-header {
