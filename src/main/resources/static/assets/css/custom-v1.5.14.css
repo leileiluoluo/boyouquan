@@ -642,6 +642,8 @@ tr:nth-child(even) {
 }
 
 .blog-requests .requests-form-container .key-value-entry .field {
+    font-size: 16px;
+    color: var(--secondary);
     padding: 2px 4px 2px 4px;
     border: 2px solid var(--tertiary);
 }
@@ -654,11 +656,6 @@ tr:nth-child(even) {
     text-overflow: ellipsis;
     align-items: center;
     margin-bottom: 2px;
-}
-
-.blog-requests .requests-form-container .key-value-entry .field {
-    font-size: 16px;
-    color: var(--secondary);
 }
 
 .blog-requests .requests-form-container .key-value-entry input {
@@ -675,6 +672,62 @@ tr:nth-child(even) {
 }
 
 .blog-requests .requests-form-container .key-value-entry input[type="submit"] {
+    margin-top: 10px;
+    font-size: 16px;
+    width: 80px !important;
+    color: var(--theme);
+    line-height: 30px;
+    background: var(--primary);
+    border-radius: 16px;
+    padding: 0 16px;
+}
+
+.login-form {
+    padding: var(--gap);
+    border-radius: var(--radius);
+    transition: transform .1s;
+    border: 1px solid var(--tertiary);
+    background: var(--entry);
+    margin-bottom: var(--gap);
+}
+
+
+.login-form .login-form-container {
+    font-size: 16px;
+    color: var(--secondary);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.login-form .login-form-container .key-value-entry {
+    margin-bottom: 6px;
+}
+
+.login-form .login-form-container .key-value-entry .field {
+    font-size: 16px;
+    color: var(--secondary);
+    padding: 2px 4px 2px 4px;
+    border: 2px solid var(--tertiary);
+}
+
+.login-form .login-form-container .key-value-entry .label {
+    display: flex;
+    font-size: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.login-form .login-form-container .key-value-entry input {
+    width: 100%;
+    caret-color: var(--content);
+    color: var(--content);
+}
+
+.login-form .login-form-container .key-value-entry input[type="submit"] {
     margin-top: 10px;
     font-size: 16px;
     width: 80px !important;
