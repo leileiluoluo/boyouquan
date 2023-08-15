@@ -11,9 +11,9 @@
             登录 - 管理页面
         </h3>
     </header>
-    <div class="blog-requests">
+    <div class="login-form">
         <form th:action="@{/admin/login}" th:object="${adminLoginForm}" method="post">
-            <div class="requests-form-container">
+            <div class="login-form-container">
                 <div class="key-value-entry">
                     <div class="label">
                         <span>账号</span> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" />
