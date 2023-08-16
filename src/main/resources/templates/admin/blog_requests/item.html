@@ -106,7 +106,7 @@
                         <p>
                         <form action="#" th:action="@{'/admin/blog-requests/reject/{id}'(id=${blogRequestInfo.id})}" th:method="post">
                             <input type="hidden" name="_method" value="post" />
-                            <input style="width: 400px; border: 2px solid var(--primary);" name="reason" />
+                            <input style="width: 400px; border: 2px solid var(--primary); caret-color: var(--content); color: var(--content);" name="reason" />
                             <button style="color: red;" type="submit">驳回</button>
                         </form>
                         </p>
