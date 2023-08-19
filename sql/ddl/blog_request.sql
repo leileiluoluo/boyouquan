@@ -12,5 +12,3 @@ CREATE TABLE blog_request (
     reason VARCHAR(300) NULL,
     deleted BOOLEAN DEFAULT FALSE
 );
-
-CREATE INDEX idx_blog_request_rss_address ON blog (rss_address);

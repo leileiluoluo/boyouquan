@@ -26,7 +26,7 @@ import java.util.Optional;
 @Service
 public class BlogCrawlerServiceImpl implements BlogCrawlerService {
 
-    private final Logger logger = LoggerFactory.getLogger(BlogCrawlerServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(BlogCrawlerServiceImpl.class);
 
     private static final OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(Duration.ofMinutes(1))
