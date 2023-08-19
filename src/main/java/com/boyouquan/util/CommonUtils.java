@@ -22,6 +22,33 @@ public class CommonUtils {
         return MORE_COMMON_DATE_HOUR_PATTERN.format(date);
     }
 
+    public static String dateBeyondSomeRangeStr(Date date) {
+        if (null == date) {
+            return "";
+        }
+
+        long now = System.currentTimeMillis();
+        long past = date.getTime();
+
+        final long oneDay = 24 * 60 * 60 * 1000;
+        final long oneMonth = 30 * oneDay;
+        final long oneYear = 365 * oneDay;
+
+        long timeDiff = now - past;
+        if (timeDiff > oneYear) {
+            int years = (int) (timeDiff / oneYear);
+            return String.format("已过了%d年", years);
+        } else if (timeDiff > oneMonth) {
+            int months = (int) (timeDiff / oneMonth);
+            return String.format("已过了%d个月", months);
+        } else if (timeDiff > oneDay) {
+            int days = (int) (timeDiff / oneDay);
+            return String.format("已过了%d天", days);
+        }
+
+        return "";
+    }
+
     public static String dateFriendlyDisplay(Date date) {
         if (null == date) {
             return "";

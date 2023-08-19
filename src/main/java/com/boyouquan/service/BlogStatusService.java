@@ -5,6 +5,8 @@ import com.boyouquan.model.BlogStatus;
 
 public interface BlogStatusService {
 
+    String getUnOkInfo(String blogDomainName);
+
     void detectBlogStatus(Blog blog);
 
     boolean isStatusOkByBlogDomainName(String blogDomainName);

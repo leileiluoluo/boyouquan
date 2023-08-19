@@ -25,7 +25,7 @@
         </header>
 
         <header th:unless="${blogInfo.statusOk}" class="blog-can-not-access-tip">
-            <strong>该博客目前无法访问！</strong>
+            <strong th:text="${blogInfo.statusUnOkInfo}"></strong>
         </header>
 
         <header class="blog-detail-header">
