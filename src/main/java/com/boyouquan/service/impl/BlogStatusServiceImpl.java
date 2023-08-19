@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.time.Duration;
 
 @Service
@@ -22,9 +23,9 @@ public class BlogStatusServiceImpl implements BlogStatusService {
     private static final Logger logger = LoggerFactory.getLogger(BlogStatusServiceImpl.class);
 
     private static final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(Duration.ofMinutes(1))
-            .readTimeout(Duration.ofMinutes(1))
-            .callTimeout(Duration.ofMinutes(2))
+            .connectTimeout(Duration.ofMinutes(2))
+            .readTimeout(Duration.ofMinutes(2))
+            .callTimeout(Duration.ofMinutes(4))
             .build();
 
     @Autowired
@@ -51,6 +52,11 @@ public class BlogStatusServiceImpl implements BlogStatusService {
                             : responseBodyString;
                 }
             }
+        } catch (SocketTimeoutException e) {
+            logger.error("timeout", e);
+            currentStatus = BlogStatus.Status.timeout;
+            code = HttpStatus.GATEWAY_TIMEOUT.value();
+            reason = "timeout";
         } catch (Exception e) {
             logger.error("error in detect blog status", e);
             currentStatus = BlogStatus.Status.can_not_be_accessed;
