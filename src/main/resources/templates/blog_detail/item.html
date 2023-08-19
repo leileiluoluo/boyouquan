@@ -8,9 +8,15 @@
 <header th:replace="~{fragments/header/header::header}"></header>
 <main class="main">
     <div class="blog-detail-main">
-        <header class="submitted-info">
-            <img th:src="@{/assets/images/sites/blog_detail/info-icon.png}">
-            <p th:text="${blogInfo.submittedInfo}"></p>
+        <header class="header-info">
+            <div class="status-info">
+                <div style="background-color: #0dcb0d;" class="status-icon"></div>
+                <p th:text="可以访问"></p>
+            </div>
+            <div class="submitted-info">
+                <img th:src="@{/assets/images/sites/blog_detail/info-icon.png}">
+                <p th:text="${blogInfo.submittedInfo}"></p>
+            </div>
         </header>
         <header class="blog-detail-header">
             <div class="icon">
