@@ -23,6 +23,11 @@
                 <p th:text="${blogInfo.submittedInfo}"></p>
             </div>
         </header>
+
+        <header th:unless="${blogInfo.statusOk}" class="blog-can-not-access-tip">
+            <strong>该博客目前无法访问！</strong>
+        </header>
+
         <header class="blog-detail-header">
             <div class="icon">
                 <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
