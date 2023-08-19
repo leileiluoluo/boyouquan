@@ -78,10 +78,15 @@
                     </p>
                 </div>
                 <footer class="bottom-info">
-                    <div class="status-info">
+                    <div class="status-info" th:if="${blogInfo.statusOk}">
                         <div style="background-color: #0dcb0d;" class="status-icon"></div>
                         <p th:text="可以访问"></p>
                     </div>
+                    <div class="status-info" th:unless="${blogInfo.statusOk}">
+                        <div style="background-color: red;" class="status-icon"></div>
+                        <p th:text="无法访问"></p>
+                    </div>
+
                     <div class="submitted-info">
                         <img th:src="@{/assets/images/sites/blog_detail/info-icon.png}">
                         <p th:text="${blogInfo.submittedInfo}"></p>

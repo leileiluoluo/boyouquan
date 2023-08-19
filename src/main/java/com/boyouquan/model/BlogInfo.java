@@ -22,5 +22,6 @@ public class BlogInfo extends Blog {
     private String blogAdminSmallImageURL;
     private String blogAdminLargeImageURL;
     private String submittedInfo;
+    private boolean statusOk;
 
 }

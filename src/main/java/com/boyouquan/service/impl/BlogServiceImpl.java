@@ -7,6 +7,7 @@ import com.boyouquan.model.BlogInfo;
 import com.boyouquan.model.Post;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
+import com.boyouquan.service.BlogStatusService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.Pagination;
@@ -29,6 +30,8 @@ public class BlogServiceImpl implements BlogService {
     private PostService postService;
     @Autowired
     private AccessService accessService;
+    @Autowired
+    private BlogStatusService blogStatusService;
 
     @Override
     public String getBlogAdminSmallImageURLByDomainName(String blogDomainName) {
@@ -184,6 +187,10 @@ public class BlogServiceImpl implements BlogService {
         blogInfo.setPosts(latestPostsPagination.getResults());
 
         blogInfo.setSubmittedInfo(blog.getSelfSubmitted() ? "自行提交" : "系统收录");
+
+        // status
+        boolean isStatusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
+        blogInfo.setStatusOk(isStatusOk);
 
         return blogInfo;
     }

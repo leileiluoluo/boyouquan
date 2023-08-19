@@ -1,0 +1,39 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.BlogStatusDaoMapper">
+    <sql id="insert_columns">
+        blog_domain_name,
+        status,
+        code,
+        reason,
+        detected_at,
+        deleted
+    </sql>
+    <sql id="select_columns">
+        blog_domain_name as blogDomainName,
+        status,
+        code,
+        reason,
+        detected_at as detectedAt,
+        deleted
+    </sql>
+    <select id="getLatestByBlogDomainName" resultType="com.boyouquan.model.BlogStatus">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog_status
+        WHERE blog_domain_name=#{blogDomainName}
+        AND deleted=false
+        ORDER BY detected_at DESC LIMIT 1
+    </select>
+    <insert id="save">
+        INSERT INTO blog_status (
+        <include refid="insert_columns"/>
+        ) VALUES (
+        #{blogDomainName},
+        #{status},
+        #{code},
+        #{reason},
+        now(),
+        false
+        )
+    </insert>
+</mapper>
