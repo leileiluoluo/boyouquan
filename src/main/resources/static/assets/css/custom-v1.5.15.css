@@ -514,7 +514,7 @@ div#searchbox {
     flex-direction: column;
     transition: transform .1s;
     background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background.jpeg);
-    padding: calc(var(--gap)/2) var(--gap) calc(var(--gap)) var(--gap);
+    padding: calc(2*var(--gap)/3) var(--gap) calc(var(--gap)) var(--gap);
     border-radius: var(--radius);
     margin-bottom: calc(var(--gap)/2);
     border: 1px solid var(--tertiary) !important;
@@ -559,10 +559,19 @@ div#searchbox {
     display: block;
 }
 
+.blog-detail-main .blog-can-not-access-tip {
+    margin-top: 6px;
+    padding: 4px 8px 4px 8px;
+    background-color: darkred;
+    font-size: 12px;
+    color: white;
+}
+
 .blog-detail-header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 8px;
 }
 
 .dark .blog-detail-main {
