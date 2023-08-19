@@ -24,7 +24,7 @@ public class BlogStatusScheduler {
     private BlogStatusService blogStatusService;
 
     @Scheduled(cron = "0 0 0/2 * * ?")
-    public void processBlogs() {
+    public void processBlogStatuses() {
         logger.info("blog status scheduler start!");
 
         detectBlogStatuses();

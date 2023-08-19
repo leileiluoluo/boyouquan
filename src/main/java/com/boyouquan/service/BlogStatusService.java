@@ -11,6 +11,6 @@ public interface BlogStatusService {
 
     BlogStatus getLatestByBlogDomainName(String blogDomainName);
 
-    void save(BlogStatus blogStatus);
+    void save(String blogDomainName, BlogStatus.Status status, int code, String reason);
 
 }
