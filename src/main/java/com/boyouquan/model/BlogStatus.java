@@ -21,6 +21,7 @@ public class BlogStatus {
 
     public enum Status {
         ok,
+        timeout,
         can_not_be_accessed
     }
 
