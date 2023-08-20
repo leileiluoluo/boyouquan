@@ -42,7 +42,7 @@ public class BlogStatusServiceImpl implements BlogStatusService {
 
         String dateBeyondSomeRange = CommonUtils.dateBeyondSomeRangeStr(blogStatus.getDetectedAt());
         if (StringUtils.isNotBlank(dateBeyondSomeRange)) {
-            return String.format("自我第一次检测到你无法访问以来，到现在「%s」，但仍未恢复正常。我依旧会像之前一样，每天向你发射一次心跳，希望你还会再次出现，而不是就此消失在网络的海洋。", dateBeyondSomeRange);
+            return String.format("自博友圈第一次检测到你无法访问以来，到现在「%s」，但你仍未恢复正常。在接下来的365个日夜里，「我」依旧会像往常一样，每天向你发射一次心跳，希望能得到你归来的讯息，而不是就此消散在网络的海洋里。", dateBeyondSomeRange);
         }
 
         return "系统检测到该博客暂时无法访问。";
