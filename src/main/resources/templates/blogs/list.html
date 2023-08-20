@@ -92,7 +92,7 @@
                     <div class="submitted-info">
                         <img th:src="@{/assets/images/sites/blog_detail/info-icon.png}">
                         <p th:text="${blogInfo.submittedInfo}"></p>
-                        <span class="tooltiptext">该博客为系统收录</span>
+                        <span th:text="${blogInfo.submittedInfoTip}" class="tooltiptext"></span>
                     </div>
                 </footer>
             </article>
