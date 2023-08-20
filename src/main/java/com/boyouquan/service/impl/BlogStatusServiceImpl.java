@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.time.Duration;
-import java.time.Period;
 
 @Service
 public class BlogStatusServiceImpl implements BlogStatusService {
@@ -41,9 +40,10 @@ public class BlogStatusServiceImpl implements BlogStatusService {
             return "";
         }
 
+        String detectedAtDateStr = CommonUtils.dateCommonFormatDisplay(blogStatus.getDetectedAt());
         String dateBeyondSomeRange = CommonUtils.dateBeyondSomeRangeStr(blogStatus.getDetectedAt());
         if (StringUtils.isNotBlank(dateBeyondSomeRange)) {
-            return String.format("自我第一次检测到你无法访问以来，到现在%s，但你仍未恢复正常。在接下来的365个日夜里，我依旧会像往常一样，每天向你发射一次心跳，希望能得到你归来的讯息，而不希望你就此消散在网络的海洋里。", dateBeyondSomeRange);
+            return String.format("自「%s」第一次检测到你无法访问以来，到现在%s，但你仍未恢复正常。在接下来的一段时间内，我依旧会像往常一样，每天向你发射一次心跳，希望能得到你归来的讯息，而不希望你就此消散在网络的海洋里。", detectedAtDateStr, dateBeyondSomeRange);
         }
 
         return "系统检测到该博客暂时无法访问。";
