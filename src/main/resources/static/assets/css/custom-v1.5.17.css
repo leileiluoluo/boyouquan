@@ -533,6 +533,10 @@ div#searchbox {
     font-size: 12px;
 }
 
+.blog-detail-main .header-info .status-info:hover .tooltiptext {
+    visibility: visible;
+}
+
 .blog-detail-main .header-info .status-info .status-icon {
     display: inline-block;
     width: 10px;
@@ -541,6 +545,7 @@ div#searchbox {
 }
 
 .blog-detail-main .header-info .status-info p {
+    user-select: none;
     margin-left: 4px;
     color: var(--secondary);
 }
@@ -553,10 +558,19 @@ div#searchbox {
     color: var(--secondary);
 }
 
+.blog-detail-main .header-info .submitted-info:hover .tooltiptext {
+    visibility: visible;
+}
+
 .blog-detail-main .header-info .submitted-info img {
+    user-select: none;
     margin-right: 2px;
     width: 14px;
     display: block;
+}
+
+.blog-detail-main .header-info .submitted-info p {
+    user-select: none;
 }
 
 .blog-detail-main .blog-can-not-access-tip {
@@ -795,4 +809,17 @@ tr:nth-child(even) {
     background: var(--primary);
     border-radius: 16px;
     padding: 0 16px;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    background-color: var(--hljs-bg);
+    color: whitesmoke;
+    margin-bottom: 52px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 4px 4px;
+    font-size: 12px;
+    position: absolute;
+    z-index: 1;
 }
