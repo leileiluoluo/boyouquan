@@ -81,15 +81,18 @@
                     <div class="status-info" th:if="${blogInfo.statusOk}">
                         <div style="background-color: #0dcb0d;" class="status-icon"></div>
                         <p th:text="运行良好"></p>
+                        <span class="tooltiptext">该博客运行状态良好</span>
                     </div>
                     <div class="status-info" th:unless="${blogInfo.statusOk}">
                         <div style="background-color: red;" class="status-icon"></div>
                         <p th:text="无法访问"></p>
+                        <span class="tooltiptext">该博客目前无法访问</span>
                     </div>
 
                     <div class="submitted-info">
                         <img th:src="@{/assets/images/sites/blog_detail/info-icon.png}">
                         <p th:text="${blogInfo.submittedInfo}"></p>
+                        <span class="tooltiptext">该博客为系统收录</span>
                     </div>
                 </footer>
             </article>
