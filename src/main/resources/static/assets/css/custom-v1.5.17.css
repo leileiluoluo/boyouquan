@@ -626,7 +626,7 @@ div#searchbox {
     overflow: hidden;
     -webkit-box-orient: vertical;
     background-color: var(--code-bg);
-    padding: 0.3rem 0.3rem;
+    padding: 0.3rem 0.6rem 0.3rem 0.6rem;
     display: -webkit-box;
     border-radius: calc(0.4rem);
 }
@@ -827,12 +827,12 @@ tr:nth-child(even) {
 
 .tooltiptext {
     visibility: hidden;
-    background-color: var(--hljs-bg);
-    color: whitesmoke;
+    background-color: var(--content);
+    color: var(--theme);
     margin-bottom: 52px;
     text-align: center;
-    border-radius: 6px;
-    padding: 4px 4px;
+    border-radius: 4px;
+    padding: 2px 4px 2px 4px;
     font-size: 12px;
     position: absolute;
     z-index: 1;
