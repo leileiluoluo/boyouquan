@@ -3,8 +3,6 @@ package com.boyouquan.helper;
 import com.boyouquan.model.Post;
 import com.boyouquan.model.RSSInfo;
 import com.boyouquan.service.PostService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +12,6 @@ import java.util.List;
 
 @Component
 public class PostHelper {
-
-    private final Logger logger = LoggerFactory.getLogger(PostHelper.class);
 
     @Autowired
     private PostService postService;
@@ -29,9 +25,7 @@ public class PostHelper {
                 boolean exists = postService.existsByLink(link);
 
                 Date publishedAt = rssPost.getPublishedAt();
-                Date latestPublishedAt = postService.getLatestPublishedAtByBlogDomainName(blogDomainName);
-
-                boolean isValidNewPost = isValidNewPost(publishedAt, latestPublishedAt);
+                boolean isValidNewPost = isValidNewPost(publishedAt);
 
                 if (!exists && isValidNewPost) {
                     Post post = new Post();
@@ -53,19 +47,9 @@ public class PostHelper {
         return false;
     }
 
-    private boolean isValidNewPost(Date publishedAt, Date latestPublishedAt) {
-        boolean isValidNewPost = false;
+    private boolean isValidNewPost(Date publishedAt) {
         Date now = new Date();
-        if (null == latestPublishedAt) {
-            if (publishedAt.before(now)) {
-                isValidNewPost = true;
-            }
-        } else {
-            if (publishedAt.before(now) && publishedAt.after(latestPublishedAt)) {
-                isValidNewPost = true;
-            }
-        }
-        return isValidNewPost;
+        return publishedAt.before(now);
     }
 
 }
