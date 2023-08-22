@@ -61,7 +61,7 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             // not exists
             logger.info("start to crawl: {}", rssAddress);
 
-            RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(rssAddress, CommonConstants.RSS_POST_COUNT_READ_LIMIT);
+            RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(rssAddress, CommonConstants.RSS_POST_COUNT_READ_LIMIT_FIRST_TIME);
             if (null == rssInfo) {
                 logger.error("rss info read failed, rssAddress: {}", rssAddress);
                 blogRequest.setStatus(BlogRequest.Status.system_check_invalid);
