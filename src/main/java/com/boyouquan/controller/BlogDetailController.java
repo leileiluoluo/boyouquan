@@ -1,7 +1,7 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.model.BlogInfo;
-import com.boyouquan.model.DayAccess;
+import com.boyouquan.model.MonthAccess;
 import com.boyouquan.model.MonthPublish;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
@@ -44,12 +44,12 @@ public class BlogDetailController {
         model.addAttribute("blogInfo", blogInfo);
 
         // monthly access charts
-        List<DayAccess> dayAccessList = accessService.getBlogAccessSeriesInLatestOneMonth(blogInfo.getDomainName());
-        String[] monthlyAccessDataLabels = dayAccessList.stream().map(DayAccess::getDay).toArray(String[]::new);
-        Integer[] monthlyAccessDataValues = dayAccessList.stream().map(DayAccess::getCount).toArray(Integer[]::new);
+        List<MonthAccess> monthAccessList = accessService.getBlogAccessSeriesInLatestOneYear(blogInfo.getDomainName());
+        String[] yearlyAccessDataLabels = monthAccessList.stream().map(MonthAccess::getMonth).toArray(String[]::new);
+        Integer[] yearlyAccessDataValues = monthAccessList.stream().map(MonthAccess::getCount).toArray(Integer[]::new);
 
-        model.addAttribute("monthlyAccessDataLabels", monthlyAccessDataLabels);
-        model.addAttribute("monthlyAccessDataValues", monthlyAccessDataValues);
+        model.addAttribute("yearlyAccessDataLabels", yearlyAccessDataLabels);
+        model.addAttribute("yearlyAccessDataValues", yearlyAccessDataValues);
 
         // yearly publish charts
         boolean showLatestPublishedAtChart = false;

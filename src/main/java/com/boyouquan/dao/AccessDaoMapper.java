@@ -2,7 +2,7 @@ package com.boyouquan.dao;
 
 import com.boyouquan.model.Access;
 import com.boyouquan.model.BlogDomainNameAccess;
-import com.boyouquan.model.DayAccess;
+import com.boyouquan.model.MonthAccess;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface AccessDaoMapper {
 
     BlogDomainNameAccess getMostAccessedBlogDomainNameInLatestOneMonth();
 
-    List<DayAccess> getBlogAccessSeriesInLatestOneMonth(String blogDomainName);
+    List<MonthAccess> getBlogAccessSeriesInLatestOneYear(String blogDomainName);
 
     Long countByBlogDomainName(String blogDomainName);
 

@@ -3,7 +3,7 @@ package com.boyouquan.service.impl;
 import com.boyouquan.dao.AccessDaoMapper;
 import com.boyouquan.model.Access;
 import com.boyouquan.model.BlogDomainNameAccess;
-import com.boyouquan.model.DayAccess;
+import com.boyouquan.model.MonthAccess;
 import com.boyouquan.service.AccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,8 @@ public class AccessServiceImpl implements AccessService {
     }
 
     @Override
-    public List<DayAccess> getBlogAccessSeriesInLatestOneMonth(String blogDomainName) {
-        return accessDaoMapper.getBlogAccessSeriesInLatestOneMonth(blogDomainName);
+    public List<MonthAccess> getBlogAccessSeriesInLatestOneYear(String blogDomainName) {
+        return accessDaoMapper.getBlogAccessSeriesInLatestOneYear(blogDomainName);
     }
 
     @Override

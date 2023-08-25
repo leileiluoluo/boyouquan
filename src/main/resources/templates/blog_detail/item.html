@@ -120,17 +120,17 @@
 
     let accessChart = new frappe.Chart( "#access-charts", { // or DOM element
     data: {
-        labels: /*[[${monthlyAccessDataLabels}]]*/ 'default',
+        labels: /*[[${yearlyAccessDataLabels}]]*/ 'default',
 
         datasets: [
           {
             name: "次浏览", chartType: 'bar',
-            values: /*[[${monthlyAccessDataValues}]]*/ 'default'
+            values: /*[[${yearlyAccessDataValues}]]*/ 'default'
           }
         ],
     },
 
-    title: "最近一个月文章浏览统计",
+    title: "最近一年文章浏览统计",
     type: 'bar', // or 'bar', 'line', 'pie', 'percentage'
     height: 200,
     colors: ['#cb2e58'],
