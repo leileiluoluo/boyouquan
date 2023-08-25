@@ -6,6 +6,7 @@ import com.boyouquan.model.MonthPublish;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PostService;
+import com.boyouquan.util.CommonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -50,12 +52,18 @@ public class BlogDetailController {
         model.addAttribute("monthlyAccessDataValues", monthlyAccessDataValues);
 
         // yearly publish charts
-        List<MonthPublish> monthPublishList = postService.getBlogPostPublishSeriesInLatestOneYear(blogInfo.getDomainName());
-        String[] yearlyPublishDataLabels = monthPublishList.stream().map(MonthPublish::getMonth).toArray(String[]::new);
-        Integer[] yearlyPublishDataValues = monthPublishList.stream().map(MonthPublish::getCount).toArray(Integer[]::new);
+        boolean showLatestPublishedAtChart = false;
+        Date latestPublishAt = postService.getLatestPublishedAtByBlogDomainName(blogInfo.getDomainName());
+        showLatestPublishedAtChart = !CommonUtils.isDateOneYearAgo(latestPublishAt);
+        model.addAttribute("showLatestPublishedAtChart", showLatestPublishedAtChart);
+        if (showLatestPublishedAtChart) {
+            List<MonthPublish> monthPublishList = postService.getBlogPostPublishSeriesInLatestOneYear(blogInfo.getDomainName());
+            String[] yearlyPublishDataLabels = monthPublishList.stream().map(MonthPublish::getMonth).toArray(String[]::new);
+            Integer[] yearlyPublishDataValues = monthPublishList.stream().map(MonthPublish::getCount).toArray(Integer[]::new);
 
-        model.addAttribute("yearlyPublishDataLabels", yearlyPublishDataLabels);
-        model.addAttribute("yearlyPublishDataValues", yearlyPublishDataValues);
+            model.addAttribute("yearlyPublishDataLabels", yearlyPublishDataLabels);
+            model.addAttribute("yearlyPublishDataValues", yearlyPublishDataValues);
+        }
 
         // for summary
         model.addAttribute("totalBlogs", blogService.countAll());
