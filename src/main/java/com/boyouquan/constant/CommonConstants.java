@@ -30,4 +30,6 @@ public class CommonConstants {
     public static final int LATEST_POST_COUNT_LIMIT = 3;
     public static final int ALL_POST_COUNT_LIMIT = 100;
 
+    public static final String FULL_BLOG_LIST_ADDRESS = "https://www.boyouquan.com/blogs";
+
 }

@@ -4,6 +4,7 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.BlogDaoMapper;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogInfo;
+import com.boyouquan.model.BlogLatestPublishedAt;
 import com.boyouquan.model.Post;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
@@ -32,6 +33,21 @@ public class BlogServiceImpl implements BlogService {
     private AccessService accessService;
     @Autowired
     private BlogStatusService blogStatusService;
+
+    @Override
+    public List<BlogLatestPublishedAt> listBlogLatestPublishedAt() {
+        return listAll().stream().map(blog -> {
+            BlogLatestPublishedAt blogLatestPublishedAt = new BlogLatestPublishedAt();
+            Date latestPublishedAt = postService.getLatestPublishedAtByBlogDomainName(blog.getDomainName());
+
+            String blogDetailPageUrl = String.format("%s/%s", CommonConstants.FULL_BLOG_LIST_ADDRESS, blog.getDomainName());
+            blogLatestPublishedAt.setBlogDetailPageUrl(blogDetailPageUrl);
+
+            Date date = (null == latestPublishedAt) ? new Date() : latestPublishedAt;
+            blogLatestPublishedAt.setLatestPublishedAt(CommonUtils.dateSitemapFormatStr(date));
+            return blogLatestPublishedAt;
+        }).toList();
+    }
 
     @Override
     public String getBlogAdminSmallImageURLByDomainName(String blogDomainName) {

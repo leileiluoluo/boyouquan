@@ -14,6 +14,12 @@ public class CommonUtils {
     private static final SimpleDateFormat MORE_COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy/MM/dd");
     private static final SimpleDateFormat MORE_COMMON_DATE_HOUR_PATTERN = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
+    private static final SimpleDateFormat SITEMAP_DATE_PATTERN = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'+08:00'");
+
+    public static String dateSitemapFormatStr(Date date) {
+        return SITEMAP_DATE_PATTERN.format(date);
+    }
+
     public static String dateCommonFormatDisplay(Date date) {
         return MORE_COMMON_DATE_PATTERN.format(date);
     }
