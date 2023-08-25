@@ -33,25 +33,25 @@
         SET sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
         select v.month,ifnull(b.count,0)  count from (
-        SELECT DATE_FORMAT((CURDATE() - INTERVAL 11 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 10 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 9 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 8 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 7 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 6 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y-%m') AS `month`
-        UNION SELECT DATE_FORMAT(CURDATE(), '%Y-%m') AS `month`
+        SELECT DATE_FORMAT((CURDATE() - INTERVAL 11 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 10 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 9 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 8 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 7 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 6 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y/%m') AS `month`
+        UNION SELECT DATE_FORMAT(CURDATE(), '%Y/%m') AS `month`
         ) v
         left join
         (select
         left(published_at,7) as 'month',count(*) as count
         from post as a
-        where DATE_FORMAT(a.published_at,'%Y-%m') >
-        DATE_FORMAT(date_sub(curdate(), interval 12 month),'%Y-%m')
+        where DATE_FORMAT(a.published_at,'%Y/%m') >
+        DATE_FORMAT(date_sub(curdate(), interval 12 month),'%Y/%m')
         AND blog_domain_name=#{blogDomainName}
         GROUP BY month
         )b

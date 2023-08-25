@@ -124,16 +124,16 @@
 
         datasets: [
           {
-            name: "次浏览", chartType: 'line',
+            name: "次浏览", chartType: 'bar',
             values: /*[[${monthlyAccessDataValues}]]*/ 'default'
           }
         ],
     },
 
     title: "最近一个月文章浏览统计",
-    type: 'axis-mixed', // or 'bar', 'line', 'pie', 'percentage'
+    type: 'bar', // or 'bar', 'line', 'pie', 'percentage'
     height: 200,
-    colors: ['rgb(72, 187, 116)'],
+    colors: ['#cb2e58'],
 
     axisOptions: {
         xIsSeries: true,   //default:false
@@ -162,16 +162,16 @@
 
             datasets: [
               {
-                name: "篇文章", chartType: 'line',
+                name: "篇文章", chartType: 'bar',
                 values: /*[[${yearlyPublishDataValues}]]*/ 'default'
               }
             ],
         },
 
         title: "最近一年文章发布统计",
-        type: 'axis-mixed', // or 'bar', 'line', 'pie', 'percentage'
+        type: 'bar', // or 'bar', 'line', 'pie', 'percentage'
         height: 200,
-        colors: ['#6b76dd'],
+        colors: ['#470bd5'],
 
         axisOptions: {
             xIsSeries: true,   //default:false
