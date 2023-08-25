@@ -47,4 +47,4 @@
         <loc th:text="${item.blogDetailPageUrl}"></loc>
         <lastmod th:text="${item.latestPublishedAt}"></lastmod>
     </url>
-</urlset>q
+</urlset>
