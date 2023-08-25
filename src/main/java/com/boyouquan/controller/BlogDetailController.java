@@ -2,6 +2,7 @@ package com.boyouquan.controller;
 
 import com.boyouquan.model.BlogInfo;
 import com.boyouquan.model.DayAccess;
+import com.boyouquan.model.MonthPublish;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PostService;
@@ -40,13 +41,21 @@ public class BlogDetailController {
 
         model.addAttribute("blogInfo", blogInfo);
 
-        // for charts
+        // monthly access charts
         List<DayAccess> dayAccessList = accessService.getBlogAccessSeriesInLatestOneMonth(blogInfo.getDomainName());
         String[] monthlyAccessDataLabels = dayAccessList.stream().map(DayAccess::getDay).toArray(String[]::new);
         Integer[] monthlyAccessDataValues = dayAccessList.stream().map(DayAccess::getCount).toArray(Integer[]::new);
 
         model.addAttribute("monthlyAccessDataLabels", monthlyAccessDataLabels);
         model.addAttribute("monthlyAccessDataValues", monthlyAccessDataValues);
+
+        // yearly publish charts
+        List<MonthPublish> monthPublishList = postService.getBlogPostPublishSeriesInLatestOneYear(blogInfo.getDomainName());
+        String[] yearlyPublishDataLabels = monthPublishList.stream().map(MonthPublish::getMonth).toArray(String[]::new);
+        Integer[] yearlyPublishDataValues = monthPublishList.stream().map(MonthPublish::getCount).toArray(Integer[]::new);
+
+        model.addAttribute("yearlyPublishDataLabels", yearlyPublishDataLabels);
+        model.addAttribute("yearlyPublishDataValues", yearlyPublishDataValues);
 
         // for summary
         model.addAttribute("totalBlogs", blogService.countAll());

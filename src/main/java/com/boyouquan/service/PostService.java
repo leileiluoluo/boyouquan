@@ -1,6 +1,7 @@
 package com.boyouquan.service;
 
 import com.boyouquan.model.BlogDomainNamePublish;
+import com.boyouquan.model.MonthPublish;
 import com.boyouquan.model.Post;
 import com.boyouquan.util.Pagination;
 
@@ -10,6 +11,8 @@ import java.util.List;
 public interface PostService {
 
     BlogDomainNamePublish getMostPublishedInLatestOneMonth();
+
+    List<MonthPublish> getBlogPostPublishSeriesInLatestOneYear(String blogDomainName);
 
     Pagination<Post> listWithKeyWord(String keyword, int page, int size);
 
