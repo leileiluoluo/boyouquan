@@ -2,6 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.dao.PostDaoMapper;
 import com.boyouquan.model.BlogDomainNamePublish;
+import com.boyouquan.model.MonthPublish;
 import com.boyouquan.model.Post;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.Pagination;
@@ -25,6 +26,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public BlogDomainNamePublish getMostPublishedInLatestOneMonth() {
         return postDaoMapper.getMostPublishedInLatestOneMonth();
+    }
+
+    @Override
+    public List<MonthPublish> getBlogPostPublishSeriesInLatestOneYear(String blogDomainName) {
+        return postDaoMapper.getBlogPostPublishSeriesInLatestOneYear(blogDomainName);
     }
 
     @Override

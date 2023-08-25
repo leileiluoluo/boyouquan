@@ -77,9 +77,10 @@
 
     <div class="blog-detail-charts">
         <div class="charts-title">
-            <h4>浏览统计</h4>
+            <h4>数据统计</h4>
         </div>
-        <div id="charts"></div>
+        <div id="access-charts"></div>
+        <div id="publish-charts"></div>
     </div>
 
     <div class="blog-detail-articles">
@@ -117,7 +118,7 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
 
-    let chart = new frappe.Chart( "#charts", { // or DOM element
+    let accessChart = new frappe.Chart( "#access-charts", { // or DOM element
     data: {
         labels: /*[[${monthlyAccessDataLabels}]]*/ 'default',
 
@@ -150,6 +151,44 @@
     });
 
 /*]]>*/
+</script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+        let publishChart = new frappe.Chart( "#publish-charts", { // or DOM element
+        data: {
+            labels: /*[[${yearlyPublishDataLabels}]]*/ 'default',
+
+            datasets: [
+              {
+                name: "篇文章", chartType: 'line',
+                values: /*[[${yearlyPublishDataValues}]]*/ 'default'
+              }
+            ],
+        },
+
+        title: "最近一年文章发布统计",
+        type: 'axis-mixed', // or 'bar', 'line', 'pie', 'percentage'
+        height: 200,
+        colors: ['#6b76dd'],
+
+        axisOptions: {
+            xIsSeries: true,   //default:false
+            xAxisMode: "tick",
+        },
+
+        lineOptions: {
+            hideDots: 1,   //default:0
+        },
+
+        tooltipOptions: {
+          formatTooltipX: d => (d + '').toUpperCase(),
+          formatTooltipY: d => d,
+        }
+        });
+
+    /*]]>*/
 </script>
 
 </body>

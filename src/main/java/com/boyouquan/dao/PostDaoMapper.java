@@ -1,6 +1,7 @@
 package com.boyouquan.dao;
 
 import com.boyouquan.model.BlogDomainNamePublish;
+import com.boyouquan.model.MonthPublish;
 import com.boyouquan.model.Post;
 
 import java.util.Date;
@@ -9,6 +10,8 @@ import java.util.List;
 public interface PostDaoMapper {
 
     BlogDomainNamePublish getMostPublishedInLatestOneMonth();
+
+    List<MonthPublish> getBlogPostPublishSeriesInLatestOneYear(String blogDomainName);
 
     Long countWithKeyWord(String keyword);
 
