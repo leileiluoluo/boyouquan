@@ -9,9 +9,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class DayAccess {
+public class MonthAccess {
 
-    private String day;
+    private String month;
     private Integer count;
 
 }
