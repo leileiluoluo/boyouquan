@@ -2,11 +2,14 @@ package com.boyouquan.service;
 
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogInfo;
+import com.boyouquan.model.BlogLatestPublishedAt;
 import com.boyouquan.util.Pagination;
 
 import java.util.List;
 
 public interface BlogService {
+
+    List<BlogLatestPublishedAt> listBlogLatestPublishedAt();
 
     String getBlogAdminSmallImageURLByDomainName(String blogDomainName);
 
