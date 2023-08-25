@@ -48,7 +48,7 @@
         ) v
         left join
         (select
-        left(published_at,7) as 'month',count(*) as count
+        DATE_FORMAT(a.published_at,'%Y/%m') as 'month',count(*) as count
         from post as a
         where DATE_FORMAT(a.published_at,'%Y/%m') >
         DATE_FORMAT(date_sub(curdate(), interval 12 month),'%Y/%m')
