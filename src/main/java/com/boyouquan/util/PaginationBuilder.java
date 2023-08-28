@@ -39,13 +39,13 @@ public class PaginationBuilder<T> {
     }
 
     public Pagination<T> build() {
-        Pagination<T> newPagination = new Pagination<>();
-        newPagination.setPageNo(this.pageNo);
-        newPagination.setPageSize(this.pageSize);
-        newPagination.setTotal(this.total);
-        newPagination.setResults(this.results);
+        Pagination<T> pagination = new Pagination<>();
+        pagination.setPageNo(this.pageNo);
+        pagination.setPageSize(this.pageSize);
+        pagination.setTotal(this.total);
+        pagination.setResults(this.results);
 
-        return newPagination;
+        return pagination;
     }
 
 }
