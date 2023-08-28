@@ -22,7 +22,7 @@ public interface PostDaoMapper {
     Date getLatestPublishedAtByBlogDomainName(String blogDomainName);
 
     Long countByBlogDomainName(String blogDomainName);
-    
+
     Long countByDraftAndBlogDomainName(boolean draft, String blogDomainName);
 
     List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int offset, int rows);
