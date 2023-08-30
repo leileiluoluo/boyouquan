@@ -1,9 +1,3 @@
-server:
-  servlet:
-    session:
-      cookie:
-        same-site: "none"
-
 management:
   endpoints:
     web:
