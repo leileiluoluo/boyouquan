@@ -65,7 +65,7 @@ jobs:
             export DATABASE_PASSWORD=$DATABASE_PASSWORD
             export EMAIL_PASSWORD=$EMAIL_PASSWORD
             export EMAIL_ENABLE=$EMAIL_ENABLE
-            nohup java -Xms600m -Xmx600m -XX:+HeapDumpOnOutOfMemoryError -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar > /tmp/server.log 2>&1 &
+            nohup java -Xms800m -Xmx800m -XX:+HeapDumpOnOutOfMemoryError -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar > /tmp/server.log 2>&1 &
             sleep 1
             while ! grep -m1 'Started BoYouQuanWebApplication' < /tmp/server.log; do
               sleep 1
