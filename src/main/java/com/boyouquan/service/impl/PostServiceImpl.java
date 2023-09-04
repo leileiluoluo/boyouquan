@@ -42,6 +42,7 @@ public class PostServiceImpl implements PostService {
 
             int code = response.code();
             String responseBodyString = responseBody.string();
+            responseBodyString = responseBodyString.length() > 200 ? responseBodyString.substring(0, 200) : responseBodyString;
             if (HttpStatus.OK.value() != code) {
                 logger.info("response code is not 200 (responseBody: {}), post will be deleted!", responseBodyString);
                 deleteByLink(link);
@@ -50,7 +51,6 @@ public class PostServiceImpl implements PostService {
             logger.error("timeout exception", e);
         } catch (Exception e) {
             logger.error("exception caught", e);
-            deleteByLink(link);
         }
     }
 
