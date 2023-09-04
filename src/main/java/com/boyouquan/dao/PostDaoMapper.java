@@ -37,4 +37,6 @@ public interface PostDaoMapper {
 
     void deleteByBlogDomainName(String blogDomainName);
 
+    void deleteByLink(String link);
+
 }
