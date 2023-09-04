@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface PostService {
 
+    void detectPostStatus(String blogDomainName, String link);
+
     BlogDomainNamePublish getMostPublishedInLatestOneMonth();
 
     List<MonthPublish> getBlogPostPublishSeriesInLatestOneYear(String blogDomainName);
@@ -33,5 +35,7 @@ public interface PostService {
     boolean batchUpdateDraftByBlogDomainName(String blogDomainName, boolean draft);
 
     void deleteByBlogDomainName(String blogDomainName);
+
+    void deleteByLink(String link);
 
 }

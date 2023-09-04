@@ -30,9 +30,10 @@
         ORDER BY postCount DESC LIMIT 1
     </select>
     <select id="getBlogPostPublishSeriesInLatestOneYear" resultType="com.boyouquan.model.MonthPublish">
-        SET sql_mode ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+        SET sql_mode
+        ='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-        select v.month,ifnull(b.count,0)  count from (
+        select v.month,ifnull(b.count,0) count from (
         SELECT DATE_FORMAT((CURDATE() - INTERVAL 11 MONTH), '%Y/%m') AS `month`
         UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 10 MONTH), '%Y/%m') AS `month`
         UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 9 MONTH), '%Y/%m') AS `month`
@@ -104,11 +105,11 @@
                 <include refid="select_columns"/>
                 FROM post p1
                 INNER JOIN (
-                    SELECT
-                    blog_domain_name as unique_blog_domain_name,
-                    MAX(published_at) as latest_published_at
-                    FROM post
-                    GROUP BY blog_domain_name
+                SELECT
+                blog_domain_name as unique_blog_domain_name,
+                MAX(published_at) as latest_published_at
+                FROM post
+                GROUP BY blog_domain_name
                 ) p2
                 ON p1.blog_domain_name = p2.unique_blog_domain_name
                 AND p1.published_at = p2.latest_published_at
@@ -197,5 +198,10 @@
         DELETE
         FROM post
         WHERE blog_domain_name=#{blogDomainName}
+    </delete>
+    <delete id="deleteByLink">
+        DELETE
+        FROM post
+        WHERE link=#{link}
     </delete>
 </mapper>
