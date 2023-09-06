@@ -32,4 +32,7 @@ public class CommonConstants {
 
     public static final String FULL_BLOG_LIST_ADDRESS = "https://www.boyouquan.com/blogs";
 
+    public static final int FEED_POST_QUERY_PAGE_NO = 1;
+    public static final int FEED_POST_QUERY_PAGE_SIZE = 100;
+
 }
