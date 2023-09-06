@@ -6,6 +6,7 @@ import com.boyouquan.model.Blog;
 import com.boyouquan.model.RSSInfo;
 import com.boyouquan.service.BlogCrawlerService;
 import com.boyouquan.service.BlogService;
+import com.boyouquan.service.BlogStatusService;
 import com.boyouquan.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,8 @@ public class PostScheduler {
 
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private BlogStatusService blogStatusService;
     @Autowired
     private PostService postService;
     @Autowired
@@ -44,18 +47,21 @@ public class PostScheduler {
         List<Blog> blogs = blogService.listAll();
         for (Blog blog : blogs) {
             try {
-                logger.info("start crawling posts, blogDomainName: {}", blog.getDomainName());
+                boolean statusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
+                if (statusOk) {
+                    logger.info("start crawling posts, blogDomainName: {}", blog.getDomainName());
 
-                RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(blog.getRssAddress(), CommonConstants.RSS_POST_COUNT_READ_LIMIT);
+                    RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(blog.getRssAddress(), CommonConstants.RSS_POST_COUNT_READ_LIMIT);
 
-                // save posts
-                boolean success = postHelper.savePosts(blog.getDomainName(), rssInfo, false);
-                if (!success) {
-                    logger.info("no new posts saved, blogDomainName: {}", blog.getDomainName());
-                    continue;
+                    // save posts
+                    boolean success = postHelper.savePosts(blog.getDomainName(), rssInfo, false);
+                    if (!success) {
+                        logger.info("no new posts saved, blogDomainName: {}", blog.getDomainName());
+                        continue;
+                    }
+
+                    logger.info("posts saved success, blogDomainName: {}", blog.getDomainName());
                 }
-
-                logger.info("posts saved success, blogDomainName: {}", blog.getDomainName());
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
