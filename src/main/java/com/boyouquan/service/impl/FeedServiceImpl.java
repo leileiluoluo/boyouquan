@@ -1,6 +1,7 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.helper.ThymeLeafTemplateHelper;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.Post;
 import com.boyouquan.service.BlogService;
@@ -26,6 +27,8 @@ public class FeedServiceImpl implements FeedService {
     private PostService postService;
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private ThymeLeafTemplateHelper thymeLeafTemplateHelper;
 
     @Override
     public String generateFeedXML() {
@@ -42,7 +45,10 @@ public class FeedServiceImpl implements FeedService {
                     .map(post -> {
                         SyndEntry entry = new SyndEntryImpl();
                         entry.setTitle(post.getTitle());
-                        entry.setLink(post.getLink());
+
+                        String postLink = thymeLeafTemplateHelper.urlEncode(post.getLink());
+                        String link = String.format("https://www.boyouquan.com/go?link=%s", postLink);
+                        entry.setLink(link);
 
                         Blog blog = blogService.getByDomainName(post.getBlogDomainName());
                         if (null != blog) {
