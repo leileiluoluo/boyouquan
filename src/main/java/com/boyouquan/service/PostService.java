@@ -28,6 +28,8 @@ public interface PostService {
 
     boolean existsByLink(String link);
 
+    boolean existsByTitle(String title);
+
     Post getByLink(String link);
 
     boolean batchSave(List<Post> posts);

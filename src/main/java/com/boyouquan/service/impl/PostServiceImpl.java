@@ -117,6 +117,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public boolean existsByTitle(String title) {
+        return postDaoMapper.existsByTitle(title);
+    }
+
+    @Override
     public Post getByLink(String link) {
         return postDaoMapper.getByLink(link);
     }

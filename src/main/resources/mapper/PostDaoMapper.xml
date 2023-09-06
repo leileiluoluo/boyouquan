@@ -173,6 +173,12 @@
         SELECT 1 FROM post WHERE link=#{link}
         )
     </select>
+    <select id="existsByTitle" resultType="boolean">
+        SELECT
+        EXISTS (
+        SELECT 1 FROM post WHERE title=#{title}
+        )
+    </select>
     <insert id="batchSave" parameterType="java.util.List">
         INSERT INTO post (
         <include refid="insert_columns"/>

@@ -22,12 +22,13 @@ public class PostHelper {
             List<Post> posts = new ArrayList<>();
             for (RSSInfo.Post rssPost : rssInfo.getBlogPosts()) {
                 String link = rssPost.getLink();
-                boolean exists = postService.existsByLink(link);
+                boolean existsByLink = postService.existsByLink(link);
+                boolean existsByTitle = postService.existsByTitle(rssPost.getTitle());
 
                 Date publishedAt = rssPost.getPublishedAt();
                 boolean isValidNewPost = isValidNewPost(publishedAt);
 
-                if (!exists && isValidNewPost) {
+                if (!existsByLink && !existsByTitle && isValidNewPost) {
                     Post post = new Post();
                     post.setLink(rssPost.getLink());
                     post.setTitle(rssPost.getTitle());
