@@ -1,7 +1,9 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.model.Blog;
 import com.boyouquan.model.Post;
+import com.boyouquan.service.BlogService;
 import com.boyouquan.service.FeedService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.Pagination;
@@ -22,6 +24,8 @@ public class FeedServiceImpl implements FeedService {
 
     @Autowired
     private PostService postService;
+    @Autowired
+    private BlogService blogService;
 
     @Override
     public String generateFeedXML() {
@@ -40,12 +44,18 @@ public class FeedServiceImpl implements FeedService {
                         entry.setTitle(post.getTitle());
                         entry.setLink(post.getLink());
 
+                        Blog blog = blogService.getByDomainName(post.getBlogDomainName());
+                        if (null != blog) {
+                            entry.setAuthor(blog.getName());
+                        }
+
                         SyndContent description = new SyndContentImpl();
                         description.setType("text/plain");
                         description.setValue(post.getDescription());
                         entry.setDescription(description);
 
                         entry.setPublishedDate(post.getPublishedAt());
+
                         return entry;
                     }).toList();
 
