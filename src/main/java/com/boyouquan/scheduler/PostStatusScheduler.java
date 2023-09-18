@@ -48,7 +48,7 @@ public class PostStatusScheduler {
                     Pagination<Post> posts = postService.listByDraftAndBlogDomainName(false, blog.getDomainName(), 1, 3);
 
                     posts.getResults().forEach(
-                            post -> postService.detectPostStatus(blog.getDomainName(), post.getLink())
+                            post -> postService.detectPostStatus(blog.getDomainName(), post.getLink(), post.getPublishedAt())
                     );
                 }
             } catch (Exception e) {
