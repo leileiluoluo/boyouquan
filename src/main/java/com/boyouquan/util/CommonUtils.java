@@ -63,6 +63,17 @@ public class CommonUtils {
         return timeDiff >= oneYear;
     }
 
+    public static boolean isDateOneWeekAgo(Date date) {
+        if (null == date) {
+            return true;
+        }
+
+        final long oneWeek = 7 * 24 * 60 * 60 * 1000;
+
+        long timeDiff = System.currentTimeMillis() - date.getTime();
+        return timeDiff >= oneWeek;
+    }
+
     private static String getTimePastStr(long timeDiff) {
         final long oneDay = 24 * 60 * 60 * 1000;
         final long oneMonth = 30 * oneDay;

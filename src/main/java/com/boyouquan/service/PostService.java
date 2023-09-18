@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PostService {
 
-    void detectPostStatus(String blogDomainName, String link);
+    void detectPostStatus(String blogDomainName, String link, Date publishedAt);
 
     BlogDomainNamePublish getMostPublishedInLatestOneMonth();
 

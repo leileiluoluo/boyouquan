@@ -6,6 +6,7 @@ import com.boyouquan.model.BlogDomainNamePublish;
 import com.boyouquan.model.MonthPublish;
 import com.boyouquan.model.Post;
 import com.boyouquan.service.PostService;
+import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
 import okhttp3.*;
@@ -36,7 +37,11 @@ public class PostServiceImpl implements PostService {
     private PostDaoMapper postDaoMapper;
 
     @Override
-    public void detectPostStatus(String blogDomainName, String link) {
+    public void detectPostStatus(String blogDomainName, String link, Date publishedAt) {
+        if (CommonUtils.isDateOneWeekAgo(publishedAt)) {
+            return;
+        }
+
         try (Response response = requestPostLink(link);
              ResponseBody responseBody = response.body()) {
 
