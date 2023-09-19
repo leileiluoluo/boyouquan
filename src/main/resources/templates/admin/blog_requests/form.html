@@ -16,7 +16,7 @@
             <div class="requests-form-container">
                 <div class="key-value-entry">
                     <div class="label">
-                        <p>博客名称</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+                        <p>博客名称 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
                     </div>
                     <div class="field">
                         <input name="name" th:field="*{name}" />
@@ -24,7 +24,7 @@
                 </div>
                 <div class="key-value-entry">
                     <div class="label">
-                        <p>RSS地址</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('rssAddress')}" th:errors="*{rssAddress}" />
+                        <p>RSS地址 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('rssAddress')}" th:errors="*{rssAddress}" />
                     </div>
                     <div class="field">
                         <input name="rssAddress" th:field="*{rssAddress}" />
@@ -32,7 +32,7 @@
                 </div>
                 <div class="key-value-entry">
                     <div class="label">
-                        <p>博主邮箱</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" />
+                        <p>博主邮箱 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" />
                     </div>
                     <div class="field">
                         <input name="adminEmail" th:field="*{adminEmail}" />
@@ -40,7 +40,7 @@
                 </div>
                 <div class="key-value-entry">
                     <div class="label">
-                        <p>博客描述</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
+                        <p>博客描述 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
                     </div>
                     <div class="field">
                         <textarea name="description" th:field="*{description}"/>
