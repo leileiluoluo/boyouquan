@@ -37,12 +37,14 @@ public class GoController {
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     @GetMapping("")
-    public void go(@RequestParam("link") String link, HttpServletRequest request, HttpServletResponse response) {
+    public void go(@RequestParam("link") String link,
+                   @RequestParam(value = "from", required = false) String from,
+                   HttpServletRequest request, HttpServletResponse response) {
         try {
             String ip = IpUtil.getRealIp(request);
 
             // async
-            executorService.execute(() -> saveAccessInfo(ip, link));
+            executorService.execute(() -> saveAccessInfo(ip, link, from));
 
             // redirect
             response.sendRedirect(link);
@@ -51,7 +53,7 @@ public class GoController {
         }
     }
 
-    private void saveAccessInfo(String ip, String link) {
+    private void saveAccessInfo(String ip, String link, String from) {
         Post post = postService.getByLink(link);
         if (null != post) {
             // save
@@ -59,6 +61,7 @@ public class GoController {
             access.setLink(link);
             access.setBlogDomainName(post.getBlogDomainName());
             access.setIp(ip);
+            access.setFrom(Access.From.of(from));
             accessService.save(access);
         } else {
             Blog blog = blogService.getByAddress(link);
@@ -68,6 +71,7 @@ public class GoController {
                 access.setLink(link);
                 access.setBlogDomainName(blog.getDomainName());
                 access.setIp(ip);
+                access.setFrom(Access.From.of(from));
                 accessService.save(access);
             }
         }

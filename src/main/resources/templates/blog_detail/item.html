@@ -33,16 +33,16 @@
 
         <header class="blog-detail-header">
             <div class="icon">
-                <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
+                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
                     <img th:src="${blogInfo.blogAdminLargeImageURL}"/>
                 </a>
             </div>
             <div class="title">
-                <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"><h3 th:text="${blogInfo.name}"></h3></a>
+                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"><h3 th:text="${blogInfo.name}"></h3></a>
             </div>
             <div class="domain">
-                <a th:text="${blogInfo.domainName}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
-                <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
+                <a th:text="${blogInfo.domainName}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
+                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
                     <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
                         <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
                         <path d="M15 3h6v6"></path>
@@ -92,7 +92,7 @@
                 <tbody>
                     <tr th:each="post, iterstat: ${blogInfo.posts}">
                         <td style="width: 20%"><text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text></td>
-                        <td style="width: 80%"><a th:text="${post.title}" th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a></td>
+                        <td style="width: 80%"><a th:text="${post.title}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a></td>
                     </tr>
                 </tbody>
             </table>

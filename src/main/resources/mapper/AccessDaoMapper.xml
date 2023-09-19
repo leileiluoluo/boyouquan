@@ -4,6 +4,7 @@
         link,
         blog_domain_name,
         ip,
+        from,
         accessed_at
     </sql>
     <select id="countAll" resultType="java.lang.Long">
@@ -67,6 +68,7 @@
         #{link},
         #{blogDomainName},
         #{ip},
+        #{from},
         now()
         )
     </insert>
