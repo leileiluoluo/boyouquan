@@ -70,6 +70,14 @@
                         <p th:text="${blogRequestInfo.reason}"></p>
                     </td>
                 </tr>
+                <tr th:if="${blogRequestInfo.approved}">
+                    <td width="20%">
+                        <span>审核时间</span>
+                    </td>
+                    <td width="80%">
+                        <p th:text="${@thymeLeafTemplateHelper.dateHourCommonFormatDisplay(blogRequestInfo.updatedAt)}"></p>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
