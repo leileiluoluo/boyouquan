@@ -4,7 +4,7 @@
         link,
         blog_domain_name,
         ip,
-        from,
+        `from`,
         accessed_at
     </sql>
     <select id="countAll" resultType="java.lang.Long">

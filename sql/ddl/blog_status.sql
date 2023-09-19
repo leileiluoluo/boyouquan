@@ -4,7 +4,7 @@ CREATE TABLE blog_status (
     status ENUM('ok', 'timeout', 'can_not_be_accessed') NOT NULL,
     code INT NOT NULL,
     reason VARCHAR(300) NULL,
-    detected_at TIMESTAMP NOT NULL,
+    detected_at TIMESTAMP NOT NULL DEFAULT '2023-07-01 00:00:00',
     deleted BOOLEAN DEFAULT FALSE
 );
 
