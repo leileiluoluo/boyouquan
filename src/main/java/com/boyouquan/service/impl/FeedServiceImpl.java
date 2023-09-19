@@ -47,7 +47,7 @@ public class FeedServiceImpl implements FeedService {
                         entry.setTitle(post.getTitle());
 
                         String postLink = thymeLeafTemplateHelper.urlEncode(post.getLink());
-                        String link = String.format("https://www.boyouquan.com/go?link=%s", postLink);
+                        String link = String.format("https://www.boyouquan.com/go?from=feed&link=%s", postLink);
                         entry.setLink(link);
 
                         Blog blog = blogService.getByDomainName(post.getBlogDomainName());

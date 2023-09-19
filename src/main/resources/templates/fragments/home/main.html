@@ -6,7 +6,7 @@
     </div>
     <article th:each="postInfo, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
-            <a th:href="'/go?link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}"><h4 th:text="${postInfo.title}"></h4></a>
+            <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}"><h4 th:text="${postInfo.title}"></h4></a>
         </header>
         <div class="entry-content">
             <p th:text="${postInfo.description}"></p>
