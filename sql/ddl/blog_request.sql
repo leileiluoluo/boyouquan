@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS blog_request;
 CREATE TABLE blog_request (
-    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     rss_address VARCHAR(200) NOT NULL,
     admin_email VARCHAR(100) NOT NULL,
     name VARCHAR(20) NOT NULL,
@@ -9,6 +9,6 @@ CREATE TABLE blog_request (
     requested_at TIMESTAMP NOT NULL DEFAULT '2023-07-01 00:00:00',
     updated_at TIMESTAMP NOT NULL DEFAULT '2023-07-01 00:00:00',
     status ENUM('submitted', 'system_check_valid', 'system_check_invalid', 'approved', 'rejected') DEFAULT NULL,
-    reason VARCHAR(300) NULL,
+    reason VARCHAR(300),
     deleted BOOLEAN DEFAULT FALSE
 );
