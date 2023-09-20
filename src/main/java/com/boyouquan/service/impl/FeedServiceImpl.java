@@ -36,7 +36,7 @@ public class FeedServiceImpl implements FeedService {
         feed.setFeedType("rss_2.0");
         feed.setTitle("博友圈 - 最新文章聚合");
         feed.setDescription("聚合所收录博客的最新文章！");
-        feed.setLink("https://www.boyouquan.com/home");
+        feed.setLink(CommonConstants.HOME_PAGE_ADDRESS);
 
         try {
             Pagination<Post> posts = postService.listWithKeyWord("", CommonConstants.FEED_POST_QUERY_PAGE_NO, CommonConstants.FEED_POST_QUERY_PAGE_SIZE);
@@ -47,7 +47,7 @@ public class FeedServiceImpl implements FeedService {
                         entry.setTitle(post.getTitle());
 
                         String postLink = thymeLeafTemplateHelper.urlEncode(post.getLink());
-                        String link = String.format("https://www.boyouquan.com/go?from=feed&link=%s", postLink);
+                        String link = String.format("%s?from=feed&link=%s", CommonConstants.GO_PAGE_ADDRESS, postLink);
                         entry.setLink(link);
 
                         Blog blog = blogService.getByDomainName(post.getBlogDomainName());

@@ -1,5 +1,6 @@
 package com.boyouquan.controller;
 
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.Access;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.Post;
@@ -9,6 +10,7 @@ import com.boyouquan.service.PostService;
 import com.boyouquan.util.IpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Controller
 @RequestMapping("/go")
@@ -34,8 +34,6 @@ public class GoController {
     @Autowired
     private AccessService accessService;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
-
     @GetMapping("")
     public void go(@RequestParam("link") String link,
                    @RequestParam(value = "from", required = false) String from,
@@ -43,38 +41,44 @@ public class GoController {
         try {
             String ip = IpUtil.getRealIp(request);
 
-            // async
-            executorService.execute(() -> saveAccessInfo(ip, link, from));
+            boolean success = saveAccessInfo(ip, link, from);
+            if (success) {
+                response.sendRedirect(link);
+                return;
+            }
 
-            // redirect
-            response.sendRedirect(link);
+            response.sendRedirect(CommonConstants.HOME_PAGE_ADDRESS);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    private void saveAccessInfo(String ip, String link, String from) {
+    private boolean saveAccessInfo(String ip, String link, String from) {
         Post post = postService.getByLink(link);
+        String blogDomainName = "";
         if (null != post) {
-            // save
-            Access access = new Access();
-            access.setLink(link);
-            access.setBlogDomainName(post.getBlogDomainName());
-            access.setIp(ip);
-            access.setFrom(Access.From.of(from));
-            accessService.save(access);
+            blogDomainName = post.getBlogDomainName();
         } else {
             Blog blog = blogService.getByAddress(link);
             if (null != blog) {
-                // save
-                Access access = new Access();
-                access.setLink(link);
-                access.setBlogDomainName(blog.getDomainName());
-                access.setIp(ip);
-                access.setFrom(Access.From.of(from));
-                accessService.save(access);
+                blogDomainName = blog.getDomainName();
             }
         }
+
+        if (StringUtils.isBlank(blogDomainName)) {
+            logger.error("blog domain name not found! link: {}, ip: {}", link, ip);
+            return false;
+        }
+
+        // save
+        Access access = new Access();
+        access.setLink(link);
+        access.setBlogDomainName(blogDomainName);
+        access.setIp(ip);
+        access.setFrom(Access.From.of(from));
+        accessService.save(access);
+
+        return true;
     }
 
 }
