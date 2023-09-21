@@ -66,6 +66,7 @@
                 FROM post
                 WHERE draft=false
                 AND deleted=false
+                AND description IS NOT NULL
                 AND title LIKE CONCAT('%', #{keyword}, '%')
             </when>
             <otherwise>
@@ -83,6 +84,7 @@
                 AND p1.published_at = p2.latest_published_at
                 AND p1.draft=false
                 AND p1.deleted=false
+                AND p1.description IS NOT NULL
             </otherwise>
         </choose>
     </select>
@@ -94,6 +96,7 @@
                 FROM post
                 WHERE draft=false
                 AND deleted=false
+                AND description IS NOT NULL
                 <if test="keyword != null and keyword !=''">
                     AND title LIKE CONCAT('%', #{keyword}, '%')
                 </if>
@@ -115,6 +118,7 @@
                 AND p1.published_at = p2.latest_published_at
                 AND p1.draft=false
                 AND p1.deleted=false
+                AND p1.description IS NOT NULL
                 ORDER BY p1.published_at DESC
                 LIMIT #{offset}, #{rows}
             </otherwise>

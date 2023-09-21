@@ -187,7 +187,7 @@ public class CommonUtils {
 
     public static String parseAndTruncateHtml2Text(String html, int length) {
         if (StringUtils.isBlank(html)) {
-            return "...";
+            return "";
         }
 
         String text = Jsoup.parse(html).text();
