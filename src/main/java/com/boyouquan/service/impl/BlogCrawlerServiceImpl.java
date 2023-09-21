@@ -88,7 +88,6 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                 // validation
                 if (StringUtils.isBlank(title) || StringUtils.isBlank(link)
                         || !link.startsWith(CommonConstants.SCHEME_HTTP)
-                        || StringUtils.isBlank(description)
                         || null == publishedAt) {
                     logger.info("invalid entry, title: {}, link: {}", title, link);
                     continue;
@@ -100,7 +99,9 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                 RSSInfo.Post post = new RSSInfo.Post();
                 post.setLink(link);
                 post.setTitle(title);
-                post.setDescription(description);
+                if (StringUtils.isNotBlank(description)) {
+                    post.setDescription(description);
+                }
                 post.setPublishedAt(publishedAt);
                 posts.add(post);
 
