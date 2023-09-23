@@ -8,6 +8,7 @@ import com.boyouquan.service.*;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -238,17 +239,7 @@ public class BlogRequestServiceImpl implements BlogRequestService {
 
         boolean exists = blogService.existsByDomainName(blogDomainName);
         if (!exists && !rssInfo.getBlogPosts().isEmpty()) {
-            Blog blog = new Blog();
-            blog.setDomainName(blogDomainName);
-            blog.setAdminEmail(blogRequest.getAdminEmail());
-            blog.setName(blogRequest.getName());
-            blog.setAddress(rssInfo.getBlogAddress());
-            blog.setRssAddress(blogRequest.getRssAddress());
-            blog.setDescription(blogRequest.getDescription());
-            blog.setSelfSubmitted(blogRequest.getSelfSubmitted());
-            blog.setCollectedAt(blogRequest.getRequestedAt());
-            blog.setUpdatedAt(blogRequest.getUpdatedAt());
-            blog.setDraft(true);
+            Blog blog = getBlog(blogRequest, rssInfo, blogDomainName);
 
             // save posts
             boolean success = postHelper.savePosts(blogDomainName, rssInfo, true);
@@ -264,6 +255,22 @@ public class BlogRequestServiceImpl implements BlogRequestService {
         }
 
         return true;
+    }
+
+    @NotNull
+    private static Blog getBlog(BlogRequest blogRequest, RSSInfo rssInfo, String blogDomainName) {
+        Blog blog = new Blog();
+        blog.setDomainName(blogDomainName);
+        blog.setAdminEmail(blogRequest.getAdminEmail());
+        blog.setName(blogRequest.getName());
+        blog.setAddress(rssInfo.getBlogAddress());
+        blog.setRssAddress(blogRequest.getRssAddress());
+        blog.setDescription(blogRequest.getDescription());
+        blog.setSelfSubmitted(blogRequest.getSelfSubmitted());
+        blog.setCollectedAt(blogRequest.getRequestedAt());
+        blog.setUpdatedAt(blogRequest.getUpdatedAt());
+        blog.setDraft(true);
+        return blog;
     }
 
     private BlogRequestInfo assembleBlogRequestInfo(BlogRequest blogRequest) {

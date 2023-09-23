@@ -1,5 +1,6 @@
 package com.boyouquan.service;
 
+import com.boyouquan.constant.CommonConstants;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,8 +13,8 @@ public class BlogCrawlerServiceTest {
 
     @Test
     public void testGetRSSInfoByRSSAddress() {
-        String rssAddress = "https://kanchuan.com/feed.xml";
-        blogCrawlerService.getRSSInfoByRSSAddress(rssAddress, 10);
+        String rssAddress = "https://www.xalaok.top/index.xml";
+        blogCrawlerService.getRSSInfoByRSSAddress(rssAddress, CommonConstants.RSS_POST_COUNT_READ_LIMIT_FIRST_TIME);
     }
 
 }

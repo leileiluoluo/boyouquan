@@ -199,6 +199,20 @@
             )
         </foreach>
     </insert>
+    <insert id="save">
+        INSERT INTO post (
+        <include refid="insert_columns"/>
+        ) VALUES
+        (
+        #{link},
+        #{blogDomainName},
+        #{title},
+        #{description},
+        #{publishedAt},
+        #{draft},
+        false
+        )
+    </insert>
     <update id="batchUpdateDraftByBlogDomainName">
         UPDATE post
         SET draft=#{draft}
