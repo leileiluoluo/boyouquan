@@ -133,21 +133,18 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean batchSave(List<Post> posts) {
+        int count = 0;
         try {
             if (null != posts) {
-                int count = 0;
                 for (Post post : posts) {
                     postDaoMapper.save(post);
                     count++;
-                }
-                if (count > 0) {
-                    return true;
                 }
             }
         } catch (Exception e) {
             logger.error("batch save failed!", e);
         }
-        return false;
+        return count > 0;
     }
 
     @Override
