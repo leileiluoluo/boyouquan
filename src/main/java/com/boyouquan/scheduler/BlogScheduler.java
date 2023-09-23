@@ -20,7 +20,7 @@ public class BlogScheduler {
     @Autowired
     private BlogRequestService blogRequestService;
 
-    @Scheduled(cron = "0 0 0/2 * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void processBlogs() {
         logger.info("blog scheduler start!");
 
