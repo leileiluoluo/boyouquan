@@ -35,6 +35,8 @@ public interface PostDaoMapper {
 
     void batchSave(List<Post> posts);
 
+    void save(Post post);
+
     void batchUpdateDraftByBlogDomainName(String blogDomainName, boolean draft);
 
     void deleteByBlogDomainName(String blogDomainName);

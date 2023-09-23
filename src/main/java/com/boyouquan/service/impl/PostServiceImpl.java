@@ -134,9 +134,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public boolean batchSave(List<Post> posts) {
         try {
-            if (null != posts && !posts.isEmpty()) {
-                postDaoMapper.batchSave(posts);
-                return true;
+            if (null != posts) {
+                int count = 0;
+                for (Post post : posts) {
+                    postDaoMapper.save(post);
+                    count++;
+                }
+                if (count > 0) {
+                    return true;
+                }
             }
         } catch (Exception e) {
             logger.error("batch save failed!", e);
