@@ -72,8 +72,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog getByRandom() {
         int tryTimes = 0;
-        int maxTryTimes = 3;
-        while (tryTimes < maxTryTimes) {
+        while (tryTimes < CommonConstants.RANDOM_BLOG_MAX_TRY_TIMES) {
             Blog blog = blogDaoMapper.getByRandom();
             boolean statusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
             if (statusOk) {
