@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS blog;
 CREATE TABLE blog (
-    domain_name VARCHAR(100) NOT NULL PRIMARY KEY,
+    domain_name VARCHAR(100) PRIMARY KEY,
     admin_email VARCHAR(100) NOT NULL,
     name VARCHAR(100) NOT NULL,
     address VARCHAR(200) NOT NULL,
