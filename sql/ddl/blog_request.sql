@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS blog_request;
 CREATE TABLE blog_request (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     rss_address VARCHAR(200) NOT NULL,
     admin_email VARCHAR(100) NOT NULL,
     name VARCHAR(20) NOT NULL,
