@@ -6,6 +6,7 @@ import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogStatus;
 import com.boyouquan.service.BlogStatusService;
 import com.boyouquan.util.CommonUtils;
+import com.boyouquan.util.OkHttpUtil;
 import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -16,18 +17,13 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.time.Duration;
 
 @Service
 public class BlogStatusServiceImpl implements BlogStatusService {
 
     private static final Logger logger = LoggerFactory.getLogger(BlogStatusServiceImpl.class);
 
-    private static final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(Duration.ofMinutes(2))
-            .readTimeout(Duration.ofMinutes(2))
-            .callTimeout(Duration.ofMinutes(4))
-            .build();
+    private static final OkHttpClient client = OkHttpUtil.getUnsafeOkHttpClient();
 
     @Autowired
     private BlogStatusDaoMapper blogStatusDaoMapper;

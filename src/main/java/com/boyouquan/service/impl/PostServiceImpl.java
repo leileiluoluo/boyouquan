@@ -7,6 +7,7 @@ import com.boyouquan.model.MonthPublish;
 import com.boyouquan.model.Post;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
+import com.boyouquan.util.OkHttpUtil;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
 import okhttp3.*;
@@ -27,11 +28,7 @@ public class PostServiceImpl implements PostService {
 
     private final Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
-    private static final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(Duration.ofMinutes(2))
-            .readTimeout(Duration.ofMinutes(2))
-            .callTimeout(Duration.ofMinutes(4))
-            .build();
+    private static final OkHttpClient client = OkHttpUtil.getUnsafeOkHttpClient();
 
     @Autowired
     private PostDaoMapper postDaoMapper;

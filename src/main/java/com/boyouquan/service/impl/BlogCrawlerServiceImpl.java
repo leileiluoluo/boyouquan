@@ -4,6 +4,7 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.RSSInfo;
 import com.boyouquan.service.BlogCrawlerService;
 import com.boyouquan.util.CommonUtils;
+import com.boyouquan.util.OkHttpUtil;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
@@ -17,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,11 +28,7 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
 
     private static final Logger logger = LoggerFactory.getLogger(BlogCrawlerServiceImpl.class);
 
-    private static final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(Duration.ofMinutes(1))
-            .readTimeout(Duration.ofMinutes(1))
-            .callTimeout(Duration.ofMinutes(2))
-            .build();
+    private static final OkHttpClient client = OkHttpUtil.getUnsafeOkHttpClient();
 
     @Override
     public RSSInfo getRSSInfoByRSSAddress(String rssAddress, int postsLimit) {
