@@ -2,6 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.service.GravatarService;
+import com.boyouquan.util.OkHttpUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -14,18 +15,13 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.Duration;
 
 @Service
 public class GravatarServiceImpl implements GravatarService {
 
     private final Logger logger = LoggerFactory.getLogger(GravatarServiceImpl.class);
 
-    private static final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(Duration.ofMinutes(1))
-            .readTimeout(Duration.ofMinutes(1))
-            .callTimeout(Duration.ofMinutes(2))
-            .build();
+    private static final OkHttpClient client = OkHttpUtil.getUnsafeOkHttpClient();
 
     @Override
     public byte[] getImage(String md5Email, int size) {
