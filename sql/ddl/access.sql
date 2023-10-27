@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS access;
 CREATE TABLE access (
-    link VARCHAR(200) NOT NULL,
+    link VARCHAR(300) NOT NULL,
     blog_domain_name VARCHAR(100) NOT NULL,
     ip VARCHAR(100) NOT NULL,
     `from` ENUM('website', 'feed', 'unknown') NOT NULL DEFAULT 'unknown',
