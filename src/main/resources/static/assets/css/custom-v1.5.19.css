@@ -133,8 +133,9 @@ h4 {
 }
 
 .footer-block .footer-contact {
-    margin-top: 10px;
+    margin-top: 18px;
     margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .footer-block .footer-summary .flex-item {
