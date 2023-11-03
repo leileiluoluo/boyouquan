@@ -9,13 +9,13 @@
     <select id="countAll" resultType="java.lang.Long">
         SELECT
         IFNULL(SUM(amount), 0)
-        FROM monthly_access
+        FROM access
     </select>
     <select id="getMostAccessedBlogDomainNameInLastMonth" resultType="com.boyouquan.model.BlogDomainNameAccess">
         SELECT
         blog_domain_name AS blogDomainName,
         SUM(amount) AS accessCount
-        FROM monthly_access
+        FROM access
         WHERE year_month_str=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m')
         GROUP BY blog_domain_name
         ORDER BY SUM(amount) DESC
@@ -39,7 +39,7 @@
         UNION SELECT DATE_FORMAT(CURDATE(), '%Y-%m') AS `month`
         ) v
         LEFT JOIN
-        monthly_access a
+        access a
         ON v.month=a.year_month_str
         AND a.blog_domain_name=#{blogDomainName}
         GROUP BY v.month;
@@ -47,17 +47,17 @@
     <select id="countByBlogDomainName" resultType="java.lang.Long">
         SELECT
         IFNULL(SUM(amount), 0)
-        FROM monthly_access
+        FROM access
         WHERE blog_domain_name=#{blogDomainName}
     </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
         IFNULL(SUM(amount), 0)
-        FROM monthly_access
+        FROM access
         WHERE link=#{link}
     </select>
     <insert id="save">
-        INSERT INTO monthly_access (
+        INSERT INTO access (
         <include refid="insert_columns"/>
         ) VALUES (
         DATE_FORMAT(CURDATE(), '%Y-%m'),
