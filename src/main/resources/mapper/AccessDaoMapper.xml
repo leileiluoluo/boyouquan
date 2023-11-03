@@ -8,21 +8,22 @@
     </sql>
     <select id="countAll" resultType="java.lang.Long">
         SELECT
-        SUM(amount)
+        IFNULL(SUM(amount), 0)
         FROM monthly_access
     </select>
     <select id="getMostAccessedBlogDomainNameInLastMonth" resultType="com.boyouquan.model.BlogDomainNameAccess">
         SELECT
         blog_domain_name AS blogDomainName,
-        amount AS accessCount
+        SUM(amount) AS accessCount
         FROM monthly_access
         WHERE year_month_str=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m')
-        ORDER BY amount DESC
+        GROUP BY blog_domain_name
+        ORDER BY SUM(amount) DESC
         LIMIT 1
     </select>
     <select id="getBlogAccessSeriesInLatestOneYear" resultType="com.boyouquan.model.MonthAccess">
         SELECT
-        v.month AS month, IFNULL(a.amount, 0) AS count
+        v.month AS month, IFNULL(SUM(a.amount), 0) AS count
         FROM (
         SELECT DATE_FORMAT((CURDATE() - INTERVAL 11 MONTH), '%Y-%m') AS `month`
         UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 10 MONTH), '%Y-%m') AS `month`
@@ -45,13 +46,13 @@
     </select>
     <select id="countByBlogDomainName" resultType="java.lang.Long">
         SELECT
-        SUM(amount)
+        IFNULL(SUM(amount), 0)
         FROM monthly_access
         WHERE blog_domain_name=#{blogDomainName}
     </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
-        SUM(amount)
+        IFNULL(SUM(amount), 0)
         FROM monthly_access
         WHERE link=#{link}
     </select>
