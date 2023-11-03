@@ -22,8 +22,8 @@ public class AccessServiceImpl implements AccessService {
     }
 
     @Override
-    public BlogDomainNameAccess getMostAccessedBlogDomainNameInLatestOneMonth() {
-        return accessDaoMapper.getMostAccessedBlogDomainNameInLatestOneMonth();
+    public BlogDomainNameAccess getMostAccessedBlogDomainNameInLastMonth() {
+        return accessDaoMapper.getMostAccessedBlogDomainNameInLastMonth();
     }
 
     @Override

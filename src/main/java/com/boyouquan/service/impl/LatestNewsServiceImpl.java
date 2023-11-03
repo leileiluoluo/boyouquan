@@ -68,7 +68,7 @@ public class LatestNewsServiceImpl implements LatestNewsService {
     }
 
     private List<LatestNews> getMostAccessedBlogsNews() {
-        BlogDomainNameAccess blogDomainNameAccess = accessService.getMostAccessedBlogDomainNameInLatestOneMonth();
+        BlogDomainNameAccess blogDomainNameAccess = accessService.getMostAccessedBlogDomainNameInLastMonth();
         Blog blog = blogService.getByDomainName(blogDomainNameAccess.getBlogDomainName());
         if (null == blog) {
             return Collections.emptyList();
