@@ -8,7 +8,7 @@
     </sql>
     <select id="countAll" resultType="java.lang.Long">
         SELECT
-        SUM(amount)
+        IFNULL(SUM(amount), 0)
         FROM monthly_access
     </select>
     <select id="getMostAccessedBlogDomainNameInLastMonth" resultType="com.boyouquan.model.BlogDomainNameAccess">
@@ -46,13 +46,13 @@
     </select>
     <select id="countByBlogDomainName" resultType="java.lang.Long">
         SELECT
-        SUM(amount)
+        IFNULL(SUM(amount), 0)
         FROM monthly_access
         WHERE blog_domain_name=#{blogDomainName}
     </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
-        SUM(amount)
+        IFNULL(SUM(amount), 0)
         FROM monthly_access
         WHERE link=#{link}
     </select>
