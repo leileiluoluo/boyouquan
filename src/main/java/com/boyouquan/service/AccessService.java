@@ -10,7 +10,7 @@ public interface AccessService {
 
     Long countAll();
 
-    BlogDomainNameAccess getMostAccessedBlogDomainNameInLatestOneMonth();
+    BlogDomainNameAccess getMostAccessedBlogDomainNameInLastMonth();
 
     List<MonthAccess> getBlogAccessSeriesInLatestOneYear(String blogDomainName);
 
