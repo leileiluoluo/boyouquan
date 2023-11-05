@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BlogDaoMapper {
 
-    Blog getByRandom();
+    List<Blog> listByRandom(int limit);
 
     Long countAll();
 

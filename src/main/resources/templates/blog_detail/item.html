@@ -101,6 +101,29 @@
             <p>* 仅显示最新100篇文章</p>
         </div>
     </div>
+
+    <div class="blog-detail-random-blogs">
+        <div class="blogs-title">
+            <h4>随机链接</h4>
+        </div>
+        <div class="blogs-container">
+            <div class="blog-entry" th:each="blogInfo, iterstat: ${randomBlogInfos}">
+                <header class="icon-and-title">
+                    <div class="flex-item">
+                        <a th:href="'/blogs/' + ${blogInfo.domainName}">
+                            <img th:src="${blogInfo.blogAdminSmallImageURL}"/>
+                        </a>
+                    </div>
+                    <div class="flex-item">
+                        <a th:href="'/blogs/' + ${blogInfo.domainName}"><h4 th:text="${blogInfo.name}"></h4></a>
+                    </div>
+                </header>
+                <div class="description">
+                    <p th:text="${blogInfo.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <footer class="footer-block">
     <div th:replace="~{fragments/footer/blog_summary::blog_summary(${totalBlogs}, ${totalBlogPosts}, ${accessTotal})}"></div>

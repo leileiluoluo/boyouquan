@@ -28,13 +28,13 @@
         draft,
         deleted
     </sql>
-    <select id="getByRandom" resultType="com.boyouquan.model.Blog">
+    <select id="listByRandom" resultType="com.boyouquan.model.Blog">
         SELECT
         <include refid="select_columns"/>
         FROM blog
         WHERE draft=false
         AND deleted=false
-        ORDER BY RAND() LIMIT 1
+        ORDER BY RAND() LIMIT #{limit}
     </select>
     <select id="countAll" resultType="java.lang.Long">
         SELECT

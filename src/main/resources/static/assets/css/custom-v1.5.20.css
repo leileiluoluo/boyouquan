@@ -699,6 +699,38 @@ tr:nth-child(even) {
     text-align: end;
 }
 
+.blog-detail-random-blogs {
+    padding: var(--gap);
+    border-radius: var(--radius);
+    transition: transform .1s;
+    border: 1px solid var(--tertiary);
+    background: var(--entry);
+    margin-bottom: var(--gap);
+}
+
+.blog-detail-random-blogs .blogs-container {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.blog-detail-random-blogs .blogs-container .blog-entry {
+    background: var(--code-bg);
+    padding: calc(var(--gap) / 2);
+    margin-bottom: 0px;
+}
+
+.blog-detail-random-blogs .blogs-container .blog-entry h4 {
+    font-size: 14px !important;
+}
+
+.blog-detail-random-blogs .blogs-container .blog-entry .description {
+    -webkit-line-clamp: 2;
+    font-size: 14px;
+}
+
 .blog-requests {
     padding: var(--gap);
     border-radius: var(--radius);
