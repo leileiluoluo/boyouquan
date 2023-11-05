@@ -700,7 +700,7 @@ tr:nth-child(even) {
 }
 
 .blog-detail-random-blogs {
-    padding: var(--gap);
+    padding: var(--gap) var(--gap) calc(var(--gap) / 2) var(--gap);
     border-radius: var(--radius);
     transition: transform .1s;
     border: 1px solid var(--tertiary);
@@ -719,7 +719,7 @@ tr:nth-child(even) {
 .blog-detail-random-blogs .blogs-container .blog-entry {
     background: var(--code-bg);
     padding: calc(var(--gap) / 2);
-    margin-bottom: 0px;
+    margin-bottom: calc(var(--gap) / 2);
 }
 
 .blog-detail-random-blogs .blogs-container .blog-entry h4 {
