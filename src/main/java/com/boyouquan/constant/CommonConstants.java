@@ -1,5 +1,7 @@
 package com.boyouquan.constant;
 
+import java.util.List;
+
 public class CommonConstants {
 
     public static final int DEFAULT_PAGE_SIZE = 10;
@@ -38,6 +40,6 @@ public class CommonConstants {
     public static final int FEED_POST_QUERY_PAGE_SIZE = 20;
 
     public static final int RANDOM_BLOG_MAX_TRY_TIMES = 3;
-    public static final String DEFAULT_BLOG_DOMAIN_NAME = "leileiluoluo.com";
+    public static final List<String> DEFAULT_BLOG_DOMAIN_NAMES = List.of("leileiluoluo.com", "www.buzhuse.com");
 
 }

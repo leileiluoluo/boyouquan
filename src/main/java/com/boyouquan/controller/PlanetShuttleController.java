@@ -17,7 +17,7 @@ public class PlanetShuttleController {
 
     @GetMapping("")
     public String shuttle(Model model) {
-        Blog blog = blogService.getByRandom();
+        Blog blog = blogService.listByRandom(1).stream().findFirst().get();
 
         model.addAttribute("blogName", blog.getName());
         model.addAttribute("blogAddress", blog.getAddress());

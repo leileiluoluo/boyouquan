@@ -15,7 +15,7 @@ public interface BlogService {
 
     String getBlogAdminLargeImageURLByDomainName(String blogDomainName);
 
-    Blog getByRandom();
+    List<Blog> listByRandom(int limit);
 
     Long countAll();
 

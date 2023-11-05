@@ -65,6 +65,14 @@ public class BlogDetailController {
             model.addAttribute("yearlyPublishDataValues", yearlyPublishDataValues);
         }
 
+        // random blogs
+        List<BlogInfo> randomBlogInfos = blogService.listByRandom(2)
+                .stream()
+                .map(blog -> blogService.getBlogInfoByDomainName(blog.getDomainName()))
+                .toList();
+
+        model.addAttribute("randomBlogInfos", randomBlogInfos);
+
         // for summary
         model.addAttribute("totalBlogs", blogService.countAll());
         model.addAttribute("totalBlogPosts", postService.countAll());

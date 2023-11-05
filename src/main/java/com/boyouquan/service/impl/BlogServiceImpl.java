@@ -70,19 +70,28 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Blog getByRandom() {
+    public List<Blog> listByRandom(int limit) {
         int tryTimes = 0;
         while (tryTimes < CommonConstants.RANDOM_BLOG_MAX_TRY_TIMES) {
-            Blog blog = blogDaoMapper.getByRandom();
-            boolean statusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
-            if (statusOk) {
-                return blog;
+            List<Blog> blogs = blogDaoMapper.listByRandom(limit);
+
+            boolean existsStatusNotOkBlogs = blogs.stream()
+                    .anyMatch(
+                            blog -> !blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName())
+                    );
+
+            if (!existsStatusNotOkBlogs) {
+                return blogs;
             }
+
             tryTimes++;
         }
 
         // default
-        return getByDomainName(CommonConstants.DEFAULT_BLOG_DOMAIN_NAME);
+        return CommonConstants.DEFAULT_BLOG_DOMAIN_NAMES
+                .stream()
+                .map(this::getByDomainName)
+                .toList();
     }
 
     @Override
