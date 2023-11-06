@@ -1,6 +1,8 @@
 package com.boyouquan.controller;
 
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.BlogLatestPublishedAt;
+import com.boyouquan.model.PostLatestPublishedAt;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
@@ -24,9 +26,11 @@ public class SitemapController {
     @GetMapping(value = "/sitemap.xml", produces = MediaType.TEXT_XML_VALUE)
     public String sitemap(Model model) {
         List<BlogLatestPublishedAt> blogLatestPublishedAts = blogService.listBlogLatestPublishedAt();
+        List<PostLatestPublishedAt> postLatestPublishedAts = postService.listPostLatestPublishedAt(CommonConstants.SITEMAP_LATEST_POST_FETCH_SIZE);
 
         model.addAttribute("now", CommonUtils.dateSitemapFormatStr(new Date()));
         model.addAttribute("blogLatestPublishedAts", blogLatestPublishedAts);
+        model.addAttribute("postLatestPublishedAts", postLatestPublishedAts);
 
         return "sitemap/sitemap.xml";
     }

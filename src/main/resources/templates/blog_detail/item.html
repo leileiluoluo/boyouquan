@@ -92,7 +92,13 @@
                 <tbody>
                     <tr th:each="post, iterstat: ${blogInfo.posts}">
                         <td style="width: 20%"><text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text></td>
-                        <td style="width: 80%"><a th:text="${post.title}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a></td>
+
+                        <td style="width: 80%">
+                            <!-- blog status ok? -->
+                            <a th:if="${blogInfo.statusOk}" th:text="${post.title}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                            <!-- blog status un ok? -->
+                            <a th:unless="${blogInfo.statusOk}" th:text="${post.title}" th:href="'/abstract?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

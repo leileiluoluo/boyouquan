@@ -10,6 +10,7 @@
         </header>
         <div class="entry-content">
             <p th:text="${postInfo.description}"></p>
+            <a style="display: none" th:href="'/abstract?link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}">[完整摘要]</a>
         </div>
         <footer class="entry-footer">
             <div class="flex-item">

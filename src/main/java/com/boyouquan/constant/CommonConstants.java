@@ -35,11 +35,14 @@ public class CommonConstants {
     public static final String HOME_PAGE_ADDRESS = "https://www.boyouquan.com/home";
     public static final String GO_PAGE_ADDRESS = "https://www.boyouquan.com/go";
     public static final String FULL_BLOG_LIST_ADDRESS = "https://www.boyouquan.com/blogs";
+    public static final String POST_ABSTRACT_ADDRESS = "https://www.boyouquan.com/abstract";
 
     public static final int FEED_POST_QUERY_PAGE_NO = 1;
     public static final int FEED_POST_QUERY_PAGE_SIZE = 20;
 
     public static final int RANDOM_BLOG_MAX_TRY_TIMES = 3;
     public static final List<String> DEFAULT_BLOG_DOMAIN_NAMES = List.of("leileiluoluo.com", "www.buzhuse.com");
+
+    public static final int SITEMAP_LATEST_POST_FETCH_SIZE = 100;
 
 }

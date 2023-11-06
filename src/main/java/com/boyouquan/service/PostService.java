@@ -3,12 +3,15 @@ package com.boyouquan.service;
 import com.boyouquan.model.BlogDomainNamePublish;
 import com.boyouquan.model.MonthPublish;
 import com.boyouquan.model.Post;
+import com.boyouquan.model.PostLatestPublishedAt;
 import com.boyouquan.util.Pagination;
 
 import java.util.Date;
 import java.util.List;
 
 public interface PostService {
+
+    List<PostLatestPublishedAt> listPostLatestPublishedAt(int limit);
 
     void detectPostStatus(String blogDomainName, String link, Date publishedAt);
 

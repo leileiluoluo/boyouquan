@@ -47,4 +47,10 @@
         <loc th:text="${item.blogDetailPageUrl}"></loc>
         <lastmod th:text="${item.latestPublishedAt}"></lastmod>
     </url>
+
+    <!-- post abstract page links -->
+    <url th:each="item, iterstat: ${postLatestPublishedAts}">
+        <loc th:text="${item.postAbstractPageUrl}"></loc>
+        <lastmod th:text="${item.publishedAt}"></lastmod>
+    </url>
 </urlset>
