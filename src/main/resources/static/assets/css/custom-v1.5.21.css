@@ -735,6 +735,19 @@ tr:nth-child(even) {
     font-size: 14px;
 }
 
+.abstract .entry-content {
+    -webkit-line-clamp: 200;
+}
+
+.abstract .source-site-go {
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+.abstract .source-site-go a h4 {
+    color: darkred;
+}
+
 .blog-requests {
     padding: var(--gap);
     border-radius: var(--radius);

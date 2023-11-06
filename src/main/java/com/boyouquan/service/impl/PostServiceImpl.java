@@ -2,9 +2,11 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.PostDaoMapper;
+import com.boyouquan.helper.ThymeLeafTemplateHelper;
 import com.boyouquan.model.BlogDomainNamePublish;
 import com.boyouquan.model.MonthPublish;
 import com.boyouquan.model.Post;
+import com.boyouquan.model.PostLatestPublishedAt;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.OkHttpUtil;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.time.Duration;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +34,27 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostDaoMapper postDaoMapper;
+    @Autowired
+    private ThymeLeafTemplateHelper thymeLeafTemplateHelper;
+
+    @Override
+    public List<PostLatestPublishedAt> listPostLatestPublishedAt(int limit) {
+        Pagination<Post> postPagination = listWithKeyWord("", 1, limit);
+        if (postPagination.getResults().isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return postPagination.getResults()
+                .stream()
+                .map(post -> {
+                    PostLatestPublishedAt postLatestPublishedAt = new PostLatestPublishedAt();
+                    String postAbstractPageUrl = String.format("%s?link=%s", CommonConstants.POST_ABSTRACT_ADDRESS, thymeLeafTemplateHelper.urlEncode(post.getLink()));
+                    postLatestPublishedAt.setPostAbstractPageUrl(postAbstractPageUrl);
+                    postLatestPublishedAt.setPublishedAt(CommonUtils.dateSitemapFormatStr(post.getPublishedAt()));
+
+                    return postLatestPublishedAt;
+                }).toList();
+    }
 
     @Override
     public void detectPostStatus(String blogDomainName, String link, Date publishedAt) {
