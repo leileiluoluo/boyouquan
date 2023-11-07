@@ -145,53 +145,56 @@
 <script th:src="@{/assets/js/tongji.js}" type="text/javascript"></script>
 
 <script th:inline="javascript">
-/*<![CDATA[*/
+    /*<![CDATA[*/
 
     let accessChart = new frappe.Chart( "#access-charts", { // or DOM element
-    data: {
-        labels: /*[[${yearlyAccessDataLabels}]]*/ 'default',
+        data: {
+            labels: /*[[${yearlyAccessDataLabels}]]*/ 'default',
 
-        datasets: [
-          {
-            name: "次浏览", chartType: 'bar',
-            values: /*[[${yearlyAccessDataValues}]]*/ 'default'
-          }
-        ],
-    },
+            datasets: [
+              {
+                name: "次浏览", chartType: 'line',
+                values: /*[[${yearlyAccessDataValues}]]*/ 'default'
+              }
+            ],
+        },
 
-    title: "最近一年文章浏览统计",
-    type: 'bar', // or 'bar', 'line', 'pie', 'percentage'
-    height: 200,
-    colors: ['#fd8754'],
+        title: "最近一年文章浏览统计",
+        type: 'bar', // or 'bar', 'line', 'pie', 'percentage'
+        height: 200,
+        colors: ['#fd8754'],
 
-    axisOptions: {
-        xIsSeries: true,   //default:false
-        xAxisMode: "tick",
-    },
+        axisOptions: {
+            xIsSeries: true,   //default:false
+            xAxisMode: "tick",
+        },
 
-    lineOptions: {
-        hideDots: 1,   //default:0
-    },
+        lineOptions: {
+            hideDots: 0,   //default:0
+            regionFill: 1, // default: 0
+            heatline: 1, // default: 0
+            dotSize: 6, // default: 4
+        },
 
-    tooltipOptions: {
-      formatTooltipX: d => (d + '').toUpperCase(),
-      formatTooltipY: d => d,
-    }
+        tooltipOptions: {
+          formatTooltipX: d => (d + '').toUpperCase(),
+          formatTooltipY: d => d,
+        }
     });
 
-/*]]>*/
+    /*]]>*/
 </script>
 
 <script th:if="${showLatestPublishedAtChart}" th:inline="javascript">
     /*<![CDATA[*/
 
-        let publishChart = new frappe.Chart( "#publish-charts", { // or DOM element
+    let publishChart = new frappe.Chart( "#publish-charts", { // or DOM element
         data: {
             labels: /*[[${yearlyPublishDataLabels}]]*/ 'default',
 
             datasets: [
               {
-                name: "篇文章", chartType: 'bar',
+                name: "篇文章", chartType: 'line',
                 values: /*[[${yearlyPublishDataValues}]]*/ 'default'
               }
             ],
@@ -208,14 +211,17 @@
         },
 
         lineOptions: {
-            hideDots: 1,   //default:0
+            hideDots: 0,   //default:0
+            regionFill: 1, // default: 0
+            heatline: 1, // default: 0
+            dotSize: 6, // default: 4
         },
 
         tooltipOptions: {
           formatTooltipX: d => (d + '').toUpperCase(),
           formatTooltipY: d => d,
         }
-        });
+    });
 
     /*]]>*/
 </script>
