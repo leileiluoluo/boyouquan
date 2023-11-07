@@ -674,7 +674,7 @@ div#searchbox {
     transition: transform .1s;
     border: 1px solid var(--tertiary);
     background: var(--entry);
-    margin-bottom: var(--gap);
+    margin-bottom: calc(var(--gap)/2);
 }
 
 .blog-detail-articles .articles-container {
@@ -709,7 +709,7 @@ tr:nth-child(even) {
     transition: transform .1s;
     border: 1px solid var(--tertiary);
     background: var(--entry);
-    margin-bottom: 0px;
+    margin-bottom: var(--gap);
 }
 
 .blog-detail-random-blogs .blogs-container {
