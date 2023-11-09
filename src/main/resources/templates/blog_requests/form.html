@@ -30,7 +30,7 @@
                         <p>博客名称 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
                     </div>
                     <div class="field">
-                        <input name="name" th:field="*{name}" placeholder="您的博客名称" />
+                        <input style="font-size: 14px" name="name" th:field="*{name}" placeholder="您的博客名称" />
                     </div>
                 </div>
                 <div class="key-value-entry">
@@ -38,7 +38,7 @@
                         <p>RSS地址 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('rssAddress')}" th:errors="*{rssAddress}" />
                     </div>
                     <div class="field">
-                        <input name="rssAddress" th:field="*{rssAddress}" placeholder="用于抓取文章" />
+                        <input style="font-size: 14px" name="rssAddress" th:field="*{rssAddress}" placeholder="用于抓取文章" />
                     </div>
                 </div>
                 <div class="key-value-entry">
@@ -46,7 +46,7 @@
                         <p>博主邮箱 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" />
                     </div>
                     <div class="field">
-                        <input name="adminEmail" th:field="*{adminEmail}" placeholder="用于展示 Gravatar 头像" />
+                        <input style="font-size: 14px" name="adminEmail" th:field="*{adminEmail}" placeholder="用于展示 Gravatar 头像" />
                     </div>
                 </div>
                 <div class="key-value-entry">
@@ -54,7 +54,7 @@
                         <p>博客描述 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
                     </div>
                     <div class="field">
-                        <textarea name="description" th:field="*{description}" placeholder="描述一下您的博客，建议 100 字以内" />
+                        <textarea style="font-size: 14px" name="description" th:field="*{description}" placeholder="描述一下您的博客，建议 100 字以内" />
                     </div>
                 </div>
 
