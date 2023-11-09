@@ -18,7 +18,7 @@ public class CommonConstants {
     public static final String BLOG_LIST_ADDRESS = "/blogs";
     public static final String BLOG_ITEM_ADDRESS_PATTERN = "/blogs?keyword=%s";
 
-    public static final String GRAVATAR_SOURCE_ADDRESS = "https://seccdn.libravatar.org/gravatarproxy/%s?s=%d";
+    public static final String GRAVATAR_SOURCE_ADDRESS = "https://cravatar.cn/avatar/%s?s=%d";
     public static final String GRAVATAR_STORE_FOLDER = "gravatar/%s/";
     public static final String GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     public static final int GRAVATAR_IMAGE_SMALL_SIZE = 20;
