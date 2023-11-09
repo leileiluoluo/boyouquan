@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Collections;
+
 @Controller
 @RequestMapping("planet-shuttle")
 public class PlanetShuttleController {
@@ -17,7 +19,7 @@ public class PlanetShuttleController {
 
     @GetMapping("")
     public String shuttle(Model model) {
-        Blog blog = blogService.listByRandom(1).stream().findFirst().get();
+        Blog blog = blogService.listByRandom(Collections.emptyList(), 1).stream().findFirst().get();
 
         model.addAttribute("blogName", blog.getName());
         model.addAttribute("blogAddress", blog.getAddress());

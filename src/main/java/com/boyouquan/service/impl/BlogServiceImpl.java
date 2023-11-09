@@ -70,10 +70,10 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> listByRandom(int limit) {
+    public List<Blog> listByRandom(List<String> excludedDomainNames, int limit) {
         int tryTimes = 0;
         while (tryTimes < CommonConstants.RANDOM_BLOG_MAX_TRY_TIMES) {
-            List<Blog> blogs = blogDaoMapper.listByRandom(limit);
+            List<Blog> blogs = blogDaoMapper.listByRandom(excludedDomainNames, limit);
 
             boolean existsStatusNotOkBlogs = blogs.stream()
                     .anyMatch(
