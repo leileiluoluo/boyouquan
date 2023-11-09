@@ -34,6 +34,12 @@
         FROM blog
         WHERE draft=false
         AND deleted=false
+        <if test="excludedDomainNames != null and excludedDomainNames.size() > 0">
+            AND domain_name NOT IN
+            <foreach collection="excludedDomainNames" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
         ORDER BY RAND() LIMIT #{limit}
     </select>
     <select id="countAll" resultType="java.lang.Long">

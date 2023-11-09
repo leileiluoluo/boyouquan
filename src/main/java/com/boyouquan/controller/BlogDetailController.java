@@ -66,7 +66,7 @@ public class BlogDetailController {
         }
 
         // random blogs
-        List<BlogInfo> randomBlogInfos = blogService.listByRandom(2)
+        List<BlogInfo> randomBlogInfos = blogService.listByRandom(List.of(blogInfo.getDomainName()), 2)
                 .stream()
                 .map(blog -> blogService.getBlogInfoByDomainName(blog.getDomainName()))
                 .toList();
