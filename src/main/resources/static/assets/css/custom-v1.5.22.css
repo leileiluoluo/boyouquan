@@ -218,6 +218,8 @@ h4 {
 }
 
 .blog-entry .icon-and-title .flex-item img {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
 }
 
@@ -614,6 +616,7 @@ div#searchbox {
 
 .blog-detail-header .icon img {
     width: 80px;
+    height: 80px;
     border-radius: 50%;
 }
 
