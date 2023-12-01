@@ -13,7 +13,10 @@ public class RobotsController {
     public String robots() {
         return """
                 User-agent: *
-                Disallow: /admin
+                Disallow: /admin/
+                Disallow: /go
+                
+                Sitemap: https://www.boyouquan.com/sitemap.xml
                 """;
     }
 
