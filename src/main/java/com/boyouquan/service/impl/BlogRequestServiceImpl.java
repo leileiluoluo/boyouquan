@@ -66,7 +66,7 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             if (null == rssInfo) {
                 logger.error("rss info read failed, rssAddress: {}", rssAddress);
                 blogRequest.setStatus(BlogRequest.Status.system_check_invalid);
-                blogRequest.setReason("RSS地址不正确，抓取不到正确内容！");
+                blogRequest.setReason("RSS 地址不正确，抓取不到正确内容！");
                 update(blogRequest);
                 return;
             }
@@ -75,7 +75,7 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             boolean saved = saveDraftBlogAndPosts(blogRequest, rssInfo);
             if (!saved) {
                 blogRequest.setStatus(BlogRequest.Status.system_check_invalid);
-                blogRequest.setReason("无法从RSS地址抓取正确内容！");
+                blogRequest.setReason("无法从 RSS 地址抓取正确内容！");
                 update(blogRequest);
                 return;
             }
