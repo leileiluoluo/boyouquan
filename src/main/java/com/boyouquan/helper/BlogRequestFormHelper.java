@@ -44,16 +44,16 @@ public class BlogRequestFormHelper {
 
         // rss address
         if (StringUtils.isBlank(blogRequestForm.getRssAddress())) {
-            errors.rejectValue("rssAddress", "fields.invalid", "RSS地址不能为空");
+            errors.rejectValue("rssAddress", "fields.invalid", "RSS 地址不能为空");
             return;
         }
         String rssAddress = blogRequestForm.getRssAddress().trim();
         if (!rssAddress.startsWith("http")) {
-            errors.rejectValue("rssAddress", "fields.invalid", "RSS地址不正确");
+            errors.rejectValue("rssAddress", "fields.invalid", "RSS 地址不正确");
             return;
         }
         if (!CommonUtils.getDomain(rssAddress).contains("/")) {
-            errors.rejectValue("rssAddress", "fields.invalid", "RSS地址不正确");
+            errors.rejectValue("rssAddress", "fields.invalid", "RSS 地址不正确");
             return;
         }
 
