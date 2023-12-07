@@ -92,14 +92,7 @@ public class BlogStatusServiceImpl implements BlogStatusService {
         }
 
         // FIXME: maybe the algorithm should be modified later
-        if (!BlogStatus.Status.ok.equals(blogStatus.getStatus())) {
-            long now = System.currentTimeMillis();
-            long past = blogStatus.getDetectedAt().getTime();
-            int oneDay = 24 * 60 * 60 * 1000;
-            return (now - past) <= oneDay;
-        }
-
-        return true;
+        return BlogStatus.Status.ok.equals(blogStatus.getStatus());
     }
 
     @Override
