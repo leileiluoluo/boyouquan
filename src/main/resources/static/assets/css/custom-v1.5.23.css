@@ -403,7 +403,7 @@ h4 {
 }
 
 div#searchbox {
-    margin-bottom: 28px;
+    margin-bottom: 10px;
 }
 
 #searchbox input {
@@ -890,4 +890,31 @@ tr:nth-child(even) {
     font-size: 12px;
     position: absolute;
     z-index: 1;
+}
+
+.switch-sort-type {
+    margin-top: 16px;
+    margin-bottom: 10px;
+}
+
+.switch-sort-type .menu {
+    list-style: none;
+    word-break: keep-all;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    margin: 0 0;
+}
+
+.switch-sort-type .menu a {
+    font-size: 16px !important;
+}
+
+.switch-sort-type .menu .active {
+    font-weight: 500;
+    border-bottom: 2px solid;
+}
+
+.switch-sort-type .menu li {
+    margin-right: 16px;
 }

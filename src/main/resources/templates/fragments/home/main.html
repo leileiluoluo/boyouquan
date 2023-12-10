@@ -4,6 +4,15 @@
     <div id="searchbox">
         <input id="searchInput" autofocus="" placeholder="搜索文章 ↵" aria-label="search" type="search" autocomplete="off">
     </div>
+    <div class="switch-sort-type">
+        <ul class="menu">
+            <li>
+                <a href="/home" title="最新文章" class="active">
+                    <span>最新文章</span>
+                </a>
+            </li>
+        </ul>
+    </div>
     <article th:each="postInfo, iterstat: ${pagination.results}" class="post-entry">
         <header class="entry-header">
             <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}"><h4 th:text="${postInfo.title}"></h4></a>

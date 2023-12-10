@@ -2,10 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.BlogDaoMapper;
-import com.boyouquan.model.Blog;
-import com.boyouquan.model.BlogInfo;
-import com.boyouquan.model.BlogLatestPublishedAt;
-import com.boyouquan.model.Post;
+import com.boyouquan.model.*;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.BlogStatusService;
@@ -121,14 +118,14 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Pagination<BlogInfo> listBlogInfosWithKeyWord(String keyword, int page, int size) {
+    public Pagination<BlogInfo> listBlogInfosWithKeyWord(BlogSortType sort, String keyword, int page, int size) {
         if (page < 1 || size <= 0) {
             return PaginationBuilder.buildEmptyResults();
         }
 
         // list
         List<BlogInfo> blogInfos = new ArrayList<>();
-        Pagination<Blog> blogPagination = listWithKeyWord(keyword, page, size);
+        Pagination<Blog> blogPagination = listWithKeyWord(sort, keyword, page, size);
         for (Blog blog : blogPagination.getResults()) {
             // assemble
             BlogInfo blogInfo = assembleBlogInfo(blog, CommonConstants.LATEST_POST_COUNT_LIMIT);
@@ -143,13 +140,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Pagination<Blog> listWithKeyWord(String keyword, int page, int size) {
+    public Pagination<Blog> listWithKeyWord(BlogSortType sort, String keyword, int page, int size) {
         if (page < 1 || size <= 0) {
             return PaginationBuilder.buildEmptyResults();
         }
 
         int offset = (page - 1) * size;
-        List<Blog> blogs = blogDaoMapper.listWithKeyWord(keyword, offset, size);
+        List<Blog> blogs = blogDaoMapper.listWithKeyWord(sort.name(), keyword, offset, size);
         Long total = blogDaoMapper.countWithKeyword(keyword);
         return PaginationBuilder.<Blog>newBuilder()
                 .pageNo(page)

@@ -10,6 +10,20 @@
         <div id="searchbox">
             <input id="searchInput" autofocus="" placeholder="搜索博客 ↵" aria-label="search" type="search" autocomplete="off">
         </div>
+        <div class="switch-sort-type">
+            <ul class="menu">
+                <li>
+                    <a href="/blogs?sort=access_count" title="最多浏览">
+                        <span>最多浏览</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/blogs?sort=collect_time" title="最近收录">
+                        <span>最近收录</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div class="blog-container">
             <article th:each="blogInfo, iterstat: ${pagination.results}" class="blog-entry">
                 <header class="icon-and-title">
@@ -38,7 +52,8 @@
                         </div>
                     </div>
                     <div class="flex-item-right">
-                        <p th:text="'收录于 ' + ${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogInfo.collectedAt)}"></p>
+                        <p th:if="${sort} == 'collect_time'" style="color: #cb2e58;" th:text="'收录于 ' + ${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogInfo.collectedAt)}"></p>
+                        <p th:unless="${sort} == 'collect_time'" th:text="'收录于 ' + ${@thymeLeafTemplateHelper.dateCommonFormatDisplay(blogInfo.collectedAt)}"></p>
                     </div>
                 </div>
                 <div class="description">
@@ -55,10 +70,12 @@
                     </div>
                     <div class="flex-item center">
                         <div class="title">
-                            <p>文章浏览</p>
+                            <p th:if="${sort} == 'access_count'" style="color: #cb2e58;">文章浏览</p>
+                            <p th:unless="${sort} == 'access_count'">文章浏览</p>
                         </div>
                         <div class="count">
-                            <p th:text="${blogInfo.accessCount}"></p>
+                            <p th:if="${sort} == 'access_count'" style="color: #cb2e58;" th:text="${blogInfo.accessCount}"></p>
+                            <p th:unless="${sort} == 'access_count'" th:text="${blogInfo.accessCount}"></p>
                         </div>
                     </div>
                     <div class="flex-item right">
@@ -100,14 +117,14 @@
         <footer class="page-footer blog-footer">
             <!-- if hasKeyword -->
             <nav th:if="${hasKeyword}" class="pagination">
-                <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blogs/page/' + ${pagination.pageNo - 1} + '?keyword=' + ${keyword}">« 上一页</a>
-                <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blogs/page/' + ${pagination.pageNo + 1} + '?keyword=' + ${keyword}">下一页 »</a>
+                <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blogs/page/' + ${pagination.pageNo - 1} + '?sort=' + ${sort} + '&keyword=' + ${keyword}">« 上一页</a>
+                <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blogs/page/' + ${pagination.pageNo + 1} + '?sort=' + ${sort} + '&keyword=' + ${keyword}">下一页 »</a>
             </nav>
 
             <!-- else -->
             <nav th:unless="${hasKeyword}" class="pagination">
-                <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blogs/page/' + ${pagination.pageNo - 1}">« 上一页</a>
-                <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blogs/page/' + ${pagination.pageNo + 1}">下一页 »</a>
+                <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blogs/page/' + ${pagination.pageNo - 1} + '?sort=' + ${sort}">« 上一页</a>
+                <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blogs/page/' + ${pagination.pageNo + 1} + '?sort=' + ${sort}">下一页 »</a>
             </nav>
         </footer>
     </main>
@@ -119,6 +136,7 @@
     <footer th:replace="~{fragments/footer/footer_site_info::footer_site_info}"></footer>
     <div th:insert="~{fragments/plugin/go_to_top::go_to_top}"></div>
     <script th:src="@{/assets/js/highlight-menu.js}" type="text/javascript"></script>
+    <script th:src="@{/assets/js/highlight-sort-type.js}" type="text/javascript"></script>
     <script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
     <script th:src="@{/assets/js/theme-listener.js}" type="text/javascript"></script>
     <script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>
