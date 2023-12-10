@@ -3,6 +3,7 @@ package com.boyouquan.service;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogInfo;
 import com.boyouquan.model.BlogLatestPublishedAt;
+import com.boyouquan.model.BlogSortType;
 import com.boyouquan.util.Pagination;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public interface BlogService {
 
     BlogInfo getBlogInfoByDomainName(String domainName);
 
-    Pagination<BlogInfo> listBlogInfosWithKeyWord(String keyword, int page, int size);
+    Pagination<BlogInfo> listBlogInfosWithKeyWord(BlogSortType sort, String keyword, int page, int size);
 
-    Pagination<Blog> listWithKeyWord(String keyword, int page, int size);
+    Pagination<Blog> listWithKeyWord(BlogSortType sort, String keyword, int page, int size);
 
     boolean existsByRssAddress(String rssAddress);
 

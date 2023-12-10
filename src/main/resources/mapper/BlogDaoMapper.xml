@@ -80,20 +80,46 @@
         </if>
     </select>
     <select id="listWithKeyWord" resultType="com.boyouquan.model.Blog">
-        SELECT
-        <include refid="select_columns"/>
-        FROM blog
-        WHERE draft=false
-        AND deleted=false
-        <if test="keyword != null and keyword !=''">
-            AND
-            (
-            name LIKE CONCAT('%', #{keyword}, '%')
-            OR address LIKE CONCAT('%', #{keyword}, '%')
-            )
-        </if>
-        ORDER BY collected_at DESC
-        LIMIT #{offset}, #{rows}
+        <choose>
+            <when test="sort == null or sort == 'access_count'">
+                SELECT
+                <include refid="select_columns"/>
+                FROM blog b
+                LEFT JOIN (
+                    SELECT blog_domain_name, sum(amount) as count
+                    FROM access
+                    GROUP BY blog_domain_name
+                ) a
+                ON b.domain_name=a.blog_domain_name
+                WHERE b.draft=false
+                AND b.deleted=false
+                <if test="keyword != null and keyword != ''">
+                    AND
+                    (
+                    b.name LIKE CONCAT('%', #{keyword}, '%')
+                    OR b.address LIKE CONCAT('%', #{keyword}, '%')
+                    )
+                </if>
+                ORDER BY a.count DESC
+                LIMIT #{offset}, #{rows}
+            </when>
+            <otherwise>
+                SELECT
+                <include refid="select_columns"/>
+                FROM blog
+                WHERE draft=false
+                AND deleted=false
+                <if test="keyword != null and keyword != ''">
+                    AND
+                    (
+                    name LIKE CONCAT('%', #{keyword}, '%')
+                    OR address LIKE CONCAT('%', #{keyword}, '%')
+                    )
+                </if>
+                ORDER BY collected_at DESC
+                LIMIT #{offset}, #{rows}
+            </otherwise>
+        </choose>
     </select>
     <select id="existsByDomainName" resultType="boolean">
         SELECT
