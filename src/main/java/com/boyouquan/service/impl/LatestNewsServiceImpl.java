@@ -60,7 +60,7 @@ public class LatestNewsServiceImpl implements LatestNewsService {
             LatestNews news = new LatestNews();
             String title = String.format(CommonConstants.BLOG_ADDED_WELCOME_PATTERN, blog.getName());
             news.setTitle(title);
-            news.setLink(CommonConstants.BLOG_LIST_ADDRESS);
+            news.setLink(CommonConstants.BLOG_LIST_ADDRESS_SORT_BY_COLLECT_TIME);
             latestNews.add(news);
         }
 
