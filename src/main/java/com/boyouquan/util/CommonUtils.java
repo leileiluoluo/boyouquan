@@ -75,22 +75,26 @@ public class CommonUtils {
     }
 
     private static String getTimePastStr(long timeDiff) {
-        final long oneDay = 24 * 60 * 60 * 1000;
+        final long oneHour = 60 * 60 * 1000;
+        final long oneDay = 24 * oneHour;
         final long oneMonth = 30 * oneDay;
         final long oneYear = 365 * oneDay;
 
         if (timeDiff > oneYear) {
             int years = (int) (timeDiff / oneYear);
-            return String.format("已过了%d年", years);
+            return String.format("已过了 %d 年", years);
         } else if (timeDiff > oneMonth) {
             int months = (int) (timeDiff / oneMonth);
-            return String.format("已过了%d个月", months);
+            return String.format("已过了 %d 个月", months);
         } else if (timeDiff > oneDay) {
             int days = (int) (timeDiff / oneDay);
-            return String.format("已过了%d天", days);
+            return String.format("已过了 %d 天", days);
+        } else if (timeDiff > oneHour) {
+            int hours = (int) (timeDiff / oneHour);
+            return String.format("已过了 %d 个小时", hours);
         }
 
-        return "";
+        return "已过了 1 个小时";
     }
 
     public static String dateFriendlyDisplay(Date date) {
