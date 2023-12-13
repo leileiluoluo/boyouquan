@@ -1,10 +1,7 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.Blog;
-import com.boyouquan.model.LatestNews;
-import com.boyouquan.model.Post;
-import com.boyouquan.model.PostInfo;
+import com.boyouquan.model.*;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.LatestNewsService;
@@ -53,19 +50,26 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-        return homeWithPagination(keyword, 1, model);
+    public String home(
+            @RequestParam(value = "sort", required = false, defaultValue = "recommended") String sort,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
+        return homeWithPagination(sort, keyword, 1, model);
     }
 
     @GetMapping("/home/page/{page}")
-    public String homeWithPagination(@RequestParam(value = "keyword", required = false) String keyword, @PathVariable("page") int page, Model model) {
+    public String homeWithPagination(
+            @RequestParam(value = "sort", required = false, defaultValue = "recommended") String sort,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @PathVariable("page") int page,
+            Model model) {
         if (null == keyword) {
             keyword = "";
         }
         keyword = StringUtils.trim(keyword);
 
         // posts
-        Pagination<Post> postPagination = postService.listWithKeyWord(keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        Pagination<Post> postPagination = postService.listWithKeyWord(PostSortType.of(sort), keyword, page, CommonConstants.DEFAULT_PAGE_SIZE);
         List<PostInfo> postInfos = new ArrayList<>();
         for (Post post : postPagination.getResults()) {
             PostInfo postInfo = new PostInfo();
@@ -92,6 +96,7 @@ public class HomeController {
         List<LatestNews> latestNews = latestNewsService.getLatestNews();
         hasLatestNews = latestNews.size() > 1;
 
+        model.addAttribute("sort", sort);
         model.addAttribute("pagination", postInfoPagination);
         model.addAttribute("totalBlogs", blogService.countAll());
         model.addAttribute("totalBlogPosts", postService.countAll());

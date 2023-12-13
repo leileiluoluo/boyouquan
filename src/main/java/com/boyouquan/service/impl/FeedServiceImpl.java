@@ -4,6 +4,7 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.helper.ThymeLeafTemplateHelper;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.Post;
+import com.boyouquan.model.PostSortType;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.FeedService;
 import com.boyouquan.service.PostService;
@@ -39,7 +40,7 @@ public class FeedServiceImpl implements FeedService {
         feed.setLink(CommonConstants.HOME_PAGE_ADDRESS);
 
         try {
-            Pagination<Post> posts = postService.listWithKeyWord("", CommonConstants.FEED_POST_QUERY_PAGE_NO, CommonConstants.FEED_POST_QUERY_PAGE_SIZE);
+            Pagination<Post> posts = postService.listWithKeyWord(PostSortType.latest, "", CommonConstants.FEED_POST_QUERY_PAGE_NO, CommonConstants.FEED_POST_QUERY_PAGE_SIZE);
 
             List<SyndEntry> entries = posts.getResults().stream()
                     .map(post -> {

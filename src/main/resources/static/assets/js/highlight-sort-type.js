@@ -1,9 +1,15 @@
-var sortType = getQueryParams()['sort'] || 'access_count';
-var menuItems = document.getElementsByClassName('switch-sort-type')[0].getElementsByClassName('menu')[0].getElementsByTagName('a');;
+var sortType = getQueryParams()['sort'];
+var menuItems = document.getElementsByClassName('switch-sort-type')[0].getElementsByClassName('menu')[0].getElementsByTagName('a');
 for (var i = 0; i < menuItems.length; i++) {
     var item = menuItems[i];
-    if (item.href.endsWith(sortType)) {
-        item.classList.add("active");
+    if (undefined !== sortType && null !== sortType) {
+        if (item.href.endsWith(sortType)) {
+            item.classList.add("active");
+        }
+    } else {
+        if (item.href.endsWith("access_count") || item.href.endsWith("recommended")) {
+            item.classList.add("active");
+        }
     }
 }
 
