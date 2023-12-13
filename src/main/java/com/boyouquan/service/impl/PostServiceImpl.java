@@ -94,7 +94,7 @@ public class PostServiceImpl implements PostService {
 
         int offset = (page - 1) * size;
         List<Post> posts = postDaoMapper.listWithKeyWord(sort.name(), keyword, offset, size);
-        Long total = postDaoMapper.countWithKeyWord(keyword);
+        Long total = postDaoMapper.countWithKeyWord(sort.name(), keyword);
         return PaginationBuilder.<Post>newBuilder()
                 .pageNo(page)
                 .pageSize(size)

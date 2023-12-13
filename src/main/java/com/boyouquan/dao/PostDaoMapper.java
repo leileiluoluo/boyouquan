@@ -13,7 +13,7 @@ public interface PostDaoMapper {
 
     List<MonthPublish> getBlogPostPublishSeriesInLatestOneYear(String blogDomainName);
 
-    Long countWithKeyWord(String keyword);
+    Long countWithKeyWord(String sort, String keyword);
 
     List<Post> listWithKeyWord(String sort, String keyword, int offset, int rows);
 
