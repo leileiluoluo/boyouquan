@@ -60,31 +60,47 @@
     </select>
     <select id="countWithKeyWord" resultType="java.lang.Long">
         <choose>
-            <when test="keyword != null and keyword !=''">
+            <when test="sort == null or sort == 'recommended'">
                 SELECT
                 COUNT(*)
                 FROM post
                 WHERE draft=false
                 AND deleted=false
                 AND description IS NOT NULL
-                AND title LIKE CONCAT('%', #{keyword}, '%')
+                AND recommended=true
+                <if test="keyword != null and keyword !=''">
+                    AND title LIKE CONCAT('%', #{keyword}, '%')
+                </if>
             </when>
             <otherwise>
-                SELECT
-                COUNT(*)
-                FROM post p1
-                INNER JOIN (
-                SELECT
-                blog_domain_name as unique_blog_domain_name,
-                MAX(published_at) as latest_published_at
-                FROM post
-                GROUP BY blog_domain_name
-                ) p2
-                ON p1.blog_domain_name = p2.unique_blog_domain_name
-                AND p1.published_at = p2.latest_published_at
-                AND p1.draft=false
-                AND p1.deleted=false
-                AND p1.description IS NOT NULL
+                <choose>
+                    <when test="keyword != null and keyword !=''">
+                        SELECT
+                        COUNT(*)
+                        FROM post
+                        WHERE draft=false
+                        AND deleted=false
+                        AND description IS NOT NULL
+                        AND title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <otherwise>
+                        SELECT
+                        COUNT(*)
+                        FROM post p1
+                        INNER JOIN (
+                        SELECT
+                        blog_domain_name as unique_blog_domain_name,
+                        MAX(published_at) as latest_published_at
+                        FROM post
+                        GROUP BY blog_domain_name
+                        ) p2
+                        ON p1.blog_domain_name = p2.unique_blog_domain_name
+                        AND p1.published_at = p2.latest_published_at
+                        AND p1.draft=false
+                        AND p1.deleted=false
+                        AND p1.description IS NOT NULL
+                    </otherwise>
+                </choose>
             </otherwise>
         </choose>
     </select>
