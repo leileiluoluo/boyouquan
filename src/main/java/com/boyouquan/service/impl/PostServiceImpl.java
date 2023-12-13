@@ -3,10 +3,7 @@ package com.boyouquan.service.impl;
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.PostDaoMapper;
 import com.boyouquan.helper.ThymeLeafTemplateHelper;
-import com.boyouquan.model.BlogDomainNamePublish;
-import com.boyouquan.model.MonthPublish;
-import com.boyouquan.model.Post;
-import com.boyouquan.model.PostLatestPublishedAt;
+import com.boyouquan.model.*;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.OkHttpUtil;
@@ -39,7 +36,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostLatestPublishedAt> listPostLatestPublishedAt(int limit) {
-        Pagination<Post> postPagination = listWithKeyWord("", 1, limit);
+        Pagination<Post> postPagination = listWithKeyWord(PostSortType.latest, "", 1, limit);
         if (postPagination.getResults().isEmpty()) {
             return Collections.emptyList();
         }
@@ -90,13 +87,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Pagination<Post> listWithKeyWord(String keyword, int page, int size) {
+    public Pagination<Post> listWithKeyWord(PostSortType sort, String keyword, int page, int size) {
         if (page < 1 || size <= 0) {
             return PaginationBuilder.buildEmptyResults();
         }
 
         int offset = (page - 1) * size;
-        List<Post> posts = postDaoMapper.listWithKeyWord(keyword, offset, size);
+        List<Post> posts = postDaoMapper.listWithKeyWord(sort.name(), keyword, offset, size);
         Long total = postDaoMapper.countWithKeyWord(keyword);
         return PaginationBuilder.<Post>newBuilder()
                 .pageNo(page)

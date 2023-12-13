@@ -7,8 +7,13 @@
     <div class="switch-sort-type">
         <ul class="menu">
             <li>
-                <a href="/home" title="最新文章" class="active">
-                    <span>最新文章</span>
+                <a href="/home?sort=recommended" title="推荐">
+                    <span>推荐</span>
+                </a>
+            </li>
+            <li>
+                <a href="/home?sort=latest" title="最新">
+                    <span>最新</span>
                 </a>
             </li>
         </ul>
@@ -41,13 +46,13 @@
     <footer class="page-footer">
         <!-- if hasKeyword -->
         <nav th:if="${hasKeyword}" class="pagination">
-            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1} + '?keyword=' + ${keyword}">« 上一页</a>
-            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1} + '?keyword=' + ${keyword}">下一页 »</a>
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1} + '?sort=' + ${sort} + '?keyword=' + ${keyword}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1} + '?sort=' + ${sort} + '?keyword=' + ${keyword}">下一页 »</a>
         </nav>
         <!-- else -->
         <nav th:unless="${hasKeyword}" class="pagination">
-            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1}">« 上一页</a>
-            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1}">下一页 »</a>
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1} + '?sort=' + ${sort}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1} + '?sort=' + ${sort}">下一页 »</a>
         </nav>
     </footer>
 </main>

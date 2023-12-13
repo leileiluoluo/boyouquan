@@ -15,7 +15,7 @@ public interface PostDaoMapper {
 
     Long countWithKeyWord(String keyword);
 
-    List<Post> listWithKeyWord(String keyword, int offset, int rows);
+    List<Post> listWithKeyWord(String sort, String keyword, int offset, int rows);
 
     Long countAll();
 
