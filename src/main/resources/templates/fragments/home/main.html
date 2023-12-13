@@ -46,8 +46,8 @@
     <footer class="page-footer">
         <!-- if hasKeyword -->
         <nav th:if="${hasKeyword}" class="pagination">
-            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1} + '?sort=' + ${sort} + '?keyword=' + ${keyword}">« 上一页</a>
-            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1} + '?sort=' + ${sort} + '?keyword=' + ${keyword}">下一页 »</a>
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/home/page/' + ${pagination.pageNo - 1} + '?sort=' + ${sort} + '&keyword=' + ${keyword}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/home/page/' + ${pagination.pageNo + 1} + '?sort=' + ${sort} + '&keyword=' + ${keyword}">下一页 »</a>
         </nav>
         <!-- else -->
         <nav th:unless="${hasKeyword}" class="pagination">
