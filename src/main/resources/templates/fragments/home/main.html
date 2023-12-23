@@ -18,7 +18,7 @@
             </li>
         </ul>
     </div>
-    <article th:each="postInfo, iterstat: ${pagination.results}" th:class="'post-entry' + ${postInfo.recommend && postInfo.pinned ? ' pinned' : ''}">
+    <article th:each="postInfo, iterstat: ${pagination.results}" th:class="'post-entry' + ${postInfo.recommended && postInfo.pinned ? ' pinned' : ''}">
         <header class="entry-header">
             <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}"><h4 th:text="${postInfo.title}"></h4></a>
         </header>
