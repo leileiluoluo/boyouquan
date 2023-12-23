@@ -114,7 +114,7 @@
                 AND deleted=false
                 AND recommended=true
                 AND description IS NOT NULL
-                ORDER BY published_at DESC
+                ORDER BY pinned DESC, published_at DESC
                 LIMIT #{offset}, #{rows}
             </when>
             <otherwise>

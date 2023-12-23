@@ -89,6 +89,10 @@ h4 {
     border: 1px solid var(--tertiary) !important;
 }
 
+.post-entry.pinned {
+    border: 1px solid #cb2e58 !important;
+}
+
 .post-entry .entry-header {
     display: -webkit-box;
     -webkit-box-orient: vertical;
