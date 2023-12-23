@@ -16,6 +16,7 @@
         description,
         published_at as publishedAt,
         draft,
+        recommended,
         pinned,
         deleted
     </sql>
