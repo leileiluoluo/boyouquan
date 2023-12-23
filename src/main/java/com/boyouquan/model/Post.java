@@ -19,5 +19,6 @@ public class Post {
     private String description;
     private Date publishedAt;
     private Boolean draft = false;
+    private Boolean pinned = false;
 
 }
