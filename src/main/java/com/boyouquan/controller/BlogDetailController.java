@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -30,13 +31,16 @@ public class BlogDetailController {
     private AccessService accessService;
 
     @GetMapping("/{domainName}/**")
-    public String getBlogByDomainName(@PathVariable("domainName") String domainName, Model model, HttpServletRequest request) {
+    public String getBlogByDomainName(@PathVariable("domainName") String domainName, Model model, HttpServletRequest request) throws UnsupportedEncodingException {
         // parse domain from request URL
         String requestURL = request.getRequestURL().toString();
-        domainName = requestURL.split("/blogs/")[1];
+        String blogDomainName = requestURL.split("/blogs/")[1];
+        if (!blogDomainName.contains("/")) {
+            blogDomainName = domainName;
+        }
 
         // get blog info
-        BlogInfo blogInfo = blogService.getBlogInfoByDomainName(domainName);
+        BlogInfo blogInfo = blogService.getBlogInfoByDomainName(blogDomainName);
         if (null == blogInfo) {
             return "error/404";
         }
