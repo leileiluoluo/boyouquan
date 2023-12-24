@@ -103,7 +103,10 @@
                     <p>最新文章</p>
                     <p th:each="post, iterstat: ${blogInfo.posts}">
                         <text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text>
-                        <a th:text="${post.title}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                        <!-- blog status ok? -->
+                        <a th:if="${blogInfo.statusOk}" th:text="${post.title}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                        <!-- blog status un ok? -->
+                        <a th:unless="${blogInfo.statusOk}" th:text="${post.title}" th:href="'/abstract?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
                     </p>
                 </div>
                 <footer class="bottom-info">
