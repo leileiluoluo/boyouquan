@@ -186,6 +186,23 @@ public class PostServiceImpl implements PostService {
         logger.info("link deleted! {}", link);
     }
 
+    @Override
+    public void recommendByLink(String link) {
+        postDaoMapper.recommendByLink(link);
+    }
+
+    @Override
+    public void unpinByLink(String link) {
+        postDaoMapper.unpinByLink(link);
+        logger.info("link unpinned! {}", link);
+    }
+
+    @Override
+    public void pinByLink(String link) {
+        postDaoMapper.pinByLink(link);
+        logger.info("link pinned! {}", link);
+    }
+
     private Response requestPostLink(String link) throws IOException {
         Request request = new Request.Builder()
                 .addHeader(CommonConstants.HEADER_USER_AGENT, CommonConstants.DATA_SPIDER_USER_AGENT)

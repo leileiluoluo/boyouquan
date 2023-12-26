@@ -261,4 +261,19 @@
         FROM post
         WHERE link=#{link}
     </delete>
+    <delete id="recommendByLink">
+        UPDATE post
+        SET recommended=true
+        WHERE link=#{link}
+    </delete>
+    <delete id="unpinByLink">
+        UPDATE post
+        SET pinned=false
+        WHERE link=#{link}
+    </delete>
+    <delete id="pinByLink">
+        UPDATE post
+        SET pinned=true
+        WHERE link=#{link}
+    </delete>
 </mapper>
