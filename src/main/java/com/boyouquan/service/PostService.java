@@ -40,4 +40,10 @@ public interface PostService {
 
     void deleteByLink(String link);
 
+    void recommendByLink(String link);
+
+    void unpinByLink(String link);
+
+    void pinByLink(String link);
+
 }

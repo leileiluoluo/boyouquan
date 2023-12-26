@@ -3,20 +3,23 @@ package com.boyouquan.controller;
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.helper.AdminLoginFormHelper;
 import com.boyouquan.helper.BlogRequestFormHelper;
+import com.boyouquan.helper.RecommendPostFormHelper;
 import com.boyouquan.model.*;
-import com.boyouquan.service.BlogRequestService;
-import com.boyouquan.service.UserService;
+import com.boyouquan.service.*;
 import com.boyouquan.util.Pagination;
+import com.boyouquan.util.PaginationBuilder;
 import com.boyouquan.util.PermissionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -31,9 +34,17 @@ public class AdminController {
     @Autowired
     private BlogRequestFormHelper requestFormHelper;
     @Autowired
+    private RecommendPostFormHelper recommendPostFormHelper;
+    @Autowired
     private AdminLoginFormHelper adminLoginFormHelper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private BlogService blogService;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private EmailService emailService;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
@@ -204,6 +215,115 @@ public class AdminController {
         session.removeAttribute("user");
 
         return "redirect:/admin/blog-requests";
+    }
+
+    @GetMapping("/recommended-posts")
+    public String listRecommendedPosts(Model model, HttpServletRequest request) {
+        return listRecommendedPosts(1, model, request);
+    }
+
+    @GetMapping("/recommended-posts/page/{page}")
+    public String listRecommendedPosts(@PathVariable("page") int page, Model model, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "redirect:/admin/login";
+        }
+
+        // list
+        Pagination<Post> postPagination = postService.listWithKeyWord(PostSortType.recommended, "", page, CommonConstants.DEFAULT_PAGE_SIZE);
+        List<PostInfo> postInfos = new ArrayList<>();
+        for (Post post : postPagination.getResults()) {
+            PostInfo postInfo = new PostInfo();
+            BeanUtils.copyProperties(post, postInfo);
+
+            Blog blog = blogService.getByDomainName(post.getBlogDomainName());
+            postInfo.setBlogName(blog.getName());
+            postInfo.setBlogAddress(blog.getAddress());
+            postInfos.add(postInfo);
+        }
+
+        Pagination<PostInfo> postInfoPagination = PaginationBuilder.<PostInfo>newBuilder()
+                .pageNo(page)
+                .pageSize(postPagination.getPageSize())
+                .total(postPagination.getTotal())
+                .results(postInfos).build();
+
+        model.addAttribute("pagination", postInfoPagination);
+
+        // user
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user", user);
+
+        return "admin/recommended_posts/list";
+    }
+
+    @GetMapping("/recommended-posts/add")
+    public String recommendPostForm(RecommendPostForm recommendPostForm, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        return "admin/recommended_posts/form";
+    }
+
+    @PostMapping("/recommended-posts/add")
+    public String recommendPostRequest(RecommendPostForm recommendPostForm, Errors errors, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // params validation
+        recommendPostFormHelper.paramsValidation(recommendPostForm, errors);
+
+        if (errors.getErrorCount() > 0) {
+            return "admin/recommended_posts/form";
+        }
+
+        postService.recommendByLink(recommendPostForm.getLink());
+
+        // after
+        Post post = postService.getByLink(recommendPostForm.getLink());
+        Blog blog = blogService.getByDomainName(post.getBlogDomainName());
+        emailService.sendPostRecommendedNotice(blog, post);
+
+        return "redirect:/admin/recommended-posts";
+    }
+
+    @GetMapping("/recommended-posts/unpin")
+    public String unpinPost(@RequestParam("link") String link, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // unpin
+        postService.unpinByLink(link);
+        return "redirect:/admin/recommended-posts";
+    }
+
+    @GetMapping("/recommended-posts/pin")
+    public String pinPost(@RequestParam("link") String link, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // unpin
+        postService.pinByLink(link);
+
+        // after
+        Post post = postService.getByLink(link);
+        Blog blog = blogService.getByDomainName(post.getBlogDomainName());
+        emailService.sendPostPinnedNotice(blog, post);
+
+        return "redirect:/admin/recommended-posts";
     }
 
 }

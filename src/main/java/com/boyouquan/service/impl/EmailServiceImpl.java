@@ -2,9 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.config.BoYouQuanConfig;
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.Blog;
-import com.boyouquan.model.BlogRequest;
-import com.boyouquan.model.BlogRequestInfo;
+import com.boyouquan.model.*;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.EmailService;
 import jakarta.mail.MessagingException;
@@ -140,20 +138,56 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void send(String to, String subject, String content, boolean html) {
-        try {
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = null;
-            helper = new MimeMessageHelper(message, true);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(content, html);
-            message.setFrom("contact@boyouquan.com");
+    public void sendPostRecommendedNotice(Blog blog, Post post) {
+        if (null != post && null != blog) {
+            String adminEmail = blog.getAdminEmail();
+            String subject = "[博友圈] 恭喜您！您有一篇文章被博友圈加入到了首页推荐！";
+
+            Context context = new Context();
+            context.setVariable("blog", blog);
+            context.setVariable("post", post);
+
+            String text = templateEngine.process("email/post_recommended_template", context);
 
             // send
-            javaMailSender.send(message);
+            send(adminEmail, subject, text, true);
+        }
+    }
 
-            logger.info("email successfully sent to: {}", to);
+    @Override
+    public void sendPostPinnedNotice(Blog blog, Post post) {
+        if (null != post && null != blog) {
+            String adminEmail = blog.getAdminEmail();
+            String subject = "[博友圈] 恭喜您！您有一篇文章被博友圈置顶到了首页！";
+
+            Context context = new Context();
+            context.setVariable("blog", blog);
+            context.setVariable("post", post);
+
+            String text = templateEngine.process("email/post_pinned_template", context);
+
+            // send
+            send(adminEmail, subject, text, true);
+        }
+    }
+
+    @Override
+    public void send(String to, String subject, String content, boolean html) {
+        try {
+            if (!to.equals(CommonConstants.FAKE_BLOG_ADMIN_EMAIL)) {
+                MimeMessage message = javaMailSender.createMimeMessage();
+                MimeMessageHelper helper = null;
+                helper = new MimeMessageHelper(message, true);
+                helper.setTo(to);
+                helper.setSubject(subject);
+                helper.setText(content, html);
+                message.setFrom("contact@boyouquan.com");
+
+                // send
+                javaMailSender.send(message);
+
+                logger.info("email successfully sent to: {}", to);
+            }
         } catch (MessagingException e) {
             logger.error("email sent failed!", e);
         }
