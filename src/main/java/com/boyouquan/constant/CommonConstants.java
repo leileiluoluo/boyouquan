@@ -11,6 +11,7 @@ public class CommonConstants {
     public static final String SCHEME_HTTP = "http";
 
     public static final String FAKE_BLOG_ADMIN_EMAIL = "notfound@notfound.com";
+    public static final String FAKE_BLOG_ADMIN_EMAIL_PREFIX = "notfound";
 
     public static final String BLOG_ADDED_WELCOME_PATTERN = "恭喜「%s」被本站收录！";
     public static final String MOST_ACCESSED_BLOG_ANNOUNCE_PATTERN = "上个月浏览最多的博客是「%s」，浏览 %d 次！";
