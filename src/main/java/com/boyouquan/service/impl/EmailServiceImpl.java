@@ -2,7 +2,10 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.config.BoYouQuanConfig;
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.*;
+import com.boyouquan.model.Blog;
+import com.boyouquan.model.BlogRequest;
+import com.boyouquan.model.BlogRequestInfo;
+import com.boyouquan.model.Post;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.EmailService;
 import jakarta.mail.MessagingException;
@@ -174,20 +177,23 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void send(String to, String subject, String content, boolean html) {
         try {
-            if (!to.equals(CommonConstants.FAKE_BLOG_ADMIN_EMAIL)) {
-                MimeMessage message = javaMailSender.createMimeMessage();
-                MimeMessageHelper helper = null;
-                helper = new MimeMessageHelper(message, true);
-                helper.setTo(to);
-                helper.setSubject(subject);
-                helper.setText(content, html);
-                message.setFrom("contact@boyouquan.com");
-
-                // send
-                javaMailSender.send(message);
-
-                logger.info("email successfully sent to: {}", to);
+            if (to.equals(CommonConstants.FAKE_BLOG_ADMIN_EMAIL)
+                    || to.startsWith(CommonConstants.FAKE_BLOG_ADMIN_EMAIL_PREFIX)) {
+                return;
             }
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = null;
+            helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(content, html);
+            message.setFrom("contact@boyouquan.com");
+
+            // send
+            javaMailSender.send(message);
+
+            logger.info("email successfully sent to: {}", to);
         } catch (MessagingException e) {
             logger.error("email sent failed!", e);
         }
