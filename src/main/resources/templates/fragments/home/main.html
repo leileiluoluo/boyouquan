@@ -1,23 +1,23 @@
 <main th:fragment="main(pagination)" class="main">
-    <article th:replace="~{fragments/header/header_info::header_info('用正能量的文字激励我们一起学习、进步！本站欢迎您的访问！')}"></article>
-<!--    <div th:if="${hasLatestNews}" th:replace="~{fragments/header/latest_news::latest_news(${hasLatestNews}, ${latestNews})}"></div>-->
-<!--    <div id="searchbox">-->
-<!--        <input id="searchInput" autofocus="" placeholder="搜索文章 ↵" aria-label="search" type="search" autocomplete="off">-->
-<!--    </div>-->
-<!--    <div class="switch-sort-type">-->
-<!--        <ul class="menu">-->
-<!--            <li>-->
-<!--                <a href="/home?sort=recommended" title="推荐">-->
-<!--                    <span>推荐</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a href="/home?sort=latest" title="最新">-->
-<!--                    <span>最新</span>-->
-<!--                </a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
+    <article th:replace="~{fragments/header/header_info::header_info('欢迎来到博友圈，这里是独立博客人的专属朋友圈！在这里可以发布您的独立博客，获取一个免费的流量入口，也可以发现更多优质的独立博客，还可以一站式获取海量博客更新和博友动态！')}"></article>
+    <div th:if="${hasLatestNews}" th:replace="~{fragments/header/latest_news::latest_news(${hasLatestNews}, ${latestNews})}"></div>
+    <div id="searchbox">
+        <input id="searchInput" autofocus="" placeholder="搜索文章 ↵" aria-label="search" type="search" autocomplete="off">
+    </div>
+    <div class="switch-sort-type">
+        <ul class="menu">
+            <li>
+                <a href="/home?sort=recommended" title="推荐">
+                    <span>推荐</span>
+                </a>
+            </li>
+            <li>
+                <a href="/home?sort=latest" title="最新">
+                    <span>最新</span>
+                </a>
+            </li>
+        </ul>
+    </div>
     <article th:each="postInfo, iterstat: ${pagination.results}" th:class="'post-entry' + ${'recommended' == sort && postInfo.pinned ? ' pinned' : ''}">
         <header class="entry-header">
             <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}"><h4 th:text="${postInfo.title}"></h4></a>
@@ -27,16 +27,16 @@
             <a style="display: none" th:href="'/abstract?link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}">[完整摘要]</a>
         </div>
         <footer class="entry-footer">
-<!--            <div class="flex-item">-->
-<!--                <a th:href="'/blogs/' + ${postInfo.blogDomainName}">-->
-<!--                    <img th:src="${postInfo.blogAdminSmallImageURL}"/>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--            <div class="flex-item">-->
-<!--                <a th:text="${postInfo.blogName}" th:href="'/blogs/' + ${postInfo.blogDomainName}"></a>-->
-<!--            </div>-->
             <div class="flex-item">
-                <span th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(postInfo.publishedAt)}"></span>
+                <a th:href="'/blogs/' + ${postInfo.blogDomainName}">
+                    <img th:src="${postInfo.blogAdminSmallImageURL}"/>
+                </a>
+            </div>
+            <div class="flex-item">
+                <a th:text="${postInfo.blogName}" th:href="'/blogs/' + ${postInfo.blogDomainName}"></a>
+            </div>
+            <div class="flex-item">
+                · <span th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(postInfo.publishedAt)}"></span>
             </div>
             <div class="flex-item">
                 · <span th:text="${postInfo.linkAccessCount}"></span>次浏览
