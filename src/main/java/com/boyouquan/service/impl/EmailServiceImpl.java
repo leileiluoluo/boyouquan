@@ -144,7 +144,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendPostRecommendedNotice(Blog blog, Post post) {
         if (null != post && null != blog) {
             String adminEmail = blog.getAdminEmail();
-            String subject = "[博友圈] 恭喜您！您有一篇文章被博友圈加入到了首页推荐！";
+            String subject = "[博友圈] 您好！您有一篇文章被博友圈加入到了首页推荐！";
 
             Context context = new Context();
             context.setVariable("blog", blog);
@@ -161,7 +161,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendPostPinnedNotice(Blog blog, Post post) {
         if (null != post && null != blog) {
             String adminEmail = blog.getAdminEmail();
-            String subject = "[博友圈] 恭喜您！您有一篇文章被博友圈置顶到了首页！";
+            String subject = "[博友圈] 恭喜您！您有一篇文章被博友圈置顶到了首页推荐！";
 
             Context context = new Context();
             context.setVariable("blog", blog);
