@@ -4,7 +4,9 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.BlogStatusDaoMapper;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogStatus;
+import com.boyouquan.service.BlogService;
 import com.boyouquan.service.BlogStatusService;
+import com.boyouquan.service.EmailService;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.OkHttpUtil;
 import okhttp3.*;
@@ -27,6 +29,10 @@ public class BlogStatusServiceImpl implements BlogStatusService {
 
     @Autowired
     private BlogStatusDaoMapper blogStatusDaoMapper;
+    @Autowired
+    private BlogService blogService;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public String getUnOkInfo(String blogDomainName) {
@@ -110,6 +116,14 @@ public class BlogStatusServiceImpl implements BlogStatusService {
 
         // save
         blogStatusDaoMapper.save(blogStatus);
+
+        // send email
+        try {
+            Blog blog = blogService.getBlogInfoByDomainName(blogDomainName);
+            emailService.sendBlogStatusNotOkNotice(blog, status);
+        } catch (Exception e) {
+            logger.error("email send failed", e);
+        }
     }
 
     private Response requestBlogAddress(String blogAddress) throws IOException {
