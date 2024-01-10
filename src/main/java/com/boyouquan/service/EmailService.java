@@ -9,9 +9,9 @@ public interface EmailService {
 
     void sendBlogRequestSubmittedNotice(BlogRequest blogRequest);
 
-    void sendBlogRequestApprovedNotice(BlogRequest blogRequest);
+    void sendBlogRequestApprovedNotice(BlogRequest blogRequest, Blog blog);
 
-    void sendBlogSystemCollectedNotice(BlogRequest blogRequest);
+    void sendBlogSystemCollectedNotice(BlogRequest blogRequest, Blog blog);
 
     void sendBlogRequestRejectNotice(BlogRequest blogRequest);
 

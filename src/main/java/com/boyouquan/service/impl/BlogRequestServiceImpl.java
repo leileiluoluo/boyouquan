@@ -173,9 +173,9 @@ public class BlogRequestServiceImpl implements BlogRequestService {
 
             // send email
             if (blogRequest.getSelfSubmitted()) {
-                emailService.sendBlogRequestApprovedNotice(blogRequest);
+                emailService.sendBlogRequestApprovedNotice(blogRequest, blog);
             } else {
-                emailService.sendBlogSystemCollectedNotice(blogRequest);
+                emailService.sendBlogSystemCollectedNotice(blogRequest, blog);
             }
         }
     }
