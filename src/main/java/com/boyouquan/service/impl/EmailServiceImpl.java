@@ -2,11 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.config.BoYouQuanConfig;
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.Blog;
-import com.boyouquan.model.BlogRequest;
-import com.boyouquan.model.BlogRequestInfo;
-import com.boyouquan.model.Post;
-import com.boyouquan.service.BlogService;
+import com.boyouquan.model.*;
 import com.boyouquan.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -31,8 +27,6 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender javaMailSender;
     @Autowired
     private SpringTemplateEngine templateEngine;
-    @Autowired
-    private BlogService blogService;
 
     @Override
     public void sendBlogRequestSubmittedNotice(BlogRequest blogRequest) {
@@ -47,10 +41,6 @@ public class EmailServiceImpl implements EmailService {
             Context context = new Context();
             BlogRequestInfo blogRequestInfo = new BlogRequestInfo();
             BeanUtils.copyProperties(blogRequest, blogRequestInfo);
-            Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
-            if (null != blog) {
-                blogRequestInfo.setDomainName(blog.getDomainName());
-            }
 
             context.setVariable("blogRequestInfo", blogRequestInfo);
 
@@ -62,7 +52,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendBlogRequestApprovedNotice(BlogRequest blogRequest) {
+    public void sendBlogRequestApprovedNotice(BlogRequest blogRequest, Blog blog) {
         if (!boYouQuanConfig.getEmailEnabled()) {
             return;
         }
@@ -74,7 +64,6 @@ public class EmailServiceImpl implements EmailService {
             Context context = new Context();
             BlogRequestInfo blogRequestInfo = new BlogRequestInfo();
             BeanUtils.copyProperties(blogRequest, blogRequestInfo);
-            Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
             if (null != blog) {
                 blogRequestInfo.setDomainName(blog.getDomainName());
             }
@@ -89,7 +78,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendBlogSystemCollectedNotice(BlogRequest blogRequest) {
+    public void sendBlogSystemCollectedNotice(BlogRequest blogRequest, Blog blog) {
         if (!boYouQuanConfig.getEmailEnabled()) {
             return;
         }
@@ -102,7 +91,6 @@ public class EmailServiceImpl implements EmailService {
                 Context context = new Context();
                 BlogRequestInfo blogRequestInfo = new BlogRequestInfo();
                 BeanUtils.copyProperties(blogRequest, blogRequestInfo);
-                Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
                 if (null != blog) {
                     blogRequestInfo.setDomainName(blog.getDomainName());
                 }
@@ -126,10 +114,6 @@ public class EmailServiceImpl implements EmailService {
             Context context = new Context();
             BlogRequestInfo blogRequestInfo = new BlogRequestInfo();
             BeanUtils.copyProperties(blogRequest, blogRequestInfo);
-            Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
-            if (null != blog) {
-                blogRequestInfo.setDomainName(blog.getDomainName());
-            }
 
             context.setVariable("blogRequestInfo", blogRequestInfo);
 
@@ -168,6 +152,29 @@ public class EmailServiceImpl implements EmailService {
             context.setVariable("post", post);
 
             String text = templateEngine.process("email/post_pinned_template", context);
+
+            // send
+            send(adminEmail, subject, text, true);
+        }
+    }
+
+    @Override
+    public void sendBlogStatusNotOkNotice(Blog blog, BlogStatus.Status status) {
+        if (null != blog && !BlogStatus.Status.ok.equals(status)) {
+            String adminEmail = blog.getAdminEmail();
+
+            String reason = "无法访问";
+            if (BlogStatus.Status.timeout.equals(status)) {
+                reason = "访问超时";
+            }
+
+            String subject = "[博友圈] 告警！博友圈检测到您的博客" + reason + "！";
+
+            Context context = new Context();
+            context.setVariable("blog", blog);
+            context.setVariable("reason", reason);
+
+            String text = templateEngine.process("email/blog_can_not_be_accessed_template", context);
 
             // send
             send(adminEmail, subject, text, true);
