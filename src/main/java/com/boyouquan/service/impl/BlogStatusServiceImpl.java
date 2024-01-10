@@ -4,8 +4,10 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.BlogStatusDaoMapper;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogStatus;
+import com.boyouquan.model.EmailLog;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.BlogStatusService;
+import com.boyouquan.service.EmailLogService;
 import com.boyouquan.service.EmailService;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.OkHttpUtil;
@@ -31,6 +33,8 @@ public class BlogStatusServiceImpl implements BlogStatusService {
     private BlogStatusDaoMapper blogStatusDaoMapper;
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private EmailLogService emailLogService;
     @Autowired
     private EmailService emailService;
 
@@ -118,12 +122,7 @@ public class BlogStatusServiceImpl implements BlogStatusService {
         blogStatusDaoMapper.save(blogStatus);
 
         // send email
-        try {
-            Blog blog = blogService.getBlogInfoByDomainName(blogDomainName);
-            emailService.sendBlogStatusNotOkNotice(blog, status);
-        } catch (Exception e) {
-            logger.error("email send failed", e);
-        }
+        sendEmail(blogDomainName, status);
     }
 
     private Response requestBlogAddress(String blogAddress) throws IOException {
@@ -134,6 +133,32 @@ public class BlogStatusServiceImpl implements BlogStatusService {
 
         Call call = client.newCall(request);
         return call.execute();
+    }
+
+    private void sendEmail(String blogDomainName, BlogStatus.Status status) {
+        try {
+            EmailLog emailLog = emailLogService.getLatestByBlogDomainNameAndType(blogDomainName, EmailLog.Type.blog_can_not_be_accessed);
+
+            boolean need2SendEmail = false;
+            if (null == emailLog) {
+                need2SendEmail = true;
+            } else {
+                long now = System.currentTimeMillis();
+                long sendAt = emailLog.getSendAt().getTime();
+                long oneMonth = (long) 30 * 24 * 60 * 60 * 1000;
+
+                need2SendEmail = (now > sendAt) && ((now - sendAt) > oneMonth);
+            }
+
+            if (need2SendEmail) {
+                Blog blog = blogService.getBlogInfoByDomainName(blogDomainName);
+                emailService.sendBlogStatusNotOkNotice(blog, status);
+
+                logger.info("blog can not access notice sent, blog: " + blog.getDomainName());
+            }
+        } catch (Exception e) {
+            logger.error("email send failed", e);
+        }
     }
 
 }

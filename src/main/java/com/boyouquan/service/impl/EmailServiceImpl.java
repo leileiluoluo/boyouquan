@@ -181,7 +181,7 @@ public class EmailServiceImpl implements EmailService {
                 reason = "访问超时";
             }
 
-            String subject = "[博友圈] 告警！博友圈刚刚检测到您的博客" + reason + "！";
+            String subject = "[博友圈] 告警！博友圈检测到您的博客" + reason + "！";
 
             Context context = new Context();
             context.setVariable("blog", blog);
