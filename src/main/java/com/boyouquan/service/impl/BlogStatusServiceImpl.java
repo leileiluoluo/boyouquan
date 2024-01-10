@@ -152,6 +152,13 @@ public class BlogStatusServiceImpl implements BlogStatusService {
             if (need2SendEmail) {
                 emailService.sendBlogStatusNotOkNotice(blog, status);
 
+                // save email log
+                EmailLog newEmailLog = new EmailLog();
+                newEmailLog.setBlogDomainName(blog.getDomainName());
+                newEmailLog.setEmail(blog.getAdminEmail());
+                newEmailLog.setType(EmailLog.Type.blog_can_not_be_accessed);
+                emailLogService.save(newEmailLog);
+
                 logger.info("blog can not access notice sent, blog: {}", blog.getDomainName());
             }
         } catch (Exception e) {
