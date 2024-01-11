@@ -6,6 +6,7 @@ import com.boyouquan.model.Post;
 import com.boyouquan.model.PostInfo;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
+import com.boyouquan.service.BlogStatusService;
 import com.boyouquan.service.PostService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class PostAbstractController {
     private BlogService blogService;
     @Autowired
     private AccessService accessService;
+    @Autowired
+    private BlogStatusService blogStatusService;
 
     @GetMapping("")
     public String getPostAbstract(@RequestParam("link") String link, Model model) {
@@ -50,6 +53,12 @@ public class PostAbstractController {
 
         // blog info
         BlogInfo blogInfo = blogService.getBlogInfoByDomainName(post.getBlogDomainName());
+
+        // blog status
+        boolean isStatusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
+        blogInfo.setStatusOk(isStatusOk);
+
+        // blog info
         model.addAttribute("blogInfo", blogInfo);
 
         // summary
