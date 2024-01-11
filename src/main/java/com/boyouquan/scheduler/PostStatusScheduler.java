@@ -28,7 +28,7 @@ public class PostStatusScheduler {
     @Autowired
     private PostService postService;
 
-    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0 0/20 * * * ?")
     public void processPostStatuses() {
         logger.info("post status scheduler start!");
 
