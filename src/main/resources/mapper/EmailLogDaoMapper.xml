@@ -27,7 +27,7 @@
         FROM email_log
         WHERE blog_domain_name=#{blogDomainName}
         AND type=#{type}
-        ORDER BY send_at DESC
+        ORDER BY sent_at DESC
         LIMIT 1
     </select>
     <insert id="save">
