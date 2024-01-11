@@ -145,8 +145,17 @@ public class BlogStatusServiceImpl implements BlogStatusService {
                 long now = System.currentTimeMillis();
                 long sendAt = emailLog.getSendAt().getTime();
                 long oneMonth = (long) 30 * 24 * 60 * 60 * 1000;
+                long oneYear = 12 * oneMonth;
 
-                need2SendEmail = (now > sendAt) && ((now - sendAt) > oneMonth);
+                BlogStatus blogStatus = getLatestByBlogDomainName(blog.getDomainName());
+                if (null != blogStatus && !BlogStatus.Status.ok.equals(blogStatus.getStatus())) {
+                    long detectedAt = blogStatus.getDetectedAt().getTime();
+
+                    need2SendEmail = (now > sendAt)
+                            && (now > detectedAt)
+                            && ((now - sendAt) > oneMonth)
+                            && ((now - detectedAt) < oneYear);
+                }
             }
 
             if (need2SendEmail) {
