@@ -28,7 +28,7 @@ public class CommonUtils {
         return MORE_COMMON_DATE_HOUR_PATTERN.format(date);
     }
 
-    public static String getBlogCannotBeAccessedInfo(Date detectedAt, Date collectedAt) {
+    public static String getBlogCannotBeAccessedInfo(Date detectedAt, Date collectedAt, boolean sunset) {
         if (null == detectedAt) {
             return "";
         }
@@ -37,18 +37,15 @@ public class CommonUtils {
         long past = detectedAt.getTime();
 
         final long oneDay = 24 * 60 * 60 * 1000;
-        final long oneYear = 365 * oneDay;
 
         long timeDiff = now - past;
-        int years = (int) (timeDiff / oneYear);
-
         int togetherDays = (int) ((past - collectedAt.getTime()) / oneDay);
 
         String detectedAtDateStr = CommonUtils.dateCommonFormatDisplay(detectedAt);
         String collectedAtDateStr = CommonUtils.dateCommonFormatDisplay(collectedAt);
 
         String timePastStr = getTimePastStr(timeDiff);
-        if (years >= 1) {
+        if (sunset) {
             return String.format("很遗憾，该博客悄无声息地于「%s」陨落在了网络的海洋里，再也不可能回来了！我依然清晰地记得我们相识于「%s」，在一起走过整整 %d 天后，你就突然消失了，没有兑现我们携手走下去的承诺。我依旧会为你保留这个页面，来记录你曾经发布过的那些点点滴滴，以证明你真的在这个世界存在过！", detectedAtDateStr, collectedAtDateStr, togetherDays);
         }
 

@@ -37,7 +37,8 @@ public class BlogStatusServiceImpl implements BlogStatusService {
             return "";
         }
 
-        return CommonUtils.getBlogCannotBeAccessedInfo(blogStatus.getDetectedAt(), collectedAt);
+        boolean sunset = isBlogSunset(blogDomainName);
+        return CommonUtils.getBlogCannotBeAccessedInfo(blogStatus.getDetectedAt(), collectedAt, sunset);
     }
 
     @Override
@@ -96,6 +97,26 @@ public class BlogStatusServiceImpl implements BlogStatusService {
 
         // FIXME: maybe the algorithm should be modified later
         return BlogStatus.Status.ok.equals(blogStatus.getStatus());
+    }
+
+    @Override
+    public boolean isBlogSunset(String blogDomainName) {
+        BlogStatus blogStatus = getLatestByBlogDomainName(blogDomainName);
+        if (null == blogStatus
+                || BlogStatus.Status.ok.equals(blogStatus.getStatus())) {
+            return false;
+        }
+
+        long now = System.currentTimeMillis();
+        long past = blogStatus.getDetectedAt().getTime();
+
+        final long oneDay = 24 * 60 * 60 * 1000;
+        final long oneYear = 365 * oneDay;
+
+        long timeDiff = now - past;
+        int years = (int) (timeDiff / oneYear);
+
+        return years >= 1;
     }
 
     @Override
