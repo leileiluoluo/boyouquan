@@ -37,7 +37,7 @@
             </ul>
         </div>
         <div class="blog-container">
-            <article th:each="blogInfo, iterstat: ${pagination.results}" class="blog-entry">
+            <article th:each="blogInfo, iterstat: ${pagination.results}" class="blog-entry" th:style="${blogInfo.sunset ? 'filter: grayscale(100%);' : ''}">
                 <header class="icon-and-title">
                     <div class="flex-item">
                         <a th:href="'/blogs/' + ${blogInfo.domainName}">
@@ -110,12 +110,17 @@
                     </p>
                 </div>
                 <footer class="bottom-info">
-                    <div class="status-info" th:if="${blogInfo.statusOk}">
+                    <div class="status-info" th:if="${blogInfo.sunset}">
+                        <div style="background-color: #0dcb0d;" class="status-icon"></div>
+                        <p th:text="已经陨落"></p>
+                        <span class="tooltiptext">该博客已经彻底陨落</span>
+                    </div>
+                    <div class="status-info" th:if="${!blogInfo.sunset and blogInfo.statusOk}">
                         <div style="background-color: #0dcb0d;" class="status-icon"></div>
                         <p th:text="运行良好"></p>
                         <span class="tooltiptext">该博客运行状态良好</span>
                     </div>
-                    <div class="status-info" th:unless="${blogInfo.statusOk}">
+                    <div class="status-info" th:if="${!blogInfo.sunset and !blogInfo.statusOk}">
                         <div style="background-color: red;" class="status-icon"></div>
                         <p th:text="无法访问"></p>
                         <span class="tooltiptext">该博客目前无法访问</span>

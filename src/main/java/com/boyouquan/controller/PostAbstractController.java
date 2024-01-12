@@ -57,6 +57,8 @@ public class PostAbstractController {
         // blog status
         boolean isStatusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
         blogInfo.setStatusOk(isStatusOk);
+        boolean sunset = blogStatusService.isBlogSunset(blog.getDomainName());
+        blogInfo.setSunset(sunset);
 
         // blog info
         model.addAttribute("blogInfo", blogInfo);

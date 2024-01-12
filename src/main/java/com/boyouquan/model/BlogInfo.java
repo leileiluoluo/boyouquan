@@ -24,6 +24,7 @@ public class BlogInfo extends Blog {
     private String submittedInfo;
     private String submittedInfoTip;
     private boolean statusOk;
+    private boolean sunset;
     private String statusUnOkInfo;
 
 }

@@ -13,6 +13,8 @@ public interface BlogStatusService {
 
     boolean isStatusOkByBlogDomainName(String blogDomainName);
 
+    boolean isBlogSunset(String blogDomainName);
+
     BlogStatus getLatestByBlogDomainName(String blogDomainName);
 
     void save(String blogDomainName, BlogStatus.Status status, int code, String reason);
