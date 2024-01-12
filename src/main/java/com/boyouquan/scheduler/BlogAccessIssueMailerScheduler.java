@@ -49,7 +49,7 @@ public class BlogAccessIssueMailerScheduler {
 
                 BlogStatus blogStatus = blogStatusService.getLatestByBlogDomainName(blog.getDomainName());
                 if (null != blogStatus && !BlogStatus.Status.ok.equals(blogStatus.getStatus())) {
-                    String unOkInfo = blogStatusService.getUnOkInfo(blog.getDomainName());
+                    String unOkInfo = blogStatusService.getUnOkInfo(blog.getDomainName(), blog.getCollectedAt());
 
                     if (need2SendEmail(blog, blogStatus)) {
                         emailService.sendBlogStatusNotOkNotice(blog, blogStatus.getStatus(), unOkInfo);

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.util.Date;
 
 @Service
 public class BlogStatusServiceImpl implements BlogStatusService {
@@ -29,14 +30,14 @@ public class BlogStatusServiceImpl implements BlogStatusService {
     private BlogStatusDaoMapper blogStatusDaoMapper;
 
     @Override
-    public String getUnOkInfo(String blogDomainName) {
+    public String getUnOkInfo(String blogDomainName, Date collectedAt) {
         BlogStatus blogStatus = getLatestByBlogDomainName(blogDomainName);
         if (null == blogStatus
                 || BlogStatus.Status.ok.equals(blogStatus.getStatus())) {
             return "";
         }
 
-        return CommonUtils.getBlogCannotBeAccessedInfo(blogStatus.getDetectedAt());
+        return CommonUtils.getBlogCannotBeAccessedInfo(blogStatus.getDetectedAt(), collectedAt);
     }
 
     @Override
