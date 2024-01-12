@@ -758,8 +758,9 @@ tr:nth-child(even) {
 
 .abstract .notice {
     font-size: 12px;
-    text-align: end;
+    text-align: start;
     color: #cb2e58;
+    margin-bottom: 10px;
 }
 
 .blog-requests {
