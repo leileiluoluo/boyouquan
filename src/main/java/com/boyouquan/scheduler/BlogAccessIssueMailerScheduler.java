@@ -70,23 +70,21 @@ public class BlogAccessIssueMailerScheduler {
     }
 
     private boolean need2SendEmail(Blog blog, BlogStatus blogStatus) {
-        boolean need2SendEmail = false;
+        long now = System.currentTimeMillis();
+        long detectedAt = blogStatus.getDetectedAt().getTime();
+        long oneDay = (long) 24 * 60 * 60 * 1000;
+        long oneYear = 365 * oneDay;
+
+        boolean need2SendEmail = (now > detectedAt)
+                && (now - detectedAt) >= (3 * oneDay)
+                && ((now - detectedAt) < oneYear);
 
         EmailLog emailLog = emailLogService.getLatestByBlogDomainNameAndType(blog.getDomainName(), EmailLog.Type.blog_can_not_be_accessed);
 
-        if (null == emailLog) {
-            need2SendEmail = true;
-        } else {
-            long now = System.currentTimeMillis();
+        if (null != emailLog) {
             long sendAt = emailLog.getSendAt().getTime();
-            long detectedAt = blogStatus.getDetectedAt().getTime();
-            long oneMonth = (long) 30 * 24 * 60 * 60 * 1000;
-            long oneYear = 12 * oneMonth;
-
             need2SendEmail = (now > sendAt)
-                    && (now > detectedAt)
-                    && ((now - sendAt) > oneMonth)
-                    && ((now - detectedAt) < oneYear);
+                    && ((now - sendAt) > 30 * oneDay);
         }
 
         return need2SendEmail;
