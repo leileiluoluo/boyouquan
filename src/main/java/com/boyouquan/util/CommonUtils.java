@@ -44,11 +44,11 @@ public class CommonUtils {
 
         String detectedAtDateStr = CommonUtils.dateCommonFormatDisplay(date);
         String timePastStr = getTimePastStr(timeDiff);
-        if (years >= 2) {
-            return String.format("自「%s」第一次检测到你无法访问以来，到现在%s，我确信你已经陨落在网络的海洋里了！我依旧会为你保留这个页面，来记录你曾经发布过的那些点点滴滴，以证明你真的在这个世界存在过。", detectedAtDateStr, timePastStr);
+        if (years >= 1) {
+            return String.format("自「%s」第一次检测到该博客无法访问以来，到现在%s，我确信你已经陨落在网络的海洋里了！我依旧会为你保留这个页面，来记录你曾经发布过的那些点点滴滴，以证明你真的在这个世界存在过。", detectedAtDateStr, timePastStr);
         }
 
-        return String.format("自「%s」第一次检测到你无法访问以来，到现在%s，但你仍未恢复正常。接下来，我依旧会像往常一样，每天向你发射一次心跳，希望能得到你归来的讯息，如果整整两年都没有等到你归来，那么我也就死心了，我会确信你真的已经陨落在网络的海洋里了。", detectedAtDateStr, timePastStr);
+        return String.format("自「%s」第一次检测到该博客无法访问以来，到现在%s，但你仍未恢复正常。接下来，我依旧会像往常一样，每天向你发射一次心跳，希望能得到你归来的讯息，如果整整一年都没有等到你归来，那么我也就死心了，我会确信你真的已经陨落在网络的海洋里了。", detectedAtDateStr, timePastStr);
     }
 
     public static boolean isDateOneYearAgo(Date date) {
