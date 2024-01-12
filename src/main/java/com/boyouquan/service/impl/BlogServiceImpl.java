@@ -226,7 +226,7 @@ public class BlogServiceImpl implements BlogService {
         // status
         boolean isStatusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
         blogInfo.setStatusOk(isStatusOk);
-        blogInfo.setStatusUnOkInfo(blogStatusService.getUnOkInfo(blogDomainName));
+        blogInfo.setStatusUnOkInfo(blogStatusService.getUnOkInfo(blogDomainName, blogInfo.getCollectedAt()));
 
         return blogInfo;
     }

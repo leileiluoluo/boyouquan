@@ -3,9 +3,11 @@ package com.boyouquan.service;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogStatus;
 
+import java.util.Date;
+
 public interface BlogStatusService {
 
-    String getUnOkInfo(String blogDomainName);
+    String getUnOkInfo(String blogDomainName, Date collectedAt);
 
     void detectBlogStatus(Blog blog);
 
