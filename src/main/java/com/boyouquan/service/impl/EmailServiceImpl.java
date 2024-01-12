@@ -159,7 +159,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendBlogStatusNotOkNotice(Blog blog, BlogStatus.Status status) {
+    public void sendBlogStatusNotOkNotice(Blog blog, BlogStatus.Status status, String unOkInfo) {
         if (null != blog && !BlogStatus.Status.ok.equals(status)) {
             String adminEmail = blog.getAdminEmail();
 
@@ -173,6 +173,7 @@ public class EmailServiceImpl implements EmailService {
             Context context = new Context();
             context.setVariable("blog", blog);
             context.setVariable("reason", reason);
+            context.setVariable("unOkInfo", unOkInfo);
 
             String text = templateEngine.process("email/blog_can_not_be_accessed_template", context);
 

@@ -19,7 +19,7 @@ public interface EmailService {
 
     void sendPostPinnedNotice(Blog blog, Post post);
 
-    void sendBlogStatusNotOkNotice(Blog blog, BlogStatus.Status status);
+    void sendBlogStatusNotOkNotice(Blog blog, BlogStatus.Status status, String unOkInfo);
 
     void send(String to, String subject, String content, boolean html);
 
