@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -165,6 +166,7 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             // change draft to false
             Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
             if (null != blog) {
+                blog.setCollectedAt(new Date());
                 blog.setDraft(false);
                 blogService.update(blog);
 

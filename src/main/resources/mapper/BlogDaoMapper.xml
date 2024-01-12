@@ -86,9 +86,9 @@
                 <include refid="select_columns"/>
                 FROM blog b
                 LEFT JOIN (
-                    SELECT blog_domain_name, sum(amount) as count
-                    FROM access
-                    GROUP BY blog_domain_name
+                SELECT blog_domain_name, sum(amount) as count
+                FROM access
+                GROUP BY blog_domain_name
                 ) a
                 ON b.domain_name=a.blog_domain_name
                 WHERE b.draft=false
@@ -180,6 +180,7 @@
         rss_address=#{rssAddress},
         description=#{description},
         self_submitted=#{selfSubmitted},
+        collected_at=#{collectedAt},
         updated_at=now(),
         valid=#{valid},
         draft=#{draft}
