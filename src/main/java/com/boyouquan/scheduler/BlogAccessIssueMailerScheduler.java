@@ -1,5 +1,6 @@
 package com.boyouquan.scheduler;
 
+import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogStatus;
 import com.boyouquan.model.EmailLog;
@@ -53,14 +54,17 @@ public class BlogAccessIssueMailerScheduler {
                     if (need2SendEmail(blog, blogStatus)) {
                         emailService.sendBlogStatusNotOkNotice(blog, blogStatus.getStatus(), unOkInfo);
 
-                        // save email log
-                        EmailLog newEmailLog = new EmailLog();
-                        newEmailLog.setBlogDomainName(blog.getDomainName());
-                        newEmailLog.setEmail(blog.getAdminEmail());
-                        newEmailLog.setType(EmailLog.Type.blog_can_not_be_accessed);
-                        emailLogService.save(newEmailLog);
+                        if (!blog.getAdminEmail().equals(CommonConstants.FAKE_BLOG_ADMIN_EMAIL)
+                                && !blog.getAdminEmail().startsWith(CommonConstants.FAKE_BLOG_ADMIN_EMAIL_PREFIX)) {
+                            // save email log
+                            EmailLog newEmailLog = new EmailLog();
+                            newEmailLog.setBlogDomainName(blog.getDomainName());
+                            newEmailLog.setEmail(blog.getAdminEmail());
+                            newEmailLog.setType(EmailLog.Type.blog_can_not_be_accessed);
+                            emailLogService.save(newEmailLog);
 
-                        logger.info("blog can not access notice sent, blog: {}", blog.getDomainName());
+                            logger.info("blog can not access notice sent, blog: {}", blog.getDomainName());
+                        }
                     }
                 }
             } catch (Exception e) {
