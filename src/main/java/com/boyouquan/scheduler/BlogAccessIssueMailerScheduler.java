@@ -32,7 +32,7 @@ public class BlogAccessIssueMailerScheduler {
     @Autowired
     private EmailService emailService;
 
-    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0 0 8 * * ?")
     public void processBlogs() {
         logger.info("blog access issue mailer scheduler start!");
 
