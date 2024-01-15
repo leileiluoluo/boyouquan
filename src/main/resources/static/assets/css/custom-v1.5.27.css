@@ -1,5 +1,5 @@
 .first-entry .entry-header {
-  background-image: linear-gradient(to right, #cb2e58, #470bd5, #9f4245);
+  background-image: linear-gradient(to right, #14100f, #470bd5, #4d14e6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -65,13 +65,13 @@ h4 {
     font-size: 26px !important;
     font-weight: normal !important;
     letter-spacing: 1px;
-    background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
+    background-image: linear-gradient(to right, #14100f, #d55b5b, #4d14e6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .dark .logo a {
-    background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
+    background-image: linear-gradient(to right, #14100f, #d55b5b, #4d14e6);
 }
 
 .main {
@@ -152,7 +152,7 @@ h4 {
 }
 
 .footer-block .footer-summary .flex-item a {
-    background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
+    background-color: #cb2e58;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -500,7 +500,7 @@ div#searchbox {
     width: 100%;
     padding-left: 10px;
     box-sizing: border-box;
-    background-image: linear-gradient(to right, #cb2e58, #b538eb, #9f4245);
+    background-image: linear-gradient(to right, #14100f, #d55b5b, #4d14e6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-backface-visibility: hidden;
@@ -708,7 +708,7 @@ tr:nth-child(even) {
     font-size: 12px;
     color: var(--secondary);
     text-align: end;
-    color: #cb2e58;
+    color: #14100f;
 }
 
 .blog-detail-random-blogs {
@@ -759,7 +759,7 @@ tr:nth-child(even) {
 .abstract .notice {
     font-size: 12px;
     text-align: start;
-    color: #cb2e58;
+    color: #14100f;
     margin-bottom: 10px;
 }
 
