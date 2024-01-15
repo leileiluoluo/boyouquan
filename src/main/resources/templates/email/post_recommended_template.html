@@ -2,6 +2,8 @@
     <p>您好！</p>
     <br/>
     <p th:text="'您的博客文章「' + ${post.title} + '」刚刚被博友圈加入到了首页推荐！'"></p>
+    <br/>
     <p>文章地址：<a th:text="${post.link}" th:href="'https://www.boyouquan.com/go?from=email&link=' + ${post.link}"></a></p>
     <p>博友圈首页推荐地址：<a href="https://www.boyouquan.com/home">https://www.boyouquan.com/home</a></p>
+    <p>博客收录地址：<a th:text="'https://www.boyouquan.com/blogs/' + ${blog.domainName}" th:href="'https://www.boyouquan.com/blogs/' + ${blog.domainName}"></a></p>
 </div>
