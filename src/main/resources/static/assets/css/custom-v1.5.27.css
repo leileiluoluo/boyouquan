@@ -930,3 +930,11 @@ tr:nth-child(even) {
 .switch-sort-type .menu li {
     margin-right: 16px;
 }
+
+.sharing img {
+    content: url(/assets/images/sites/share/share-black.png);
+}
+
+.dark .sharing img {
+    content: url(/assets/images/sites/share/share-white.png);
+}
