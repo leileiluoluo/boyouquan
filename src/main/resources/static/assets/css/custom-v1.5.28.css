@@ -71,7 +71,7 @@ h4 {
 }
 
 .dark .logo a {
-    background-image: linear-gradient(to right, #14100f, #d55b5b, #4d14e6);
+    background-image: linear-gradient(to right, #d3a497, #d55b5b, #9877f1);
 }
 
 .main {
@@ -159,7 +159,16 @@ h4 {
 
 .footer-block .planet-shuttle {
     margin-bottom: 10px;
-    /*font-size: 14px;*/
+}
+
+.planet-shuttle a {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, #14100f, #d55b5b, #4d14e6);
+}
+
+.dark .planet-shuttle a {
+    background-image: linear-gradient(to right, #d3a497, #d55b5b, #9877f1);
 }
 
 .footer-block .cloud-promotion {
@@ -504,6 +513,10 @@ div#searchbox {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-backface-visibility: hidden;
+}
+
+.dark .latest-news .content ul li {
+    background-image: linear-gradient(to right, #d3a497, #d55b5b, #9877f1);
 }
 
 .latest-news .content ul {
