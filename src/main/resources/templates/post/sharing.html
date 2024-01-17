@@ -8,7 +8,7 @@
 <main class="main">
     <article class="abstract post-entry">
         <header class="entry-header sharing">
-            <h4 th:text="'我在博友圈发现一篇有意思的文章：「' + ${postInfo.title} + '」，快点击阅读原文看看吧！'"></h4>
+            <h4>我在博友圈发现一篇有意思的文章：「<strong th:text="${postInfo.title}"></strong>」，快点击阅读原文看看吧！</h4>
         </header>
         <div class="entry-content">
             <p th:text="${postInfo.description}"></p>
