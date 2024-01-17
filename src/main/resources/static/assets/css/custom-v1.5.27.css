@@ -931,6 +931,10 @@ tr:nth-child(even) {
     margin-right: 16px;
 }
 
+.post-entry .entry-header.sharing {
+    -webkit-line-clamp: 2;
+}
+
 .sharing img {
     content: url(/assets/images/sites/share/share-black.png);
 }
