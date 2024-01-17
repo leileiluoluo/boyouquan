@@ -39,7 +39,14 @@
                 · <span th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(postInfo.publishedAt)}"></span>
             </div>
             <div class="flex-item">
-                · <span th:text="${postInfo.linkAccessCount}"></span>次浏览
+                · <span th:text="${postInfo.linkAccessCount}"></span>次浏览 ·
+            </div>
+            <div class="flex-item">
+                <a th:href="'/sharing?link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}">
+                    <div class="sharing">
+                        <img th:src="@{/assets/images/sites/share/share-black.png}" width="20px" height="20px">
+                    </div>
+                </a>
             </div>
         </footer>
     </article>
