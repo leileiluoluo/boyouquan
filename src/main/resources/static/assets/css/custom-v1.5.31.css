@@ -486,16 +486,25 @@ div#searchbox {
 }
 
 .latest-news .icon {
-    width: 22px;
+    width: 30px;
     margin-left: 4px;
     display: flex;
     align-items: center;
+}
+
+.latest-news .icon img {
+    content: url(/assets/images/sites/latest_news/broadcast.png);
+}
+
+.dark .latest-news .icon img {
+    content: url(/assets/images/sites/latest_news/broadcast-white.png);
 }
 
 .latest-news .content {
     font-size: 14px;
     color: #000;
     overflow: hidden;
+    margin-left: -8px;
 }
 
 .latest-news .content li {
