@@ -11,7 +11,7 @@
             <p style="color: #cb2e58;">* 原始文章地址可能暂时无法访问，仅展示文章的摘要信息</p>
         </header>
         <header class="entry-header">
-            <h4 th:text="'「' + ${postInfo.title} + '」的摘要信息'"></h4>
+            <h4>「<strong th:text="${postInfo.title}"></strong>」的摘要信息</h4>
         </header>
         <div class="entry-content">
             <p th:text="${postInfo.description}"></p>
