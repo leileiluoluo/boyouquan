@@ -48,7 +48,7 @@
                         <p>博主邮箱 *</p> <p style="margin-left: 20px; color: red; font-size: 14px" th:if="${#fields.hasErrors('adminEmail')}" th:errors="*{adminEmail}" />
                     </div>
                     <div class="field">
-                        <input style="font-size: 14px" name="adminEmail" th:field="*{adminEmail}" placeholder="用于展示 Gravatar 头像" />
+                        <input style="font-size: 14px" name="adminEmail" th:field="*{adminEmail}" placeholder="用于展示 Gravatar 头像，以及获取通知" />
                     </div>
                 </div>
                 <div class="key-value-entry">
@@ -66,7 +66,7 @@
 
                 <!-- need help? -->
                 <div style="margin-top: 18px; font-size: 12px;">
-                    <p><a style="color: #b538eb" href="mailto:contact@boyouquan.com?subject=提交博客时遇到了问题&amp;body=RSS地址：%0d%0a问题描述：%0d%0a">提交遇到问题？我要联系站长！</a></p>
+                    <p><a style="color: #cb2e58;" href="mailto:contact@boyouquan.com?subject=提交博客时遇到了问题&amp;body=RSS地址：%0d%0a问题描述：%0d%0a">提交遇到问题？我要联系站长！</a></p>
                 </div>
             </div>
         </form>
