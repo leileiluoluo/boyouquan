@@ -110,6 +110,10 @@ h4 {
 
 .entry-footer .flex-item {
     margin: 2px 0 0 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 140px;
 }
 
 .entry-footer img {
@@ -766,7 +770,7 @@ tr:nth-child(even) {
 }
 
 .abstract .source-site-go a h4 {
-    color: darkred;
+    color: #cb2e58;
 }
 
 .abstract .notice {
@@ -945,7 +949,7 @@ tr:nth-child(even) {
 }
 
 .post-entry .entry-header.sharing {
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
 }
 
 .sharing img {
@@ -954,4 +958,17 @@ tr:nth-child(even) {
 
 .dark .sharing img {
     content: url(/assets/images/sites/share/share-white.png);
+}
+
+.share .entry-content {
+    -webkit-line-clamp: 4;
+}
+
+.share .source-site-go {
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+.share .source-site-go a h4 {
+    color: #cb2e58;
 }
