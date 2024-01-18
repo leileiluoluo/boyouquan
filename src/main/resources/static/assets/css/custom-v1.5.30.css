@@ -113,7 +113,7 @@ h4 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 140px;
+    max-width: 30%;
 }
 
 .entry-footer img {
