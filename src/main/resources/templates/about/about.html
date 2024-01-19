@@ -36,7 +36,8 @@
             <p>除了博主自行提交外，博友圈还有一些博客是本站后台收录的。若博友圈收录了您的博客，而您不想其被收录，也可以联系我进行删除！</p>
 
             <h3 id="add-link">添加链接</h3>
-            <p>您可以本着自愿的原则，将本站链接添加到您博客的适当位置，以让更多的博客人发现我们这个小众的圈子！</p>
+            <p>您可以本着自愿的原则，将本站链接添加到您博客的适当位置，以让更多的博客人发现我们这个圈子！</p>
+
             <ul>
                 <li>站名：博友圈</li>
                 <li>网址：<a href="https://www.boyouquan.com/">https://www.boyouquan.com/</a></li>
@@ -44,12 +45,26 @@
                 <li>星球穿梭页：<a href="https://www.boyouquan.com/planet-shuttle">https://www.boyouquan.com/planet-shuttle</a></li>
                 <li>素材：各尺寸 Logo 如下，请自取！</li>
             </ul>
-            <p>
-                <a th:href="@{/assets/images/sites/logo/logo-small.png}"><img width="43.5px" th:src="@{/assets/images/sites/logo/logo-small.png}"/></a>
-                <a th:href="@{/assets/images/sites/logo/logo-medium.png}"><img width="113px" th:src="@{/assets/images/sites/logo/logo-medium.png}"/></a>
-                <a th:href="@{/assets/images/sites/logo/logo-large.png}"><img width="194px" th:src="@{/assets/images/sites/logo/logo-large.png}"/></a>
-                <a th:href="@{/assets/images/sites/logo/planet-shuttle.png}"><img width="206px" th:src="@{/assets/images/sites/logo/planet-shuttle.png}"/></a>
-            </p>
+
+            <table style="display: table; table-layout: fixed;">
+                <tbody>
+                <tr>
+                    <td>120px x 120px</td>
+                    <td><a th:href="@{/assets/images/sites/logo/logo-small.png}"><img width="43.5px" th:src="@{/assets/images/sites/logo/logo-small.png}"/></a></td>
+                    <td><a th:href="@{/assets/images/sites/logo/logo-small.png}"><img width="43.5px" th:src="@{/assets/images/sites/logo/logo-small-dark.png}"/></a></td>
+                </tr>
+                <tr>
+                    <td>120px x 120px</td>
+                    <td><a th:href="@{/assets/images/sites/logo/logo-medium.png}"><img width="113px" th:src="@{/assets/images/sites/logo/logo-medium.png}"/></a></td>
+                    <td><a th:href="@{/assets/images/sites/logo/logo-medium.png}"><img width="113px" th:src="@{/assets/images/sites/logo/logo-medium-dark.png}"/></a></td>
+                </tr>
+                <tr>
+                    <td>120px x 120px</td>
+                    <td><a th:href="@{/assets/images/sites/logo/planet-shuttle.png}"><img width="206px" th:src="@{/assets/images/sites/logo/planet-shuttle.png}"/></a></td>
+                    <td><a th:href="@{/assets/images/sites/logo/planet-shuttle.png}"><img width="206px" th:src="@{/assets/images/sites/logo/planet-shuttle-dark.png}"/></a></td>
+                </tr>
+                </tbody>
+            </table>
 
             <h3 id="data-spider">数据采集</h3>
             <p>为了在本站聚合展示最新博文，本站会对已收录的博客定时进行数据采集，采集 URL 为博客的 RSS 地址，采集频率为 1 小时 1 次（一天 24 次），相信这样的频率不会对您的服务器造成多大的压力。</p>
