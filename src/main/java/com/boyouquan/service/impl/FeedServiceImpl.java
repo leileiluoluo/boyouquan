@@ -35,12 +35,12 @@ public class FeedServiceImpl implements FeedService {
     public String generateFeedXML() {
         SyndFeed feed = new SyndFeedImpl();
         feed.setFeedType("rss_2.0");
-        feed.setTitle("博友圈 - 最新文章聚合");
-        feed.setDescription("聚合所收录博客的最新文章！");
+        feed.setTitle("博友圈 - 推荐文章聚合");
+        feed.setDescription("聚合博友圈首页推荐文章 - https://www.boyouquan.com/home?sort=recommended");
         feed.setLink(CommonConstants.HOME_PAGE_ADDRESS);
 
         try {
-            Pagination<Post> posts = postService.listWithKeyWord(PostSortType.latest, "", CommonConstants.FEED_POST_QUERY_PAGE_NO, CommonConstants.FEED_POST_QUERY_PAGE_SIZE);
+            Pagination<Post> posts = postService.listWithKeyWord(PostSortType.recommended, "", CommonConstants.FEED_POST_QUERY_PAGE_NO, CommonConstants.FEED_POST_QUERY_PAGE_SIZE);
 
             List<SyndEntry> entries = posts.getResults().stream()
                     .map(post -> {
