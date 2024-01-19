@@ -220,8 +220,8 @@ class JumpToHyperspace {
     });this.bind();this.setup();document.body.appendChild(this.canvas);this.render();}}
 
 window.myJump = new JumpToHyperspace();
-window.addEventListener(
-'resize',
-_.debounce(() => {
-  window.myJump.reset();
-}, 250));
+//window.addEventListener(
+//'resize',
+//_.debounce(() => {
+//  window.myJump.reset();
+//}, 250));
