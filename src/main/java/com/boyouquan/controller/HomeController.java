@@ -96,6 +96,9 @@ public class HomeController {
         List<LatestNews> latestNews = latestNewsService.getLatestNews();
         hasLatestNews = latestNews.size() > 1;
 
+        // popular bloggers
+        List<BlogInfo> popularBloggers = blogService.listPopularBlogInfos(CommonConstants.POPULAR_BLOGGERS_SIZE);
+
         model.addAttribute("sort", sort);
         model.addAttribute("pagination", postInfoPagination);
         model.addAttribute("totalBlogs", blogService.countAll());
@@ -105,6 +108,7 @@ public class HomeController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("hasLatestNews", hasLatestNews);
         model.addAttribute("latestNews", latestNews);
+        model.addAttribute("popularBloggers", popularBloggers);
 
         return "home";
     }

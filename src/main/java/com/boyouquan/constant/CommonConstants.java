@@ -46,5 +46,7 @@ public class CommonConstants {
 
     public static final int SITEMAP_LATEST_POST_FETCH_SIZE = 100;
 
+    public static final int POPULAR_BLOGGERS_SIZE = 15;
+
 }
 
