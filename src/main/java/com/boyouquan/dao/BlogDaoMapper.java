@@ -29,9 +29,13 @@ public interface BlogDaoMapper {
 
     Blog getByRSSAddress(String rssAddress);
 
+    Blog getByMd5AdminEmail(String md5AdminEmail);
+
     void save(Blog blog);
 
     void update(Blog blog);
+
+    void updateGravatarValidFlag(String domainName, boolean gravatarValid);
 
     void deleteByDomainName(String domainName);
 

@@ -1,7 +1,5 @@
 package com.boyouquan.constant;
 
-import java.util.List;
-
 public class CommonConstants {
 
     public static final int DEFAULT_PAGE_SIZE = 10;
@@ -21,10 +19,12 @@ public class CommonConstants {
 
     public static final String GRAVATAR_SOURCE_ADDRESS = "https://cravatar.cn/avatar/%s?s=%d";
     public static final String GRAVATAR_STORE_FOLDER = "gravatar/%s/";
-    public static final String GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    public static final String GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL = "ccd670b883d4ac11d698c380668529de";
     public static final int GRAVATAR_IMAGE_SMALL_SIZE = 20;
+    public static final int GRAVATAR_IMAGE_MEDIUM_SIZE = 40;
     public static final int GRAVATAR_IMAGE_LARGE_SIZE = 80;
     public static final String GRAVATAR_ADDRESS_SMALL_SIZE = "/gravatar/%s?size=" + GRAVATAR_IMAGE_SMALL_SIZE;
+    public static final String GRAVATAR_ADDRESS_MEDIUM_SIZE = "/gravatar/%s?size=" + GRAVATAR_IMAGE_MEDIUM_SIZE;
     public static final String GRAVATAR_ADDRESS_LARGE_SIZE = "/gravatar/%s?size=" + GRAVATAR_IMAGE_LARGE_SIZE;
 
     public static final int RSS_POST_COUNT_READ_LIMIT_FIRST_TIME = 1000;
@@ -42,8 +42,6 @@ public class CommonConstants {
     public static final int FEED_POST_QUERY_PAGE_SIZE = 20;
 
     public static final int RANDOM_BLOG_MAX_TRY_TIMES = 3;
-    public static final List<String> DEFAULT_BLOG_DOMAIN_NAMES = List.of("leileiluoluo.com", "www.buzhuse.com");
-
     public static final int SITEMAP_LATEST_POST_FETCH_SIZE = 100;
 
     public static final int POPULAR_BLOGGERS_SIZE = 15;

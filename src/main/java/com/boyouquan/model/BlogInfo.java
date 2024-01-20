@@ -20,6 +20,7 @@ public class BlogInfo extends Blog {
     private Date latestPublishedAt;
     private List<Post> posts = Collections.emptyList();
     private String blogAdminSmallImageURL;
+    private String blogAdminMediumImageURL;
     private String blogAdminLargeImageURL;
     private String submittedInfo;
     private String submittedInfoTip;

@@ -14,6 +14,8 @@ public interface BlogService {
 
     String getBlogAdminSmallImageURLByDomainName(String blogDomainName);
 
+    String getBlogAdminMediumImageURLByDomainName(String blogDomainName);
+
     String getBlogAdminLargeImageURLByDomainName(String blogDomainName);
 
     List<Blog> listByRandom(List<String> excludedDomainNames, int limit);
@@ -42,9 +44,13 @@ public interface BlogService {
 
     Blog getByRSSAddress(String rssAddress);
 
+    Blog getByMd5AdminEmail(String md5AdminEmail);
+
     void save(Blog blog);
 
     void update(Blog blog);
+
+    void updateGravatarValidFlag(String domainName, boolean gravatarValid);
 
     void deleteByDomainName(String domainName);
 
