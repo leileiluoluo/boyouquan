@@ -28,6 +28,8 @@ public interface BlogService {
 
     Pagination<BlogInfo> listBlogInfosWithKeyWord(BlogSortType sort, String keyword, int page, int size);
 
+    List<BlogInfo> listPopularBlogInfos(int limit);
+
     Pagination<Blog> listWithKeyWord(BlogSortType sort, String keyword, int page, int size);
 
     boolean existsByRssAddress(String rssAddress);

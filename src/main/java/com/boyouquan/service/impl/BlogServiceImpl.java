@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -137,6 +138,23 @@ public class BlogServiceImpl implements BlogService {
                 .pageSize(size)
                 .total(total)
                 .results(blogInfos).build();
+    }
+
+    @Override
+    public List<BlogInfo> listPopularBlogInfos(int limit) {
+        List<Blog> popularBlogs = listByRandom(Collections.emptyList(), limit);
+
+        // list
+        List<BlogInfo> blogInfos = new ArrayList<>();
+        for (Blog blog : popularBlogs) {
+            // assemble
+            BlogInfo blogInfo = new BlogInfo();
+            BeanUtils.copyProperties(blog, blogInfo);
+            blogInfo.setBlogAdminLargeImageURL(getBlogAdminLargeImageURLByDomainName(blog.getDomainName()));
+
+            blogInfos.add(blogInfo);
+        }
+        return blogInfos;
     }
 
     @Override
