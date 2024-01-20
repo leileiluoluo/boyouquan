@@ -34,6 +34,7 @@
         FROM blog
         WHERE draft=false
         AND deleted=false
+        AND gravatar_valid=true
         <if test="excludedDomainNames != null and excludedDomainNames.size() > 0">
             AND domain_name NOT IN
             <foreach collection="excludedDomainNames" index="index" item="item" open="(" separator="," close=")">
@@ -153,6 +154,12 @@
         FROM blog
         WHERE rss_address=#{rssAddress}
     </select>
+    <select id="getByMd5AdminEmail" resultType="com.boyouquan.model.Blog">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog
+        WHERE md5(admin_email)=#{md5AdminEmail}
+    </select>
     <insert id="save">
         INSERT INTO blog (
         <include refid="insert_columns"/>
@@ -184,6 +191,12 @@
         updated_at=now(),
         valid=#{valid},
         draft=#{draft}
+        WHERE domain_name=#{domainName}
+    </update>
+    <update id="updateGravatarValidFlag">
+        UPDATE blog
+        SET
+        gravatar_valid=#{gravatarValid}
         WHERE domain_name=#{domainName}
     </update>
     <delete id="deleteByDomainName">

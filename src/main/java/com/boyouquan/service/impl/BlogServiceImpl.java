@@ -58,6 +58,16 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public String getBlogAdminMediumImageURLByDomainName(String blogDomainName) {
+        Blog blog = getByDomainName(blogDomainName);
+        if (null == blog) {
+            return "";
+        }
+
+        return String.format(CommonConstants.GRAVATAR_ADDRESS_MEDIUM_SIZE, CommonUtils.md5(blog.getAdminEmail()));
+    }
+
+    @Override
     public String getBlogAdminLargeImageURLByDomainName(String blogDomainName) {
         Blog blog = getByDomainName(blogDomainName);
         if (null == blog) {
@@ -70,8 +80,9 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> listByRandom(List<String> excludedDomainNames, int limit) {
         int tryTimes = 0;
+        List<Blog> blogs = Collections.emptyList();
         while (tryTimes < CommonConstants.RANDOM_BLOG_MAX_TRY_TIMES) {
-            List<Blog> blogs = blogDaoMapper.listByRandom(excludedDomainNames, limit);
+            blogs = blogDaoMapper.listByRandom(excludedDomainNames, limit);
 
             boolean existsStatusNotOkBlogs = blogs.stream()
                     .anyMatch(
@@ -86,10 +97,7 @@ public class BlogServiceImpl implements BlogService {
         }
 
         // default
-        return CommonConstants.DEFAULT_BLOG_DOMAIN_NAMES
-                .stream()
-                .map(this::getByDomainName)
-                .toList();
+        return blogs;
     }
 
     @Override
@@ -199,6 +207,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Blog getByMd5AdminEmail(String md5AdminEmail) {
+        return blogDaoMapper.getByMd5AdminEmail(md5AdminEmail);
+    }
+
+    @Override
     public void save(Blog blog) {
         blogDaoMapper.save(blog);
     }
@@ -209,6 +222,11 @@ public class BlogServiceImpl implements BlogService {
                 && StringUtils.isNotBlank(blog.getDomainName());
 
         blogDaoMapper.update(blog);
+    }
+
+    @Override
+    public void updateGravatarValidFlag(String domainName, boolean gravatarValid) {
+        blogDaoMapper.updateGravatarValidFlag(domainName, gravatarValid);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.model.Blog;
+import com.boyouquan.service.BlogService;
 import com.boyouquan.service.GravatarService;
 import com.boyouquan.util.OkHttpUtil;
 import okhttp3.OkHttpClient;
@@ -9,6 +11,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,9 @@ public class GravatarServiceImpl implements GravatarService {
 
     private static final OkHttpClient client = OkHttpUtil.getUnsafeOkHttpClient();
 
+    @Autowired
+    private BlogService blogService;
+
     @Override
     public byte[] getImage(String md5Email, int size) {
         try {
@@ -33,12 +39,15 @@ public class GravatarServiceImpl implements GravatarService {
             byte[] bytes = getFromGravatarSource(md5Email, size, false);
 
             // get default image
+            byte[] defaultGravatarBytes = getDefaultGravatarFromLocalStore(size);
             if (0 == bytes.length) {
-                bytes = getDefaultGravatarFromLocalStore(size);
+                return defaultGravatarBytes;
             }
 
             // write to local store
-            writeToLocalStore(md5Email, size, bytes);
+            if (bytes.length != defaultGravatarBytes.length) {
+                writeToLocalStore(true, md5Email, size, bytes);
+            }
 
             return bytes;
         } catch (Exception e) {
@@ -56,7 +65,7 @@ public class GravatarServiceImpl implements GravatarService {
                 byte[] bytes = getFromGravatarSource(md5Email, size, false);
                 if (bytes.length > 0
                         && bytes.length != localBytes.length) {
-                    writeToLocalStore(md5Email, size, bytes);
+                    writeToLocalStore(false, md5Email, size, bytes);
 
                     logger.info("local image refreshed, previousLength: {}, currentLength: {}", localBytes.length, bytes.length);
                 }
@@ -80,13 +89,21 @@ public class GravatarServiceImpl implements GravatarService {
         return new byte[]{};
     }
 
-    private void writeToLocalStore(String md5Email, int size, byte[] bytes) {
+    private void writeToLocalStore(boolean gravatarValid, String md5Email, int size, byte[] bytes) {
         Path folderPath = getGravatarFolderPath(md5Email, size);
         Path filePath = getGravatarFilePath(md5Email, size);
 
         try {
             Files.createDirectories(folderPath);
             Files.write(filePath, bytes);
+
+            // update flag
+            if (gravatarValid) {
+                Blog blog = blogService.getByMd5AdminEmail(md5Email);
+                if (null != blog) {
+                    blogService.updateGravatarValidFlag(blog.getDomainName(), true);
+                }
+            }
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
@@ -100,7 +117,7 @@ public class GravatarServiceImpl implements GravatarService {
 
             byte[] bytes = getFromGravatarSource(CommonConstants.GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL, size, true);
             if (bytes.length > 0) {
-                writeToLocalStore(CommonConstants.GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL, size, bytes);
+                writeToLocalStore(false, CommonConstants.GRAVATAR_DEFAULT_IMAGE_MD5_EMAIL, size, bytes);
             }
 
             return bytes;
