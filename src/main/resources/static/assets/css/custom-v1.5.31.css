@@ -104,6 +104,29 @@ h4 {
     margin: 0 0 14px 0 !important;
 }
 
+.sign-in-box {
+    clear: both;
+    padding: 20px 0;
+    background-color: var(--color-white);
+    overflow: hidden;
+    border-radius: 4px;
+    border-bottom: 1px dashed var(--color-tag-gray-light);
+    border-top: 1px dashed var(--color-tag-gray-light);
+}
+
+.sign-in-one.el-popover__reference {
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin: 8px 4px 14px 4px;
+}
+
+.sign-in-one.el-popover__reference img {
+    display: block;
+    max-width: 100%;
+    border-radius: 50%;
+}
+
 .entry-footer {
     display: flex;
 }
