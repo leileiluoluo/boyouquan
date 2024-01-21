@@ -125,8 +125,10 @@ h4 {
 }
 
 .blogger-one img {
+    width: 32px;
+    height: 32px;
     display: block;
-    max-width: 100%;
+    max-width: 90%;
     border-radius: 50%;
 }
 
@@ -188,7 +190,7 @@ h4 {
 }
 
 .footer-block .planet-shuttle {
-    margin-bottom: 10px;
+    margin-bottom: 18px;
 }
 
 .planet-shuttle a {
@@ -248,58 +250,68 @@ h4 {
     margin-bottom: 18px;
 }
 
-.blog-entry .icon-and-title {
+.blog-entry .blog-entry-header {
     display: flex;
     align-items: center;
 }
 
-.blog-entry .icon-and-title .flex-item {
+.blog-entry .blog-entry-header .blogger-icon {
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.blog-entry .blog-entry-header .blogger-icon img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.blog-entry .blog-entry-header .blogger-basic .icon-and-title {
+    display: flex;
+    align-items: center;
+}
+
+.blog-entry .blog-entry-header .blogger-basic .icon-and-title .flex-item {
     margin-right: 6px;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
-.blog-entry .icon-and-title .flex-item img {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-}
-
-.blog-entry .domain {
+.blog-entry .blog-entry-header .blogger-basic .domain {
     font-size: 14px;
-    margin-top: 8px;
+    margin-top: 2px;
     display: flex;
     align-items: flex-end;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.blog-entry .domain .flex-item-left {
+.blog-entry .blog-entry-header .blogger-basic .domain .flex-item-left {
     display: flex;
     overflow: hidden;
     margin-right: 8px;
 }
 
-.blog-entry .domain .flex-item-left .domain-name {
+.blog-entry .blog-entry-header .blogger-basic .domain .flex-item-left .domain-name {
     color: var(--secondary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.blog-entry .domain .flex-item-left .link {
+.blog-entry .blog-entry-header .blogger-basic .domain .flex-item-left .link {
     flex: 0 0 auto;
-    margin-left: 2px;
+    margin-left: 4px;
 }
 
-.blog-entry .domain .flex-item-right {
+.blog-entry .blog-entry-header .blogger-basic .domain .flex-item-right {
     color: var(--secondary);
     white-space: nowrap;
     flex: 0 0 auto;
 }
 
-.blog-entry .domain a {
+.blog-entry .blog-entry-header .blogger-basic .domain a {
     color: var(--primary)
 }
 
@@ -1006,4 +1018,14 @@ tr:nth-child(even) {
 
 .share .source-site-go a h4 {
     color: #cb2e58;
+}
+
+.special-thanks {
+    border: 1px solid var(--tertiary);
+    border-radius: var(--radius);
+}
+
+.special-thanks .popular-bloggers {
+    display: flex;
+    justify-content: center;
 }
