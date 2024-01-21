@@ -14,6 +14,6 @@ public class PostInfo extends Post {
     private String blogName;
     private String blogAddress;
     private Long linkAccessCount;
-    private String blogAdminSmallImageURL;
+    private String blogAdminMediumImageURL;
 
 }
