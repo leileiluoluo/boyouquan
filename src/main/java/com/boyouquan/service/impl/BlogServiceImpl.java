@@ -249,6 +249,9 @@ public class BlogServiceImpl implements BlogService {
         String blogAdminSmallImageURL = getBlogAdminSmallImageURLByDomainName(blogDomainName);
         blogInfo.setBlogAdminSmallImageURL(blogAdminSmallImageURL);
 
+        String blogAdminMediumImageURL = getBlogAdminMediumImageURLByDomainName(blogDomainName);
+        blogInfo.setBlogAdminMediumImageURL(blogAdminMediumImageURL);
+
         String blogAdminLargeImageURL = getBlogAdminLargeImageURLByDomainName(blogDomainName);
         blogInfo.setBlogAdminLargeImageURL(blogAdminLargeImageURL);
 
