@@ -119,14 +119,34 @@
         </div>
         <div class="blogs-container">
             <div class="blog-entry" th:each="blogInfo, iterstat: ${randomBlogInfos}">
-                <header class="icon-and-title">
-                    <div class="flex-item">
+                <header class="blog-entry-header">
+                    <div class="blogger-icon">
                         <a th:href="'/blogs/' + ${blogInfo.domainName}">
-                            <img th:src="${blogInfo.blogAdminSmallImageURL}"/>
+                            <img th:src="${blogInfo.blogAdminLargeImageURL}"/>
                         </a>
                     </div>
-                    <div class="flex-item">
-                        <a th:href="'/blogs/' + ${blogInfo.domainName}"><h4 th:text="${blogInfo.name}"></h4></a>
+                    <div class="blogger-basic">
+                        <div class="icon-and-title">
+                            <div class="flex-item">
+                                <a th:href="'/blogs/' + ${blogInfo.domainName}"><h4 th:text="${blogInfo.name}"></h4></a>
+                            </div>
+                        </div>
+                        <div class="domain">
+                            <div class="flex-item-left">
+                                <div class="domain-name">
+                                    <a th:text="${blogInfo.domainName}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
+                                </div>
+                                <div class="link">
+                                    <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
+                                        <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                            <path d="M15 3h6v6"></path>
+                                            <path d="M10 14L21 3"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </header>
                 <div class="description">
@@ -139,7 +159,7 @@
 <footer class="footer-block">
     <div th:replace="~{fragments/footer/blog_summary::blog_summary(${totalBlogs}, ${totalBlogPosts}, ${accessTotal})}"></div>
     <div th:replace="~{fragments/footer/shuttle::shuttle}"></div>
-    <div th:replace="~{fragments/footer/contact::contact}"></div>
+    <div th:replace="~{fragments/footer/notice::notice}"></div>
 </footer>
 <footer th:replace="~{fragments/footer/footer_site_info::footer_site_info}"></footer>
 <div th:insert="~{fragments/plugin/go_to_top::go_to_top}"></div>
