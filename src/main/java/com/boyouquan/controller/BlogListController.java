@@ -29,7 +29,7 @@ public class BlogListController {
 
     @GetMapping("")
     public String list(
-            @RequestParam(value = "sort", required = false, defaultValue = "access_count") String sort,
+            @RequestParam(value = "sort", required = false, defaultValue = "collect_time") String sort,
             @RequestParam(value = "keyword", required = false) String keyword,
             Model model) {
         return list(sort, keyword, 1, model);
@@ -37,7 +37,7 @@ public class BlogListController {
 
     @GetMapping("/page/{page}")
     public String list(
-            @RequestParam(value = "sort", required = false, defaultValue = "access_count") String sort,
+            @RequestParam(value = "sort", required = false, defaultValue = "collect_time") String sort,
             @RequestParam(value = "keyword", required = false) String keyword, @PathVariable("page") int page,
             Model model) {
         if (null == keyword) {

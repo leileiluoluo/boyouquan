@@ -82,7 +82,23 @@
     </select>
     <select id="listWithKeyWord" resultType="com.boyouquan.model.Blog">
         <choose>
-            <when test="sort == null or sort == 'access_count'">
+            <when test="sort == null or sort == 'collect_time'">
+                SELECT
+                <include refid="select_columns"/>
+                FROM blog
+                WHERE draft=false
+                AND deleted=false
+                <if test="keyword != null and keyword != ''">
+                    AND
+                    (
+                    name LIKE CONCAT('%', #{keyword}, '%')
+                    OR address LIKE CONCAT('%', #{keyword}, '%')
+                    )
+                </if>
+                ORDER BY collected_at DESC
+                LIMIT #{offset}, #{rows}
+            </when>
+            <otherwise>
                 SELECT
                 <include refid="select_columns"/>
                 FROM blog b
@@ -102,22 +118,6 @@
                     )
                 </if>
                 ORDER BY a.count DESC
-                LIMIT #{offset}, #{rows}
-            </when>
-            <otherwise>
-                SELECT
-                <include refid="select_columns"/>
-                FROM blog
-                WHERE draft=false
-                AND deleted=false
-                <if test="keyword != null and keyword != ''">
-                    AND
-                    (
-                    name LIKE CONCAT('%', #{keyword}, '%')
-                    OR address LIKE CONCAT('%', #{keyword}, '%')
-                    )
-                </if>
-                ORDER BY collected_at DESC
                 LIMIT #{offset}, #{rows}
             </otherwise>
         </choose>
