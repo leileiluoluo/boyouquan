@@ -7,7 +7,7 @@ for (var i = 0; i < menuItems.length; i++) {
             item.classList.add("active");
         }
     } else {
-        if (item.href.endsWith("access_count") || item.href.endsWith("recommended")) {
+        if (item.href.endsWith("collect_time") || item.href.endsWith("recommended")) {
             item.classList.add("active");
         }
     }
