@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 @RequestMapping("/go")
@@ -39,12 +40,16 @@ public class GoController {
                    @RequestParam(value = "from", required = false) String from,
                    HttpServletRequest request, HttpServletResponse response) {
         try {
-            String ip = IpUtil.getRealIp(request);
+            if (StringUtils.isNotBlank(link)) {
+                String ip = IpUtil.getRealIp(request);
 
-            boolean success = saveAccessInfo(ip, link, from);
-            if (success) {
-                response.sendRedirect(link);
-                return;
+                boolean success = saveAccessInfo(ip, link, from);
+                if (success) {
+                    // FIXME: important, use this way to solve path wth chinese character issue
+                    link = new String(link.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+                    response.sendRedirect(link);
+                    return;
+                }
             }
 
             response.sendRedirect(CommonConstants.HOME_PAGE_ADDRESS);
