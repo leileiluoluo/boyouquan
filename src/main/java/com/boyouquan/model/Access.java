@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class Access {
 
+    private String ip;
     private String blogDomainName;
     private String link;
 
