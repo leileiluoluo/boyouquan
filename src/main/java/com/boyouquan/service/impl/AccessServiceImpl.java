@@ -1,6 +1,7 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.dao.AccessDaoMapper;
+import com.boyouquan.helper.IPControlHelper;
 import com.boyouquan.model.Access;
 import com.boyouquan.model.BlogDomainNameAccess;
 import com.boyouquan.model.MonthAccess;
@@ -15,6 +16,8 @@ public class AccessServiceImpl implements AccessService {
 
     @Autowired
     private AccessDaoMapper accessDaoMapper;
+    @Autowired
+    private IPControlHelper ipControlHelper;
 
     @Override
     public Long countAll() {
@@ -43,7 +46,14 @@ public class AccessServiceImpl implements AccessService {
 
     @Override
     public void save(Access access) {
-        accessDaoMapper.save(access);
+        String ip = access.getIp();
+        String link = access.getLink();
+
+        if (!ipControlHelper.alreadyAccessed(ip, link)) {
+            // save
+            accessDaoMapper.save(access);
+            ipControlHelper.access(ip, link);
+        }
     }
 
 }

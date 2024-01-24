@@ -77,6 +77,7 @@ public class GoController {
 
         // save
         Access access = new Access();
+        access.setIp(ip);
         access.setLink(link);
         access.setBlogDomainName(blogDomainName);
         accessService.save(access);
