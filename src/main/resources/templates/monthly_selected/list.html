@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head/head::head('月度精选 - 博友圈 · 博客人的朋友圈！', '月度精选,文章', '每个月的精选文章合集')}"></head>
+<head th:replace="~{fragments/head/head::head('每月精选 - 博友圈 · 博客人的朋友圈！', '每月精选,文章', '每个月的精选文章合集')}"></head>
 <body class="list" id="top">
 <script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/charts/frappe-charts@1.6.2.min.umd.js}" type="text/javascript"></script>
@@ -12,7 +12,7 @@
             <p></p>
             <ul>
                 <li>
-                    <strong>首页文章推荐更新的太快？几天不刷就感觉错过了什么？快来月度精选看看过去每个月的精选文章吧！</strong>
+                    <strong>首页文章更新的太快？几天不刷就感觉错过了什么？快来每月精选看看过去几个月的精选文章吧！</strong>
                 </li>
             </ul>
             <p></p>
@@ -23,7 +23,7 @@
         <div class="monthly-selected-single" th:each="monthlyPostInfos, iterstat: ${monthlyPostInfosList}">
             <div class="blog-detail-articles">
                 <div class="articles-title">
-                    <h4 th:text="${monthlyPostInfos.yearMonthStr}"></h4>
+                    <h4 th:text="${monthlyPostInfos.yearMonthStr} + ' 精选文章'"></h4>
                 </div>
                 <div class="articles-container">
                     <table style="display: table; table-layout: fixed;">
