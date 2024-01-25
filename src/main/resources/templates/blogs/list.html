@@ -72,7 +72,7 @@
                     <p th:text="${blogInfo.description}"></p>
                 </div>
                 <div class="summary">
-                    <div class="flex-item left">
+                    <div class="flex-item">
                         <div class="title">
                             <p>文章收录</p>
                         </div>
@@ -80,7 +80,7 @@
                             <p th:text="${blogInfo.postCount}"></p>
                         </div>
                     </div>
-                    <div class="flex-item center">
+                    <div class="flex-item">
                         <div class="title">
                             <p th:if="${sort} == 'access_count'" style="color: #cb2e58;">文章浏览</p>
                             <p th:unless="${sort} == 'access_count'">文章浏览</p>
@@ -90,7 +90,7 @@
                             <p th:unless="${sort} == 'access_count'" th:text="${blogInfo.accessCount}"></p>
                         </div>
                     </div>
-                    <div class="flex-item right">
+                    <div class="flex-item">
                         <div class="title">
                             <p>最近更新</p>
                         </div>
@@ -98,7 +98,7 @@
                             <p th:text="${@thymeLeafTemplateHelper.dateFriendlyDisplay(blogInfo.latestPublishedAt)}"></p>
                         </div>
                     </div>
-                    <div class="flex-item right">
+                    <div class="flex-item">
                         <div class="title">
                             <p th:if="${sort} == 'collect_time'" style="color: #cb2e58;">收录时间</p>
                             <p th:unless="${sort} == 'collect_time'">收录时间</p>
