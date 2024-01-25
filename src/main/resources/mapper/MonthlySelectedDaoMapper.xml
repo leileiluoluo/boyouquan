@@ -8,8 +8,6 @@
         AND a.link=p.link
         AND a.link != b.address
         AND p.recommended=true
-        <!-- FIXME: not good, please fix me later -->
-        AND p.published_at between concat(#{a.year_month_str}, '-01') and concat(#{a.year_month_str}, '-31')
         GROUP BY a.year_month_str
         ORDER BY a.year_month_str DESC
     </select>
