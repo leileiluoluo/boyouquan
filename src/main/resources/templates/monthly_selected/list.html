@@ -29,13 +29,16 @@
                     <table style="display: table; table-layout: fixed;">
                         <thead>
                         <tr>
+                            <td width="20%"><span>博客名称</span></td>
                             <td width="60%"><span>文章标题</span></td>
                             <td width="20%"><span>发布时间</span></td>
-                            <td width="20%"><span>博客名称</span></td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="post, iterstat: ${monthlyPostInfos.postInfos}">
+                            <td width="20%">
+                                <a th:text="${post.blogName}" th:href="'/blogs/' + ${post.blogDomainName}"></a>
+                            </td>
                             <td width="60%">
                                 <a th:text="${post.title}"
                                    th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
@@ -43,9 +46,6 @@
                             <td width="20%">
                                 <text style="margin-right: 6px;"
                                       th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text>
-                            </td>
-                            <td width="20%">
-                                <a th:text="${post.blogName}" th:href="'/blogs/' + ${post.blogDomainName}"></a>
                             </td>
                         </tr>
                         </tbody>
