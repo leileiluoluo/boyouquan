@@ -23,7 +23,7 @@
         <div class="monthly-selected-single" th:each="monthlyPostInfos, iterstat: ${monthlyPostInfosList}">
             <div class="blog-detail-articles">
                 <div class="articles-title">
-                    <h4 th:text="${monthlyPostInfos.yearMonthStr} + ' 月度精选'"></h4>
+                    <h4 th:text="${monthlyPostInfos.yearMonthStr}"></h4>
                 </div>
                 <div class="articles-container">
                     <table style="display: table; table-layout: fixed;">
