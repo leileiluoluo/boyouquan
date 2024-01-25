@@ -1,0 +1,32 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.MonthlySelectedDaoMapper">
+    <select id="listYearMonthStrs" resultType="java.lang.String">
+        SELECT distinct year_month_str
+        FROM access a, blog b, post p
+        WHERE a.blog_domain_name=b.domain_name
+        AND a.blog_domain_name=p.blog_domain_name
+        AND a.link=p.link
+        AND a.link != b.address
+        AND p.recommended=true
+        <!-- FIXME: not good, please fix me later -->
+        AND p.published_at between concat(#{a.year_month_str}, '-01') and concat(#{a.year_month_str}, '-31')
+        GROUP BY a.year_month_str
+        ORDER BY a.year_month_str DESC
+    </select>
+    <select id="listSelectedPostsByYearMonthStr" resultType="com.boyouquan.model.SelectedPostAccess">
+        SELECT a.year_month_str as yearMonthStr, a.link as postLink, max(b.domain_name) as blogDomainName, sum(a.amount)
+        as accessCount
+        FROM access a, blog b, post p
+        WHERE a.blog_domain_name=b.domain_name
+        AND a.blog_domain_name=p.blog_domain_name
+        AND a.link=p.link
+        AND a.link != b.address
+        AND p.recommended=true
+        AND a.year_month_str=#{yearMonthStr}
+        <!-- FIXME: not good, please fix me later -->
+        AND p.published_at between concat(#{yearMonthStr}, '-01') and concat(#{yearMonthStr}, '-31')
+        GROUP BY a.year_month_str, a.link
+        ORDER BY accessCount desc
+        LIMIT #{limit}
+    </select>
+</mapper>

@@ -46,5 +46,7 @@ public class CommonConstants {
 
     public static final int POPULAR_BLOGGERS_SIZE = 15;
 
+    public static final int MONTHLY_SELECTED_POSTS_LIMIT = 10;
+
 }
 
