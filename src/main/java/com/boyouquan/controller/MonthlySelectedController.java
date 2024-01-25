@@ -32,7 +32,7 @@ public class MonthlySelectedController {
 
         List<MonthlySelectedPost> monthlyPostInfosList = new ArrayList<>();
 
-        yearMonthStrs.stream().forEach(yearMonthStr -> {
+        yearMonthStrs.forEach(yearMonthStr -> {
             List<SelectedPostAccess> selectedPostAccessList = monthlySelectedService.listSelectedPostsByYearMonthStr(yearMonthStr, CommonConstants.MONTHLY_SELECTED_POSTS_LIMIT);
 
             List<PostInfo> postInfos = selectedPostAccessList.stream()
