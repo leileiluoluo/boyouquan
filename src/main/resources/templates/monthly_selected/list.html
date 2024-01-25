@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head/head::head('月度精选 - 博友圈 · 博客人的朋友圈！', '月度精选', '月度精选')}"></head>
+<body class="list" id="top">
+<script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/charts/frappe-charts@1.6.2.min.umd.js}" type="text/javascript"></script>
+<header th:replace="~{fragments/header/header::header}"></header>
+<main class="main">
+    <article class="first-entry home-info">
+        <div class="entry-content">
+            <p></p>
+            <ul>
+                <li>
+                    <strong>首页文章推荐更新的太快？几天不刷就感觉错过了什么？那就来月度精选看看过去每个月的精选文章吧！</strong>
+                </li>
+            </ul>
+            <p></p>
+        </div>
+    </article>
+
+    <div class="monthly-selected-container">
+        <div class="monthly-selected-single" th:each="monthlyPostInfos, iterstat: ${monthlyPostInfosList}">
+            <div class="blog-detail-articles">
+                <div class="articles-title">
+                    <h4 th:text="${monthlyPostInfos.yearMonthStr} + ' 月度精选'"></h4>
+                </div>
+                <div class="articles-container">
+                    <table style="display: table; table-layout: fixed;">
+                        <thead>
+                        <tr>
+                            <td width="20%"><span>发布时间</span></td>
+                            <td width="60%"><span>文章标题</span></td>
+                            <td width="20%"><span>博客名称</span></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="post, iterstat: ${monthlyPostInfos.postInfos}">
+                            <td width="20%">
+                                <text style="margin-right: 6px;"
+                                      th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text>
+                            </td>
+
+                            <td width="60%">
+                                <a th:text="${post.title}"
+                                   th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                            </td>
+
+                            <td width="20%">
+                                <a th:text="${post.blogName}" th:href="'/blogs/' + ${post.blogDomainName}"></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer-block">
+    <div th:replace="~{fragments/footer/shuttle::shuttle}"></div>
+    <div th:replace="~{fragments/footer/notice::notice}"></div>
+</footer>
+<footer th:replace="~{fragments/footer/footer_site_info::footer_site_info}"></footer>
+<div th:insert="~{fragments/plugin/go_to_top::go_to_top}"></div>
+<script th:src="@{/assets/js/highlight-menu.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/theme-listener.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/tongji.js}" type="text/javascript"></script>
+</body>
+</html>
