@@ -63,11 +63,6 @@ public class PostAbstractController {
         // blog info
         model.addAttribute("blogInfo", blogInfo);
 
-        // summary
-        model.addAttribute("totalBlogs", blogService.countAll());
-        model.addAttribute("totalBlogPosts", postService.countAll());
-        model.addAttribute("accessTotal", accessService.countAll());
-
         return "post/abstract";
     }
 

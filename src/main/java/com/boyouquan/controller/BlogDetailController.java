@@ -77,11 +77,6 @@ public class BlogDetailController {
 
         model.addAttribute("randomBlogInfos", randomBlogInfos);
 
-        // for summary
-        model.addAttribute("totalBlogs", blogService.countAll());
-        model.addAttribute("totalBlogPosts", postService.countAll());
-        model.addAttribute("accessTotal", accessService.countAll());
-
         return "blog_detail/item";
     }
 
