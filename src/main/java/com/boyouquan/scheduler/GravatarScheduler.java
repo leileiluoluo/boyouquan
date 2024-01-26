@@ -43,10 +43,8 @@ public class GravatarScheduler {
                     String md5Email = CommonUtils.md5(adminEmail);
 
                     // refresh
-                    gravatarService.refreshLocalImage(md5Email, CommonConstants.GRAVATAR_IMAGE_SMALL_SIZE);
+                    gravatarService.refreshLocalImage(md5Email, CommonConstants.GRAVATAR_IMAGE_MEDIUM_SIZE);
                     gravatarService.refreshLocalImage(md5Email, CommonConstants.GRAVATAR_IMAGE_LARGE_SIZE);
-
-                    logger.info("gravatar image refreshed, blogDomainName: {}, md5Email: {}", blog.getDomainName(), md5Email);
                 }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
