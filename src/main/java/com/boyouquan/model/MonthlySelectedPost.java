@@ -14,6 +14,13 @@ import java.util.List;
 public class MonthlySelectedPost {
 
     private String yearMonthStr;
-    private List<PostInfo> postInfos;
+    private List<PostInfoWithBlogStatus> postInfos;
 
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @ToString
+    public static class PostInfoWithBlogStatus extends PostInfo {
+        private boolean blogStatusOk;
+    }
 }

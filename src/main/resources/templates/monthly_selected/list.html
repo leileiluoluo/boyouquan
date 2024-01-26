@@ -20,7 +20,7 @@
     </article>
 
     <div class="monthly-selected-container">
-        <div class="monthly-selected-single" th:each="monthlyPostInfos, iterstat: ${monthlyPostInfosList}">
+        <div class="monthly-selected-single" th:each="monthlyPostInfos, iterstat: ${monthlySelectedPosts}">
             <div class="blog-detail-articles">
                 <div class="articles-title">
                     <h4 th:text="${monthlyPostInfos.yearMonthStr} + ' 精选文章'"></h4>
@@ -40,8 +40,12 @@
                                 <a th:text="${post.blogName}" th:href="'/blogs/' + ${post.blogDomainName}"></a>
                             </td>
                             <td width="60%">
-                                <a th:text="${post.title}"
+                                <!-- blog status ok? -->
+                                <a th:if="${post.blogStatusOk}" th:text="${post.title}"
                                    th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                                <!-- blog status un ok? -->
+                                <a th:unless="${post.blogStatusOk}" th:text="${post.title}"
+                                   th:href="'/abstract?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
                             </td>
                             <td width="20%">
                                 <text style="margin-right: 6px;"
