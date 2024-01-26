@@ -1,8 +1,12 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.*;
+import com.boyouquan.model.Blog;
+import com.boyouquan.model.MonthlySelectedPost;
+import com.boyouquan.model.Post;
+import com.boyouquan.model.SelectedPostAccess;
 import com.boyouquan.service.BlogService;
+import com.boyouquan.service.BlogStatusService;
 import com.boyouquan.service.MonthlySelectedService;
 import com.boyouquan.service.PostService;
 import org.springframework.beans.BeanUtils;
@@ -25,38 +29,45 @@ public class MonthlySelectedController {
     private PostService postService;
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private BlogStatusService blogStatusService;
 
     @GetMapping("")
     public String monthlySelected(Model model) {
         List<String> yearMonthStrs = monthlySelectedService.listYearMonthStrs();
 
-        List<MonthlySelectedPost> monthlyPostInfosList = new ArrayList<>();
+        List<MonthlySelectedPost> monthlySelectedPosts = new ArrayList<>();
 
         yearMonthStrs.forEach(yearMonthStr -> {
             List<SelectedPostAccess> selectedPostAccessList = monthlySelectedService.listSelectedPostsByYearMonthStr(yearMonthStr, CommonConstants.MONTHLY_SELECTED_POSTS_LIMIT);
 
-            List<PostInfo> postInfos = selectedPostAccessList.stream()
+            List<MonthlySelectedPost.PostInfoWithBlogStatus> postInfos = selectedPostAccessList.stream()
                     .map(selectedPostAccess -> {
                         Post post = postService.getByLink(selectedPostAccess.getPostLink());
 
-                        PostInfo postInfo = new PostInfo();
+                        MonthlySelectedPost.PostInfoWithBlogStatus postInfo = new MonthlySelectedPost.PostInfoWithBlogStatus();
                         BeanUtils.copyProperties(post, postInfo);
 
+                        // blog
                         Blog blog = blogService.getByDomainName(post.getBlogDomainName());
                         postInfo.setBlogName(blog.getName());
                         postInfo.setBlogAddress(blog.getAddress());
 
+                        // blog status
+                        boolean blogStatusOk = blogStatusService.isStatusOkByBlogDomainName(selectedPostAccess.getBlogDomainName());
+                        postInfo.setBlogStatusOk(blogStatusOk);
+
                         return postInfo;
                     }).toList();
 
-            MonthlySelectedPost monthPostInfos = new MonthlySelectedPost();
-            monthPostInfos.setYearMonthStr(yearMonthStr);
-            monthPostInfos.setPostInfos(postInfos);
+            MonthlySelectedPost monthlySelectedPost = new MonthlySelectedPost();
+            monthlySelectedPost.setYearMonthStr(yearMonthStr);
+            monthlySelectedPost.setPostInfos(postInfos);
 
-            monthlyPostInfosList.add(monthPostInfos);
+            monthlySelectedPosts.add(monthlySelectedPost);
         });
 
-        model.addAttribute("monthlyPostInfosList", monthlyPostInfosList);
+        model.addAttribute("monthlySelectedPosts", monthlySelectedPosts);
 
         return "monthly_selected/list";
     }
