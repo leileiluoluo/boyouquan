@@ -48,16 +48,6 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public String getBlogAdminSmallImageURLByDomainName(String blogDomainName) {
-        Blog blog = getByDomainName(blogDomainName);
-        if (null == blog) {
-            return "";
-        }
-
-        return String.format(CommonConstants.GRAVATAR_ADDRESS_SMALL_SIZE, CommonUtils.md5(blog.getAdminEmail()));
-    }
-
-    @Override
     public String getBlogAdminMediumImageURLByDomainName(String blogDomainName) {
         Blog blog = getByDomainName(blogDomainName);
         if (null == blog) {
@@ -245,9 +235,6 @@ public class BlogServiceImpl implements BlogService {
         Long accessCount = accessService.countByBlogDomainName(blogDomainName);
         blogInfo.setAccessCount(accessCount);
         blogInfo.setLatestPublishedAt(latestUpdatedAt);
-
-        String blogAdminSmallImageURL = getBlogAdminSmallImageURLByDomainName(blogDomainName);
-        blogInfo.setBlogAdminSmallImageURL(blogAdminSmallImageURL);
 
         String blogAdminMediumImageURL = getBlogAdminMediumImageURLByDomainName(blogDomainName);
         blogInfo.setBlogAdminMediumImageURL(blogAdminMediumImageURL);
