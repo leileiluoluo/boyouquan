@@ -32,15 +32,24 @@ public class FeedServiceImpl implements FeedService {
     private ThymeLeafTemplateHelper thymeLeafTemplateHelper;
 
     @Override
-    public String generateFeedXML() {
+    public String generateFeedXML(PostSortType sortType) {
         SyndFeed feed = new SyndFeedImpl();
         feed.setFeedType("rss_2.0");
-        feed.setTitle("博友圈 - 推荐文章聚合");
-        feed.setDescription("聚合博友圈首页推荐文章 - https://www.boyouquan.com/home?sort=recommended");
+        feed.setTitle("博友圈");
+        feed.setDescription("博客人的朋友圈");
         feed.setLink(CommonConstants.HOME_PAGE_ADDRESS);
+        if (PostSortType.recommended.equals(sortType)) {
+            feed.setTitle("博友圈 - 推荐文章聚合");
+            feed.setDescription("聚合展示博友圈推荐文章");
+            feed.setLink(CommonConstants.HOME_PAGE_SORT_RECOMMENDED_ADDRESS);
+        } else if (PostSortType.latest.equals(sortType)) {
+            feed.setTitle("博友圈 - 最新文章聚合");
+            feed.setDescription("聚合展示博友圈最新文章");
+            feed.setLink(CommonConstants.HOME_PAGE_SORT_LATEST_ADDRESS);
+        }
 
         try {
-            Pagination<Post> posts = postService.listWithKeyWord(PostSortType.recommended, "", CommonConstants.FEED_POST_QUERY_PAGE_NO, CommonConstants.FEED_POST_QUERY_PAGE_SIZE);
+            Pagination<Post> posts = postService.listWithKeyWord(sortType, "", CommonConstants.FEED_POST_QUERY_PAGE_NO, CommonConstants.FEED_POST_QUERY_PAGE_SIZE);
 
             List<SyndEntry> entries = posts.getResults().stream()
                     .map(post -> {

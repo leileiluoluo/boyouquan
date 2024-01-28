@@ -32,6 +32,8 @@ public class CommonConstants {
     public static final int ALL_POST_COUNT_LIMIT = 100;
 
     public static final String HOME_PAGE_ADDRESS = "https://www.boyouquan.com/home";
+    public static final String HOME_PAGE_SORT_LATEST_ADDRESS = "https://www.boyouquan.com/home?sort=latest";
+    public static final String HOME_PAGE_SORT_RECOMMENDED_ADDRESS = "https://www.boyouquan.com/home?sort=recommended";
     public static final String GO_PAGE_ADDRESS = "https://www.boyouquan.com/go";
     public static final String FULL_BLOG_LIST_ADDRESS = "https://www.boyouquan.com/blogs";
     public static final String POST_ABSTRACT_ADDRESS = "https://www.boyouquan.com/abstract";
