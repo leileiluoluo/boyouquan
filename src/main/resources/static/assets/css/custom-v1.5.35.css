@@ -330,13 +330,6 @@ h4 {
     border-radius: calc(0.4rem);
 }
 
-/*
-.blog-entry .description:hover {
-   overflow: visible;
-   display: block;
-}
-*/
-
 .blog-entry .summary {
     margin-top: 8px;
     display: flex;
@@ -793,6 +786,9 @@ tr:nth-child(even) {
 .blog-detail-random-blogs .blogs-container .blog-entry .description {
     -webkit-line-clamp: 2;
     font-size: 14px;
+    margin-bottom: 0px;
+    margin-top: 4px;
+    padding: 0px;
 }
 
 .abstract .entry-content {
