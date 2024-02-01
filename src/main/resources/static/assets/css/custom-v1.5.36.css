@@ -775,7 +775,7 @@ tr:nth-child(even) {
 
 .blog-detail-random-blogs .blogs-container .blog-entry {
     background: var(--code-bg);
-    padding: calc(var(--gap) / 2);
+    padding: 12px;
     margin-bottom: var(--gap);
 }
 

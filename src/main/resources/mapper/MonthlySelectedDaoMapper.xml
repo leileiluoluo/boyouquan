@@ -6,7 +6,7 @@
         WHERE a.blog_domain_name=b.domain_name
         AND a.blog_domain_name=p.blog_domain_name
         AND a.link=p.link
-        AND a.link != b.address
+        AND a.link!=b.address
         AND p.recommended=true
         GROUP BY a.year_month_str
         ORDER BY a.year_month_str DESC
@@ -18,7 +18,7 @@
         WHERE a.blog_domain_name=b.domain_name
         AND a.blog_domain_name=p.blog_domain_name
         AND a.link=p.link
-        AND a.link != b.address
+        AND a.link!=b.address
         AND p.recommended=true
         AND a.year_month_str=#{yearMonthStr}
         <!-- FIXME: not good, please fix me later -->
