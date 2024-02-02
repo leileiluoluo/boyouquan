@@ -93,11 +93,26 @@ h4 {
     border: 1px solid #cb2e58 !important;
 }
 
+.post-entry .pinned-icon {
+    width: 40px;
+    height: 20px;
+    margin-right: 4px;
+}
+
 .post-entry .entry-header {
+    display: flex;
+    align-items: center;
+}
+
+.post-entry .entry-header .article-go {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
+}
+
+.post-entry.pinned .entry-header .article-go {
+    padding-bottom: 1px;
 }
 
 .first-entry .entry-content {
