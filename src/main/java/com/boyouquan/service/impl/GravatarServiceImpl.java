@@ -45,9 +45,7 @@ public class GravatarServiceImpl implements GravatarService {
             }
 
             // write to local store
-            if (bytes.length != defaultGravatarBytes.length) {
-                writeToLocalStore(true, md5Email, size, bytes);
-            }
+            writeToLocalStore(true, md5Email, size, bytes);
 
             return bytes;
         } catch (Exception e) {
