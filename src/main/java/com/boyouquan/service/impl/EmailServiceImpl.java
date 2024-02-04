@@ -137,7 +137,8 @@ public class EmailServiceImpl implements EmailService {
             String text = templateEngine.process("email/post_recommended_template", context);
 
             // send
-            send(adminEmail, subject, text, true);
+            // FIXME: temp turn off
+            // send(adminEmail, subject, text, true);
         }
     }
 
@@ -154,7 +155,8 @@ public class EmailServiceImpl implements EmailService {
             String text = templateEngine.process("email/post_pinned_template", context);
 
             // send
-            send(adminEmail, subject, text, true);
+            // FIXME: temp turn off
+            // send(adminEmail, subject, text, true);
         }
     }
 
