@@ -18,7 +18,7 @@
                         <span>博客名称</span>
                     </td>
                     <td width="80%">
-                        <p th:text="${blogRequestInfo.name}"></p>
+                        <p><a th:text="${blogRequestInfo.name}" th:href="'http://' + ${blogRequestInfo.domainName}"></a></p>
                     </td>
                 </tr>
                 <tr>
