@@ -18,6 +18,7 @@ public class BlogRequestInfo extends BlogRequest {
     private boolean approved;
     private boolean failed;
     private String domainName;
+    private String address;
     private List<Post> posts = Collections.emptyList();
 
 }

@@ -292,10 +292,9 @@ public class BlogRequestServiceImpl implements BlogRequestService {
 
         Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
         blogRequestInfo.setApproved(BlogRequest.Status.approved.equals(blogRequest.getStatus()));
-        if (BlogRequest.Status.approved.equals(blogRequest.getStatus())) {
-            if (null != blog) {
-                blogRequestInfo.setDomainName(blog.getDomainName());
-            }
+        if (null != blog) {
+            blogRequestInfo.setDomainName(blog.getDomainName());
+            blogRequestInfo.setAddress(blog.getAddress());
         }
 
         // admin email
