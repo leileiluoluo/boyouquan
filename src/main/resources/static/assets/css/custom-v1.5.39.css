@@ -9,7 +9,6 @@ body {
 }
 
 body#top {
-    background-image: url(/assets/images/sites/background/background.svg);
     background-position: center center, center center;
     background-size: cover,cover;
     background-repeat: no-repeat, no-repeat;
