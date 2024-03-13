@@ -1,19 +1,18 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.model.Blog;
 import com.boyouquan.model.MonthlySelectedPost;
-import com.boyouquan.model.Post;
-import com.boyouquan.model.SelectedPostAccess;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.BlogStatusService;
 import com.boyouquan.service.MonthlySelectedService;
 import com.boyouquan.service.PostService;
-import org.springframework.beans.BeanUtils;
+import com.boyouquan.util.Pagination;
+import com.boyouquan.util.PaginationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -33,41 +32,31 @@ public class MonthlySelectedController {
     private BlogStatusService blogStatusService;
 
     @GetMapping("")
-    public String monthlySelected(Model model) {
-        List<String> yearMonthStrs = monthlySelectedService.listYearMonthStrs();
+    public String list(Model model) {
+        return list(1, model);
+    }
+
+    @GetMapping("/page/{page}")
+    public String list(@PathVariable("page") int page, Model model) {
+        List<String> yearMonthStrs = monthlySelectedService.listYearMonthStrs()
+                .stream()
+                .skip((long) (page - 1) * CommonConstants.MONTHLY_SELECTED_PAGE_SIZE)
+                .limit(CommonConstants.MONTHLY_SELECTED_PAGE_SIZE)
+                .toList();
 
         List<MonthlySelectedPost> monthlySelectedPosts = new ArrayList<>();
 
         yearMonthStrs.forEach(yearMonthStr -> {
-            List<SelectedPostAccess> selectedPostAccessList = monthlySelectedService.listSelectedPostsByYearMonthStr(yearMonthStr, CommonConstants.MONTHLY_SELECTED_POSTS_LIMIT);
-
-            List<MonthlySelectedPost.PostInfoWithBlogStatus> postInfos = selectedPostAccessList.stream()
-                    .map(selectedPostAccess -> {
-                        Post post = postService.getByLink(selectedPostAccess.getPostLink());
-
-                        MonthlySelectedPost.PostInfoWithBlogStatus postInfo = new MonthlySelectedPost.PostInfoWithBlogStatus();
-                        BeanUtils.copyProperties(post, postInfo);
-
-                        // blog
-                        Blog blog = blogService.getByDomainName(post.getBlogDomainName());
-                        postInfo.setBlogName(blog.getName());
-                        postInfo.setBlogAddress(blog.getAddress());
-
-                        // blog status
-                        boolean blogStatusOk = blogStatusService.isStatusOkByBlogDomainName(selectedPostAccess.getBlogDomainName());
-                        postInfo.setBlogStatusOk(blogStatusOk);
-
-                        return postInfo;
-                    }).toList();
-
-            MonthlySelectedPost monthlySelectedPost = new MonthlySelectedPost();
-            monthlySelectedPost.setYearMonthStr(yearMonthStr);
-            monthlySelectedPost.setPostInfos(postInfos);
-
-            monthlySelectedPosts.add(monthlySelectedPost);
+            MonthlySelectedPost monthlySelected = monthlySelectedService.listSelectedByYearMonth(yearMonthStr);
+            monthlySelectedPosts.add(monthlySelected);
         });
 
-        model.addAttribute("monthlySelectedPosts", monthlySelectedPosts);
+        Pagination<MonthlySelectedPost> pagination = PaginationBuilder.<MonthlySelectedPost>newBuilder()
+                .pageNo(page)
+                .pageSize(CommonConstants.MONTHLY_SELECTED_PAGE_SIZE)
+                .results(monthlySelectedPosts).build();
+
+        model.addAttribute("pagination", pagination);
 
         return "monthly_selected/list";
     }
