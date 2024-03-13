@@ -38,15 +38,16 @@ public class MonthlySelectedController {
 
     @GetMapping("/page/{page}")
     public String list(@PathVariable("page") int page, Model model) {
-        List<String> yearMonthStrs = monthlySelectedService.listYearMonthStrs()
-                .stream()
+        List<String> yearMonthStrs = monthlySelectedService.listYearMonthStrs();
+
+        List<String> yearMonthSubStrs = yearMonthStrs.stream()
                 .skip((long) (page - 1) * CommonConstants.MONTHLY_SELECTED_PAGE_SIZE)
                 .limit(CommonConstants.MONTHLY_SELECTED_PAGE_SIZE)
                 .toList();
 
         List<MonthlySelectedPost> monthlySelectedPosts = new ArrayList<>();
 
-        yearMonthStrs.forEach(yearMonthStr -> {
+        yearMonthSubStrs.forEach(yearMonthStr -> {
             MonthlySelectedPost monthlySelected = monthlySelectedService.listSelectedByYearMonth(yearMonthStr);
             monthlySelectedPosts.add(monthlySelected);
         });
@@ -54,6 +55,7 @@ public class MonthlySelectedController {
         Pagination<MonthlySelectedPost> pagination = PaginationBuilder.<MonthlySelectedPost>newBuilder()
                 .pageNo(page)
                 .pageSize(CommonConstants.MONTHLY_SELECTED_PAGE_SIZE)
+                .total((long) yearMonthStrs.size())
                 .results(monthlySelectedPosts).build();
 
         model.addAttribute("pagination", pagination);
