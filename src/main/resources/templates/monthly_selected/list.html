@@ -60,8 +60,8 @@
     </div>
     <footer class="page-footer blog-footer">
         <nav class="pagination">
-            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/monthly-selected/page/' + ${pagination.pageNo - 1} + '?sort=' + ${sort}">« 上一页</a>
-            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/monthly-selected/page/' + ${pagination.pageNo + 1} + '?sort=' + ${sort}">下一页 »</a>
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/monthly-selected/page/' + ${pagination.pageNo - 1}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/monthly-selected/page/' + ${pagination.pageNo + 1}">下一页 »</a>
         </nav>
     </footer>
 </main>
