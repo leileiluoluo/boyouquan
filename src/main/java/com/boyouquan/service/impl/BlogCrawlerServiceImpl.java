@@ -73,7 +73,7 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
                 String title = entry.getTitle().trim();
 
                 // description
-                String description = parseDescription(entry).trim();
+                String description = parseDescription(entry);
 
                 // link
                 String link = parseLink(entry).trim();
@@ -157,9 +157,13 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
 
         // important, replacing blank spaces
         if (StringUtils.isNotBlank(description)) {
-            String regexp = "[　*|\\s*]*";
-            description = description.replaceFirst(regexp, "");
+            String blank = "[　*|\\s*]*";
+            String htmlBlank = "\u2003"; // &emsp
+            description = description
+                    .replaceFirst(blank, "")
+                    .replaceFirst(htmlBlank, "");
         }
+
         return description;
     }
 
