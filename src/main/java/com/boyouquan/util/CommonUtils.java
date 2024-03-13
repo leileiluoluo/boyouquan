@@ -196,6 +196,7 @@ public class CommonUtils {
         }
 
         String text = Jsoup.parse(html).text();
+        text = text.trim();
         if (text.length() <= length) {
             return text;
         } else {
