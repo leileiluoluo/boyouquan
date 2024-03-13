@@ -20,7 +20,7 @@
     </article>
 
     <div class="monthly-selected-container">
-        <div class="monthly-selected-single" th:each="monthlyPostInfos, iterstat: ${monthlySelectedPosts}">
+        <div class="monthly-selected-single" th:each="monthlyPostInfos, iterstat: ${pagination.results}">
             <div class="blog-detail-articles">
                 <div class="articles-title">
                     <h4 th:text="${monthlyPostInfos.yearMonthStr} + ' 精选文章'"></h4>
@@ -58,6 +58,12 @@
             </div>
         </div>
     </div>
+    <footer class="page-footer blog-footer">
+        <nav class="pagination">
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/monthly-selected/page/' + ${pagination.pageNo - 1} + '?sort=' + ${sort}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/monthly-selected/page/' + ${pagination.pageNo + 1} + '?sort=' + ${sort}">下一页 »</a>
+        </nav>
+    </footer>
 </main>
 <footer class="footer-block">
     <div th:replace="~{fragments/footer/shuttle::shuttle}"></div>
