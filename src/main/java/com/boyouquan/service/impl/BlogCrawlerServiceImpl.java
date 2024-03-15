@@ -161,7 +161,7 @@ public class BlogCrawlerServiceImpl implements BlogCrawlerService {
             String htmlBlank = "\u2003"; // &emsp
             description = description
                     .replaceFirst(blank, "")
-                    .replaceFirst(htmlBlank, "");
+                    .replaceAll(htmlBlank, "");
         }
 
         return description;
