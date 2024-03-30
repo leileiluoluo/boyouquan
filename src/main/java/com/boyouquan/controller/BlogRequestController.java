@@ -51,6 +51,9 @@ public class BlogRequestController {
     @GetMapping("/{id}")
     public String getBlogRequestById(@PathVariable("id") Long id, Model model) {
         BlogRequestInfo blogRequestInfo = blogRequestService.getBlogRequestInfoById(id);
+        if (null == blogRequestInfo) {
+            return "error/404";
+        }
 
         model.addAttribute("blogRequestInfo", blogRequestInfo);
 
