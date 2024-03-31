@@ -37,6 +37,7 @@ public class PlanetShuttleController {
         Blog blog = blogService.listByRandom(Collections.emptyList(), 1).stream().findFirst().get();
 
         // save planet shuttle
+        long fromBlogInitiatedCount = 0;
         if (null != fromBlog) {
             String ip = IpUtil.getRealIp(request);
 
@@ -45,11 +46,14 @@ public class PlanetShuttleController {
             planetShuttle.setBlogDomainName(fromBlog.getDomainName());
             planetShuttle.setToBlogAddress(blog.getAddress());
             planetShuttleService.save(planetShuttle);
+
+            fromBlogInitiatedCount = planetShuttleService.countInitiatedByBlogDomainName(fromBlog.getDomainName());
         }
 
         model.addAttribute("blogName", blog.getName());
         model.addAttribute("blogAddress", blog.getAddress());
         model.addAttribute("fromBlog", fromBlog);
+        model.addAttribute("fromBlogInitiatedCount", fromBlogInitiatedCount);
 
         return "planet_shuttle/planet_shuttle";
     }
