@@ -148,7 +148,7 @@
         FROM blog
         WHERE draft=false
         AND deleted=false
-        AND domain_name CONCAT(#{shortDomainName}, '%')
+        AND domain_name LIKE CONCAT(#{shortDomainName}, '%')
     </select>
     <select id="getByAddress" resultType="com.boyouquan.model.Blog">
         SELECT
