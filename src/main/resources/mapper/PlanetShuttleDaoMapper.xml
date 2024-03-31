@@ -42,7 +42,7 @@
         LEFT JOIN
         planet_shuttle ps
         ON v.month=ps.year_month_str
-        AND a.blog_domain_name=#{blogDomainName}
+        AND ps.blog_domain_name=#{blogDomainName}
         GROUP BY v.month;
     </select>
     <select id="countInitiatedByBlogDomainName" resultType="java.lang.Long">
