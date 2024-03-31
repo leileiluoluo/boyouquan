@@ -190,6 +190,21 @@ public class CommonUtils {
         return address;
     }
 
+    public static String getDomainFromURL(String url) {
+        // scheme
+        if (url.startsWith("https://")) {
+            url = url.substring("https://".length());
+        } else if (url.startsWith("http://")) {
+            url = url.substring("http://".length());
+        }
+
+        // tail
+        if (url.contains("/")) {
+            url = url.substring(0, url.indexOf("/"));
+        }
+        return url;
+    }
+
     public static String parseAndTruncateHtml2Text(String html, int length) {
         if (StringUtils.isBlank(html)) {
             return "";
