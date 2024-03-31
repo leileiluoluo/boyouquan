@@ -1,8 +1,11 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.model.Blog;
+import com.boyouquan.model.PlanetShuttle;
 import com.boyouquan.service.BlogService;
+import com.boyouquan.service.PlanetShuttleService;
 import com.boyouquan.util.CommonUtils;
+import com.boyouquan.util.IpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ public class PlanetShuttleController {
 
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private PlanetShuttleService planetShuttleService;
 
     @GetMapping("")
     public String shuttle(HttpServletRequest request, Model model) {
@@ -30,6 +35,17 @@ public class PlanetShuttleController {
         }
 
         Blog blog = blogService.listByRandom(Collections.emptyList(), 1).stream().findFirst().get();
+
+        // save planet shuttle
+        if (null != fromBlog) {
+            String ip = IpUtil.getRealIp(request);
+
+            PlanetShuttle planetShuttle = new PlanetShuttle();
+            planetShuttle.setIp(ip);
+            planetShuttle.setBlogDomainName(fromBlog.getDomainName());
+            planetShuttle.setToBlogAddress(blog.getAddress());
+            planetShuttleService.save(planetShuttle);
+        }
 
         model.addAttribute("blogName", blog.getName());
         model.addAttribute("blogAddress", blog.getAddress());

@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,6 +22,8 @@ public class CommonUtils {
     private static final SimpleDateFormat MORE_COMMON_DATE_HOUR_PATTERN = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
     private static final SimpleDateFormat SITEMAP_DATE_PATTERN = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'+08:00'");
+
+    private static final SimpleDateFormat COMMON_YEAR_MONTH_PATTERN = new SimpleDateFormat("yyyy-MM");
 
     public static String dateSitemapFormatStr(Date date) {
         return SITEMAP_DATE_PATTERN.format(date);
@@ -227,6 +230,15 @@ public class CommonUtils {
             text += "...";
         }
         return text;
+    }
+
+    public static Date yearMonthStr2Date(String yearMonthStr) {
+        try {
+            return COMMON_YEAR_MONTH_PATTERN.parse(yearMonthStr);
+        } catch (ParseException e) {
+            logger.error(e.getMessage(), e);
+            return null;
+        }
     }
 
 }

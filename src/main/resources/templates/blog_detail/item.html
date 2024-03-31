@@ -86,6 +86,7 @@
         </div>
         <div id="access-charts"></div>
         <div th:if="${showLatestPublishedAtChart}" id="publish-charts"></div>
+        <div th:if="${showLatestInitiatedChart}" id="initiated-charts"></div>
     </div>
 
     <div class="blog-detail-articles">
@@ -225,6 +226,47 @@
         },
 
         title: "最近一年文章收录统计",
+        type: 'bar', // or 'bar', 'line', 'pie', 'percentage'
+        height: 200,
+        colors: ['#cc6cf6'],
+
+        axisOptions: {
+            xIsSeries: true,   //default:false
+            xAxisMode: "tick",
+        },
+
+        lineOptions: {
+            hideDots: 0,   //default:0
+            regionFill: 1, // default: 0
+            heatline: 1, // default: 0
+            dotSize: 6, // default: 4
+        },
+
+        tooltipOptions: {
+          formatTooltipX: d => (d + '').toUpperCase(),
+          formatTooltipY: d => d,
+        }
+    });
+
+    /*]]>*/
+</script>
+
+<script th:if="${showLatestInitiatedChart}" th:inline="javascript">
+    /*<![CDATA[*/
+
+    let publishChart = new frappe.Chart( "#initiated-charts", { // or DOM element
+        data: {
+            labels: /*[[${yearlyInitiatedDataLabels}]]*/ 'default',
+
+            datasets: [
+              {
+                name: "次助力", chartType: 'line',
+                values: /*[[${yearlyInitiatedDataValues}]]*/ 'default'
+              }
+            ],
+        },
+
+        title: "最近一年星球穿梭助力统计",
         type: 'bar', // or 'bar', 'line', 'pie', 'percentage'
         height: 200,
         colors: ['#cc6cf6'],

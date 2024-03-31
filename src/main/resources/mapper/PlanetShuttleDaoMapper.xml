@@ -1,0 +1,64 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.PlanetShuttleDaoMapper">
+    <sql id="insert_columns">
+        year_month_str,
+        blog_domain_name,
+        to_blog_address,
+        amount
+    </sql>
+    <select id="getMostInitiatedBlogDomainNameInLastMonth" resultType="com.boyouquan.model.BlogDomainNameInitiated">
+        SELECT
+        blog_domain_name AS blogDomainName,
+        SUM(amount) AS initiatedCount
+        FROM planet_shuttle
+        WHERE year_month_str=DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH), '%Y-%m')
+        GROUP BY blog_domain_name
+        ORDER BY SUM(amount) DESC
+        LIMIT 1
+    </select>
+    <select id="getLatestInitiatedYearMonthStr" resultType="java.lang.String">
+        SELECT
+        MAX(year_month_str)
+        FROM planet_shuttle
+        WHERE blog_domain_name=#{blogDomainName}
+    </select>
+    <select id="getBlogInitiatedSeriesInLatestOneYear" resultType="com.boyouquan.model.MonthInitiated">
+        SELECT
+        v.month AS month, IFNULL(SUM(ps.amount), 0) AS count
+        FROM (
+        SELECT DATE_FORMAT((CURDATE() - INTERVAL 11 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 10 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 9 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 8 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 7 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 6 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 5 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 4 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 3 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 2 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 1 MONTH), '%Y-%m') AS `month`
+        UNION SELECT DATE_FORMAT(CURDATE(), '%Y-%m') AS `month`
+        ) v
+        LEFT JOIN
+        planet_shuttle ps
+        ON v.month=ps.year_month_str
+        AND a.blog_domain_name=#{blogDomainName}
+        GROUP BY v.month;
+    </select>
+    <select id="countInitiatedByBlogDomainName" resultType="java.lang.Long">
+        SELECT
+        IFNULL(SUM(amount), 0)
+        FROM planet_shuttle
+        WHERE blog_domain_name=#{blogDomainName}
+    </select>
+    <insert id="save">
+        INSERT INTO planet_shuttle (
+        <include refid="insert_columns"/>
+        ) VALUES (
+        DATE_FORMAT(CURDATE(), '%Y-%m'),
+        #{blogDomainName},
+        #{toBlogAddress},
+        1
+        ) ON DUPLICATE KEY UPDATE amount=amount+1
+    </insert>
+</mapper>
