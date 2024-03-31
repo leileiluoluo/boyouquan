@@ -187,6 +187,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Blog getByShortDomainName(String shortDomainName) {
+        return blogDaoMapper.getByShortDomainName(shortDomainName);
+    }
+
+    @Override
     public Blog getByAddress(String address) {
         return blogDaoMapper.getByAddress(address);
     }

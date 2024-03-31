@@ -1,7 +1,6 @@
 package com.boyouquan.dao;
 
 import com.boyouquan.model.Blog;
-import com.boyouquan.model.BlogSortType;
 
 import java.util.List;
 
@@ -24,6 +23,8 @@ public interface BlogDaoMapper {
     boolean existsByRssAddress(String rssAddress);
 
     Blog getByDomainName(String domainName);
+
+    Blog getByShortDomainName(String shortDomainName);
 
     Blog getByAddress(String address);
 

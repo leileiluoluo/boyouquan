@@ -67,7 +67,7 @@ public class GoController {
         if (null != post) {
             blogDomainName = post.getBlogDomainName();
         } else {
-            String domainName = CommonUtils.getDomainFromURL(link);
+            String domainName = CommonUtils.removeFromPart(link);
             if (StringUtils.isNotBlank(domainName)) {
                 Blog blog = blogService.getByDomainName(domainName);
                 if (null != blog) {
