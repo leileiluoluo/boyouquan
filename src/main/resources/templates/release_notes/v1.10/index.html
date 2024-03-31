@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head/head::head('v1.10 版本说明 - 博友圈 · 博客人的朋友圈！', '博友圈, 版本说明, v1.10', '博友圈 v1.10 版本说明。')}"></head>
+<body class="list" id="top">
+<script th:src="@{/assets/js/theme-settings.js}" type="text/javascript"></script>
+<header th:replace="~{fragments/header/header::header}"></header>
+<main class="main">
+    <header class="post-header">
+        <h1 class="post-title">
+            v1.10 版本说明
+        </h1>
+        <div class="post-publish-date">
+            <p>2024年03月31日</p>
+        </div>
+    </header>
+    <article class="post-single">
+        <div class="post-content">
+            <p>博友圈于 2024 年 03 月 31 日发布了 v1.10 版本！该版本对星球穿梭功能进行了整体优化。</p>
+
+            <h3>功能说明</h3>
+            <p>上一个版本，星球穿梭只是一个可以跳转到随机博客的简单页面。而本次则对星球穿梭进行了全链路的优化，将数据与行为完整的连接了起来。下面对具体的优化细节进行说明。</p>
+
+            <p>1）当博友在其博客的任一页面添加了博友圈「<a href="/planet-shuttle">星球穿梭链接</a>」时，其即开启了星球穿梭功能。</p>
+            <p><img border="1" th:src="@{/assets/images/sites/release_notes/v1.10/from-blog.png}"></p>
+
+            <p>2）当访问者点击星球穿梭链接时，即会跳转到博友圈星球穿梭页面。该页面会自动检测来源博客，并显示其博客名、助力值（助力次数）与博客的博友圈链接。</p>
+            <p><img border="1" th:src="@{/assets/images/sites/release_notes/v1.10/planet-shuttle.png}"></p>
+
+            <p>3）5 秒后，星球穿梭页面即会自动跳转到一个随机博客。跳转到的博客链接会添加原始的来源博客地址（如：?from=https://leileiluoluo.com），方便对发起穿梭的博客进行推广！</p>
+            <p><img border="1" th:src="@{/assets/images/sites/release_notes/v1.10/to-blog.png}"></p>
+
+            <p>4）此外，在博客详情页面还会展示穿梭发起者的详细助力数据。</p>
+            <p><img border="1" th:src="@{/assets/images/sites/release_notes/v1.10/blog-detail.png}"></p>
+
+            <p>所以，本次的优化即对星球穿梭功能进行了全链路的数据整合，相信会较之前的版本提升了用户体验。</p>
+        </div>
+    </article>
+</main>
+<footer class="footer-block">
+    <div th:replace="~{fragments/footer/shuttle::shuttle}"></div>
+    <div th:replace="~{fragments/footer/notice::notice}"></div>
+</footer>
+<footer th:replace="~{fragments/footer/footer_site_info::footer_site_info}"></footer>
+<div th:insert="~{fragments/plugin/go_to_top::go_to_top}"></div>
+<script th:src="@{/assets/js/highlight-menu.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/theme-listener.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/tongji.js}" type="text/javascript"></script>
+</body>
+</html>
