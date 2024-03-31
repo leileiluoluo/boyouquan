@@ -7,6 +7,7 @@ import com.boyouquan.model.Post;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PostService;
+import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.IpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 
 @Controller
@@ -53,18 +56,19 @@ public class GoController {
             }
 
             response.sendRedirect(CommonConstants.HOME_PAGE_ADDRESS);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    private boolean saveAccessInfo(String ip, String link, String from) {
+    private boolean saveAccessInfo(String ip, String link, String from) throws URISyntaxException, MalformedURLException {
         Post post = postService.getByLink(link);
         String blogDomainName = "";
         if (null != post) {
             blogDomainName = post.getBlogDomainName();
         } else {
-            Blog blog = blogService.getByAddress(link);
+            String domainName = CommonUtils.getDomainFromURL(link);
+            Blog blog = blogService.getByDomainName(domainName);
             if (null != blog) {
                 blogDomainName = blog.getDomainName();
             }
