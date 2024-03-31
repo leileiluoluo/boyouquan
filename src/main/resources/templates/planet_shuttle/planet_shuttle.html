@@ -15,7 +15,7 @@
     <div style="color: white; text-align: center; position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);">
         <div th:if="${fromBlog != null}">
             <p th:text="'总助力值为 ' + ${fromBlogInitiatedCount} + ' 的'"></p>
-            <p>「<a style="color: white;" th:href="'/blogs/' + ${fromBlog.domainName}" th:text="${fromBlog.name}"></a>」正在带您穿梭到「<a id="shuttle" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogAddress + '?from=' + fromBlog.address)}" th:text="${blogName}" style="color: white; text-decoration: auto; animation: typing 0.7s infinite;"></a>」的星球！</p>
+            <p>「<a style="color: white;" th:href="'/blogs/' + ${fromBlog.domainName}" th:text="${fromBlog.name}"></a>」正在带您穿梭到「<a id="shuttle" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogAddress + '?from=' + fromBlog.domainName)}" th:text="${blogName}" style="color: white; text-decoration: auto; animation: typing 0.7s infinite;"></a>」的星球！</p>
         </div>
         <div th:unless="${fromBlog != null}">
             <p>您即将穿梭到「<a id="shuttle" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogAddress)}" th:text="${blogName}" style="color: white; text-decoration: auto; animation: typing 0.7s infinite;"></a>」的星球！</p>
