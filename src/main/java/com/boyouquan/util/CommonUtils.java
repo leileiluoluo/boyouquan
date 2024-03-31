@@ -2,7 +2,11 @@ package com.boyouquan.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -10,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CommonUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(CommonUtils.class);
 
     private static final SimpleDateFormat MORE_COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy/MM/dd");
     private static final SimpleDateFormat MORE_COMMON_DATE_HOUR_PATTERN = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -191,18 +197,13 @@ public class CommonUtils {
     }
 
     public static String getDomainFromURL(String url) {
-        // scheme
-        if (url.startsWith("https://")) {
-            url = url.substring("https://".length());
-        } else if (url.startsWith("http://")) {
-            url = url.substring("http://".length());
+        try {
+            URI uri = new URI(url);
+            return uri.getHost();
+        } catch (URISyntaxException e) {
+            logger.error(e.getMessage(), e);
+            return "";
         }
-
-        // tail
-        if (url.contains("/")) {
-            url = url.substring(0, url.indexOf("/"));
-        }
-        return url;
     }
 
     public static String parseAndTruncateHtml2Text(String html, int length) {
