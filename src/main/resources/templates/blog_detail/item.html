@@ -254,7 +254,7 @@
 <script th:if="${showLatestInitiatedChart}" th:inline="javascript">
     /*<![CDATA[*/
 
-    let publishChart = new frappe.Chart( "#initiated-charts", { // or DOM element
+    let initiatedChart = new frappe.Chart( "#initiated-charts", { // or DOM element
         data: {
             labels: /*[[${yearlyInitiatedDataLabels}]]*/ 'default',
 
