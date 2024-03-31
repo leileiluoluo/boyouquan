@@ -38,7 +38,7 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          source: './target/boyouquan-1.0-SNAPSHOT.jar'
+          source: './target/boyouquan-1.0.jar'
           target: '/usr/app/new/'
       - name: Start Service
         uses: appleboy/ssh-action@v0.1.4
@@ -58,14 +58,14 @@ jobs:
             cd /usr/app/
             source /etc/profile
             ps -ef | grep java | grep -v grep | awk '{print $2}' | xargs kill -9
-            rm /usr/app/old/boyouquan-1.0-SNAPSHOT.jar
-            mv /usr/app/new/target/boyouquan-1.0-SNAPSHOT.jar /usr/app/old/
+            rm /usr/app/old/boyouquan-1.0.jar
+            mv /usr/app/new/target/boyouquan-1.0.jar /usr/app/old/
             export DATABASE_URL=$DATABASE_URL
             export DATABASE_USER=$DATABASE_USER
             export DATABASE_PASSWORD=$DATABASE_PASSWORD
             export EMAIL_PASSWORD=$EMAIL_PASSWORD
             export EMAIL_ENABLE=$EMAIL_ENABLE
-            nohup java -Xms600m -Xmx600m -XX:+HeapDumpOnOutOfMemoryError -jar /usr/app/old/boyouquan-1.0-SNAPSHOT.jar > /tmp/server.log 2>&1 &
+            nohup java -Xms600m -Xmx600m -XX:+HeapDumpOnOutOfMemoryError -jar /usr/app/old/boyouquan-1.0.jar > /tmp/server.log 2>&1 &
             sleep 1
             while ! grep -m1 'Started BoYouQuanWebApplication' < /tmp/server.log; do
               sleep 1
