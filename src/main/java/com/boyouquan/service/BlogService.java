@@ -38,6 +38,8 @@ public interface BlogService {
 
     Blog getByDomainName(String domainName);
 
+    Blog getByShortDomainName(String shortDomainName);
+
     Blog getByAddress(String address);
 
     Blog getByRSSAddress(String rssAddress);

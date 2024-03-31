@@ -206,6 +206,13 @@ public class CommonUtils {
         }
     }
 
+    public static String removeFromPart(String url) {
+        if (url.contains("?from")) {
+            return url.substring(0, url.indexOf("?from"));
+        }
+        return url;
+    }
+
     public static String parseAndTruncateHtml2Text(String html, int length) {
         if (StringUtils.isBlank(html)) {
             return "";

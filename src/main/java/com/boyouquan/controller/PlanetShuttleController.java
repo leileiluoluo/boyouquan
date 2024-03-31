@@ -26,7 +26,7 @@ public class PlanetShuttleController {
         Blog fromBlog = null;
         if (StringUtils.isNotBlank(referer)) {
             String fromDomainName = CommonUtils.getDomainFromURL(referer);
-            fromBlog = blogService.getByDomainName(fromDomainName);
+            fromBlog = blogService.getByShortDomainName(fromDomainName);
         }
 
         Blog blog = blogService.listByRandom(Collections.emptyList(), 1).stream().findFirst().get();
