@@ -2,12 +2,15 @@ package com.boyouquan.controller;
 
 import com.boyouquan.model.BlogInfo;
 import com.boyouquan.model.MonthAccess;
+import com.boyouquan.model.MonthInitiated;
 import com.boyouquan.model.MonthPublish;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
+import com.boyouquan.service.PlanetShuttleService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,8 @@ public class BlogDetailController {
     private PostService postService;
     @Autowired
     private AccessService accessService;
+    @Autowired
+    private PlanetShuttleService planetShuttleService;
 
     @GetMapping("/{domainName}/**")
     public String getBlogByDomainName(@PathVariable("domainName") String domainName, Model model, HttpServletRequest request) throws UnsupportedEncodingException {
@@ -46,6 +51,21 @@ public class BlogDetailController {
         }
 
         model.addAttribute("blogInfo", blogInfo);
+
+        // planet shuttle charts
+        String latestInitiatedYearMonthStr = planetShuttleService.getLatestInitiatedYearMonthStr(blogInfo.getDomainName());
+        if (StringUtils.isNotBlank(latestInitiatedYearMonthStr)) {
+            Date latestInitiated = CommonUtils.yearMonthStr2Date(latestInitiatedYearMonthStr);
+            boolean oneYearAgo = CommonUtils.isDateOneYearAgo(latestInitiated);
+            model.addAttribute("showLatestInitiatedChart", !oneYearAgo);
+            if (!oneYearAgo) {
+                List<MonthInitiated> monthInitiatedList = planetShuttleService.getBlogInitiatedSeriesInLatestOneYear(blogInfo.getDomainName());
+                String[] yearlyInitiatedDataLabels = monthInitiatedList.stream().map(MonthInitiated::getMonth).toArray(String[]::new);
+                Integer[] yearlyInitiatedDataValues = monthInitiatedList.stream().map(MonthInitiated::getCount).toArray(Integer[]::new);
+                model.addAttribute("yearlyInitiatedDataLabels", yearlyInitiatedDataLabels);
+                model.addAttribute("yearlyInitiatedDataValues", yearlyInitiatedDataValues);
+            }
+        }
 
         // monthly access charts
         List<MonthAccess> monthAccessList = accessService.getBlogAccessSeriesInLatestOneYear(blogInfo.getDomainName());
