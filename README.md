@@ -6,5 +6,5 @@
 
 ## 工程介绍
 
-本工程是一个使用 Maven 管理的 Spring Boot 工程，主要使用了 SpingMVC + Thymeleaf + MyBatis 技术。
+本工程是一个使用 Maven 管理的 Spring Boot 工程，主要使用了 SpringMVC + Thymeleaf + MyBatis 技术。
 
