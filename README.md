@@ -6,5 +6,5 @@
 
 ## 工程介绍
 
-本工程是一个使用 Maven 管理的 Spring Boot 工程，主要使用了 SpingMVC + Thymeleaf + MyBatis 技术。本工程源码已开源，您可以完全自由的使用该源码搭建另一个「博友圈」，要求仅有一条，就是在您的网站底部标注一句话「本站使用博友圈（[www.boyouquan.com](https://www.boyouquan.com)）开源程序创建」。
+本工程是一个使用 Maven 管理的 Spring Boot 工程，主要使用了 SpringMVC + Thymeleaf + MyBatis 技术。本工程源码已开源，您可以完全自由的使用该源码搭建另一个「博友圈」，仅需在您的网站底部标注一句「本站使用博友圈（[www.boyouquan.com](https://www.boyouquan.com)）开源程序创建」即可。
 
