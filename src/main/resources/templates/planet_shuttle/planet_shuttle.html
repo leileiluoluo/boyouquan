@@ -20,7 +20,10 @@
         <div th:unless="${fromBlog != null}">
             <p>您即将穿梭到「<a id="shuttle" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogAddress)}" th:text="${blogName}" style="color: white; text-decoration: auto; animation: typing 0.7s infinite;"></a>」的星球！</p>
         </div>
-        <span style="font-size: 12px">© 2023-2024 <a href="https://www.boyouquan.com/home" style="color: white">博友圈</a></span>
+
+        <div style="margin-top: 40px;">
+            <span style="font-size: 12px">© 2023-2024 <a href="https://www.boyouquan.com/home" style="color: white">博友圈</a></span>
+        </div>
     </div>
     <script th:src="@{/assets/js/planet-shuttle/lib/TweenMax.min.js}" type="text/javascript"></script>
 
