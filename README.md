@@ -8,9 +8,7 @@
 
 ## 工程介绍
 
-博友圈应用程序是一个使用 Maven 管理的 Java 工程，集前后台于一体，使用了 Spring Boot + Thymeleaf + MyBatis
-技术。其中，Spring Boot 负责请求处理和依赖注入，Thymeleaf 负责模板渲染，MyBatis 负责数据库访问。此外，应用程序的持久化数据存储使用的是
-MariaDB。
+博友圈应用程序是一个使用 Maven 管理的 Java 工程，集前后台于一体，使用了 Spring Boot + Thymeleaf + MyBatis 技术。其中，Spring Boot 是工程所使用的总框架，其 SpringMVC 模块负责请求处理和依赖注入，Thymeleaf 模块负责模板渲染，MyBatis 模块负责数据库访问。此外，该应用程序使用的数据库是 MariaDB。
 
 ## 应用程序架构
 
