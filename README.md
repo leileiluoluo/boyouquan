@@ -4,7 +4,7 @@
 
 博友圈（[www.boyouquan.com](https://www.boyouquan.com)）成立于 2023 年，是博客人的专属朋友圈，提供博客收录、文章聚合展示、星球穿梭等功能。
 
-若想了解博友圈的建站初衷、主要功能和技术架构详情，请站长的「[一篇博客文章](https://leileiluoluo.com/posts/boyouquan-introduction.html)」。
+若想了解博友圈的建站初衷、主要功能和技术架构详情，请参看站长的「[这篇博客文章](https://leileiluoluo.com/posts/boyouquan-introduction.html)」。
 
 ## 工程介绍
 
