@@ -17,7 +17,7 @@ MariaDB。
 博友圈应用程序架构如下图所示，自上而下使用了经典的三层架构：即控制器层（Controller Layer）、业务逻辑层（Service
 Layer）、数据访问层（DAO Layer）。
 
-![博友圈应用程序架构](https://leileiluoluo.com/static/images/uploads/2024/04/boyouquan-application-architecture.svg#center)
+![博友圈应用程序架构](./images/readme/application-architecture.svg)
 
 - 控制器层包含一组 SpringMVC 控制器，负责请求的接收、参数校验、服务调用和结果的返回；
 - 业务逻辑逻辑层包含一组服务，负责核心业务逻辑处理；
