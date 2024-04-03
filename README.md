@@ -8,7 +8,7 @@
 
 ## 工程介绍
 
-博友圈应用程序主要使用 Java 语言编写，是一个集前后台于一体的单体服务，使用了 Spring Boot + Thymeleaf + MyBatis
+博友圈应用程序是一个使用 Maven 管理的 Java 工程，集前后台于一体，使用了 Spring Boot + Thymeleaf + MyBatis
 技术。其中，Spring Boot 负责请求处理和依赖注入，Thymeleaf 负责模板渲染，MyBatis 负责数据库访问。此外，应用程序的持久化数据存储使用的是
 MariaDB。
 
@@ -44,4 +44,50 @@ Layer）、数据访问层（DAO Layer）。
 
 然后，在建好的数据库上执行 [./sql/ddl/](./sql/ddl/) 目录下除 `database.sql` 之外的所有 SQL 文件中的语句。
 
+最后，需要对 `user` 表执行一条插入一句，以设置管理员账号：
+
+```sql
+-- root/root
+INSERT INTO `user` (`username`, `md5password`, `role`, `deleted`)
+  VALUES ('root', md5('root'), 'admin', false);
+```
+
 ### 编译与运行
+
+在工程根目录使用如下 Maven 命令进行打包：
+
+```shell
+./mvnw clean package
+```
+
+打包完成后，使用如下命令设置环境变量，并运行：
+
+```shell
+export DATABASE_URL=jdbc:mysql://localhost:3306/boyouquan
+export DATABASE_USER=root
+export DATABASE_PASSWORD=root
+export EMAIL_ENABLE=false
+
+java -jar ./target/boyouquan-1.0.jar
+```
+
+启动成功后，访问 [http://localhost:8080](http://localhost:8080) 即可看到一个空白的首页：
+
+![首页](./images/readme/home.png)
+
+然后点击「提交博客」，录入信息，提交第一个博客即可：
+
+![提交博客](./images/readme/blog-requests-add.png)
+
+打开博客申请管理页面 [http://localhost:8080/admin/blog-requests](http://localhost:8080/admin/blog-requests)
+，输入 `root/root` 并登录：
+
+![博客申请管理页面](./images/readme/admin-login.png)
+
+可以看到一条申请，点击博客名称查看申请详情，然后点击下方的 Approve 即可：
+
+![博客审批](./images/readme/blog-requests-approval.png)
+
+这样，在「博客广场」即可看到这个博客了：
+
+![博客广场](./images/readme/blogs.png)
