@@ -24,7 +24,21 @@
 
 ## 程序设置与启动
 
+### 依赖项
+
 本工程依赖的 Java 与 MariaDB 版本如下：
 
 - Java 17+
 - MariaDB 10.5+
+
+### 数据库
+
+本工程已将所有用到的 MySQL 建库与建表语句置于 `sql/ddl` 目录下。
+
+首先，在您本地安装的 MariaDB 上执行如下建库语句：
+
+[./sql/ddl/database.sql](./sql/ddl/database.sql)
+
+然后，在建好的数据库上执行 [./sql/ddl/](./sql/ddl/) 目录下除 `database.sql` 之外的所有 SQL 文件中的语句。
+
+### 编译与运行
