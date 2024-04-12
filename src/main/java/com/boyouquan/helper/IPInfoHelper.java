@@ -56,6 +56,9 @@ public class IPInfoHelper {
             BlogLocation blogLocation = new BlogLocation();
             blogLocation.setDomainName(domainName);
             blogLocation.setLocation(ipLocationInfo.getLocationInfo());
+
+            logger.info("domain: {}, ip: {}, location: {}", domain, ip, ipLocationInfo.getLocationInfo());
+
             return blogLocation;
         } catch (IOException e) {
             logger.error(e.getMessage(), e);

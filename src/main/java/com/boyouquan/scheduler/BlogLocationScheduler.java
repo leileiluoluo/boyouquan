@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @EnableScheduling
@@ -30,7 +31,7 @@ public class BlogLocationScheduler {
     @Autowired
     private BlogLocationService blogLocationService;
 
-    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void refreshBlogLocationsJob() {
         logger.info("blog location scheduler start!");
 
@@ -43,6 +44,8 @@ public class BlogLocationScheduler {
         List<Blog> blogs = blogService.listAll();
         for (Blog blog : blogs) {
             try {
+                TimeUnit.SECONDS.sleep(1);
+
                 String blogDomainName = blog.getDomainName();
                 boolean statusOK = blogStatusService.isStatusOkByBlogDomainName(blogDomainName);
 
