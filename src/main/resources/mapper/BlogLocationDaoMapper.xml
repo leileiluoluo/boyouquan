@@ -3,7 +3,6 @@
     <sql id="insert_columns">
         domain_name,
         location,
-        isp,
         created_at,
         updated_at,
         deleted
@@ -11,7 +10,6 @@
     <sql id="select_columns">
         domain_name as domainName,
         location,
-        isp,
         created_at as createdAt,
         updated_at as updatedAt,
         deleted
@@ -35,7 +33,6 @@
         ) VALUES (
         #{domainName},
         #{location},
-        #{isp},
         now(),
         now(),
         false
@@ -45,7 +42,6 @@
         UPDATE blog_location
         SET
         location=#{location},
-        isp=#{isp},
         updated_at=now()
         WHERE domain_name=#{domainName}
     </update>

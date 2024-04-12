@@ -53,7 +53,6 @@ public class BlogLocationScheduler {
                     if (null != blogLocation) {
                         blogLocation.setDomainName(blogDomainName);
                         blogLocation.setLocation(blogLocation.getLocation());
-                        blogLocation.setIsp(blogLocation.getIsp());
 
                         boolean exists = blogLocationService.existsByDomainName(blogDomainName);
                         if (exists) {

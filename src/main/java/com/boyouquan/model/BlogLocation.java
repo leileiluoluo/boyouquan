@@ -11,7 +11,6 @@ public class BlogLocation {
 
     private String domainName;
     private String location;
-    private String isp;
     private Date createdAt;
     private Date updatedAt;
     protected Boolean deleted;
