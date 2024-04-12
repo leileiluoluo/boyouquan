@@ -8,6 +8,7 @@ import com.boyouquan.util.OkHttpUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class IPInfoHelper {
 
     public String getIpInfoByDomainName(String domainName) {
         String ip = IPUtil.domainToIp(domainName);
+        if (StringUtils.isBlank(ip)) {
+            return null;
+        }
+
         String url = boYouQuanConfig.getIpInfoQueryUrl() + ip;
 
         Request request = new Request.Builder()
