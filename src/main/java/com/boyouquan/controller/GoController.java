@@ -8,7 +8,7 @@ import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
-import com.boyouquan.util.IpUtil;
+import com.boyouquan.util.IPUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +44,7 @@ public class GoController {
                    HttpServletRequest request, HttpServletResponse response) {
         try {
             if (StringUtils.isNotBlank(link)) {
-                String ip = IpUtil.getRealIp(request);
+                String ip = IPUtil.getRealIp(request);
 
                 boolean success = saveAccessInfo(ip, link, from);
                 if (success) {

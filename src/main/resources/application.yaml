@@ -38,4 +38,5 @@ mybatis:
 boyouquan:
   email:
     enable: ${EMAIL_ENABLE:false}
+  ip-info-query-url: https://api.vore.top/api/IPdata?ip=
 

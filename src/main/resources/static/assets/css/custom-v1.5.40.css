@@ -673,6 +673,36 @@ div#searchbox {
     margin-top: 8px;
 }
 
+.blog-detail-main .footer-info {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.blog-detail-main .footer-info .location-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 12px;
+    color: var(--secondary);
+}
+
+.blog-detail-main .footer-info .location-info:hover .tooltiptext {
+    visibility: visible;
+}
+
+.blog-detail-main .footer-info .location-info img {
+    user-select: none;
+    margin-right: 2px;
+    width: 14px;
+    display: block;
+}
+
+.blog-detail-main .footer-info .location-info p {
+    user-select: none;
+}
+
 .dark .blog-detail-main {
     background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background-dark.jpeg);
 }

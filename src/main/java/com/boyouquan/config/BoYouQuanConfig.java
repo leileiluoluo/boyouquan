@@ -15,4 +15,7 @@ public class BoYouQuanConfig {
     @Value("${boyouquan.email.enable}")
     private Boolean emailEnabled;
 
+    @Value("${boyouquan.ip-info-query-url}")
+    private String ipInfoQueryUrl;
+
 }

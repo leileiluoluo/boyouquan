@@ -5,7 +5,7 @@ import com.boyouquan.model.PlanetShuttle;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PlanetShuttleService;
 import com.boyouquan.util.CommonUtils;
-import com.boyouquan.util.IpUtil;
+import com.boyouquan.util.IPUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class PlanetShuttleController {
         // save planet shuttle
         long fromBlogInitiatedCount = 0;
         if (null != fromBlog) {
-            String ip = IpUtil.getRealIp(request);
+            String ip = IPUtil.getRealIp(request);
 
             PlanetShuttle planetShuttle = new PlanetShuttle();
             planetShuttle.setIp(ip);
