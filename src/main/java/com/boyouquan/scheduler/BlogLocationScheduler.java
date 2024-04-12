@@ -31,7 +31,7 @@ public class BlogLocationScheduler {
     @Autowired
     private BlogLocationService blogLocationService;
 
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0 8 ? * MON")
     public void refreshBlogLocationsJob() {
         logger.info("blog location scheduler start!");
 
