@@ -1,7 +1,7 @@
 package com.boyouquan.helper;
 
 import com.boyouquan.config.BoYouQuanConfig;
-import com.boyouquan.model.IpInfo;
+import com.boyouquan.model.BlogLocation;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.IPUtil;
 import com.boyouquan.util.ObjectUtil;
@@ -30,7 +30,7 @@ public class IPInfoHelper {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public String getIpInfoByDomainName(String domainName) {
+    public BlogLocation getIpInfoByDomainName(String domainName) {
         String domain = CommonUtils.getDomainFromURL(domainName);
         String ip = IPUtil.domainToIp(domain);
         if (StringUtils.isBlank(ip)) {
@@ -54,9 +54,7 @@ public class IPInfoHelper {
             JsonNode node = objectMapper.readTree(body);
             String info = node.get("ipdata").toString();
 
-            IpInfo ipInfo = ObjectUtil.jsonToObject(info, IpInfo.class);
-
-            return ipInfo.getAddressInfo();
+            return ObjectUtil.jsonToObject(info, BlogLocation.class);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }

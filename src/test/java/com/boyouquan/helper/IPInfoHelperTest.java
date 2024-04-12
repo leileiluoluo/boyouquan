@@ -12,7 +12,7 @@ public class IPInfoHelperTest {
 
     @Test
     public void testGetIpInfoByDomainName() {
-        System.out.println(ipInfoHelper.getIpInfoByDomainName("tonybai.com"));
+        System.out.println(ipInfoHelper.getIpInfoByDomainName("leileiluoluo.com"));
     }
 
 }

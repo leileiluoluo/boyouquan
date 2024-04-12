@@ -599,7 +599,7 @@ div#searchbox {
     flex-direction: column;
     transition: transform .1s;
     background-image: url(/assets/images/sites/blog_detail/blog-detail-header-background.jpeg);
-    padding: calc(2*var(--gap)/3) var(--gap) calc(var(--gap)) var(--gap);
+    padding: calc(2*var(--gap)/3) var(--gap) calc(2*var(--gap)/3) var(--gap);
     border-radius: var(--radius);
     margin-bottom: calc(var(--gap)/2);
     border: 1px solid var(--tertiary) !important;
@@ -674,6 +674,7 @@ div#searchbox {
 }
 
 .blog-detail-main .footer-info {
+    margin-top: 8px;
     display: flex;
     align-items: flex-end;
     flex-direction: row;

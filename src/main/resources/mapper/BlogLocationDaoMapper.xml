@@ -1,0 +1,52 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.BlogLocationDaoMapper">
+    <sql id="insert_columns">
+        domain_name,
+        location,
+        isp,
+        created_at,
+        updated_at,
+        deleted
+    </sql>
+    <sql id="select_columns">
+        domain_name as domainName,
+        location,
+        isp,
+        created_at as createdAt,
+        updated_at as updatedAt,
+        deleted
+    </sql>
+    <select id="existsByDomainName" resultType="boolean">
+        SELECT
+        EXISTS (
+        SELECT 1 FROM blog_location WHERE domain_name=#{domainName}
+        )
+    </select>
+    <select id="getByDomainName" resultType="com.boyouquan.model.BlogLocation">
+        SELECT
+        <include refid="select_columns"/>
+        FROM blog_location
+        WHERE deleted=false
+        AND domain_name=#{domainName}
+    </select>
+    <insert id="save">
+        INSERT INTO blog_location (
+        <include refid="insert_columns"/>
+        ) VALUES (
+        #{domainName},
+        #{location},
+        #{isp},
+        #{createdAt},
+        #{updatedAt},
+        false
+        )
+    </insert>
+    <update id="update">
+        UPDATE blog_location
+        SET
+        location=#{location},
+        isp=#{isp},
+        updated_at=now()
+        WHERE domain_name=#{domainName}
+    </update>
+</mapper>

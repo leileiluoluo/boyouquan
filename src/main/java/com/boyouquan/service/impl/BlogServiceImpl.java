@@ -2,12 +2,8 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.BlogDaoMapper;
-import com.boyouquan.helper.IPInfoHelper;
 import com.boyouquan.model.*;
-import com.boyouquan.service.AccessService;
-import com.boyouquan.service.BlogService;
-import com.boyouquan.service.BlogStatusService;
-import com.boyouquan.service.PostService;
+import com.boyouquan.service.*;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
@@ -33,7 +29,7 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private BlogStatusService blogStatusService;
     @Autowired
-    private IPInfoHelper ipInfoHelper;
+    private BlogLocationService blogLocationService;
 
     @Override
     public List<BlogLatestPublishedAt> listBlogLatestPublishedAt() {
@@ -265,8 +261,10 @@ public class BlogServiceImpl implements BlogService {
         blogInfo.setSunset(sunset);
 
         // blog server location
-        String blogServerLocation = ipInfoHelper.getIpInfoByDomainName(blogDomainName);
-        blogInfo.setBlogServerLocation(blogServerLocation);
+        BlogLocation blogLocation = blogLocationService.getByDomainName(blogDomainName);
+        if (null != blogLocation) {
+            blogInfo.setBlogServerLocation(blogLocation.getLocationInfo());
+        }
 
         return blogInfo;
     }
