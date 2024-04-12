@@ -32,19 +32,15 @@ public class BlogLocation {
             return location;
         }
 
-        if (isp.contains("阿里")) {
-            isp = "阿里云";
-        } else if (isp.contains("腾讯")) {
-            isp = "腾讯";
-        } else if (isp.contains("华为")) {
-            isp = "华为云";
-        } else if (isp.contains("DigitalOcean")) {
-            isp = " DigitalOcean";
-        } else if (isp.length() > 100) {
+        if (isp.length() > 30) {
             isp = "";
         }
 
-        return location + isp;
+        String info = location + isp;
+        info = info.replaceAll("，", "");
+        info = info.replaceAll("。", "");
+
+        return info;
     }
 
 }
