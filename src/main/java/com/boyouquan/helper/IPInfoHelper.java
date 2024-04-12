@@ -2,11 +2,11 @@ package com.boyouquan.helper;
 
 import com.boyouquan.config.BoYouQuanConfig;
 import com.boyouquan.model.BlogLocation;
+import com.boyouquan.model.IPLocationInfo;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.IPUtil;
 import com.boyouquan.util.ObjectUtil;
 import com.boyouquan.util.OkHttpUtil;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +37,7 @@ public class IPInfoHelper {
             return null;
         }
 
-        String url = boYouQuanConfig.getIpInfoQueryUrl() + ip;
+        String url = String.format(boYouQuanConfig.getIpInfoQueryUrl(), ip);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -51,10 +51,12 @@ public class IPInfoHelper {
                 logger.error("request ip info failed, status: {}, body: {}", response.code(), body);
             }
 
-            JsonNode node = objectMapper.readTree(body);
-            String info = node.get("ipdata").toString();
+            IPLocationInfo ipLocationInfo = ObjectUtil.jsonToObject(body, IPLocationInfo.class);
 
-            return ObjectUtil.jsonToObject(info, BlogLocation.class);
+            BlogLocation blogLocation = new BlogLocation();
+            blogLocation.setDomainName(domainName);
+            blogLocation.setLocation(ipLocationInfo.getLocationInfo());
+            return blogLocation;
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
