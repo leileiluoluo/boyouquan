@@ -26,5 +26,6 @@ public class BlogInfo extends Blog {
     private boolean statusOk;
     private boolean sunset;
     private String statusUnOkInfo;
+    private String blogServerLocation;
 
 }
