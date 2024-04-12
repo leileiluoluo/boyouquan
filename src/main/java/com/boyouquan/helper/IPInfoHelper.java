@@ -31,7 +31,7 @@ public class IPInfoHelper {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public BlogLocation getIpInfoByDomainName(String domainName) {
-        String domain = CommonUtils.getDomainFromURL(domainName);
+        String domain = CommonUtils.getDomainFromBlogDomainName(domainName);
         String ip = IPUtil.domainToIp(domain);
         if (StringUtils.isBlank(ip)) {
             return null;

@@ -209,6 +209,14 @@ public class CommonUtils {
         }
     }
 
+    public static String getDomainFromBlogDomainName(String blogDomainName) {
+        int slashIndex = blogDomainName.indexOf("/");
+        if (slashIndex > 0) {
+            return blogDomainName.substring(0, slashIndex);
+        }
+        return blogDomainName;
+    }
+
     public static String removeFromPart(String url) {
         if (url.contains("?from")) {
             return url.substring(0, url.indexOf("?from"));
