@@ -2,6 +2,7 @@ package com.boyouquan.helper;
 
 import com.boyouquan.config.BoYouQuanConfig;
 import com.boyouquan.model.IpInfo;
+import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.IPUtil;
 import com.boyouquan.util.ObjectUtil;
 import com.boyouquan.util.OkHttpUtil;
@@ -30,7 +31,8 @@ public class IPInfoHelper {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public String getIpInfoByDomainName(String domainName) {
-        String ip = IPUtil.domainToIp(domainName);
+        String domain = CommonUtils.getDomainFromURL(domainName);
+        String ip = IPUtil.domainToIp(domain);
         if (StringUtils.isBlank(ip)) {
             return null;
         }
