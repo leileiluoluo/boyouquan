@@ -51,12 +51,13 @@ public class BlogLocationScheduler {
 
                     BlogLocation blogLocation = ipInfoHelper.getIpInfoByDomainName(blogDomainName);
                     if (null != blogLocation) {
+                        blogLocation.setDomainName(blogDomainName);
+                        blogLocation.setLocation(blogLocation.getLocation());
+                        blogLocation.setIsp(blogLocation.getIsp());
+
                         boolean exists = blogLocationService.existsByDomainName(blogDomainName);
                         if (exists) {
-                            BlogLocation blogLocationStored = blogLocationService.getByDomainName(blogDomainName);
-                            blogLocationStored.setLocation(blogLocation.getLocation());
-                            blogLocationStored.setIsp(blogLocation.getIsp());
-                            blogLocationService.update(blogLocationStored);
+                            blogLocationService.update(blogLocation);
                         } else {
                             blogLocationService.save(blogLocation);
                         }

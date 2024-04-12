@@ -36,8 +36,8 @@
         #{domainName},
         #{location},
         #{isp},
-        #{createdAt},
-        #{updatedAt},
+        now(),
+        now(),
         false
         )
     </insert>

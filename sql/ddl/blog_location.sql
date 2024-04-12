@@ -8,4 +8,4 @@ CREATE TABLE blog_location (
     deleted BOOLEAN DEFAULT FALSE
 );
 
-CREATE INDEX idx_blog_location_domain_name ON blog (domain_name);
+CREATE INDEX idx_blog_location_domain_name ON blog_location (domain_name);
