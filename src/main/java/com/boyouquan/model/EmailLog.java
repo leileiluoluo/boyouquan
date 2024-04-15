@@ -16,7 +16,7 @@ public class EmailLog {
     private String blogDomainName;
     private String email;
     private Type type;
-    private Date sendAt;
+    private Date sentAt;
 
     public enum Type {
         blog_can_not_be_accessed

@@ -86,9 +86,9 @@ public class BlogAccessIssueMailerScheduler {
         EmailLog emailLog = emailLogService.getLatestByBlogDomainNameAndType(blog.getDomainName(), EmailLog.Type.blog_can_not_be_accessed);
 
         if (null != emailLog) {
-            long sendAt = emailLog.getSendAt().getTime();
-            need2SendEmail = (now > sendAt)
-                    && ((now - sendAt) > 30 * oneDay);
+            long sentAt = emailLog.getSentAt().getTime();
+            need2SendEmail = (now > sentAt)
+                    && ((now - sentAt) > 30 * oneDay);
         }
 
         return need2SendEmail;

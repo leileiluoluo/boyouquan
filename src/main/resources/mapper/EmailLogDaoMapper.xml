@@ -7,10 +7,10 @@
         sent_at
     </sql>
     <sql id="select_columns">
-        blog_domain_name,
+        blog_domain_name as blogDomainName,
         email,
         type,
-        sent_at
+        sent_at as sentAt
     </sql>
     <select id="existsByBlogDomainNameAndType" resultType="boolean">
         SELECT
