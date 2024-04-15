@@ -57,9 +57,11 @@ public class BlogLocationScheduler {
                         blogLocation.setDomainName(blogDomainName);
                         blogLocation.setLocation(blogLocation.getLocation());
 
-                        boolean exists = blogLocationService.existsByDomainName(blogDomainName);
-                        if (exists) {
-                            blogLocationService.update(blogLocation);
+                        BlogLocation blogLocationStored = blogLocationService.getByDomainName(blogDomainName);
+                        if (null != blogLocationStored) {
+                            if (!blogLocation.getLocation().equals(blogLocationStored.getLocation())) {
+                                blogLocationService.update(blogLocation);
+                            }
                         } else {
                             blogLocationService.save(blogLocation);
                         }

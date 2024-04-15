@@ -263,7 +263,7 @@ public class BlogServiceImpl implements BlogService {
         // blog server location
         BlogLocation blogLocation = blogLocationService.getByDomainName(blogDomainName);
         if (null != blogLocation) {
-            blogInfo.setBlogServerLocation(blogLocation.getLocation());
+            blogInfo.setBlogServerLocation(blogLocation.getLocationShort());
         }
 
         return blogInfo;
