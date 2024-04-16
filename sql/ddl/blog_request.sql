@@ -8,7 +8,7 @@ CREATE TABLE blog_request (
     self_submitted BOOLEAN DEFAULT FALSE,
     requested_at TIMESTAMP NOT NULL DEFAULT '2023-07-01 00:00:00',
     updated_at TIMESTAMP NOT NULL DEFAULT '2023-07-01 00:00:00',
-    status ENUM('submitted', 'system_check_valid', 'system_check_invalid', 'approved', 'rejected') DEFAULT NULL,
+    status ENUM('submitted', 'system_check_valid', 'system_check_invalid', 'approved', 'rejected', 'uncollected') DEFAULT NULL,
     reason VARCHAR(300),
     deleted BOOLEAN DEFAULT FALSE
 );

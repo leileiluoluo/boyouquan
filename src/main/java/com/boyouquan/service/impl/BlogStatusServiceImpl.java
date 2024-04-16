@@ -136,6 +136,11 @@ public class BlogStatusServiceImpl implements BlogStatusService {
         blogStatusDaoMapper.save(blogStatus);
     }
 
+    @Override
+    public void deleteByBlogDomainName(String blogDomainName) {
+        blogStatusDaoMapper.deleteByBlogDomainName(blogDomainName);
+    }
+
     private Response requestBlogAddress(String blogAddress) throws IOException {
         Request request = new Request.Builder()
                 .addHeader(CommonConstants.HEADER_USER_AGENT, CommonConstants.DATA_SPIDER_USER_AGENT)

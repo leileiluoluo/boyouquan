@@ -30,7 +30,8 @@ public class BlogRequest {
         system_check_valid,
         system_check_invalid,
         approved,
-        rejected
+        rejected,
+        uncollected
     }
 
 }

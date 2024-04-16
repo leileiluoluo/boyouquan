@@ -12,4 +12,6 @@ public interface BlogLocationService {
 
     void update(BlogLocation blogLocation);
 
+    void deleteByDomainName(String domainName);
+
 }

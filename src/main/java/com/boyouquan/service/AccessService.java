@@ -20,4 +20,6 @@ public interface AccessService {
 
     void save(Access access);
 
+    void deleteByBlogDomainName(String blogDomainName);
+
 }

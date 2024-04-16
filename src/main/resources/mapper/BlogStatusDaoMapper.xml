@@ -36,4 +36,9 @@
         false
         )
     </insert>
+    <select id="deleteByBlogDomainName">
+        DELETE
+        FROM blog_status
+        WHERE blog_domain_name=#{blogDomainName}
+    </select>
 </mapper>
