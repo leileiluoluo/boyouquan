@@ -30,6 +30,8 @@ public interface BlogRequestService {
 
     void submit(BlogRequest blogRequest);
 
+    void uncollectedByRssAddress(String rssAddress, String reason);
+
     void deleteByRssAddress(String rssAddress);
 
 }

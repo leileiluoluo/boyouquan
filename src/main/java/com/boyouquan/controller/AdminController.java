@@ -96,6 +96,23 @@ public class AdminController {
         return "admin/blog_requests/item";
     }
 
+    @PatchMapping("/blog-requests/{id}/uncollected")
+    public String uncollectedBlogById(@PathVariable("id") Long id, BlogUncollectedForm blogDeletedForm, HttpServletRequest request) {
+        // permission check
+        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
+        if (!hasAdminPermission) {
+            return "user/no_permission/notice";
+        }
+
+        // get
+        BlogRequest blogRequest = blogRequestService.getById(id);
+        if (null != blogRequest) {
+            blogRequestService.uncollectedByRssAddress(blogRequest.getRssAddress(), blogDeletedForm.getReason());
+        }
+
+        return "redirect:/admin/blog-requests";
+    }
+
     @DeleteMapping("/blog-requests/{id}")
     public String deleteBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
         // permission check

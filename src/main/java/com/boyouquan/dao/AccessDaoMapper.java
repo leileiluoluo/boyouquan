@@ -20,4 +20,6 @@ public interface AccessDaoMapper {
 
     void save(Access access);
 
+    void deleteByBlogDomainName(String blogDomainName);
+
 }

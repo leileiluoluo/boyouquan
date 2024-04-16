@@ -56,4 +56,9 @@ public class AccessServiceImpl implements AccessService {
         }
     }
 
+    @Override
+    public void deleteByBlogDomainName(String blogDomainName) {
+        accessDaoMapper.deleteByBlogDomainName(blogDomainName);
+    }
+
 }

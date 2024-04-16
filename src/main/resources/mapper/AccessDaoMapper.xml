@@ -66,4 +66,9 @@
         1
         ) ON DUPLICATE KEY UPDATE amount=amount+1
     </insert>
+    <delete id="deleteByBlogDomainName">
+        DELETE
+        FROM access
+        WHERE blog_domain_name=#{blogDomainName}
+    </delete>
 </mapper>

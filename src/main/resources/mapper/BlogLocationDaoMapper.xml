@@ -45,4 +45,9 @@
         updated_at=now()
         WHERE domain_name=#{domainName}
     </update>
+    <select id="deleteByDomainName">
+        DELETE
+        FROM blog_location
+        WHERE domain_name=#{domainName}
+    </select>
 </mapper>

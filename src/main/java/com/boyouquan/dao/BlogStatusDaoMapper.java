@@ -8,4 +8,6 @@ public interface BlogStatusDaoMapper {
 
     void save(BlogStatus blogStatus);
 
+    void deleteByBlogDomainName(String blogDomainName);
+
 }

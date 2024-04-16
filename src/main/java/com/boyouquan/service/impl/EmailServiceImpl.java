@@ -185,6 +185,25 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendBlogUncollectedNotice(BlogRequest blogRequest) {
+        if (null != blogRequest) {
+            String adminEmail = blogRequest.getAdminEmail();
+            String subject = String.format("[博友圈] 很遗憾！您的博客「%s」被博友圈移出收录名单！", blogRequest.getName());
+
+            Context context = new Context();
+            BlogRequestInfo blogRequestInfo = new BlogRequestInfo();
+            BeanUtils.copyProperties(blogRequest, blogRequestInfo);
+
+            context.setVariable("blogRequestInfo", blogRequestInfo);
+
+            String text = templateEngine.process("email/blog_uncollected_template", context);
+
+            // send
+            send(adminEmail, subject, text, true);
+        }
+    }
+
+    @Override
     public void send(String to, String subject, String content, boolean html) {
         try {
             if (to.equals(CommonConstants.FAKE_BLOG_ADMIN_EMAIL)

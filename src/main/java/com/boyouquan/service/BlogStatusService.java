@@ -19,4 +19,6 @@ public interface BlogStatusService {
 
     void save(String blogDomainName, BlogStatus.Status status, int code, String reason);
 
+    void deleteByBlogDomainName(String blogDomainName);
+
 }

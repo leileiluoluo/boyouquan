@@ -32,4 +32,9 @@ public class BlogLocationServiceImpl implements BlogLocationService {
         blogLocationDaoMapper.update(blogLocation);
     }
 
+    @Override
+    public void deleteByDomainName(String domainName) {
+        blogLocationDaoMapper.deleteByDomainName(domainName);
+    }
+
 }

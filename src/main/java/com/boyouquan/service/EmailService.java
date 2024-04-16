@@ -21,6 +21,8 @@ public interface EmailService {
 
     void sendBlogStatusNotOkNotice(Blog blog, BlogStatus.Status status, String unOkInfo);
 
+    void sendBlogUncollectedNotice(BlogRequest blogRequest);
+
     void send(String to, String subject, String content, boolean html);
 
 }

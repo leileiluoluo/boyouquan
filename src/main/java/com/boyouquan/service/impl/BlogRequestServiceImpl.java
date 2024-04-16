@@ -33,7 +33,13 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     @Autowired
     private BlogService blogService;
     @Autowired
+    private BlogStatusService blogStatusService;
+    @Autowired
     private PostService postService;
+    @Autowired
+    private AccessService accessService;
+    @Autowired
+    private BlogLocationService blogLocationService;
     @Autowired
     private PostHelper postHelper;
     @Autowired
@@ -219,6 +225,39 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     }
 
     @Override
+    public void uncollectedByRssAddress(String rssAddress, String reason) {
+        BlogRequest blogRequest = getByRssAddress(rssAddress);
+        if (null != blogRequest) {
+            blogRequest.setStatus(BlogRequest.Status.uncollected);
+            blogRequest.setReason(reason);
+            update(blogRequest);
+
+            Blog blog = blogService.getByRSSAddress(rssAddress);
+            if (null != blog) {
+                // delete blogs
+                blogService.deleteByDomainName(blog.getDomainName());
+
+                // delete posts
+                postService.deleteByBlogDomainName(blog.getDomainName());
+
+                // delete blog status
+                blogStatusService.deleteByBlogDomainName(blog.getDomainName());
+
+                // delete access
+                accessService.deleteByBlogDomainName(blog.getDomainName());
+
+                // delete location
+                blogLocationService.deleteByDomainName(blog.getDomainName());
+            }
+
+            // send email
+            if (blogRequest.getSelfSubmitted()) {
+                emailService.sendBlogUncollectedNotice(blogRequest);
+            }
+        }
+    }
+
+    @Override
     public void deleteByRssAddress(String rssAddress) {
         BlogRequest blogRequest = getByRssAddress(rssAddress);
         if (null != blogRequest) {
@@ -229,11 +268,20 @@ public class BlogRequestServiceImpl implements BlogRequestService {
 
                 // delete posts
                 postService.deleteByBlogDomainName(blog.getDomainName());
-            }
-        }
 
-        // delete blog requests
-        blogRequestDaoMapper.deleteByRssAddress(rssAddress);
+                // delete blog status
+                blogStatusService.deleteByBlogDomainName(blog.getDomainName());
+
+                // delete access
+                accessService.deleteByBlogDomainName(blog.getDomainName());
+
+                // delete location
+                blogLocationService.deleteByDomainName(blog.getDomainName());
+            }
+
+            // delete blog requests
+            blogRequestDaoMapper.deleteByRssAddress(rssAddress);
+        }
     }
 
     private boolean saveDraftBlogAndPosts(BlogRequest blogRequest, RSSInfo rssInfo) {
