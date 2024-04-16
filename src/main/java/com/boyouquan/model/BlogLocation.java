@@ -27,6 +27,9 @@ public class BlogLocation {
             }
             return null;
         }
+        if ("本机地址".equals(location)) {
+            return null;
+        }
         return location;
     }
 
