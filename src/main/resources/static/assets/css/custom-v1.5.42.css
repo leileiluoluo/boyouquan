@@ -857,6 +857,7 @@ tr:nth-child(even) {
 }
 
 .blog-requests {
+    margin-top: 16px;
     padding: var(--gap);
     border-radius: var(--radius);
     transition: transform .1s;
