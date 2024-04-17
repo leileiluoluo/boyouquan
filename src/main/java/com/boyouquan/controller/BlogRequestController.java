@@ -7,14 +7,12 @@ import com.boyouquan.model.BlogRequestForm;
 import com.boyouquan.model.BlogRequestInfo;
 import com.boyouquan.service.BlogRequestService;
 import com.boyouquan.util.Pagination;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,17 +31,31 @@ public class BlogRequestController {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @GetMapping("")
-    public String listBlogRequests(Model model) {
-        return listBlogRequests(1, model);
+    public String listBlogRequests(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
+        return listBlogRequests(keyword, 1, model);
     }
 
     @GetMapping("/page/{page}")
-    public String listBlogRequests(@PathVariable("page") int page, Model model) {
-        List<BlogRequest.Status> statuses = Arrays.asList(BlogRequest.Status.submitted, BlogRequest.Status.system_check_valid, BlogRequest.Status.system_check_invalid, BlogRequest.Status.approved, BlogRequest.Status.rejected);
+    public String listBlogRequests(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @PathVariable("page") int page,
+            Model model) {
+        List<BlogRequest.Status> statuses = Arrays.asList(
+                BlogRequest.Status.submitted,
+                BlogRequest.Status.system_check_valid,
+                BlogRequest.Status.system_check_invalid,
+                BlogRequest.Status.approved,
+                BlogRequest.Status.rejected,
+                BlogRequest.Status.uncollected
+        );
 
-        Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(true, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(keyword, true, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
 
         model.addAttribute("pagination", pagination);
+        model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
+        model.addAttribute("keyword", keyword);
 
         return "blog_requests/list";
     }

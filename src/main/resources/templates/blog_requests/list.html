@@ -17,11 +17,9 @@
             <p></p>
         </div>
     </article>
-    <header class="post-header">
-        <h3 class="post-title">
-            博客审核结果
-        </h3>
-    </header>
+    <div id="searchbox">
+        <input id="searchInput" autofocus="" placeholder="搜索博客申请 ↵" aria-label="search" type="search" autocomplete="off">
+    </div>
     <div class="blog-requests">
         <div class="requests-container">
             <table>
@@ -52,11 +50,16 @@
     </div>
 
     <footer class="page-footer blog-footer">
-        <nav class="pagination">
-            <a class="pre" th:if="${pagination.pageNo} > 1"
-               th:href="'/blog-requests/page/' + ${pagination.pageNo - 1}">« 上一页</a>
-            <a class="next" th:if="${pagination.hasNextPage()}"
-               th:href="'/blog-requests/page/' + ${pagination.pageNo + 1}">下一页 »</a>
+        <!-- if hasKeyword -->
+        <nav th:if="${hasKeyword}" class="pagination">
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blog-requests/page/' + ${pagination.pageNo - 1} + '?keyword=' + ${keyword}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blog-requests/page/' + ${pagination.pageNo + 1} + '?keyword=' + ${keyword}">下一页 »</a>
+        </nav>
+
+        <!-- else -->
+        <nav th:unless="${hasKeyword}" class="pagination">
+            <a class="pre" th:if="${pagination.pageNo} > 1" th:href="'/blog-requests/page/' + ${pagination.pageNo - 1}">« 上一页</a>
+            <a class="next" th:if="${pagination.hasNextPage()}" th:href="'/blog-requests/page/' + ${pagination.pageNo + 1}">下一页 »</a>
         </nav>
     </footer>
 </main>
@@ -70,6 +73,7 @@
 <script th:src="@{/assets/js/scroll.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/theme-listener.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/to-top.js}" type="text/javascript"></script>
+<script th:src="@{/assets/js/blog-request-search.js}" type="text/javascript"></script>
 <script th:src="@{/assets/js/tongji.js}" type="text/javascript"></script>
 </body>
 </html>
