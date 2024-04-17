@@ -112,7 +112,7 @@
                         </p>
 
                         <p>
-                            <form action="#" th:action="@{'/admin/blog-requests/{id}/uncollected'(id=${blogRequestInfo.id})}" th:method="delete">
+                            <form action="#" th:action="@{'/admin/blog-requests/{id}/uncollected'(id=${blogRequestInfo.id})}" th:method="patch">
                                 <input type="hidden" name="_method" value="patch" />
                                 <input style="width: 400px; border: 2px solid var(--primary); caret-color: var(--content); color: var(--content);" name="reason" />
                                 <button style="color: red;" type="submit">移出收录名单</button>
