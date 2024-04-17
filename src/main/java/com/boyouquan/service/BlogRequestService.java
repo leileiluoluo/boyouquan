@@ -10,9 +10,9 @@ public interface BlogRequestService {
 
     void processNewRequest(String rssAddress);
 
-    Pagination<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses, int page, int size);
+    Pagination<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(String keyword, boolean selfSubmitted, List<BlogRequest.Status> statuses, int page, int size);
 
-    Pagination<BlogRequestInfo> listBlogRequestInfosByStatuses(List<BlogRequest.Status> statuses, int page, int size);
+    Pagination<BlogRequestInfo> listBlogRequestInfosByStatuses(String keyword, List<BlogRequest.Status> statuses, int page, int size);
 
     BlogRequestInfo getBlogRequestInfoById(Long id);
 

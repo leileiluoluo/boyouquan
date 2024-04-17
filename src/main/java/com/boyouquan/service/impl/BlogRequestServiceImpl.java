@@ -96,19 +96,19 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     }
 
     @Override
-    public Pagination<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses, int page, int size) {
+    public Pagination<BlogRequestInfo> listBlogRequestInfosBySelfSubmittedAndStatuses(String keyword, boolean selfSubmitted, List<BlogRequest.Status> statuses, int page, int size) {
         if (page < 1 || size <= 0) {
             return PaginationBuilder.buildEmptyResults();
         }
 
         int offset = (page - 1) * size;
-        List<BlogRequest> blogRequests = blogRequestDaoMapper.listBySelfSubmittedAndStatuses(selfSubmitted, statuses, offset, size);
+        List<BlogRequest> blogRequests = blogRequestDaoMapper.listBySelfSubmittedAndStatuses(keyword, selfSubmitted, statuses, offset, size);
         List<BlogRequestInfo> blogRequestInfos = new ArrayList<>();
         for (BlogRequest blogRequest : blogRequests) {
             blogRequestInfos.add(assembleBlogRequestInfo(blogRequest));
         }
 
-        Long total = blogRequestDaoMapper.countBySelfSubmittedAndStatuses(selfSubmitted, statuses);
+        Long total = blogRequestDaoMapper.countBySelfSubmittedAndStatuses(keyword, selfSubmitted, statuses);
         return PaginationBuilder.<BlogRequestInfo>newBuilder()
                 .pageNo(page)
                 .pageSize(size)
@@ -117,19 +117,19 @@ public class BlogRequestServiceImpl implements BlogRequestService {
     }
 
     @Override
-    public Pagination<BlogRequestInfo> listBlogRequestInfosByStatuses(List<BlogRequest.Status> statuses, int page, int size) {
+    public Pagination<BlogRequestInfo> listBlogRequestInfosByStatuses(String keyword, List<BlogRequest.Status> statuses, int page, int size) {
         if (page < 1 || size <= 0) {
             return PaginationBuilder.buildEmptyResults();
         }
 
         int offset = (page - 1) * size;
-        List<BlogRequest> blogRequests = blogRequestDaoMapper.listByStatuses(statuses, offset, size);
+        List<BlogRequest> blogRequests = blogRequestDaoMapper.listByStatuses(keyword, statuses, offset, size);
         List<BlogRequestInfo> blogRequestInfos = new ArrayList<>();
         for (BlogRequest blogRequest : blogRequests) {
             blogRequestInfos.add(assembleBlogRequestInfo(blogRequest));
         }
 
-        Long total = blogRequestDaoMapper.countByStatuses(statuses);
+        Long total = blogRequestDaoMapper.countByStatuses(keyword, statuses);
         return PaginationBuilder.<BlogRequestInfo>newBuilder()
                 .pageNo(page)
                 .pageSize(size)
@@ -333,6 +333,8 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             blogRequestInfo.setFailed(true);
         } else if (BlogRequest.Status.approved.equals(blogRequest.getStatus())) {
             blogRequestInfo.setStatusInfo("通过");
+        } else if (BlogRequest.Status.uncollected.equals(blogRequest.getStatus())) {
+            blogRequestInfo.setStatusInfo("取消收录");
         }
 
         Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());

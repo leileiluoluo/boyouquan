@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface BlogRequestDaoMapper {
 
-    List<BlogRequest> listBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses, int offset, int rows);
+    List<BlogRequest> listBySelfSubmittedAndStatuses(String keyword, boolean selfSubmitted, List<BlogRequest.Status> statuses, int offset, int rows);
 
-    Long countBySelfSubmittedAndStatuses(boolean selfSubmitted, List<BlogRequest.Status> statuses);
+    Long countBySelfSubmittedAndStatuses(String keyword, boolean selfSubmitted, List<BlogRequest.Status> statuses);
 
-    List<BlogRequest> listByStatuses(List<BlogRequest.Status> statuses, int offset, int rows);
+    List<BlogRequest> listByStatuses(String keyword, List<BlogRequest.Status> statuses, int offset, int rows);
 
-    Long countByStatuses(List<BlogRequest.Status> statuses);
+    Long countByStatuses(String keyword, List<BlogRequest.Status> statuses);
 
     List<BlogRequest> listByStatus(BlogRequest.Status status);
 

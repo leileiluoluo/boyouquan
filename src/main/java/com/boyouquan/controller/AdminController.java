@@ -49,12 +49,17 @@ public class AdminController {
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @GetMapping("/blog-requests")
-    public String listBlogRequests(Model model, HttpServletRequest request) {
-        return listBlogRequests(1, model, request);
+    public String listBlogRequests(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model, HttpServletRequest request) {
+        return listBlogRequests(keyword, 1, model, request);
     }
 
     @GetMapping("/blog-requests/page/{page}")
-    public String listBlogRequests(@PathVariable("page") int page, Model model, HttpServletRequest request) {
+    public String listBlogRequests(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @PathVariable("page") int page,
+            Model model, HttpServletRequest request) {
         // permission check
         boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
         if (!hasAdminPermission) {
@@ -62,16 +67,21 @@ public class AdminController {
         }
 
         // list
-        List<BlogRequest.Status> statuses = Arrays.asList(BlogRequest.Status.submitted,
+        List<BlogRequest.Status> statuses = Arrays.asList(
+                BlogRequest.Status.submitted,
                 BlogRequest.Status.system_check_valid,
                 BlogRequest.Status.system_check_invalid,
                 BlogRequest.Status.approved,
-                BlogRequest.Status.rejected);
+                BlogRequest.Status.rejected,
+                BlogRequest.Status.uncollected
+        );
 
         Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosByStatuses(
-                statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+                keyword, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
 
         model.addAttribute("pagination", pagination);
+        model.addAttribute("hasKeyword", StringUtils.isNotBlank(keyword));
+        model.addAttribute("keyword", keyword);
 
         // user
         User user = (User) request.getSession().getAttribute("user");
