@@ -243,9 +243,6 @@ public class BlogRequestServiceImpl implements BlogRequestService {
                 // delete blog status
                 blogStatusService.deleteByBlogDomainName(blog.getDomainName());
 
-                // delete access
-                accessService.deleteByBlogDomainName(blog.getDomainName());
-
                 // delete location
                 blogLocationService.deleteByDomainName(blog.getDomainName());
             }
@@ -263,7 +260,7 @@ public class BlogRequestServiceImpl implements BlogRequestService {
         if (null != blogRequest) {
             Blog blog = blogService.getByRSSAddress(rssAddress);
             if (null != blog) {
-                // delete blogs
+                // delete blog
                 blogService.deleteByDomainName(blog.getDomainName());
 
                 // delete posts
