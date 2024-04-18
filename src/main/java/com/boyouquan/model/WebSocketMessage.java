@@ -6,5 +6,6 @@ import lombok.Data;
 public class WebSocketMessage {
 
     private String message;
+    private String gotoUrl;
 
 }

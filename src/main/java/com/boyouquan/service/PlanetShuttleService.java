@@ -1,5 +1,6 @@
 package com.boyouquan.service;
 
+import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogDomainNameInitiated;
 import com.boyouquan.model.MonthInitiated;
 import com.boyouquan.model.PlanetShuttle;
@@ -16,6 +17,6 @@ public interface PlanetShuttleService {
 
     Long countInitiatedByBlogDomainName(String blogDomainName);
 
-    void save(PlanetShuttle planetShuttle);
+    void save(PlanetShuttle planetShuttle, String referer, Blog fromBlog, Blog toBlog);
 
 }

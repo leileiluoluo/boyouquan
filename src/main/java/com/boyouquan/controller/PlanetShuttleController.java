@@ -45,7 +45,7 @@ public class PlanetShuttleController {
             planetShuttle.setIp(ip);
             planetShuttle.setBlogDomainName(fromBlog.getDomainName());
             planetShuttle.setToBlogAddress(blog.getAddress());
-            planetShuttleService.save(planetShuttle);
+            planetShuttleService.save(planetShuttle, referer, fromBlog, blog);
 
             fromBlogInitiatedCount = planetShuttleService.countInitiatedByBlogDomainName(fromBlog.getDomainName());
         }

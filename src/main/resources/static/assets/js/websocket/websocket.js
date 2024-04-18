@@ -19,14 +19,14 @@ window.addEventListener('load', function () {
         if (window.Notification && Notification.permission === "granted") {
 
         const stompClient = new StompJs.Client({
-            brokerURL: 'ws://localhost:8080/websocket'
+            brokerURL: 'wss://www.boyouquan.com/websocket'
         });
 
         stompClient.onConnect = (frame) => {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/broadcasts', (message) => {
-                showGreeting(JSON.parse(message.body).message);
-                webnotify(message)
+                var message = JSON.parse(message.body);
+                webnotify(message.message, message.gotoUrl);
             });
         };
 
@@ -55,7 +55,8 @@ window.addEventListener('load', function () {
                         }
                         // 如果用户同意了
                         if (status === "granted") {
-                            webnotify()
+                            var message = JSON.parse(message.body);
+                            webnotify(message.message, message.gotoUrl);
                         }
 
                     });
@@ -65,13 +66,13 @@ window.addEventListener('load', function () {
     })
 
 
-function webnotify(message){
+function webnotify(message, gotoUrl){
         var notify = new Notification(
-            "通知",
+            "博友圈通知",
             {
                 dir: 'auto',
                 lang: 'zh-CN',
-//                icon: '???.png',//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
+                icon: '/assets/images/sites/logo/logo-small.png',//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
                 body: message //通知的具体内容
             }
         );
@@ -82,13 +83,13 @@ function webnotify(message){
             notify.close();
         },
             notify.onerror = function (e) {
-            console.log(e);
+                console.log(e);
                 console.log("HTML5桌面消息出错！！！");
             };
         notify.onshow = function () {
             setTimeout(function () {
                 notify.close();
-            }, 20000)
+            }, 8000)
         };
         notify.onclose = function () {
             console.log("HTML5桌面消息关闭！！！");
