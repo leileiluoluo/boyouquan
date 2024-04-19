@@ -32,7 +32,7 @@ public interface PostService {
 
     Post getByLink(String link);
 
-    boolean batchSave(List<Post> posts);
+    int batchSave(List<Post> posts);
 
     boolean batchUpdateDraftByBlogDomainName(String blogDomainName, boolean draft);
 

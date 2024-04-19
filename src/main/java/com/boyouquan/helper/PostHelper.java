@@ -16,7 +16,7 @@ public class PostHelper {
     @Autowired
     private PostService postService;
 
-    public boolean savePosts(String blogDomainName, RSSInfo rssInfo, boolean draft) {
+    public int savePosts(String blogDomainName, RSSInfo rssInfo, boolean draft) {
         if (null != rssInfo) {
             // save posts
             List<Post> posts = new ArrayList<>();
@@ -45,7 +45,7 @@ public class PostHelper {
             return postService.batchSave(posts);
         }
 
-        return false;
+        return 0;
     }
 
     private boolean isValidNewPost(Date publishedAt) {

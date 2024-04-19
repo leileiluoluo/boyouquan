@@ -4,10 +4,8 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.helper.PostHelper;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.RSSInfo;
-import com.boyouquan.service.BlogCrawlerService;
-import com.boyouquan.service.BlogService;
-import com.boyouquan.service.BlogStatusService;
-import com.boyouquan.service.PostService;
+import com.boyouquan.model.WebSocketMessage;
+import com.boyouquan.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,8 @@ public class PostScheduler {
     private BlogCrawlerService blogCrawlerService;
     @Autowired
     private PostHelper postHelper;
+    @Autowired
+    private WebSocketService webSocketService;
 
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void crawlingBlogPosts() {
@@ -45,6 +45,7 @@ public class PostScheduler {
 
     public void savePosts() {
         List<Blog> blogs = blogService.listAll();
+        int total = 0;
         for (Blog blog : blogs) {
             try {
                 boolean statusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
@@ -54,18 +55,31 @@ public class PostScheduler {
                     RSSInfo rssInfo = blogCrawlerService.getRSSInfoByRSSAddress(blog.getRssAddress(), CommonConstants.RSS_POST_COUNT_READ_LIMIT);
 
                     // save posts
-                    boolean success = postHelper.savePosts(blog.getDomainName(), rssInfo, false);
-                    if (!success) {
+                    int count = postHelper.savePosts(blog.getDomainName(), rssInfo, false);
+                    if (0 == count) {
                         logger.info("no new posts saved, blogDomainName: {}", blog.getDomainName());
                         continue;
                     }
 
+                    total += count;
                     logger.info("posts saved success, blogDomainName: {}", blog.getDomainName());
                 }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             }
         }
+
+        // broadcast
+        if (total > 0) {
+            broadcast(total);
+        }
+    }
+
+    private void broadcast(int total) {
+        WebSocketMessage message = new WebSocketMessage();
+        message.setMessage(String.format("刚刚新收录了 %d 篇文章，快来看看吧！", total));
+        message.setGotoUrl(CommonConstants.HOME_PAGE_SORT_LATEST_ADDRESS);
+        webSocketService.broadcast(message);
     }
 
 }
