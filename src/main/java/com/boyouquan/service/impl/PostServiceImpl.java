@@ -149,7 +149,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean batchSave(List<Post> posts) {
+    public int batchSave(List<Post> posts) {
         int count = 0;
 
         if (null != posts) {
@@ -158,13 +158,14 @@ public class PostServiceImpl implements PostService {
                     postDaoMapper.save(post);
                 } catch (Exception e) {
                     logger.error("save failed", e);
+                    continue;
                 }
 
                 count++;
             }
         }
 
-        return count > 0;
+        return count;
     }
 
     @Override
