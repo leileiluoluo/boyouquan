@@ -289,8 +289,8 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             Blog blog = getBlog(blogRequest, rssInfo, blogDomainName);
 
             // save posts
-            boolean success = postHelper.savePosts(blogDomainName, rssInfo, true);
-            if (!success) {
+            int count = postHelper.savePosts(blogDomainName, rssInfo, true);
+            if (0 == count) {
                 logger.error("posts save failed, blogDomainName: {}", blogDomainName);
                 return false;
             }
