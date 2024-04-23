@@ -1,6 +1,7 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.dao.BlogLocationDaoMapper;
+import com.boyouquan.helper.IPInfoHelper;
 import com.boyouquan.model.BlogLocation;
 import com.boyouquan.service.BlogLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ public class BlogLocationServiceImpl implements BlogLocationService {
 
     @Autowired
     private BlogLocationDaoMapper blogLocationDaoMapper;
+    @Autowired
+    private IPInfoHelper ipInfoHelper;
 
     @Override
     public boolean existsByDomainName(String domainName) {
@@ -23,13 +26,19 @@ public class BlogLocationServiceImpl implements BlogLocationService {
     }
 
     @Override
-    public void save(BlogLocation blogLocation) {
-        blogLocationDaoMapper.save(blogLocation);
-    }
+    public void refreshLocation(String domainName) {
+        BlogLocation blogLocation = ipInfoHelper.getIpInfoByDomainName(domainName);
 
-    @Override
-    public void update(BlogLocation blogLocation) {
-        blogLocationDaoMapper.update(blogLocation);
+        if (null != blogLocation) {
+            BlogLocation blogLocationStored = getByDomainName(domainName);
+            if (null != blogLocationStored) {
+                if (!blogLocation.getLocation().equals(blogLocationStored.getLocation())) {
+                    blogLocationDaoMapper.update(blogLocation);
+                }
+            } else {
+                blogLocationDaoMapper.save(blogLocation);
+            }
+        }
     }
 
     @Override

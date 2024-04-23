@@ -8,9 +8,7 @@ public interface BlogLocationService {
 
     BlogLocation getByDomainName(String domainName);
 
-    void save(BlogLocation blogLocation);
-
-    void update(BlogLocation blogLocation);
+    void refreshLocation(String domainName);
 
     void deleteByDomainName(String domainName);
 
