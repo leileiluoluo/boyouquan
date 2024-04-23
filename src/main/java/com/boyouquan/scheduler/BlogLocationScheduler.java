@@ -1,8 +1,6 @@
 package com.boyouquan.scheduler;
 
-import com.boyouquan.helper.IPInfoHelper;
 import com.boyouquan.model.Blog;
-import com.boyouquan.model.BlogLocation;
 import com.boyouquan.service.BlogLocationService;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.BlogStatusService;
@@ -22,8 +20,6 @@ public class BlogLocationScheduler {
 
     private final Logger logger = LoggerFactory.getLogger(BlogLocationScheduler.class);
 
-    @Autowired
-    private IPInfoHelper ipInfoHelper;
     @Autowired
     private BlogService blogService;
     @Autowired
@@ -52,20 +48,8 @@ public class BlogLocationScheduler {
                 if (statusOK) {
                     logger.info("process for {}", blogDomainName);
 
-                    BlogLocation blogLocation = ipInfoHelper.getIpInfoByDomainName(blogDomainName);
-                    if (null != blogLocation) {
-                        blogLocation.setDomainName(blogDomainName);
-                        blogLocation.setLocation(blogLocation.getLocation());
-
-                        BlogLocation blogLocationStored = blogLocationService.getByDomainName(blogDomainName);
-                        if (null != blogLocationStored) {
-                            if (!blogLocation.getLocation().equals(blogLocationStored.getLocation())) {
-                                blogLocationService.update(blogLocation);
-                            }
-                        } else {
-                            blogLocationService.save(blogLocation);
-                        }
-                    }
+                    // refresh location
+                    blogLocationService.refreshLocation(blogDomainName);
                 }
             } catch (Exception e) {
                 logger.error("refresh failed", e);

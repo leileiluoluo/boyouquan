@@ -169,14 +169,18 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             blogRequest.setStatus(BlogRequest.Status.approved);
             update(blogRequest);
 
-            // change draft to false
             Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
             if (null != blog) {
                 blog.setCollectedAt(new Date());
                 blog.setDraft(false);
+
                 blogService.update(blog);
 
+                // change draft to false
                 postService.batchUpdateDraftByBlogDomainName(blog.getDomainName(), false);
+
+                // refresh blog location
+                blogLocationService.refreshLocation(blog.getDomainName());
             }
 
             // send email
