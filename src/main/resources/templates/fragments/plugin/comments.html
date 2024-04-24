@@ -1,6 +1,6 @@
 <div th:fragment="comments">
     <div id="tcomment"></div>
-    <script src="https://cdn.staticfile.org/twikoo/1.6.32/twikoo.all.min.js"></script>
+    <script th:src="@{/assets/js/twikoo/1.6.32/twikoo.all.min.js}" type="text/javascript"></script>
     <script>
         twikoo.init({
           envId: 'https://www.boyouquan.com/comments', // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
