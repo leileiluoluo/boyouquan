@@ -176,6 +176,15 @@
             </div>
         </div>
     </div>
+
+    <div class="blog-detail-comments">
+        <div class="comments-title">
+            <h4>评论</h4>
+        </div>
+        <div class="comments-container">
+            <div th:replace="~{fragments/plugin/comments::comments}"></div>
+        </div>
+    </div>
 </main>
 <footer class="footer-block">
     <div th:replace="~{fragments/footer/shuttle::shuttle}"></div>
