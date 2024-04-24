@@ -31,6 +31,7 @@ function connect() {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/broadcasts', (message) => {
             var message = JSON.parse(message.body);
+            console.log(message);
             notify(message.message, message.gotoUrl);
         });
     };
