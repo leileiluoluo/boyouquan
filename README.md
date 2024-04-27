@@ -6,6 +6,10 @@
 
 若想了解博友圈的建站初衷、主要功能和技术架构详情，请参看站长的「[这篇博客文章](https://leileiluoluo.com/posts/boyouquan-introduction.html)」。
 
+## 代码开源
+
+本工程已开源，您可以完全自由的使用本工程代码搭建另一个「博友圈」，而只需在您的网站底部标注一句「本站使用博友圈（www.boyouquan.com）开源程序创建」即可。
+
 ## 工程介绍
 
 博友圈应用程序是一个使用 Maven 管理的 Java 工程，集前后台于一体，使用了 Spring Boot + Thymeleaf + MyBatis 技术。其中，Spring Boot 是工程所使用的总框架，负责请求处理和依赖注入，Thymeleaf 模块负责模板渲染，MyBatis 模块负责数据库访问。此外，该应用程序使用的数据库是 MariaDB。
