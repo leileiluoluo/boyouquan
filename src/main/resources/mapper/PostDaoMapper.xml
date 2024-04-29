@@ -150,6 +150,8 @@
                         AND p1.draft=false
                         AND p1.deleted=false
                         AND p1.description IS NOT NULL
+                        GROUP BY p1.published_at
+                        HAVING COUNT(p1.published_at) &lt; 2
                         ORDER BY p1.published_at DESC
                         LIMIT #{offset}, #{rows}
                     </otherwise>
