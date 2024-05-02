@@ -53,10 +53,10 @@
                         <div class="domain">
                             <div class="flex-item-left">
                                 <div class="domain-name">
-                                    <a th:text="${blogInfo.domainName}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
+                                    <a th:text="${blogInfo.domainName}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}" target="_blank"></a>
                                 </div>
                                 <div class="link">
-                                    <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
+                                    <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}" target="_blank">
                                         <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
                                             <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
                                             <path d="M15 3h6v6"></path>
@@ -114,7 +114,7 @@
                     <p th:each="post, iterstat: ${blogInfo.posts}">
                         <text style="margin-right: 6px;" th:text="${@thymeLeafTemplateHelper.dateCommonFormatDisplay(post.publishedAt)}"></text>
                         <!-- blog status ok? -->
-                        <a th:if="${blogInfo.statusOk}" th:text="${post.title}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                        <a th:if="${blogInfo.statusOk}" th:text="${post.title}" th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}" target="_blank"></a>
                         <!-- blog status un ok? -->
                         <a th:unless="${blogInfo.statusOk}" th:text="${post.title}" th:href="'/abstract?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
                     </p>

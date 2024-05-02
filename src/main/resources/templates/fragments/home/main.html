@@ -50,7 +50,7 @@
                 <img th:src="@{/assets/images/sites/pinned/pinned.svg}">
             </div>
             <div class="article-go">
-                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}"><h4 th:text="${postInfo.title}"></h4></a>
+                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(postInfo.link)}" target="_blank"><h4 th:text="${postInfo.title}"></h4></a>
             </div>
         </header>
         <div class="entry-content">

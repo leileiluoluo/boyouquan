@@ -38,18 +38,18 @@
 
         <header class="blog-detail-header">
             <div class="icon">
-                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
+                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}" target="_blank">
                     <img th:src="${blogInfo.blogAdminLargeImageURL}"/>
                 </a>
             </div>
             <div class="title">
-                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"><h3
+                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}" target="_blank"><h3
                         th:text="${blogInfo.name}"></h3></a>
             </div>
             <div class="domain">
                 <a th:text="${blogInfo.domainName}"
-                   th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}"></a>
-                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}">
+                   th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}" target="_blank"></a>
+                <a th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(blogInfo.address)}" target="_blank">
                     <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
                          stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
                         <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
@@ -117,7 +117,7 @@
                     <td style="width: 80%">
                         <!-- blog status ok? -->
                         <a th:if="${blogInfo.statusOk}" th:text="${post.title}"
-                           th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                           th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}" target="_blank"></a>
                         <!-- blog status un ok? -->
                         <a th:unless="${blogInfo.statusOk}" th:text="${post.title}"
                            th:href="'/abstract?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
