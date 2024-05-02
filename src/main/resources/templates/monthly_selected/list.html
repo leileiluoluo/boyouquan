@@ -41,7 +41,7 @@
                             <td width="60%">
                                 <!-- blog status ok? -->
                                 <a th:if="${post.blogStatusOk}" th:text="${post.title}"
-                                   th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
+                                   th:href="'/go?from=website&link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}" target="_blank"></a>
                                 <!-- blog status un ok? -->
                                 <a th:unless="${post.blogStatusOk}" th:text="${post.title}"
                                    th:href="'/abstract?link=' + ${@thymeLeafTemplateHelper.urlEncode(post.link)}"></a>
