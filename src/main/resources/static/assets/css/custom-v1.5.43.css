@@ -836,24 +836,6 @@ tr:nth-child(even) {
     padding: 0px;
 }
 
-.blog-detail-comments {
-    padding: var(--gap) var(--gap) calc(var(--gap) / 2) var(--gap);
-    border-radius: var(--radius);
-    transition: transform .1s;
-    border: 1px solid var(--tertiary);
-    background: var(--entry);
-    margin-bottom: var(--gap);
-}
-
-.blog-detail-comments .comments-title {
-
-}
-
-.blog-detail-comments .comments-container {
-    margin-top: 16px;
-    margin-bottom: 16px;
-}
-
 .abstract .entry-content {
     -webkit-line-clamp: 200;
 }
