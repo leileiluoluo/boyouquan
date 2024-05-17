@@ -1,9 +1,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boyouquan.dao.MonthlySelectedDaoMapper">
     <select id="listYearMonthStrs" resultType="java.lang.String">
-        SELECT distinct year_month_str
+        SELECT distinct a.year_month_str
         FROM access a, blog b, post p
         WHERE a.blog_domain_name=b.domain_name
+        AND a.year_month_str!=DATE_FORMAT(CURDATE(), '%Y-%m')
         AND a.blog_domain_name=p.blog_domain_name
         AND a.link=p.link
         AND a.link!=b.address
