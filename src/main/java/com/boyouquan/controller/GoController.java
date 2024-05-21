@@ -9,6 +9,7 @@ import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.IPUtil;
+import com.boyouquan.util.UserAgentUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +46,9 @@ public class GoController {
         try {
             if (StringUtils.isNotBlank(link)) {
                 String ip = IPUtil.getRealIp(request);
+                String userAgent = UserAgentUtil.getUserAgent(request);
+
+                logger.info("user agent: {}", userAgent);
 
                 boolean success = saveAccessInfo(ip, link, from);
                 if (success) {
