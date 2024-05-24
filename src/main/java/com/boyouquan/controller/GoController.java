@@ -1,6 +1,7 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.enumration.BotUserAgent;
 import com.boyouquan.model.Access;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.Post;
@@ -22,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 
 @Controller
@@ -50,8 +49,12 @@ public class GoController {
 
                 logger.info("user agent: {}", userAgent);
 
-                boolean success = saveAccessInfo(ip, link, from);
-                if (success) {
+                String blogDomainName = getBlogDomainName(ip, link);
+                if (StringUtils.isNotBlank(blogDomainName)) {
+                    // save access info
+                    boolean isBotAgent = BotUserAgent.isBotAgent(userAgent);
+                    saveAccessInfo(ip, link, blogDomainName, isBotAgent);
+
                     // FIXME: important, use this way to solve path wth chinese character issue
                     link = new String(link.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
                     response.sendRedirect(link);
@@ -60,12 +63,12 @@ public class GoController {
             }
 
             response.sendRedirect(CommonConstants.HOME_PAGE_ADDRESS);
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }
     }
 
-    private boolean saveAccessInfo(String ip, String link, String from) throws URISyntaxException, MalformedURLException {
+    private String getBlogDomainName(String ip, String link) {
         Post post = postService.getByLink(link);
         String blogDomainName = "";
         if (null != post) {
@@ -78,9 +81,13 @@ public class GoController {
             }
         }
 
-        if (StringUtils.isBlank(blogDomainName)) {
-            logger.error("blog domain name not found! link: {}, ip: {}", link, ip);
-            return false;
+        return blogDomainName;
+    }
+
+    private void saveAccessInfo(String ip, String link, String blogDomainName, boolean isBotAgent) {
+        if (isBotAgent) {
+            logger.info("bot agent, skip saving access info");
+            return;
         }
 
         // save
@@ -89,8 +96,6 @@ public class GoController {
         access.setLink(link);
         access.setBlogDomainName(blogDomainName);
         accessService.save(access);
-
-        return true;
     }
 
 }
