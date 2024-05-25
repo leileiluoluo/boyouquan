@@ -339,6 +339,7 @@ public class BlogRequestServiceImpl implements BlogRequestService {
             blogRequestInfo.setStatusInfo("通过");
         } else if (BlogRequest.Status.uncollected.equals(blogRequest.getStatus())) {
             blogRequestInfo.setStatusInfo("取消收录");
+            blogRequestInfo.setFailed(true);
         }
 
         Blog blog = blogService.getByRSSAddress(blogRequest.getRssAddress());
