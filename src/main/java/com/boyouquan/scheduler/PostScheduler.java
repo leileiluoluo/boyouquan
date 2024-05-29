@@ -34,7 +34,7 @@ public class PostScheduler {
     @Autowired
     private WebSocketService webSocketService;
 
-    @Scheduled(cron = "0 0 0/2 * * ?")
+    @Scheduled(cron = "0 0 0,2,4,6,8,10,12,14,16,18,20,22 * * ?")
     public void crawlingBlogPosts() {
         logger.info("post scheduler start!");
 
