@@ -7,7 +7,8 @@ public enum BotUserAgent {
     TWITTER_BOT("TwitterBot"),
     GOOGLE_BOT("Googlebot"),
     AHREFS_BOT("AhrefsBot"),
-    SMT_BOT("SMTBot");
+    SMT_BOT("SMTBot"),
+    RU_BOT("RU_Bot");
 
     private String name;
 
