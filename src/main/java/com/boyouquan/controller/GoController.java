@@ -53,7 +53,11 @@ public class GoController {
                 if (StringUtils.isNotBlank(blogDomainName)) {
                     // save access info
                     boolean isBotAgent = BotUserAgent.isBotAgent(userAgent);
-                    saveAccessInfo(ip, link, blogDomainName, isBotAgent);
+                    if (isBotAgent) {
+                        logger.info("bot agent, skip saving access info, userAgent: {}", userAgent);
+                    } else {
+                        saveAccessInfo(ip, link, blogDomainName);
+                    }
 
                     // FIXME: important, use this way to solve path wth chinese character issue
                     link = new String(link.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
@@ -84,12 +88,7 @@ public class GoController {
         return blogDomainName;
     }
 
-    private void saveAccessInfo(String ip, String link, String blogDomainName, boolean isBotAgent) {
-        if (isBotAgent) {
-            logger.info("bot agent, skip saving access info");
-            return;
-        }
-
+    private void saveAccessInfo(String ip, String link, String blogDomainName) {
         // save
         Access access = new Access();
         access.setIp(ip);
