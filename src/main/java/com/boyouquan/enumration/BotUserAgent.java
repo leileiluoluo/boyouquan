@@ -4,11 +4,13 @@ import org.apache.commons.lang3.StringUtils;
 
 public enum BotUserAgent {
 
-    TWITTER_BOT("TwitterBot"),
+    TELEGRAM_BOT("TelegramBot"),
     GOOGLE_BOT("Googlebot"),
     AHREFS_BOT("AhrefsBot"),
     SMT_BOT("SMTBot"),
-    RU_BOT("RU_Bot");
+    RU_BOT("RU_Bot"),
+    DIFF_BOT("Diffbot"),
+    LIVELAP_BOT("LivelapBot");
 
     private String name;
 
