@@ -1,5 +1,6 @@
 package com.boyouquan.helper;
 
+import com.boyouquan.config.BoYouQuanConfig;
 import com.boyouquan.model.BlogRequestForm;
 import com.boyouquan.service.BlogRequestService;
 import com.boyouquan.util.CommonUtils;
@@ -12,6 +13,8 @@ import org.springframework.validation.Errors;
 @Component
 public class BlogRequestFormHelper {
 
+    @Autowired
+    private BoYouQuanConfig boYouQuanConfig;
     @Autowired
     private BlogRequestService blogRequestService;
 
@@ -54,6 +57,13 @@ public class BlogRequestFormHelper {
         }
         if (!CommonUtils.getDomain(rssAddress).contains("/")) {
             errors.rejectValue("rssAddress", "fields.invalid", "RSS 地址不正确");
+            return;
+        }
+
+        // refusing domains check
+        String domain = CommonUtils.getDomainFromURL(rssAddress);
+        if (boYouQuanConfig.getDomainsRefuseToJoin().stream().anyMatch(domain::endsWith)) {
+            errors.rejectValue("rssAddress", "fields.invalid", "该域名拒绝加入");
             return;
         }
 
