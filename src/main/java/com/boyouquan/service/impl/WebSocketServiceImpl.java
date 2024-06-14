@@ -17,12 +17,4 @@ public class WebSocketServiceImpl implements WebSocketService {
         template.convertAndSend("/topic/broadcasts", message);
     }
 
-    public void test() {
-        System.out.println("hahaha");
-        WebSocketMessage message = new WebSocketMessage();
-        message.setMessage("传到了大飒飒法发大沙发\n[点击前往]");
-        message.setGotoUrl("https://www.baidu.com/");
-        broadcast(message);
-    }
-
 }
