@@ -332,9 +332,6 @@ public class AdminController {
             return "user/no_permission/notice";
         }
 
-        // FIXME: important, use this way to solve path wth chinese character issue
-        link = CommonUtils.repairURL(link);
-
         // unpin
         postService.unpinByLink(link);
 
@@ -348,9 +345,6 @@ public class AdminController {
         if (!hasAdminPermission) {
             return "user/no_permission/notice";
         }
-
-        // FIXME: important, use this way to solve path wth chinese character issue
-        link = CommonUtils.repairURL(link);
 
         // pin
         postService.pinByLink(link);
