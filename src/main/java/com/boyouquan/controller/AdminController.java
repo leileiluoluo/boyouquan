@@ -6,6 +6,7 @@ import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.helper.RecommendPostFormHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.*;
+import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
 import com.boyouquan.util.PermissionUtil;
@@ -19,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.module.Configuration;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -329,8 +332,12 @@ public class AdminController {
             return "user/no_permission/notice";
         }
 
+        // FIXME: important, use this way to solve path wth chinese character issue
+        link = CommonUtils.repairURL(link);
+
         // unpin
         postService.unpinByLink(link);
+
         return "redirect:/admin/recommended-posts";
     }
 
@@ -342,7 +349,10 @@ public class AdminController {
             return "user/no_permission/notice";
         }
 
-        // unpin
+        // FIXME: important, use this way to solve path wth chinese character issue
+        link = CommonUtils.repairURL(link);
+
+        // pin
         postService.pinByLink(link);
 
         // after
