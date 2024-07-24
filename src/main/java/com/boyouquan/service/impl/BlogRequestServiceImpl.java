@@ -230,58 +230,82 @@ public class BlogRequestServiceImpl implements BlogRequestService {
 
     @Override
     public void uncollectedByRssAddress(String rssAddress, String reason) {
-        BlogRequest blogRequest = getByRssAddress(rssAddress);
-        if (null != blogRequest) {
-            blogRequest.setStatus(BlogRequest.Status.uncollected);
-            blogRequest.setReason(reason);
-            update(blogRequest);
+        logger.info("trying to un-collect blog by rssAddress: {}", rssAddress);
 
-            Blog blog = blogService.getByRSSAddress(rssAddress);
-            if (null != blog) {
-                // delete blogs
-                blogService.deleteByDomainName(blog.getDomainName());
+        try {
+            BlogRequest blogRequest = getByRssAddress(rssAddress);
+            if (null != blogRequest) {
+                blogRequest.setStatus(BlogRequest.Status.uncollected);
+                blogRequest.setReason(reason);
+                update(blogRequest);
+                logger.info("blog request's status updated");
 
-                // delete posts
-                postService.deleteByBlogDomainName(blog.getDomainName());
+                Blog blog = blogService.getByRSSAddress(rssAddress);
+                if (null != blog) {
+                    // delete posts
+                    postService.deleteByBlogDomainName(blog.getDomainName());
+                    logger.info("blog posts deleted");
 
-                // delete blog status
-                blogStatusService.deleteByBlogDomainName(blog.getDomainName());
+                    // delete blog status
+                    blogStatusService.deleteByBlogDomainName(blog.getDomainName());
+                    logger.info("blog statuses deleted");
 
-                // delete location
-                blogLocationService.deleteByDomainName(blog.getDomainName());
+                    // delete location
+                    blogLocationService.deleteByDomainName(blog.getDomainName());
+                    logger.info("blog locations deleted");
+
+                    // delete blog
+                    blogService.deleteByDomainName(blog.getDomainName());
+                    logger.info("blog deleted");
+                }
+
+                // send email
+                if (blogRequest.getSelfSubmitted()) {
+                    emailService.sendBlogUncollectedNotice(blogRequest);
+                    logger.info("blog uncollected notice sent");
+                }
             }
-
-            // send email
-            if (blogRequest.getSelfSubmitted()) {
-                emailService.sendBlogUncollectedNotice(blogRequest);
-            }
+        } catch (Exception e) {
+            logger.error("blog uncollected failed", e);
         }
     }
 
     @Override
     public void deleteByRssAddress(String rssAddress) {
-        BlogRequest blogRequest = getByRssAddress(rssAddress);
-        if (null != blogRequest) {
-            Blog blog = blogService.getByRSSAddress(rssAddress);
-            if (null != blog) {
-                // delete blog
-                blogService.deleteByDomainName(blog.getDomainName());
+        logger.info("trying to delete blog by rssAddress: {}", rssAddress);
 
-                // delete posts
-                postService.deleteByBlogDomainName(blog.getDomainName());
+        try {
+            BlogRequest blogRequest = getByRssAddress(rssAddress);
+            if (null != blogRequest) {
+                Blog blog = blogService.getByRSSAddress(rssAddress);
+                if (null != blog) {
+                    // delete posts
+                    postService.deleteByBlogDomainName(blog.getDomainName());
+                    logger.info("blog posts deleted");
 
-                // delete blog status
-                blogStatusService.deleteByBlogDomainName(blog.getDomainName());
+                    // delete blog status
+                    blogStatusService.deleteByBlogDomainName(blog.getDomainName());
+                    logger.info("blog statuses deleted");
 
-                // delete access
-                accessService.deleteByBlogDomainName(blog.getDomainName());
+                    // delete access
+                    accessService.deleteByBlogDomainName(blog.getDomainName());
+                    logger.info("blog accesses deleted");
 
-                // delete location
-                blogLocationService.deleteByDomainName(blog.getDomainName());
+                    // delete location
+                    blogLocationService.deleteByDomainName(blog.getDomainName());
+                    logger.info("blog locations deleted");
+
+                    // delete blog
+                    blogService.deleteByDomainName(blog.getDomainName());
+                    logger.info("blog deleted");
+                }
+
+                // delete blog requests
+                blogRequestDaoMapper.deleteByRssAddress(rssAddress);
+                logger.info("blog request deleted");
             }
-
-            // delete blog requests
-            blogRequestDaoMapper.deleteByRssAddress(rssAddress);
+        } catch (Exception e) {
+            logger.error("blog deleted failed", e);
         }
     }
 
