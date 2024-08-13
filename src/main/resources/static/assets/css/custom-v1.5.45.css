@@ -114,6 +114,14 @@ h4 {
     padding-bottom: 1px;
 }
 
+.share.post-entry .entry-header.sharing h4 strong {
+    color: #cb2e58;
+}
+
+.abstract.post-entry .entry-header h4 strong {
+    color: #cb2e58;
+}
+
 .first-entry .entry-content {
     margin: 0 0 14px 0 !important;
 }
