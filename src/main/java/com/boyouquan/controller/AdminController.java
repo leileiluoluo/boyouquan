@@ -48,6 +48,8 @@ public class AdminController {
     private PostService postService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private PinHistoryService pinHistoryService;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
 
@@ -353,6 +355,12 @@ public class AdminController {
         Post post = postService.getByLink(link);
         Blog blog = blogService.getByDomainName(post.getBlogDomainName());
         emailService.sendPostPinnedNotice(blog, post);
+
+        // save pin history
+        PinHistory pinHistory = new PinHistory();
+        pinHistory.setBlogDomainName(post.getBlogDomainName());
+        pinHistory.setLink(link);
+        pinHistoryService.save(pinHistory);
 
         return "redirect:/admin/recommended-posts";
     }

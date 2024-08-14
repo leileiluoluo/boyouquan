@@ -1,0 +1,17 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boyouquan.dao.PinHistoryDaoMapper">
+    <sql id="insert_columns">
+        blog_domain_name,
+        link,
+        pinned_at
+    </sql>
+    <insert id="save">
+        INSERT INTO pin_history (
+        <include refid="insert_columns"/>
+        ) VALUES (
+        #{blogDomainName},
+        #{link},
+        now()
+        )
+    </insert>
+</mapper>
