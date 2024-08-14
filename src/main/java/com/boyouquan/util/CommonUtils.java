@@ -23,7 +23,7 @@ public class CommonUtils {
 
     private static final SimpleDateFormat SITEMAP_DATE_PATTERN = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'+08:00'");
 
-    private static final SimpleDateFormat COMMON_YEAR_MONTH_PATTERN = new SimpleDateFormat("yyyy-MM");
+    private static final SimpleDateFormat COMMON_YEAR_MONTH_PATTERN = new SimpleDateFormat("yyyy/MM");
 
     public static String dateSitemapFormatStr(Date date) {
         return SITEMAP_DATE_PATTERN.format(date);
