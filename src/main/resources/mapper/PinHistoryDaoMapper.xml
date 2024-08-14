@@ -12,6 +12,6 @@
         #{blogDomainName},
         #{link},
         now()
-        )
+        ) ON DUPLICATE KEY UPDATE pinned_at=now()
     </insert>
 </mapper>
