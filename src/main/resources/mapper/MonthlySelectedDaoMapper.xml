@@ -13,7 +13,9 @@
         ORDER BY a.year_month_str DESC
     </select>
     <select id="listSelectedPostsByYearMonthStr" resultType="com.boyouquan.model.SelectedPostAccess">
-        SELECT a.year_month_str as yearMonthStr, a.link as postLink, max(b.domain_name) as blogDomainName, sum(a.amount)
+        SELECT popular.yearMonthStr, popular.postLink, popular.publishedAt, popular.blogDomainName, popular.accessCount, (pinned.postLink IS NOT NULL) FROM
+        (
+        SELECT a.year_month_str as yearMonthStr, a.link as postLink, p.published_at as publishedAt, max(b.domain_name) as blogDomainName, sum(a.amount)
         as accessCount
         FROM access a, blog b, post p
         WHERE a.blog_domain_name=b.domain_name
@@ -22,10 +24,20 @@
         AND a.link!=b.address
         AND p.recommended=true
         AND a.year_month_str=#{yearMonthStr}
-        <!-- FIXME: not good, please fix me later -->
-        AND p.published_at between concat(#{yearMonthStr}, '-01') and concat(#{yearMonthStr}, '-31')
-        GROUP BY a.year_month_str, a.link
-        ORDER BY accessCount desc
+        AND p.published_at between concat(#{yearMonthStr}, '/01') and concat(#{yearMonthStr}, '/31')
+        GROUP BY a.link
+        ) popular
+
+        LEFT JOIN
+
+        (
+        SELECT link as postLink, blog_domain_name as blogDomainName
+        FROM pin_history
+        WHERE pinned_at between concat(#{yearMonthStr}, '/01') and concat(#{yearMonthStr}, '/31')
+        ) pinned
+
+        ON popular.postLink=pinned.postLink
+        ORDER BY (pinned.postLink IS NOT NULL) DESC, popular.accessCount DESC
         LIMIT #{limit}
     </select>
 </mapper>
