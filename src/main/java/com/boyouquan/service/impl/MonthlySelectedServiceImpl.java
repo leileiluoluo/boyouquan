@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -38,6 +39,7 @@ public class MonthlySelectedServiceImpl implements MonthlySelectedService {
         List<SelectedPostAccess> selectedPostAccessList = monthlySelectedDaoMapper.listSelectedPostsByYearMonthStr(yearMonth, CommonConstants.MONTHLY_SELECTED_POSTS_LIMIT);
 
         List<MonthlySelectedPost.PostInfoWithBlogStatus> postInfos = selectedPostAccessList.stream()
+                .sorted(Comparator.comparing(SelectedPostAccess::getPublishedAt).reversed())
                 .map(selectedPostAccess -> {
                     Post post = postService.getByLink(selectedPostAccess.getPostLink());
 
