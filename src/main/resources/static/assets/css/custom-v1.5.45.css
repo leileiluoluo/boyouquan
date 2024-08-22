@@ -1062,8 +1062,3 @@ tr:nth-child(even) {
     border: 1px solid var(--tertiary);
     border-radius: var(--radius);
 }
-
-.special-thanks .popular-bloggers {
-    display: flex;
-    justify-content: center;
-}
