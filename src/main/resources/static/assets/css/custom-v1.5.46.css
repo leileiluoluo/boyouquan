@@ -1062,3 +1062,13 @@ tr:nth-child(even) {
     border: 1px solid var(--tertiary);
     border-radius: var(--radius);
 }
+
+
+.pagination button {
+    color: var(--theme);
+    font-size: 13px;
+    line-height: 36px;
+    background: var(--primary);
+    border-radius: calc(36px / 2);
+    padding: 0 16px;
+}
