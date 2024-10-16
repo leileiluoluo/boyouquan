@@ -22,7 +22,7 @@ public class MonthlySelectedRestController {
     private MonthlySelectedService monthlySelectedService;
 
     @GetMapping("")
-    public Pagination<MonthlySelectedPost> list(@RequestParam("page") int page) {
+    public Pagination<MonthlySelectedPost> list(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         List<String> yearMonthStrs = monthlySelectedService.listYearMonthStrs();
 
         List<String> yearMonthSubStrs = yearMonthStrs.stream()
