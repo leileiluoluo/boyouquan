@@ -29,7 +29,7 @@ public class BlogListRestController {
     public Pagination<BlogInfo> list(
             @RequestParam(value = "sort", required = false, defaultValue = "collect_time") String sort,
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam("page") int page) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         if (null == keyword) {
             keyword = "";
         }

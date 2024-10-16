@@ -30,7 +30,7 @@ public class PostListRestController {
     public Pagination<PostInfo> list(
             @RequestParam(value = "sort", required = false, defaultValue = "recommended") String sort,
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam("page") int page) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         if (null == keyword) {
             keyword = "";
         }
