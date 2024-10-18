@@ -61,7 +61,7 @@ public class PostListRestController {
                 .results(postInfos).build();
     }
 
-    @GetMapping("")
+    @GetMapping("/by-link")
     public PostInfo getByLink(@RequestParam("link") String link) {
         Post post = postService.getByLink(link);
 
