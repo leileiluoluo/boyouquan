@@ -61,4 +61,23 @@ public class PostListRestController {
                 .results(postInfos).build();
     }
 
+    @GetMapping("")
+    public PostInfo getByLink(@RequestParam("link") String link) {
+        Post post = postService.getByLink(link);
+
+        PostInfo postInfo = new PostInfo();
+        BeanUtils.copyProperties(post, postInfo);
+
+        Blog blog = blogService.getByDomainName(post.getBlogDomainName());
+        postInfo.setBlogName(blog.getName());
+        postInfo.setBlogAddress(blog.getAddress());
+        String blogAdminMediumImageURL = blogService.getBlogAdminMediumImageURLByDomainName(blog.getDomainName());
+        postInfo.setBlogAdminMediumImageURL(blogAdminMediumImageURL);
+
+        Long linkAccessCount = accessService.countByLink(post.getLink());
+        postInfo.setLinkAccessCount(linkAccessCount);
+
+        return postInfo;
+    }
+
 }
