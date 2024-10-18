@@ -31,7 +31,7 @@ public class PlanetShuttleRestController {
     public Map<String, Object> shuttle(HttpServletRequest request, Model model) {
         Map<String, Object> result = new HashMap<>();
 
-        String referer = request.getHeader("Referer");
+        String referer = request.getHeader("From");
         Blog fromBlog = null;
         if (StringUtils.isNotBlank(referer)) {
             String fromDomainName = CommonUtils.getDomainFromURL(referer);
