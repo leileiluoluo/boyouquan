@@ -1,5 +1,6 @@
 package com.boyouquan.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class BlogInfo extends Blog {
 
     private Long postCount;
     private Long accessCount;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
     private Date latestPublishedAt;
     private List<Post> posts = Collections.emptyList();
     private String blogAdminMediumImageURL;
