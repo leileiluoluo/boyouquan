@@ -1,5 +1,6 @@
 package com.boyouquan.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class BlogRequest {
     private String name;
     private String description;
     private Boolean selfSubmitted;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
     private Date requestedAt;
     private Date updatedAt;
     private Status status;
