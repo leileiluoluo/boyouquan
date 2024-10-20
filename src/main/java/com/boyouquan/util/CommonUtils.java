@@ -20,6 +20,7 @@ public class CommonUtils {
 
     private static final SimpleDateFormat MORE_COMMON_DATE_PATTERN = new SimpleDateFormat("yyyy/MM/dd");
     private static final SimpleDateFormat MORE_COMMON_DATE_HOUR_PATTERN = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    private static final SimpleDateFormat MORE_COMMON_DATE_HOUR_SECOND_PATTERN = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     private static final SimpleDateFormat SITEMAP_DATE_PATTERN = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'+08:00'");
 
@@ -35,6 +36,10 @@ public class CommonUtils {
 
     public static String dateHourCommonFormatDisplay(Date date) {
         return MORE_COMMON_DATE_HOUR_PATTERN.format(date);
+    }
+
+    public static String dateHourSecondCommonFormatDisplay(Date date) {
+        return MORE_COMMON_DATE_HOUR_SECOND_PATTERN.format(date);
     }
 
     public static String getBlogCannotBeAccessedInfo(Date detectedAt, Date collectedAt, boolean sunset) {
