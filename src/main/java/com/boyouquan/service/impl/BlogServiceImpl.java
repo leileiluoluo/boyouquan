@@ -112,7 +112,7 @@ public class BlogServiceImpl implements BlogService {
         }
 
         // assemble
-        return assembleBlogInfo(blog, CommonConstants.ALL_POST_COUNT_LIMIT);
+        return assembleBlogInfo(blog, false, CommonConstants.ALL_POST_COUNT_LIMIT);
     }
 
     @Override
@@ -228,7 +228,7 @@ public class BlogServiceImpl implements BlogService {
         blogDaoMapper.deleteByDomainName(domainName);
     }
 
-    private BlogInfo assembleBlogInfo(Blog blog, int postCountLimit) {
+    private BlogInfo assembleBlogInfo(Blog blog, boolean withPosts, int postCountLimit) {
         BlogInfo blogInfo = new BlogInfo();
         BeanUtils.copyProperties(blog, blogInfo);
 
@@ -246,8 +246,10 @@ public class BlogServiceImpl implements BlogService {
         String blogAdminLargeImageURL = getBlogAdminLargeImageURLByDomainName(blogDomainName);
         blogInfo.setBlogAdminLargeImageURL(blogAdminLargeImageURL);
 
-        Pagination<Post> latestPostsPagination = postService.listByDraftAndBlogDomainName(false, blog.getDomainName(), 1, postCountLimit);
-        blogInfo.setPosts(latestPostsPagination.getResults());
+        if (withPosts) {
+            Pagination<Post> latestPostsPagination = postService.listByDraftAndBlogDomainName(false, blog.getDomainName(), 1, postCountLimit);
+            blogInfo.setPosts(latestPostsPagination.getResults());
+        }
 
         blogInfo.setSubmittedInfo(blog.getSelfSubmitted() ? "自行提交" : "后台收录");
         String collectedAt = CommonUtils.dateCommonFormatDisplay(blogInfo.getCollectedAt());
