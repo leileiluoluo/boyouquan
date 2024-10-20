@@ -1,6 +1,7 @@
 package com.boyouquan.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.boyouquan.util.CustomDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public class BlogInfo extends Blog {
 
     private Long postCount;
     private Long accessCount;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Date latestPublishedAt;
     private List<Post> posts = Collections.emptyList();
     private String blogAdminMediumImageURL;

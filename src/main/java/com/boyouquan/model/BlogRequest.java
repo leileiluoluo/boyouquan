@@ -1,6 +1,7 @@
 package com.boyouquan.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.boyouquan.util.CustomDateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class BlogRequest {
     private String name;
     private String description;
     private Boolean selfSubmitted;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
+    @JsonSerialize(using = CustomDateSerializer.class)
     private Date requestedAt;
     private Date updatedAt;
     private Status status;
