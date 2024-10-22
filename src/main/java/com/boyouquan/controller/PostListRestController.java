@@ -10,6 +10,7 @@ import com.boyouquan.util.PaginationBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class PostListRestController {
     private AccessService accessService;
 
     @GetMapping("")
+    @Cacheable("homePostsCache")
     public Pagination<PostInfo> list(
             @RequestParam(value = "sort", required = false, defaultValue = "recommended") String sort,
             @RequestParam(value = "keyword", required = false) String keyword,
