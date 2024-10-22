@@ -4,6 +4,7 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.*;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
+import com.boyouquan.service.BlogStatusService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
@@ -26,6 +27,8 @@ public class PostListRestController {
     private PostService postService;
     @Autowired
     private AccessService accessService;
+    @Autowired
+    private BlogStatusService blogStatusService;
 
     @GetMapping("")
     @Cacheable(value = "recommendedPostsCache", key = "#page", condition = "#page < 10 && (null == #keyword || #keyword.trim() == '') && 'recommended'.equals(#sort)")
@@ -48,6 +51,10 @@ public class PostListRestController {
             Blog blog = blogService.getByDomainName(post.getBlogDomainName());
             postInfo.setBlogName(blog.getName());
             postInfo.setBlogAddress(blog.getAddress());
+
+            boolean isStatusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
+            postInfo.setBlogStatusOk(isStatusOk);
+
             String blogAdminMediumImageURL = blogService.getBlogAdminMediumImageURLByDomainName(blog.getDomainName());
             postInfo.setBlogAdminMediumImageURL(blogAdminMediumImageURL);
 
@@ -67,12 +74,20 @@ public class PostListRestController {
     public PostInfo getByLink(@RequestParam("link") String link) {
         Post post = postService.getByLink(link);
 
+        if (null == post) {
+            return null;
+        }
+
         PostInfo postInfo = new PostInfo();
         BeanUtils.copyProperties(post, postInfo);
 
         Blog blog = blogService.getByDomainName(post.getBlogDomainName());
         postInfo.setBlogName(blog.getName());
         postInfo.setBlogAddress(blog.getAddress());
+
+        boolean isStatusOk = blogStatusService.isStatusOkByBlogDomainName(blog.getDomainName());
+        postInfo.setBlogStatusOk(isStatusOk);
+
         String blogAdminMediumImageURL = blogService.getBlogAdminMediumImageURLByDomainName(blog.getDomainName());
         postInfo.setBlogAdminMediumImageURL(blogAdminMediumImageURL);
 
