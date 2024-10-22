@@ -6,7 +6,6 @@ import com.boyouquan.service.MonthlySelectedService;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +22,6 @@ public class MonthlySelectedRestController {
     private MonthlySelectedService monthlySelectedService;
 
     @GetMapping("")
-    @Cacheable("monthlyReportCache")
     public Pagination<MonthlySelectedPost> list(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         List<String> yearMonthStrs = monthlySelectedService.listYearMonthStrs();
 
