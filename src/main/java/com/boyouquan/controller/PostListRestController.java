@@ -28,7 +28,7 @@ public class PostListRestController {
     private AccessService accessService;
 
     @GetMapping("")
-    @Cacheable(value = "recommendedPostsCache", key = "#page", condition = "#page < 10 && null == #keyword && 'recommended'.equals(#sort)")
+    @Cacheable(value = "recommendedPostsCache", key = "#page", condition = "#page < 10 && (null == #keyword || #keyword.trim() = '') && 'recommended'.equals(#sort)")
     public Pagination<PostInfo> list(
             @RequestParam(value = "sort", required = false, defaultValue = "recommended") String sort,
             @RequestParam(value = "keyword", required = false) String keyword,
