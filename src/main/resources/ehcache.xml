@@ -20,4 +20,23 @@
             <offheap unit="MB">30</offheap>
         </resources>
     </cache>
+    <cache alias="recommendedPostsCache">
+        <key-type>java.lang.Integer</key-type>
+        <value-type>com.boyouquan.util.Pagination</value-type>
+        <expiry>
+            <ttl>3600</ttl>
+        </expiry>
+        <listeners>
+            <listener>
+                <class>com.boyouquan.util.CacheEventLogger</class>
+                <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
+                <event-ordering-mode>UNORDERED</event-ordering-mode>
+                <events-to-fire-on>CREATED</events-to-fire-on>
+                <events-to-fire-on>EXPIRED</events-to-fire-on>
+            </listener>
+        </listeners>
+        <resources>
+            <offheap unit="MB">30</offheap>
+        </resources>
+    </cache>
 </config>
