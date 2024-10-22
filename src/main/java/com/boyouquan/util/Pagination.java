@@ -1,9 +1,12 @@
 package com.boyouquan.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pagination<T> {
+public class Pagination<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int pageNo = 0;
     private int pageSize = 0;
