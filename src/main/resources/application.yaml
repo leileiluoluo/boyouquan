@@ -8,6 +8,9 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
   mail:
     host: smtp.exmail.qq.com
     port: 465
