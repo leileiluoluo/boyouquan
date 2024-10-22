@@ -8,13 +8,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Post {
+public class Post implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -1412983129684476980L;
 
     private String link;
     private String blogDomainName;
