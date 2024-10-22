@@ -2,7 +2,7 @@
         xmlns="http://www.ehcache.org/v3"
         xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
     <cache alias="monthlyReportCache">
-        <key-type>java.lang.Long</key-type>
+        <key-type>java.lang.Integer</key-type>
         <value-type>com.boyouquan.util.Pagination</value-type>
         <expiry>
             <ttl>86400</ttl>
