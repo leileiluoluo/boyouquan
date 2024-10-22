@@ -91,7 +91,7 @@ public class BlogAccessIssueMailerScheduler {
                     && ((now - sentAt) > 30 * oneDay);
         }
 
-        return need2SendEmail;
+        return blog.getSelfSubmitted() && need2SendEmail;
     }
 
 }
