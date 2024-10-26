@@ -1,6 +1,7 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.*;
 import com.boyouquan.util.LoginUtil;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -30,6 +33,10 @@ public class AdminRestController {
     private EmailService emailService;
     @Autowired
     private PinHistoryService pinHistoryService;
+    @Autowired
+    private BlogRequestFormHelper blogRequestFormHelper;
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody AdminLoginForm adminLoginForm) {
@@ -141,6 +148,40 @@ public class AdminRestController {
         result.put("status", "success");
         result.put("result", blogRequestInfo);
 
+        return result;
+    }
+
+    @PostMapping("/blog-requests/add")
+    public Map<String, Object> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+
+        // permission check
+        String sessionId = request.getHeader("sessionId");
+        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
+            result.put("status", "error");
+            result.put("message", "您无权限操作！");
+            return result;
+        }
+
+        Map<String, String> error = blogRequestFormHelper.paramsValidation(blogRequestForm);
+        if (null != error) {
+            result.put("status", "error");
+            result.put("message", error);
+            return result;
+        }
+
+        // submit
+        BlogRequest blogRequest = new BlogRequest();
+        blogRequest.setName(blogRequestForm.getName().trim());
+        blogRequest.setDescription(blogRequestForm.getDescription().trim());
+        blogRequest.setRssAddress(blogRequestForm.getRssAddress().trim());
+        blogRequest.setAdminEmail(blogRequestForm.getAdminEmail().trim());
+        blogRequest.setSelfSubmitted(false);
+        blogRequestService.submit(blogRequest);
+
+        executorService.execute(() -> blogRequestService.processNewRequest(blogRequest.getRssAddress()));
+
+        result.put("status", "success");
         return result;
     }
 
