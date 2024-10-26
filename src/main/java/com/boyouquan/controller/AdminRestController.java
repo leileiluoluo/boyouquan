@@ -188,7 +188,7 @@ public class AdminRestController {
         return result;
     }
 
-    @GetMapping("/blog-requests/approve/{id}")
+    @PatchMapping("/blog-requests/approve/{id}")
     public Map<String, Object> approveBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
@@ -207,7 +207,7 @@ public class AdminRestController {
         return result;
     }
 
-    @PostMapping("/blog-requests/reject/{id}")
+    @PatchMapping("/blog-requests/reject/{id}")
     public Map<String, Object> rejectBlogRequestById(@PathVariable("id") Long id, BlogRequestRejectForm blogRequestRejectForm, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
