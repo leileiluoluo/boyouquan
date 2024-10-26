@@ -36,12 +36,16 @@ public class AdminRestController {
         // name
         if (StringUtils.isBlank(adminLoginForm.getUsername())) {
             result.put("status", "error");
-            result.put("message", "账号不能为空");
+            Map<String, String> message = new HashMap<>();
+            message.put("username", "账号不能为空");
+            result.put("message", message);
             return result;
         }
         if (StringUtils.isBlank(adminLoginForm.getPassword())) {
             result.put("status", "error");
-            result.put("message", "密码不能为空");
+            Map<String, String> message = new HashMap<>();
+            message.put("username", "密码不能为空");
+            result.put("message", message);
             return result;
         }
 
@@ -49,7 +53,9 @@ public class AdminRestController {
         boolean isUserValid = userService.isUsernamePasswordValid(adminLoginForm.getUsername(), adminLoginForm.getPassword());
         if (!isUserValid) {
             result.put("status", "error");
-            result.put("message", "账号或密码无效！");
+            Map<String, String> message = new HashMap<>();
+            message.put("username", "账号或密码无效！");
+            result.put("message", message);
             return result;
         }
 
