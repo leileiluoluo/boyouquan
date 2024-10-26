@@ -362,7 +362,7 @@ public class AdminRestController {
     }
 
     @PatchMapping("/recommended-posts/pin")
-    public Map<String, Object> pinPost(RecommendPostForm recommendPostForm, HttpServletRequest request) {
+    public Map<String, Object> pinPost(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
         // permission check
