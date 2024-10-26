@@ -28,7 +28,7 @@ import java.util.Map;
 @RequestMapping("/api/go")
 public class GoRestController {
 
-    private final Logger logger = LoggerFactory.getLogger(GoController.class);
+    private final Logger logger = LoggerFactory.getLogger(GoRestController.class);
 
     @Autowired
     private BlogService blogService;
