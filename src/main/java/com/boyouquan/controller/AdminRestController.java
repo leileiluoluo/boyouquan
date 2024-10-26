@@ -145,7 +145,7 @@ public class AdminRestController {
     }
 
     @PatchMapping("/blog-requests/{id}/uncollected")
-    public Map<String, Object> uncollectedBlogById(@PathVariable("id") Long id, BlogUncollectedForm blogDeletedForm, HttpServletRequest request) {
+    public Map<String, Object> uncollectedBlogById(@PathVariable("id") Long id, @RequestBody BlogUncollectedForm blogDeletedForm, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
         // permission check
@@ -208,7 +208,7 @@ public class AdminRestController {
     }
 
     @PatchMapping("/blog-requests/reject/{id}")
-    public Map<String, Object> rejectBlogRequestById(@PathVariable("id") Long id, BlogRequestRejectForm blogRequestRejectForm, HttpServletRequest request) {
+    public Map<String, Object> rejectBlogRequestById(@PathVariable("id") Long id, @RequestBody BlogRequestRejectForm blogRequestRejectForm, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
         // permission check
@@ -265,7 +265,7 @@ public class AdminRestController {
     }
 
     @PostMapping("/recommended-posts/add")
-    public Map<String, Object> recommendPostRequest(RecommendPostForm recommendPostForm, HttpServletRequest request) {
+    public Map<String, Object> recommendPostRequest(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
         // permission check
@@ -276,10 +276,16 @@ public class AdminRestController {
             return result;
         }
 
+        Post post = postService.getByLink(recommendPostForm.getLink());
+        if (null == post) {
+            result.put("status", "error");
+            result.put("message", "文章链接不存在！");
+            return result;
+        }
+
         postService.recommendByLink(recommendPostForm.getLink());
 
         // after
-        Post post = postService.getByLink(recommendPostForm.getLink());
         Blog blog = blogService.getByDomainName(post.getBlogDomainName());
         emailService.sendPostRecommendedNotice(blog, post);
 
@@ -287,8 +293,8 @@ public class AdminRestController {
         return result;
     }
 
-    @GetMapping("/recommended-posts/unpin")
-    public Map<String, Object> unpinPost(@RequestParam("link") String link, HttpServletRequest request) {
+    @PatchMapping("/recommended-posts/unpin")
+    public Map<String, Object> unpinPost(RecommendPostForm recommendPostForm, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
         // permission check
@@ -298,6 +304,8 @@ public class AdminRestController {
             result.put("message", "您无权限操作！");
             return result;
         }
+
+        String link = recommendPostForm.getLink();
 
         // unpin
         postService.unpinByLink(link);
@@ -306,8 +314,8 @@ public class AdminRestController {
         return result;
     }
 
-    @GetMapping("/recommended-posts/pin")
-    public Map<String, Object> pinPost(@RequestParam("link") String link, HttpServletRequest request) {
+    @PatchMapping("/recommended-posts/pin")
+    public Map<String, Object> pinPost(RecommendPostForm recommendPostForm, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
         // permission check
@@ -317,6 +325,8 @@ public class AdminRestController {
             result.put("message", "您无权限操作！");
             return result;
         }
+
+        String link = recommendPostForm.getLink();
 
         // pin
         postService.pinByLink(link);
