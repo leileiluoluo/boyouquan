@@ -335,7 +335,7 @@ public class AdminRestController {
     }
 
     @PatchMapping("/recommended-posts/unpin")
-    public Map<String, Object> unpinPost(RecommendPostForm recommendPostForm, HttpServletRequest request) {
+    public Map<String, Object> unpinPost(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
 
         // permission check
@@ -347,6 +347,12 @@ public class AdminRestController {
         }
 
         String link = recommendPostForm.getLink();
+
+        if (!postService.existsByLink(link)) {
+            result.put("status", "error");
+            result.put("message", "文章链接不存在！");
+            return result;
+        }
 
         // unpin
         postService.unpinByLink(link);
@@ -368,6 +374,12 @@ public class AdminRestController {
         }
 
         String link = recommendPostForm.getLink();
+
+        if (!postService.existsByLink(link)) {
+            result.put("status", "error");
+            result.put("message", "文章链接不存在！");
+            return result;
+        }
 
         // pin
         postService.pinByLink(link);
