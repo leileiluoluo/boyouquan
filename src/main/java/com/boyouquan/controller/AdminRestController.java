@@ -69,7 +69,7 @@ public class AdminRestController {
 
         // permission check
         String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || !LoginUtil.getSessionId().equals(sessionId)) {
+        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
             result.put("status", "error");
             result.put("message", "您无权限操作！");
             return result;
@@ -91,7 +91,7 @@ public class AdminRestController {
 
         // permission check
         String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || !LoginUtil.getSessionId().equals(sessionId)) {
+        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
             result.put("status", "error");
             result.put("message", "您无权限操作！");
             return result;
@@ -112,6 +112,27 @@ public class AdminRestController {
 
         result.put("status", "success");
         result.put("result", pagination);
+
+        return result;
+    }
+
+    @GetMapping("/blog-requests/{id}")
+    public Map<String, Object> getBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+
+        // permission check
+        String sessionId = request.getHeader("sessionId");
+        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
+            result.put("status", "error");
+            result.put("message", "您无权限操作！");
+            return result;
+        }
+
+        // get
+        BlogRequestInfo blogRequestInfo = blogRequestService.getBlogRequestInfoById(id);
+
+        result.put("status", "success");
+        result.put("result", blogRequestInfo);
 
         return result;
     }
