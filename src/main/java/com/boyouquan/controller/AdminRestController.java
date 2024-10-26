@@ -44,7 +44,7 @@ public class AdminRestController {
         if (StringUtils.isBlank(adminLoginForm.getPassword())) {
             result.put("status", "error");
             Map<String, String> message = new HashMap<>();
-            message.put("username", "密码不能为空");
+            message.put("password", "密码不能为空");
             result.put("message", message);
             return result;
         }
