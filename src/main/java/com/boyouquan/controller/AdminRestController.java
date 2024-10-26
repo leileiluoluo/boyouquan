@@ -4,21 +4,16 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.model.AdminLoginForm;
 import com.boyouquan.model.BlogRequest;
 import com.boyouquan.model.BlogRequestInfo;
-import com.boyouquan.model.User;
 import com.boyouquan.service.BlogRequestService;
 import com.boyouquan.service.UserService;
+import com.boyouquan.util.LoginUtil;
 import com.boyouquan.util.Pagination;
-import com.boyouquan.util.PermissionUtil;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -30,7 +25,7 @@ public class AdminRestController {
     private BlogRequestService blogRequestService;
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody AdminLoginForm adminLoginForm, HttpSession session) {
+    public Map<String, Object> login(@RequestBody AdminLoginForm adminLoginForm) {
         Map<String, Object> result = new HashMap<>();
 
         // name
@@ -60,28 +55,28 @@ public class AdminRestController {
         }
 
         // set session
-        User user = userService.getUserByUsername(adminLoginForm.getUsername());
-        session.setAttribute("user", user);
+        String sessionId = UUID.randomUUID().toString();
+        LoginUtil.setSessionId(sessionId);
 
         result.put("status", "success");
-        result.put("result", user);
+        result.put("result", sessionId);
         return result;
     }
 
     @GetMapping("/logout")
-    public Map<String, String> logout(HttpServletRequest request, HttpSession session) {
+    public Map<String, String> logout(HttpServletRequest request) {
         Map<String, String> result = new HashMap<>();
 
         // permission check
-        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
-        if (!hasAdminPermission) {
+        String sessionId = request.getHeader("sessionId");
+        if (StringUtils.isBlank(sessionId) || !LoginUtil.getSessionId().equals(sessionId)) {
             result.put("status", "error");
             result.put("message", "您无权限操作！");
             return result;
         }
 
         // remove session
-        session.removeAttribute("user");
+        LoginUtil.removeSessionId();
 
         result.put("status", "success");
         return result;
@@ -95,8 +90,8 @@ public class AdminRestController {
         Map<String, Object> result = new HashMap<>();
 
         // permission check
-        boolean hasAdminPermission = PermissionUtil.hasAdminPermission(request);
-        if (!hasAdminPermission) {
+        String sessionId = request.getHeader("sessionId");
+        if (StringUtils.isBlank(sessionId) || !LoginUtil.getSessionId().equals(sessionId)) {
             result.put("status", "error");
             result.put("message", "您无权限操作！");
             return result;
