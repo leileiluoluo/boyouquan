@@ -1,6 +1,7 @@
 package com.boyouquan.model;
 
 import com.boyouquan.util.CustomDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Date;
 public class Blog {
 
     private String domainName;
+    @JsonIgnore
     private String adminEmail;
     private String name;
     private String address;
