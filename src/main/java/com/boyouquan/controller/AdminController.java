@@ -5,14 +5,12 @@ import com.boyouquan.enumration.ErrorCode;
 import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.*;
-import com.boyouquan.util.LoginUtil;
-import com.boyouquan.util.Pagination;
-import com.boyouquan.util.PaginationBuilder;
-import com.boyouquan.util.ResponseUtil;
+import com.boyouquan.util.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -139,23 +137,16 @@ public class AdminController {
         return result;
     }
 
-    @PostMapping("/blog-requests/add")
-    public Map<String, Object> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    @PostMapping("/blog-requests")
+    public ResponseEntity<?> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
-        Map<String, String> error = blogRequestFormHelper.paramsValidation(blogRequestForm);
+        ErrorCode error = blogRequestFormHelper.paramsValidation(blogRequestForm);
         if (null != error) {
-            result.put("status", "error");
-            result.put("message", error);
-            return result;
+            return ResponseUtil.errorResponse(error);
         }
 
         // submit
@@ -169,8 +160,7 @@ public class AdminController {
 
         executorService.execute(() -> blogRequestService.processNewRequest(blogRequest.getRssAddress()));
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PatchMapping("/blog-requests/{id}/uncollected")

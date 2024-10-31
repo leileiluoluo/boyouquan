@@ -1,13 +1,15 @@
 package com.boyouquan.util;
 
-import com.boyouquan.model.User;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 
 public class PermissionUtil {
 
     public static boolean hasAdminPermission(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        return null != user && User.Role.admin.equals(user.getRole());
+        String sessionId = request.getHeader("sessionId");
+        return !StringUtils.isBlank(sessionId)
+                && null != LoginUtil.getSessionId()
+                && LoginUtil.getSessionId().equals(sessionId);
     }
 
 }
