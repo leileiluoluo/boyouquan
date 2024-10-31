@@ -11,16 +11,17 @@ import com.boyouquan.util.Pagination;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/blogs")
-public class BlogListRestController {
+public class BlogsController {
 
     @Autowired
     private BlogService blogService;
@@ -54,22 +55,34 @@ public class BlogListRestController {
     }
 
     @GetMapping("/random-blogs")
-    public List<BlogInfo> getRandomBlogsUnderBlog(@RequestParam("domainName") String domainName) {
-        return blogService.listByRandom(List.of(domainName), 2)
+    public ResponseEntity<List<BlogInfo>> getRandomBlogsUnderBlog(@RequestParam("domainName") String domainName) {
+        List<BlogInfo> blogInfos = blogService.listByRandom(List.of(domainName), 2)
                 .stream()
                 .map(blog -> blogService.getBlogInfoByDomainName(blog.getDomainName()))
                 .toList();
+
+        return ResponseEntity.ok(blogInfos);
     }
 
     @GetMapping("/posts")
-    public List<Post> getPostsUnderBlog(@RequestParam("domainName") String domainName) {
-        return postService.listByDraftAndBlogDomainName(false, domainName, 1, CommonConstants.ALL_POST_COUNT_LIMIT)
+    public ResponseEntity<List<Post>> getPostsUnderBlog(@RequestParam("domainName") String domainName) {
+        List<Post> posts = postService.listByDraftAndBlogDomainName(false, domainName, 1, CommonConstants.ALL_POST_COUNT_LIMIT)
                 .getResults();
+
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/charts")
-    public Map<String, Object> getBlogCharts(@RequestParam("domainName") String domainName) {
-        Map<String, Object> result = new HashMap<>();
+    public ResponseEntity<BlogCharts> getBlogCharts(@RequestParam("domainName") String domainName) {
+        BlogCharts charts = new BlogCharts();
+
+        // monthly access charts
+        List<MonthAccess> monthAccessList = accessService.getBlogAccessSeriesInLatestOneYear(domainName);
+        List<String> yearlyAccessDataLabels = monthAccessList.stream().map(MonthAccess::getMonth).toList();
+        List<Integer> yearlyAccessDataValues = monthAccessList.stream().map(MonthAccess::getCount).toList();
+
+        charts.setYearlyAccessDataLabels(yearlyAccessDataLabels);
+        charts.setYearlyAccessDataValues(yearlyAccessDataValues);
 
         // planet shuttle charts
         boolean showLatestInitiatedChart = false;
@@ -77,41 +90,33 @@ public class BlogListRestController {
         if (StringUtils.isNotBlank(latestInitiatedYearMonthStr)) {
             Date latestInitiated = CommonUtils.yearMonthStr2Date(latestInitiatedYearMonthStr);
             boolean oneYearAgo = CommonUtils.isDateOneYearAgo(latestInitiated);
-
             if (!oneYearAgo) {
                 showLatestInitiatedChart = true;
                 List<MonthInitiated> monthInitiatedList = planetShuttleService.getBlogInitiatedSeriesInLatestOneYear(domainName);
-                String[] yearlyInitiatedDataLabels = monthInitiatedList.stream().map(MonthInitiated::getMonth).toArray(String[]::new);
-                Integer[] yearlyInitiatedDataValues = monthInitiatedList.stream().map(MonthInitiated::getCount).toArray(Integer[]::new);
-                result.put("yearlyInitiatedDataLabels", yearlyInitiatedDataLabels);
-                result.put("yearlyInitiatedDataValues", yearlyInitiatedDataValues);
+                List<String> yearlyInitiatedDataLabels = monthInitiatedList.stream().map(MonthInitiated::getMonth).toList();
+                List<Integer> yearlyInitiatedDataValues = monthInitiatedList.stream().map(MonthInitiated::getCount).toList();
+
+                charts.setYearlyInitiatedDataLabels(yearlyInitiatedDataLabels);
+                charts.setYearlyInitiatedDataValues(yearlyInitiatedDataValues);
             }
         }
-        result.put("showLatestInitiatedChart", showLatestInitiatedChart);
-
-        // monthly access charts
-        List<MonthAccess> monthAccessList = accessService.getBlogAccessSeriesInLatestOneYear(domainName);
-        String[] yearlyAccessDataLabels = monthAccessList.stream().map(MonthAccess::getMonth).toArray(String[]::new);
-        Integer[] yearlyAccessDataValues = monthAccessList.stream().map(MonthAccess::getCount).toArray(Integer[]::new);
-
-        result.put("yearlyAccessDataLabels", yearlyAccessDataLabels);
-        result.put("yearlyAccessDataValues", yearlyAccessDataValues);
+        charts.setShowLatestInitiatedChart(showLatestInitiatedChart);
 
         // yearly publish charts
         boolean showLatestPublishedAtChart = false;
         Date latestPublishAt = postService.getLatestPublishedAtByBlogDomainName(domainName);
         showLatestPublishedAtChart = !CommonUtils.isDateOneYearAgo(latestPublishAt);
-        result.put("showLatestPublishedAtChart", showLatestPublishedAtChart);
+        charts.setShowLatestPublishedAtChart(showLatestPublishedAtChart);
         if (showLatestPublishedAtChart) {
             List<MonthPublish> monthPublishList = postService.getBlogPostPublishSeriesInLatestOneYear(domainName);
-            String[] yearlyPublishDataLabels = monthPublishList.stream().map(MonthPublish::getMonth).toArray(String[]::new);
-            Integer[] yearlyPublishDataValues = monthPublishList.stream().map(MonthPublish::getCount).toArray(Integer[]::new);
+            List<String> yearlyPublishDataLabels = monthPublishList.stream().map(MonthPublish::getMonth).toList();
+            List<Integer> yearlyPublishDataValues = monthPublishList.stream().map(MonthPublish::getCount).toList();
 
-            result.put("yearlyPublishDataLabels", yearlyPublishDataLabels);
-            result.put("yearlyPublishDataValues", yearlyPublishDataValues);
+            charts.setYearlyPublishDataLabels(yearlyPublishDataLabels);
+            charts.setYearlyPublishDataValues(yearlyPublishDataValues);
         }
 
-        return result;
+        return ResponseEntity.ok(charts);
     }
 
 }
