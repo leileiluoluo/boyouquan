@@ -1,16 +1,19 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.enumration.ErrorCode;
 import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.*;
 import com.boyouquan.util.LoginUtil;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
+import com.boyouquan.util.ResponseUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -19,7 +22,7 @@ import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/api/admin")
-public class AdminRestController {
+public class AdminController {
 
     @Autowired
     private UserService userService;
@@ -39,42 +42,27 @@ public class AdminRestController {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody AdminLoginForm adminLoginForm) {
-        Map<String, Object> result = new HashMap<>();
-
-        // name
+    public ResponseEntity<?> login(@RequestBody AdminLoginForm adminLoginForm) {
+        // validation
         if (StringUtils.isBlank(adminLoginForm.getUsername())) {
-            result.put("status", "error");
-            Map<String, String> message = new HashMap<>();
-            message.put("username", "账号不能为空");
-            result.put("message", message);
-            return result;
+            return ResponseUtil.errorResponse(ErrorCode.LOGIN_USERNAME_INVALID);
         }
         if (StringUtils.isBlank(adminLoginForm.getPassword())) {
-            result.put("status", "error");
-            Map<String, String> message = new HashMap<>();
-            message.put("password", "密码不能为空");
-            result.put("message", message);
-            return result;
+            return ResponseUtil.errorResponse(ErrorCode.LOGIN_PASSWORD_INVALID);
         }
 
-        // check user
         boolean isUserValid = userService.isUsernamePasswordValid(adminLoginForm.getUsername(), adminLoginForm.getPassword());
         if (!isUserValid) {
-            result.put("status", "error");
-            Map<String, String> message = new HashMap<>();
-            message.put("username", "账号或密码无效！");
-            result.put("message", message);
-            return result;
+            return ResponseUtil.errorResponse(ErrorCode.LOGIN_USERNAME_PASSWORD_INVALID);
         }
 
         // set session
         String sessionId = UUID.randomUUID().toString();
         LoginUtil.setSessionId(sessionId);
 
-        result.put("status", "success");
-        result.put("result", sessionId);
-        return result;
+        // return
+        LoginSuccess loginSuccess = new LoginSuccess(sessionId);
+        return ResponseEntity.ok(loginSuccess);
     }
 
     @GetMapping("/logout")
