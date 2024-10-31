@@ -1,25 +1,27 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.enumration.ErrorCode;
 import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.BlogRequest;
 import com.boyouquan.model.BlogRequestForm;
 import com.boyouquan.model.BlogRequestInfo;
 import com.boyouquan.service.BlogRequestService;
 import com.boyouquan.util.Pagination;
+import com.boyouquan.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/api/blog-requests")
-public class BlogRequestsRestController {
+public class BlogRequestsController {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -29,7 +31,7 @@ public class BlogRequestsRestController {
     private BlogRequestService blogRequestService;
 
     @GetMapping("")
-    public Pagination<BlogRequestInfo> listBlogRequests(
+    public ResponseEntity<Pagination<BlogRequestInfo>> listBlogRequests(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         List<BlogRequest.Status> statuses = Arrays.asList(
@@ -41,29 +43,23 @@ public class BlogRequestsRestController {
                 BlogRequest.Status.uncollected
         );
 
-        return blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(keyword, true, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        Pagination<BlogRequestInfo> blogRequestInfo = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(keyword, true, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+
+        return ResponseEntity.ok(blogRequestInfo);
     }
 
     @GetMapping("/{id}")
-    public BlogRequestInfo getBlogRequestById(@PathVariable("id") Long id) {
-        return blogRequestService.getBlogRequestInfoById(id);
+    public ResponseEntity<BlogRequestInfo> getBlogRequestById(@PathVariable("id") Long id) {
+        BlogRequestInfo blogRequestInfo = blogRequestService.getBlogRequestInfoById(id);
+
+        return ResponseEntity.ok(blogRequestInfo);
     }
 
     @PostMapping("")
-    public Map<String, Object> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm) {
-        Map<String, Object> result = new HashMap<>();
-        Map<String, String> error = blogRequestFormHelper.paramsValidation(blogRequestForm);
+    public ResponseEntity<?> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm) {
+        ErrorCode error = blogRequestFormHelper.paramsValidation(blogRequestForm);
         if (null != error) {
-            result.put("status", "error");
-            result.put("message", error);
-            return result;
-        }
-
-        // params validation
-        if (null != blogRequestService.getByRssAddress(blogRequestForm.getRssAddress())) {
-            result.put("status", "error");
-            result.put("message", "您要提交的博客已存在！");
-            return result;
+            return ResponseUtil.errorResponse(error);
         }
 
         // submit
@@ -77,8 +73,7 @@ public class BlogRequestsRestController {
 
         executorService.execute(() -> blogRequestService.processNewRequest(blogRequest.getRssAddress()));
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
