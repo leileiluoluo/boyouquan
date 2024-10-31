@@ -25,7 +25,10 @@ public class GravatarController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .headers(headers)
+                .body(bytes);
     }
 
 }
