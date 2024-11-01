@@ -1,22 +1,19 @@
 package com.boyouquan.controller;
 
-import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.enumration.ErrorCode;
 import com.boyouquan.helper.BlogRequestFormHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.*;
-import com.boyouquan.util.*;
+import com.boyouquan.util.LoginUtil;
+import com.boyouquan.util.PermissionUtil;
+import com.boyouquan.util.ResponseUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -81,45 +78,6 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/blog-requests")
-    public ResponseEntity<?> listBlogRequests(
-            @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            HttpServletRequest request) {
-        // permission check
-        if (!PermissionUtil.hasAdminPermission(request)) {
-            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
-        }
-
-        // list
-        List<BlogRequest.Status> statuses = Arrays.asList(
-                BlogRequest.Status.submitted,
-                BlogRequest.Status.system_check_valid,
-                BlogRequest.Status.system_check_invalid,
-                BlogRequest.Status.approved,
-                BlogRequest.Status.rejected,
-                BlogRequest.Status.uncollected
-        );
-
-        Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosByStatuses(
-                keyword, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
-
-        return ResponseEntity.ok(pagination);
-    }
-
-    @GetMapping("/blog-requests/{id}")
-    public ResponseEntity<?> getBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
-        // permission check
-        if (!PermissionUtil.hasAdminPermission(request)) {
-            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
-        }
-
-        // get
-        BlogRequestInfo blogRequestInfo = blogRequestService.getBlogRequestInfoById(id);
-
-        return ResponseEntity.ok(blogRequestInfo);
-    }
-
     @PostMapping("/blog-requests")
     public ResponseEntity<?> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm, HttpServletRequest request) {
         // permission check
@@ -178,7 +136,7 @@ public class AdminController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/blog-requests/approve/{id}")
+    @PatchMapping("/blog-requests/{id}/approve")
     public ResponseEntity<?> approveBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
         // permission check
         if (!PermissionUtil.hasAdminPermission(request)) {
@@ -191,7 +149,7 @@ public class AdminController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/blog-requests/reject/{id}")
+    @PatchMapping("/blog-requests/{id}/reject")
     public ResponseEntity<?> rejectBlogRequestById(@PathVariable("id") Long id, @RequestBody BlogRequestRejectForm blogRequestRejectForm, HttpServletRequest request) {
         // permission check
         if (!PermissionUtil.hasAdminPermission(request)) {
@@ -204,35 +162,6 @@ public class AdminController {
         }
 
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/recommended-posts")
-    public ResponseEntity<?> listRecommendedPosts(@RequestParam("page") int page, HttpServletRequest request) {
-        // permission check
-        if (!PermissionUtil.hasAdminPermission(request)) {
-            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
-        }
-
-        // list
-        Pagination<Post> postPagination = postService.listWithKeyWord(PostSortType.recommended, "", page, CommonConstants.DEFAULT_PAGE_SIZE);
-        List<PostInfo> postInfos = new ArrayList<>();
-        for (Post post : postPagination.getResults()) {
-            PostInfo postInfo = new PostInfo();
-            BeanUtils.copyProperties(post, postInfo);
-
-            Blog blog = blogService.getByDomainName(post.getBlogDomainName());
-            postInfo.setBlogName(blog.getName());
-            postInfo.setBlogAddress(blog.getAddress());
-            postInfos.add(postInfo);
-        }
-
-        Pagination<PostInfo> postInfoPagination = PaginationBuilder.<PostInfo>newBuilder()
-                .pageNo(page)
-                .pageSize(postPagination.getPageSize())
-                .total(postPagination.getTotal())
-                .results(postInfos).build();
-
-        return ResponseEntity.ok(postInfoPagination);
     }
 
     @PostMapping("/recommended-posts")
