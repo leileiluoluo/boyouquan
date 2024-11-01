@@ -1,6 +1,7 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.enumration.ErrorCode;
 import com.boyouquan.model.*;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
@@ -8,6 +9,7 @@ import com.boyouquan.service.PlanetShuttleService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.Pagination;
+import com.boyouquan.util.ResponseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +43,9 @@ public class BlogController {
         // single blog
         if (StringUtils.isNotBlank(domainName)) {
             BlogInfo blogInfo = blogService.getBlogInfoByDomainName(domainName);
+            if (null == blogInfo) {
+                return ResponseUtil.errorResponse(ErrorCode.BLOG_NOT_EXISTS);
+            }
             return ResponseEntity.ok(blogInfo);
         }
 
