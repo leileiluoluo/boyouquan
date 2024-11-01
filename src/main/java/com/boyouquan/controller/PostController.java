@@ -1,6 +1,7 @@
 package com.boyouquan.controller;
 
 import com.boyouquan.constant.CommonConstants;
+import com.boyouquan.enumration.ErrorCode;
 import com.boyouquan.model.*;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
@@ -8,10 +9,11 @@ import com.boyouquan.service.BlogStatusService;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
+import com.boyouquan.util.ResponseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
-public class PostListRestController {
+public class PostController {
 
     @Autowired
     private BlogService blogService;
@@ -31,8 +33,7 @@ public class PostListRestController {
     private BlogStatusService blogStatusService;
 
     @GetMapping("")
-    @Cacheable(value = "recommendedPostsCache", key = "#page", condition = "#page < 10 && (null == #keyword || #keyword.trim() == '') && 'recommended'.equals(#sort)")
-    public Pagination<PostInfo> list(
+    public ResponseEntity<Pagination<PostInfo>> list(
             @RequestParam(value = "sort", required = false, defaultValue = "recommended") String sort,
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
@@ -63,19 +64,21 @@ public class PostListRestController {
             postInfos.add(postInfo);
         }
 
-        return PaginationBuilder.<PostInfo>newBuilder()
+        Pagination<PostInfo> postInfoPagination = PaginationBuilder.<PostInfo>newBuilder()
                 .pageNo(page)
                 .pageSize(postPagination.getPageSize())
                 .total(postPagination.getTotal())
                 .results(postInfos).build();
+
+        return ResponseEntity.ok(postInfoPagination);
     }
 
     @GetMapping("/by-link")
-    public PostInfo getByLink(@RequestParam("link") String link) {
+    public ResponseEntity<?> getByLink(@RequestParam("link") String link) {
         Post post = postService.getByLink(link);
 
         if (null == post) {
-            return null;
+            return ResponseUtil.errorResponse(ErrorCode.POST_NOT_EXISTS);
         }
 
         PostInfo postInfo = new PostInfo();
@@ -94,7 +97,7 @@ public class PostListRestController {
         Long linkAccessCount = accessService.countByLink(post.getLink());
         postInfo.setLinkAccessCount(linkAccessCount);
 
-        return postInfo;
+        return ResponseEntity.ok(postInfo);
     }
 
 }
