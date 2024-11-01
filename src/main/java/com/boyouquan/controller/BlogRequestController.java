@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("/api/blog-requests")
-public class BlogRequestsController {
+public class BlogRequestController {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -35,7 +35,7 @@ public class BlogRequestsController {
     public ResponseEntity<Pagination<BlogRequestInfo>> listBlogRequests(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(value = "selfSubmitted", required = false, defaultValue = "true") boolean selfSubmitted) {
+            @RequestParam(value = "onlySelfSubmitted", required = false, defaultValue = "true") boolean onlySelfSubmitted) {
         List<BlogRequest.Status> statuses = Arrays.asList(
                 BlogRequest.Status.submitted,
                 BlogRequest.Status.system_check_valid,
@@ -46,7 +46,7 @@ public class BlogRequestsController {
         );
 
         Pagination<BlogRequestInfo> blogRequestInfo = PaginationBuilder.buildEmptyResults();
-        if (selfSubmitted) {
+        if (onlySelfSubmitted) {
             blogRequestInfo = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(keyword, true, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
         } else {
             blogRequestInfo = blogRequestService.listBlogRequestInfosByStatuses(
