@@ -3,13 +3,16 @@ package com.boyouquan.controller;
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.enumration.ErrorCode;
 import com.boyouquan.helper.BlogRequestFormHelper;
+import com.boyouquan.helper.IPControlHelper;
 import com.boyouquan.model.BlogRequest;
 import com.boyouquan.model.BlogRequestForm;
 import com.boyouquan.model.BlogRequestInfo;
 import com.boyouquan.service.BlogRequestService;
+import com.boyouquan.util.IPUtil;
 import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
 import com.boyouquan.util.ResponseUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +33,8 @@ public class BlogRequestController {
     private BlogRequestFormHelper blogRequestFormHelper;
     @Autowired
     private BlogRequestService blogRequestService;
+    @Autowired
+    private IPControlHelper ipControlHelper;
 
     @GetMapping("")
     public ResponseEntity<Pagination<BlogRequestInfo>> listBlogRequests(
@@ -64,10 +69,16 @@ public class BlogRequestController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm) {
+    public ResponseEntity<?> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm, HttpServletRequest request) {
         ErrorCode error = blogRequestFormHelper.paramsValidation(blogRequestForm);
         if (null != error) {
             return ResponseUtil.errorResponse(error);
+        }
+
+        // IP Control
+        String ip = IPUtil.getRealIp(request);
+        if (ipControlHelper.alreadyAccessed(ip, "blog_submitted")) {
+            return ResponseUtil.errorResponse(ErrorCode.BLOG_SUBMITTED_WITH_SAME_IP);
         }
 
         // submit
@@ -79,7 +90,12 @@ public class BlogRequestController {
         blogRequest.setSelfSubmitted(true);
         blogRequestService.submit(blogRequest);
 
-        executorService.execute(() -> blogRequestService.processNewRequest(blogRequest.getRssAddress()));
+        executorService.execute(() -> {
+            // IP Control
+            ipControlHelper.access(ip, "blog_submitted");
+
+            blogRequestService.processNewRequest(blogRequest.getRssAddress());
+        });
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

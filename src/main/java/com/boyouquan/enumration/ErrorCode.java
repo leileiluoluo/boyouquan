@@ -16,6 +16,7 @@ public enum ErrorCode implements RestErrorResponse {
     LOGIN_PASSWORD_INVALID(HttpStatus.BAD_REQUEST, "login_password_invalid", "密码无效"),
     LOGIN_USERNAME_PASSWORD_INVALID(HttpStatus.BAD_REQUEST, "login_username_password_invalid", "账号密码无效"),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "unauthorized", "无权限访问该接口"),
+    BLOG_SUBMITTED_WITH_SAME_IP(HttpStatus.BAD_REQUEST, "blog_submitted_with_same_ip", "同一 IP 同一天内仅可提交一次"),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "internal_server_error", "服务器内部错误");
 
     private final HttpStatus httpStatus;
