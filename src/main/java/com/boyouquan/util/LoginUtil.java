@@ -1,19 +1,22 @@
 package com.boyouquan.util;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class LoginUtil {
 
-    private static String SESSION_ID = null;
+    private static final Map<String, String> SESSION_ID = new ConcurrentHashMap<>();
 
-    public static void setSessionId(String sessionId) {
-        SESSION_ID = sessionId;
+    public static void setSessionId(String username, String sessionId) {
+        SESSION_ID.put(username, sessionId);
     }
 
-    public static String getSessionId() {
-        return SESSION_ID;
+    public static String getSessionId(String username) {
+        return SESSION_ID.get(username);
     }
 
-    public static void removeSessionId() {
-        SESSION_ID = null;
+    public static void removeSessionId(String username) {
+        SESSION_ID.remove(username);
     }
 
 }
