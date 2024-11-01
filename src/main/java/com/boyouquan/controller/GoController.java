@@ -4,6 +4,7 @@ import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.enumration.BotUserAgent;
 import com.boyouquan.model.Access;
 import com.boyouquan.model.Blog;
+import com.boyouquan.model.GoLink;
 import com.boyouquan.model.Post;
 import com.boyouquan.service.AccessService;
 import com.boyouquan.service.BlogService;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,9 +28,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/go")
-public class GoRestController {
+public class GoController {
 
-    private final Logger logger = LoggerFactory.getLogger(GoRestController.class);
+    private final Logger logger = LoggerFactory.getLogger(GoController.class);
 
     @Autowired
     private BlogService blogService;
@@ -38,12 +40,13 @@ public class GoRestController {
     private AccessService accessService;
 
     @GetMapping("")
-    public Map<String, String> go(
+    public ResponseEntity<?> go(
             @RequestParam("link") String link,
             @RequestParam(value = "from", required = false) String from,
             HttpServletRequest request) {
-        Map<String, String> result = new HashMap<>();
-        result.put("link", CommonConstants.HOME_PAGE_ADDRESS);
+        GoLink goLink = new GoLink();
+        goLink.setLink(CommonConstants.HOME_PAGE_ADDRESS);
+
         try {
             if (StringUtils.isNotBlank(link)) {
                 String ip = IPUtil.getRealIp(request);
@@ -63,14 +66,14 @@ public class GoRestController {
 
                     // FIXME: important, use this way to solve path wth chinese character issue
                     link = CommonUtils.repairURL(link);
-                    result.put("link", link);
+                    goLink.setLink(link);
                 }
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
 
-        return result;
+        return ResponseEntity.ok(goLink);
     }
 
     private String getBlogDomainName(String ip, String link) {

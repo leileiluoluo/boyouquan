@@ -2,6 +2,7 @@ package com.boyouquan.controller;
 
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.PlanetShuttle;
+import com.boyouquan.model.PlanetShuttleGo;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.PlanetShuttleService;
 import com.boyouquan.util.CommonUtils;
@@ -9,6 +10,7 @@ import com.boyouquan.util.IPUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/planet-shuttle")
-public class PlanetShuttleRestController {
+public class PlanetShuttleController {
 
     @Autowired
     private BlogService blogService;
@@ -28,9 +30,7 @@ public class PlanetShuttleRestController {
     private PlanetShuttleService planetShuttleService;
 
     @GetMapping("")
-    public Map<String, Object> shuttle(HttpServletRequest request, Model model) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<PlanetShuttleGo> shuttle(HttpServletRequest request, Model model) {
         String referer = request.getHeader("From");
         Blog fromBlog = null;
         if (StringUtils.isNotBlank(referer)) {
@@ -54,12 +54,14 @@ public class PlanetShuttleRestController {
             fromBlogInitiatedCount = planetShuttleService.countInitiatedByBlogDomainName(fromBlog.getDomainName());
         }
 
-        result.put("blogName", blog.getName());
-        result.put("blogAddress", blog.getAddress());
-        result.put("fromBlog", fromBlog);
-        result.put("fromBlogInitiatedCount", fromBlogInitiatedCount);
+        // return
+        PlanetShuttleGo planetShuttleGo = new PlanetShuttleGo();
+        planetShuttleGo.setBlogName(blog.getName());
+        planetShuttleGo.setBlogAddress(blog.getAddress());
+        planetShuttleGo.setFromBlog(fromBlog);
+        planetShuttleGo.setFromBlogInitiatedCount(fromBlogInitiatedCount);
 
-        return result;
+        return ResponseEntity.ok(planetShuttleGo);
     }
 
 }
