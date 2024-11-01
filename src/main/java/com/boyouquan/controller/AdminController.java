@@ -78,6 +78,16 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/permission-check")
+    public ResponseEntity<?> permissionCheck(HttpServletRequest request) {
+        // permission check
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/blog-requests")
     public ResponseEntity<?> addBlogRequest(@RequestBody BlogRequestForm blogRequestForm, HttpServletRequest request) {
         // permission check
