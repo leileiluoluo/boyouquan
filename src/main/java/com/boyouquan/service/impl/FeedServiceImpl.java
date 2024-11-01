@@ -1,13 +1,13 @@
 package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
-import com.boyouquan.helper.ThymeLeafTemplateHelper;
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.Post;
 import com.boyouquan.model.PostSortType;
 import com.boyouquan.service.BlogService;
 import com.boyouquan.service.FeedService;
 import com.boyouquan.service.PostService;
+import com.boyouquan.util.CommonUtils;
 import com.boyouquan.util.Pagination;
 import com.rometools.rome.feed.synd.*;
 import com.rometools.rome.io.FeedException;
@@ -28,8 +28,6 @@ public class FeedServiceImpl implements FeedService {
     private PostService postService;
     @Autowired
     private BlogService blogService;
-    @Autowired
-    private ThymeLeafTemplateHelper thymeLeafTemplateHelper;
 
     @Override
     public String generateFeedXML(PostSortType sortType) {
@@ -56,7 +54,7 @@ public class FeedServiceImpl implements FeedService {
                         SyndEntry entry = new SyndEntryImpl();
                         entry.setTitle(post.getTitle());
 
-                        String postLink = thymeLeafTemplateHelper.urlEncode(post.getLink());
+                        String postLink = CommonUtils.urlEncode(post.getLink());
                         String link = String.format("%s?from=feed&link=%s", CommonConstants.GO_PAGE_ADDRESS, postLink);
                         entry.setLink(link);
 
