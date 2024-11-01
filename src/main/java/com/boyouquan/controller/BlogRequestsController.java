@@ -8,6 +8,7 @@ import com.boyouquan.model.BlogRequestForm;
 import com.boyouquan.model.BlogRequestInfo;
 import com.boyouquan.service.BlogRequestService;
 import com.boyouquan.util.Pagination;
+import com.boyouquan.util.PaginationBuilder;
 import com.boyouquan.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,8 @@ public class BlogRequestsController {
     @GetMapping("")
     public ResponseEntity<Pagination<BlogRequestInfo>> listBlogRequests(
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "selfSubmitted", required = false, defaultValue = "true") boolean selfSubmitted) {
         List<BlogRequest.Status> statuses = Arrays.asList(
                 BlogRequest.Status.submitted,
                 BlogRequest.Status.system_check_valid,
@@ -43,7 +45,13 @@ public class BlogRequestsController {
                 BlogRequest.Status.uncollected
         );
 
-        Pagination<BlogRequestInfo> blogRequestInfo = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(keyword, true, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        Pagination<BlogRequestInfo> blogRequestInfo = PaginationBuilder.buildEmptyResults();
+        if (selfSubmitted) {
+            blogRequestInfo = blogRequestService.listBlogRequestInfosBySelfSubmittedAndStatuses(keyword, true, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        } else {
+            blogRequestInfo = blogRequestService.listBlogRequestInfosByStatuses(
+                    keyword, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
+        }
 
         return ResponseEntity.ok(blogRequestInfo);
     }
