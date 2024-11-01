@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -257,6 +258,10 @@ public class CommonUtils {
     public static String repairURL(String rawURL) {
         // FIXME: important, use this way to solve path wth chinese character issue
         return new String(rawURL.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+    }
+
+    public static String urlEncode(String url) {
+        return URLEncoder.encode(url, StandardCharsets.UTF_8);
     }
 
 }

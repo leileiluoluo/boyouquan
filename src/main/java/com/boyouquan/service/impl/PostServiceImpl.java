@@ -2,7 +2,6 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.constant.CommonConstants;
 import com.boyouquan.dao.PostDaoMapper;
-import com.boyouquan.helper.ThymeLeafTemplateHelper;
 import com.boyouquan.model.*;
 import com.boyouquan.service.PostService;
 import com.boyouquan.util.CommonUtils;
@@ -31,8 +30,6 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostDaoMapper postDaoMapper;
-    @Autowired
-    private ThymeLeafTemplateHelper thymeLeafTemplateHelper;
 
     @Override
     public List<PostLatestPublishedAt> listPostLatestPublishedAt(int limit) {
@@ -45,7 +42,7 @@ public class PostServiceImpl implements PostService {
                 .stream()
                 .map(post -> {
                     PostLatestPublishedAt postLatestPublishedAt = new PostLatestPublishedAt();
-                    String postAbstractPageUrl = String.format("%s?link=%s", CommonConstants.POST_ABSTRACT_ADDRESS, thymeLeafTemplateHelper.urlEncode(post.getLink()));
+                    String postAbstractPageUrl = String.format("%s?link=%s", CommonConstants.POST_ABSTRACT_ADDRESS, CommonUtils.urlEncode(post.getLink()));
                     postLatestPublishedAt.setPostAbstractPageUrl(postAbstractPageUrl);
                     postLatestPublishedAt.setPublishedAt(CommonUtils.dateSitemapFormatStr(post.getPublishedAt()));
 
