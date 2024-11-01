@@ -62,8 +62,12 @@ public class BlogRequestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BlogRequestInfo> getBlogRequestById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getBlogRequestById(@PathVariable("id") Long id) {
         BlogRequestInfo blogRequestInfo = blogRequestService.getBlogRequestInfoById(id);
+
+        if (null == blogRequestInfo) {
+            return ResponseUtil.errorResponse(ErrorCode.BLOG_REQUEST_NOT_EXISTS);
+        }
 
         return ResponseEntity.ok(blogRequestInfo);
     }
