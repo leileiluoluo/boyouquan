@@ -14,7 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -56,45 +59,36 @@ public class AdminController {
 
         // set session
         String sessionId = UUID.randomUUID().toString();
-        LoginUtil.setSessionId(sessionId);
+        LoginUtil.setSessionId(adminLoginForm.getUsername(), sessionId);
 
         // return
-        LoginSuccess loginSuccess = new LoginSuccess(sessionId);
+        LoginSuccess loginSuccess = new LoginSuccess(adminLoginForm.getUsername(), sessionId);
         return ResponseEntity.ok(loginSuccess);
     }
 
-    @GetMapping("/logout")
-    public Map<String, String> logout(HttpServletRequest request) {
-        Map<String, String> result = new HashMap<>();
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        String username = request.getHeader("username");
 
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         // remove session
-        LoginUtil.removeSessionId();
+        LoginUtil.removeSessionId(username);
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/blog-requests")
-    public Map<String, Object> listBlogRequests(
+    public ResponseEntity<?> listBlogRequests(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         // list
@@ -110,31 +104,20 @@ public class AdminController {
         Pagination<BlogRequestInfo> pagination = blogRequestService.listBlogRequestInfosByStatuses(
                 keyword, statuses, page, CommonConstants.DEFAULT_PAGE_SIZE);
 
-        result.put("status", "success");
-        result.put("result", pagination);
-
-        return result;
+        return ResponseEntity.ok(pagination);
     }
 
     @GetMapping("/blog-requests/{id}")
-    public Map<String, Object> getBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<?> getBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         // get
         BlogRequestInfo blogRequestInfo = blogRequestService.getBlogRequestInfoById(id);
 
-        result.put("status", "success");
-        result.put("result", blogRequestInfo);
-
-        return result;
+        return ResponseEntity.ok(blogRequestInfo);
     }
 
     @PostMapping("/blog-requests")
@@ -164,15 +147,10 @@ public class AdminController {
     }
 
     @PatchMapping("/blog-requests/{id}/uncollected")
-    public Map<String, Object> uncollectedBlogById(@PathVariable("id") Long id, @RequestBody BlogUncollectedForm blogDeletedForm, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<?> uncollectedBlogById(@PathVariable("id") Long id, @RequestBody BlogUncollectedForm blogDeletedForm, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         // get
@@ -181,20 +159,14 @@ public class AdminController {
             blogRequestService.uncollectedByRssAddress(blogRequest.getRssAddress(), blogDeletedForm.getReason());
         }
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/blog-requests/{id}")
-    public Map<String, Object> deleteBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<?> deleteBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         // get
@@ -203,39 +175,27 @@ public class AdminController {
             blogRequestService.deleteByRssAddress(blogRequest.getRssAddress());
         }
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/blog-requests/approve/{id}")
-    public Map<String, Object> approveBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<?> approveBlogRequestById(@PathVariable("id") Long id, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         // approve
         blogRequestService.approveById(id);
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/blog-requests/reject/{id}")
-    public Map<String, Object> rejectBlogRequestById(@PathVariable("id") Long id, @RequestBody BlogRequestRejectForm blogRequestRejectForm, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<?> rejectBlogRequestById(@PathVariable("id") Long id, @RequestBody BlogRequestRejectForm blogRequestRejectForm, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         // reject
@@ -243,20 +203,14 @@ public class AdminController {
             blogRequestService.rejectById(id, blogRequestRejectForm.getReason());
         }
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/recommended-posts")
-    public Map<String, Object> listRecommendedPosts(@RequestParam("page") int page, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<?> listRecommendedPosts(@RequestParam("page") int page, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         // list
@@ -278,28 +232,19 @@ public class AdminController {
                 .total(postPagination.getTotal())
                 .results(postInfos).build();
 
-        result.put("status", "success");
-        result.put("result", postInfoPagination);
-        return result;
+        return ResponseEntity.ok(postInfoPagination);
     }
 
-    @PostMapping("/recommended-posts/add")
-    public Map<String, Object> recommendPostRequest(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    @PostMapping("/recommended-posts")
+    public ResponseEntity<?> recommendPostRequest(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         Post post = postService.getByLink(recommendPostForm.getLink());
         if (null == post) {
-            result.put("status", "error");
-            result.put("message", "文章链接不存在！");
-            return result;
+            return ResponseUtil.errorResponse(ErrorCode.POST_NOT_EXISTS);
         }
 
         postService.recommendByLink(recommendPostForm.getLink());
@@ -308,55 +253,39 @@ public class AdminController {
         Blog blog = blogService.getByDomainName(post.getBlogDomainName());
         emailService.sendPostRecommendedNotice(blog, post);
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PatchMapping("/recommended-posts/unpin")
-    public Map<String, Object> unpinPost(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<?> unpinPost(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         String link = recommendPostForm.getLink();
 
         if (!postService.existsByLink(link)) {
-            result.put("status", "error");
-            result.put("message", "文章链接不存在！");
-            return result;
+            return ResponseUtil.errorResponse(ErrorCode.POST_NOT_EXISTS);
         }
 
         // unpin
         postService.unpinByLink(link);
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/recommended-posts/pin")
-    public Map<String, Object> pinPost(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
-        Map<String, Object> result = new HashMap<>();
-
+    public ResponseEntity<?> pinPost(@RequestBody RecommendPostForm recommendPostForm, HttpServletRequest request) {
         // permission check
-        String sessionId = request.getHeader("sessionId");
-        if (StringUtils.isBlank(sessionId) || null == LoginUtil.getSessionId() || !LoginUtil.getSessionId().equals(sessionId)) {
-            result.put("status", "error");
-            result.put("message", "您无权限操作！");
-            return result;
+        if (!PermissionUtil.hasAdminPermission(request)) {
+            return ResponseUtil.errorResponse(ErrorCode.UNAUTHORIZED);
         }
 
         String link = recommendPostForm.getLink();
 
         if (!postService.existsByLink(link)) {
-            result.put("status", "error");
-            result.put("message", "文章链接不存在！");
-            return result;
+            return ResponseUtil.errorResponse(ErrorCode.POST_NOT_EXISTS);
         }
 
         // pin
@@ -373,8 +302,7 @@ public class AdminController {
         pinHistory.setLink(link);
         pinHistoryService.save(pinHistory);
 
-        result.put("status", "success");
-        return result;
+        return ResponseEntity.noContent().build();
     }
 
 }

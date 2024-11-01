@@ -7,9 +7,15 @@ public class PermissionUtil {
 
     public static boolean hasAdminPermission(HttpServletRequest request) {
         String sessionId = request.getHeader("sessionId");
-        return !StringUtils.isBlank(sessionId)
-                && null != LoginUtil.getSessionId()
-                && LoginUtil.getSessionId().equals(sessionId);
+        String username = request.getHeader("username");
+
+        if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(username)) {
+            return false;
+        }
+
+        String sessionIdStored = LoginUtil.getSessionId(username);
+        return null != sessionIdStored
+                && sessionIdStored.equals(sessionId);
     }
 
 }

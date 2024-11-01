@@ -7,6 +7,7 @@ import com.boyouquan.util.Pagination;
 import com.boyouquan.util.PaginationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,14 +18,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/monthly-selected")
-public class MonthlySelectedRestController {
+public class MonthlySelectedController {
 
     @Autowired
     private MonthlySelectedService monthlySelectedService;
 
     @GetMapping("")
     @Cacheable(value = "monthlyReportCache", key = "#page")
-    public Pagination<MonthlySelectedPost> list(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+    public ResponseEntity<Pagination<MonthlySelectedPost>> list(@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         List<String> yearMonthStrs = monthlySelectedService.listYearMonthStrs();
 
         List<String> yearMonthSubStrs = yearMonthStrs.stream()
@@ -39,11 +40,13 @@ public class MonthlySelectedRestController {
             monthlySelectedPosts.add(monthlySelected);
         });
 
-        return PaginationBuilder.<MonthlySelectedPost>newBuilder()
+        Pagination<MonthlySelectedPost> monthlySelected = PaginationBuilder.<MonthlySelectedPost>newBuilder()
                 .pageNo(page)
                 .pageSize(CommonConstants.MONTHLY_SELECTED_PAGE_SIZE)
                 .total((long) yearMonthStrs.size())
                 .results(monthlySelectedPosts).build();
+
+        return ResponseEntity.ok(monthlySelected);
     }
 
 }
