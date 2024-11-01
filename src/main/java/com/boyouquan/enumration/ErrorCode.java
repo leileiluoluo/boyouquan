@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode implements RestErrorResponse {
 
+    BLOG_NOT_EXISTS(HttpStatus.BAD_REQUEST, "blog_not_exists", "博客不存在"),
     POST_NOT_EXISTS(HttpStatus.BAD_REQUEST, "post_not_exists", "文章不存在"),
     BLOG_REQUEST_NAME_INVALID(HttpStatus.BAD_REQUEST, "blog_request_name_invalid", "博客名称不能为空，且不可大于 20 个字符"),
     BLOG_REQUEST_DESCRIPTION_INVALID(HttpStatus.BAD_REQUEST, "blog_request_description_invalid", "博客描述不能为空，且需介于 10 到 300 个字符之间"),
