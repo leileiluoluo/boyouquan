@@ -38,7 +38,7 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          source: './target/boyouquan-1.0.jar'
+          source: './target/boyouquan-api-2.0.jar'
           target: '/usr/app/new/'
       - name: Start Service
         uses: appleboy/ssh-action@v0.1.4
