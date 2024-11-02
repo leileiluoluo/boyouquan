@@ -70,5 +70,5 @@ curl http://localhost:8080/api/blogs
 {"pageNo":1,"pageSize":10,"total":0,"results":[]}
 ```
 
-至此，后端程序启动成功，接下来可以接着启动 [前端程序]([boyouquan-ui](https://github.com/leileiluoluo/boyouquan-ui))
+至此，后端程序启动成功，接下来可以接着启动 [前端程序](https://github.com/leileiluoluo/boyouquan-ui)
 ，启动成功后即可以进行整体调试与测试了。
