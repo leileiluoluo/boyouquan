@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.4</version>
+        <version>3.3.5</version>
         <relativePath/>
     </parent>
 
     <groupId>com.boyouquan</groupId>
-    <artifactId>boyouquan</artifactId>
-    <version>1.0</version>
+    <artifactId>boyouquan-api</artifactId>
+    <version>2.0</version>
 
     <properties>
         <java.version>17</java.version>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.32</version>
+            <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
 
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
-            <version>1.8.0</version>
+            <version>1.9.0</version>
         </dependency>
 
         <!-- email -->
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.3.0</version>
+            <version>9.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -66,7 +66,7 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>5.0.0-alpha.12</version>
+            <version>5.0.0-alpha.14</version>
         </dependency>
 
         <!-- rss reader -->
@@ -80,14 +80,14 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.16.1</version>
+            <version>1.18.1</version>
         </dependency>
 
         <!-- commons lang -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.14.0</version>
+            <version>3.17.0</version>
         </dependency>
 
         <!-- actuator -->
@@ -111,7 +111,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>

@@ -22,19 +22,19 @@ Layer）。
 
 ## 设置与启动
 
-启动前请确保您已安装 Java（17 及以上）和 MySQL（8.0.0 及以上）。
+启动前请确保您已安装 Java（17 及以上）和 MySQL（8.0 及以上）。
 
 ### 数据库创建及 DDL 执行
 
 本工程已将所有用到的 MySQL 建库与建表语句置于 `sql/ddl` 目录下。
 
-首先，在您本地安装的 MariaDB 上执行如下建库语句：
+首先，在您本地安装的 MySQL 上执行如下建库语句：
 
 [./sql/ddl/database.sql](./sql/ddl/database.sql)
 
 然后，在建好的数据库上执行 [./sql/ddl/](./sql/ddl/) 目录下除 `database.sql` 之外的所有 SQL 文件中的 DDL 语句。
 
-最后，需要对 `user` 表执行一条插入一句，以设置管理后台的管理员账号：
+最后，需要对 `user` 表执行一条插入一句，以设置管理后台的管理员账号和密码：
 
 ```sql
 -- root/root
@@ -53,10 +53,21 @@ INSERT INTO `user` (`username`, `md5password`, `role`, `deleted`)
 打包完成后，使用如下命令设置环境变量，并运行：
 
 ```shell
-export DATABASE_URL=jdbc:mysql://localhost:3306/boyouquan?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=GMT%2B8
-export DATABASE_USER=root
-export DATABASE_PASSWORD=root
+export DATABASE_URL="jdbc:mysql://localhost:3306/boyouquan?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=GMT%2B8"
+export DATABASE_USER=root # 换成你的账号
+export DATABASE_PASSWORD=root # 换成你的密码
 export EMAIL_ENABLE=false
 
-java -jar ./target/boyouquan-1.0.jar
+java -jar ./target/boyouquan-api-2.0.jar
 ```
+
+程序启动后，尝试使用命令行或在浏览器访问一下博客列表
+API（[http://localhost:8080/api/blogs](http://localhost:8080/api/blogs)），无初始数据，所以会返回一个空列表。
+
+```shell
+curl http://localhost:8080/api/blogs
+
+{"pageNo":1,"pageSize":10,"total":0,"results":[]}
+```
+
+至此，后端程序启动成功，接下来即可以启动前端程序，从而进行调试了。
