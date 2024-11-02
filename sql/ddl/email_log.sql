@@ -5,3 +5,5 @@ CREATE TABLE email_log (
     type ENUM('blog_can_not_be_accessed') NOT NULL,
     sent_at TIMESTAMP NOT NULL DEFAULT '2023-07-01 00:00:00'
 );
+
+CREATE INDEX idx_email_log_blog_domain_name ON email_log (blog_domain_name);

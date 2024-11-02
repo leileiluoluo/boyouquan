@@ -7,4 +7,5 @@ CREATE TABLE planet_shuttle (
     PRIMARY KEY (year_month_str, blog_domain_name, to_blog_address)
 );
 
+CREATE INDEX idx_planet_shuttle_blog_domain_name ON planet_shuttle (blog_domain_name);
 CREATE INDEX idx_planet_shuttle_year_month_str_domain_name ON planet_shuttle (year_month_str, blog_domain_name);

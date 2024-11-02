@@ -7,4 +7,6 @@ CREATE TABLE access (
     PRIMARY KEY (year_month_str, blog_domain_name, link)
 );
 
+CREATE INDEX idx_access_blog_domain_name ON access (blog_domain_name);
+CREATE INDEX idx_access_link ON access (link);
 CREATE INDEX idx_access_year_month_str_domain_name ON access (year_month_str, blog_domain_name);
