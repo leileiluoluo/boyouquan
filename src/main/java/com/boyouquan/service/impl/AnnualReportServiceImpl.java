@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,8 @@ public class AnnualReportServiceImpl implements AnnualReportService {
     private PostService postService;
     @Autowired
     private AccessService accessService;
+    @Autowired
+    private PinHistoryService pinHistoryService;
 
     @Autowired
     private EmailService emailService;
@@ -48,21 +51,28 @@ public class AnnualReportServiceImpl implements AnnualReportService {
 
         Date currentYearFirstDay = getCurrentYearFirstDay();
 
+        // joinedAfterStartDay
+        boolean joinedAfterStartDay = blog.getCollectedAt().after(currentYearFirstDay);
+        report.setJoinedAfterYearStartDay(joinedAfterStartDay);
+
+        // startDate
+        Date startDate = joinedAfterStartDay ? blog.getCollectedAt() : currentYearFirstDay;
+
         // postCountTillNow
-        long postCountTillNow = postService.countByBlogDomainName(domainName, currentYearFirstDay);
+        long postCountTillNow = postService.countByBlogDomainName(domainName, startDate);
         report.setPostCountTillNow(postCountTillNow);
 
         // accessCountTillNow
-        long accessCountTillNow = accessService.countByBlogDomainName(domainName, currentYearFirstDay);
+        long accessCountTillNow = accessService.countByBlogDomainName(domainName, startDate);
         report.setAccessCountTillNow(accessCountTillNow);
 
         // recommendedPosts
-        List<Post> recommendedPosts = postService.listRecommendedByBlogDomainName(domainName, currentYearFirstDay);
-        report.setRecommendedPosts(recommendedPosts);
+        List<Post> recommendedPosts = postService.listRecommendedByBlogDomainName(domainName, startDate);
+        report.setRecommendedPosts(recommendedPosts.stream().limit(5).toList());
 
         // pinnedPosts
-        List<Post> pinnedPosts = postService.listPinnedByBlogDomainName(domainName, currentYearFirstDay);
-        report.setPinnedPosts(pinnedPosts);
+        List<Post> pinnedPosts = getPinnedPosts(domainName, startDate);
+        report.setPinnedPosts(pinnedPosts.stream().limit(5).toList());
 
         return emailService.getBlogAnnualReport(report);
     }
@@ -74,6 +84,20 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
         return calendar.getTime();
+    }
+
+    private List<Post> getPinnedPosts(String domainName, Date startDate) {
+        List<String> pinnedLinks = pinHistoryService.listLinksByBlogDomainName(domainName, startDate);
+        List<Post> pinnedPosts = new ArrayList<>();
+        if (null != pinnedLinks) {
+            for (String link : pinnedLinks) {
+                Post post = postService.getByLink(link);
+                if (null != post) {
+                    pinnedPosts.add(post);
+                }
+            }
+        }
+        return pinnedPosts;
     }
 
 }

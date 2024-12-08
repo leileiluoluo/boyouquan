@@ -14,4 +14,12 @@
         now()
         ) ON DUPLICATE KEY UPDATE pinned_at=now()
     </insert>
+    <select id="listLinksByBlogDomainName" resultType="java.lang.String">
+        SELECT
+        link
+        FROM pin_history
+        WHERE blog_domain_name=#{blogDomainName}
+        AND pinned_at >= #{startDate}
+        ORDER BY pinned_at DESC
+    </select>
 </mapper>

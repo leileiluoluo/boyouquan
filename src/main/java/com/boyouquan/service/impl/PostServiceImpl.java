@@ -141,11 +141,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> listPinnedByBlogDomainName(String blogDomainName, Date startDate) {
-        return postDaoMapper.listPinnedByBlogDomainName(blogDomainName, startDate);
-    }
-
-    @Override
     public boolean existsByLink(String link) {
         return postDaoMapper.existsByLink(link);
     }
