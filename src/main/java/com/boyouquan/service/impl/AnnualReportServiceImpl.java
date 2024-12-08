@@ -68,11 +68,11 @@ public class AnnualReportServiceImpl implements AnnualReportService {
 
         // recommendedPosts
         List<Post> recommendedPosts = postService.listRecommendedByBlogDomainName(domainName, startDate);
-        report.setRecommendedPosts(recommendedPosts.stream().limit(5).toList());
+        report.setRecommendedPosts(recommendedPosts);
 
         // pinnedPosts
         List<Post> pinnedPosts = getPinnedPosts(domainName, startDate);
-        report.setPinnedPosts(pinnedPosts.stream().limit(5).toList());
+        report.setPinnedPosts(pinnedPosts);
 
         return emailService.getBlogAnnualReport(report);
     }
