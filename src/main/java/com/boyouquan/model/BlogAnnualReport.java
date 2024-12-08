@@ -2,6 +2,7 @@ package com.boyouquan.model;
 
 import lombok.Data;
 
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -16,7 +17,11 @@ public class BlogAnnualReport {
     private boolean joinedAfterYearStartDay;
     private long postCountTillNow;
     private long accessCountTillNow;
-    private List<Post> recommendedPosts;
-    private List<Post> pinnedPosts;
+
+    private MonthPublish maxMonthPublish;
+    private MonthAccess maxMonthAccess;
+
+    private List<Post> recommendedPosts = Collections.emptyList();
+    private List<Post> pinnedPosts = Collections.emptyList();
 
 }

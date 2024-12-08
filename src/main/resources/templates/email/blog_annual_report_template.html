@@ -8,9 +8,8 @@
     <br/>
 
     <p>
-        <strong th:if="${report.joinedAfterYearStartDay}">自您加入博友圈起到现在</strong>
-        <strong th:unless="${report.joinedAfterYearStartDay}">这一年</strong>
-        ，
+        <strong th:if="${report.joinedAfterYearStartDay}">自加入博友圈起到现在，</strong>
+        <strong th:unless="${report.joinedAfterYearStartDay}">2024 这一年，</strong>
     </p>
 
     <p th:if="${report.postCountTillNow} > 0">
@@ -18,24 +17,34 @@
     </p>
 
     <p th:if="${report.accessCountTillNow} > 0">
-        从博友圈获得 <strong style="color: red" th:text="${report.accessCountTillNow}"></strong>  次访问。
+        共从博友圈获得 <strong style="color: red" th:text="${report.accessCountTillNow}"></strong>  次访问。
+    </p>
+
+    <p th:if="${report.maxMonthPublish} != null">
+        您发布文章最多的月份是 <strong style="color: red" th:text="${report.maxMonthPublish.month}"></strong> 月，
+        发布了 <strong style="color: red" th:text="${report.maxMonthPublish.count}"></strong> 篇文章。
+    </p>
+
+    <p th:if="${report.maxMonthAccess} != null">
+        从博友圈获得访问最多的月份是 <strong style="color: red" th:text="${report.maxMonthAccess.month}"></strong> 月，
+        获得了 <strong style="color: red" th:text="${report.maxMonthAccess.count}"></strong> 次访问。
     </p>
 
     <p th:if="${#lists.size(report.recommendedPosts)} > 0">
-        您有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong>  篇文章被博友圈推荐到了首页，它们有：
+        您有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong>  篇文章被博友圈推荐到了首页：
 
-        <ul th:each="post, stat : ${report.recommendedPosts}" th:if="${stat.count} lt 5">
+        <ul th:each="post, stat : ${report.recommendedPosts}" th:if="${stat.count} lt 6">
             <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
-            <li th:if="${stat.count} eq 4">...</li>
+            <li th:if="${stat.count} eq 5">...</li>
         </ul>
     </p>
 
     <p th:if="${#lists.size(report.pinnedPosts)} > 0">
-        更加幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶，它们有：
+        更加幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶：
 
-        <ul th:each="post, stat : ${report.pinnedPosts}" th:if="${stat.count} lt 5">
+        <ul th:each="post, stat : ${report.pinnedPosts}" th:if="${stat.count} lt 6">
             <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
-            <li th:if="${stat.count} eq 4">...</li>
+            <li th:if="${stat.count} eq 5">...</li>
         </ul>
     </p>
 </div>

@@ -1,22 +1,23 @@
 package com.boyouquan.service.impl;
 
-import com.boyouquan.model.Blog;
-import com.boyouquan.model.BlogAnnualReport;
-import com.boyouquan.model.Post;
+import com.boyouquan.model.*;
 import com.boyouquan.service.*;
 import com.boyouquan.util.CommonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class AnnualReportServiceImpl implements AnnualReportService {
+
+    private final Logger logger = LoggerFactory.getLogger(AnnualReportServiceImpl.class);
 
     @Autowired
     private BlogService blogService;
@@ -66,6 +67,14 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         long accessCountTillNow = accessService.countByBlogDomainName(domainName, startDate);
         report.setAccessCountTillNow(accessCountTillNow);
 
+        // maxMonthPublish
+        MonthPublish maxMonthPublish = getMaxMonthPublish(domainName, startDate);
+        report.setMaxMonthPublish(maxMonthPublish);
+
+        // maxMonthAccess
+        MonthAccess maxMonthAccess = getMaxMonthAccess(domainName, startDate);
+        report.setMaxMonthAccess(maxMonthAccess);
+
         // recommendedPosts
         List<Post> recommendedPosts = postService.listRecommendedByBlogDomainName(domainName, startDate);
         report.setRecommendedPosts(recommendedPosts);
@@ -84,6 +93,38 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
         return calendar.getTime();
+    }
+
+    private MonthPublish getMaxMonthPublish(String domainName, Date startDate) {
+        List<MonthPublish> monthPublishes = postService.getBlogPostPublishSeriesInLatestOneYear(domainName);
+        if (null != monthPublishes && !monthPublishes.isEmpty()) {
+            MonthPublish monthPublish = monthPublishes.stream().max(Comparator.comparingInt(MonthPublish::getCount)).get();
+            if (monthPublish.getCount() > 0) {
+                try {
+                    Date monthDate = new SimpleDateFormat("yyyy/MM").parse(monthPublish.getMonth());
+                    return monthDate.after(startDate) ? monthPublish : null;
+                } catch (ParseException e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+        }
+        return null;
+    }
+
+    private MonthAccess getMaxMonthAccess(String domainName, Date startDate) {
+        List<MonthAccess> monthAccesses = accessService.getBlogAccessSeriesInLatestOneYear(domainName);
+        if (null != monthAccesses && !monthAccesses.isEmpty()) {
+            MonthAccess monthAccess = monthAccesses.stream().max(Comparator.comparingInt(MonthAccess::getCount)).get();
+            if (monthAccess.getCount() > 0) {
+                try {
+                    Date monthDate = new SimpleDateFormat("yyyy/MM").parse(monthAccess.getMonth());
+                    return monthDate.after(startDate) ? monthAccess : null;
+                } catch (ParseException e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+        }
+        return null;
     }
 
     private List<Post> getPinnedPosts(String domainName, Date startDate) {
