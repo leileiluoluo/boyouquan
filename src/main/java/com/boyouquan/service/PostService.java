@@ -28,6 +28,10 @@ public interface PostService {
 
     Pagination<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int page, int size);
 
+    List<Post> listRecommendedByBlogDomainName(String blogDomainName, Date startDate);
+
+    List<Post> listPinnedByBlogDomainName(String blogDomainName, Date startDate);
+
     boolean existsByLink(String link);
 
     boolean existsByTitle(String title);

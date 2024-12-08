@@ -207,6 +207,28 @@
         ORDER BY published_at DESC
         LIMIT #{offset}, #{rows}
     </select>
+    <select id="listRecommendedByBlogDomainName" resultType="com.boyouquan.model.Post">
+        SELECT
+        <include refid="select_columns"/>
+        FROM post
+        WHERE deleted=false
+        AND draft=false
+        AND recommended=true
+        AND blog_domain_name=#{blogDomainName}
+        AND published_at > #{startDate}
+        ORDER BY published_at DESC
+    </select>
+    <select id="listPinnedByBlogDomainName" resultType="com.boyouquan.model.Post">
+        SELECT
+        <include refid="select_columns"/>
+        FROM post
+        WHERE deleted=false
+        AND draft=false
+        AND pinned=true
+        AND blog_domain_name=#{blogDomainName}
+        AND published_at > #{startDate}
+        ORDER BY published_at DESC
+    </select>
     <select id="getByLink" resultType="com.boyouquan.model.Post">
         SELECT
         <include refid="select_columns"/>

@@ -29,6 +29,10 @@ public interface PostDaoMapper {
 
     List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int offset, int rows);
 
+    List<Post> listRecommendedByBlogDomainName(String blogDomainName, Date startDate);
+
+    List<Post> listPinnedByBlogDomainName(String blogDomainName, Date startDate);
+
     Post getByLink(String link);
 
     boolean existsByLink(String link);
