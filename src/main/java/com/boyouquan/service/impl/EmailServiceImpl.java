@@ -204,6 +204,14 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public String getBlogAnnualReport(BlogAnnualReport blogAnnualReport) {
+        Context context = new Context();
+        context.setVariable("report", blogAnnualReport);
+
+        return templateEngine.process("email/blog_annual_report_template", context);
+    }
+
+    @Override
     public void send(String to, String subject, String content, boolean html) {
         try {
             if (to.equals(CommonConstants.FAKE_BLOG_ADMIN_EMAIL)

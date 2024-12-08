@@ -24,6 +24,8 @@ public interface PostService {
 
     Long countByBlogDomainName(String blogDomainName);
 
+    Long countByBlogDomainName(String blogDomainName, Date startDate);
+
     Pagination<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int page, int size);
 
     boolean existsByLink(String link);

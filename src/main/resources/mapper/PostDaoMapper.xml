@@ -180,6 +180,15 @@
         AND deleted=false
         AND blog_domain_name=#{blogDomainName}
     </select>
+    <select id="countByBlogDomainNameAndStartDate" resultType="java.lang.Long">
+        SELECT
+        COUNT(*)
+        FROM post
+        WHERE draft=false
+        AND deleted=false
+        AND blog_domain_name=#{blogDomainName}
+        AND published_at >= #{startDate}
+    </select>
     <select id="countByDraftAndBlogDomainName" resultType="java.lang.Long">
         SELECT
         COUNT(*)

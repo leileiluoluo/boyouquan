@@ -9,6 +9,7 @@ import com.boyouquan.service.AccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,6 +38,11 @@ public class AccessServiceImpl implements AccessService {
     @Override
     public Long countByBlogDomainName(String blogDomainName) {
         return accessDaoMapper.countByBlogDomainName(blogDomainName);
+    }
+
+    @Override
+    public Long countByBlogDomainName(String blogDomainName, Date startDate) {
+        return accessDaoMapper.countByBlogDomainNameAndStartDate(blogDomainName, startDate);
     }
 
     @Override

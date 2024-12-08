@@ -50,6 +50,13 @@
         FROM access
         WHERE blog_domain_name=#{blogDomainName}
     </select>
+    <select id="countByBlogDomainNameAndStartDate" resultType="java.lang.Long">
+        SELECT
+        IFNULL(SUM(amount), 0)
+        FROM access
+        WHERE blog_domain_name=#{blogDomainName}
+        AND STR_TO_DATE(year_month_str, '%Y/%m') >= #{startDate}
+    </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
         IFNULL(SUM(amount), 0)
