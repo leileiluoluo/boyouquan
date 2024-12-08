@@ -1,5 +1,5 @@
 <div width="100%" xmlns:th="http://www.thymeleaf.org">
-    <p th:text="'您的 '${report.year} + ' 年度报告：'"></p>
+    <p th:text="'您的 ' + ${report.year} + ' 年度报告：'"></p>
     <br/>
     <p>
         您的博客「<a th:text="${report.blogName}" th:href="'https://www.boyouquan.com/blogs/' + ${report.blogDomainName}"></a>」
