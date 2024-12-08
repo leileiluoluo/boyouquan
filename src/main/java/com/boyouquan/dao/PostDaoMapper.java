@@ -31,8 +31,6 @@ public interface PostDaoMapper {
 
     List<Post> listRecommendedByBlogDomainName(String blogDomainName, Date startDate);
 
-    List<Post> listPinnedByBlogDomainName(String blogDomainName, Date startDate);
-
     Post getByLink(String link);
 
     boolean existsByLink(String link);

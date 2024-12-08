@@ -12,6 +12,8 @@ public class BlogAnnualReport {
     private String blogName;
     private String blogCollectedAt;
     private long joinDaysTillNow;
+
+    private boolean joinedAfterYearStartDay;
     private long postCountTillNow;
     private long accessCountTillNow;
     private List<Post> recommendedPosts;

@@ -30,8 +30,6 @@ public interface PostService {
 
     List<Post> listRecommendedByBlogDomainName(String blogDomainName, Date startDate);
 
-    List<Post> listPinnedByBlogDomainName(String blogDomainName, Date startDate);
-
     boolean existsByLink(String link);
 
     boolean existsByTitle(String title);
