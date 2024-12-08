@@ -55,7 +55,7 @@
         IFNULL(SUM(amount), 0)
         FROM access
         WHERE blog_domain_name=#{blogDomainName}
-        AND year_month_str >= DATE_FORMAT(${startDate}, '%Y/%m')
+        AND year_month_str >= DATE_FORMAT(#{startDate}, '%Y/%m')
     </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
