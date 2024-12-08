@@ -20,16 +20,16 @@
     <p th:if="${#lists.size(report.recommendedPosts)} > 0">
         这一年您共有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong>  篇文章被博友圈推荐到了首页，它们是：
 
-        <ul th:each="item, post : ${report.recommendedPosts}">
-            <li><a th:text="${post.title}" th:href="${post.link}"></li>
+        <ul th:each="post : ${report.recommendedPosts}">
+            <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
         </ul>
     </p>
 
     <p th:if="${#lists.size(report.pinnedPosts)} > 0">
         更加幸运的是，这一年您共有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶，它们是：
 
-        <ul th:each="item, post : ${report.pinnedPosts}">
-            <li><a th:text="${post.title}" th:href="${post.link}"></li>
+        <ul th:each="post : ${report.pinnedPosts}">
+            <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
         </ul>
     </p>
 </div>
