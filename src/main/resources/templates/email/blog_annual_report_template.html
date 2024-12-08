@@ -5,6 +5,6 @@
     <p th:text="'于 ' + ${report.blogCollectedAt} + ' 被博友圈收录，到今天我们已一起走过 ' + ${report.joinDaysTillNow} + ' 个日日夜夜！'">
     <br/>
 
-    <p th:if="${report.postCountTillNow} > 0" th:text="'这一年您共发布了 ' + ${report.postCountTillNow} 篇文章，"></p>
-    <p th:if="${report.accessCountTillNow} > 0" th:text="'从博友圈获得 ' + ${report.accessCountTillNow} 次访问。"></p>
+    <p th:if="${report.postCountTillNow} > 0" th:text="'这一年您共发布了 ' + ${report.postCountTillNow} + ' 篇文章，'"></p>
+    <p th:if="${report.accessCountTillNow} > 0" th:text="'从博友圈获得 ' + ${report.accessCountTillNow} + ' 次访问。'"></p>
 </div>
