@@ -26,14 +26,16 @@ public class AnnualReportServiceImpl implements AnnualReportService {
     private EmailService emailService;
 
     @Override
-    public String getAnnualReport(String domainName, String year) {
+    public String getAnnualReport(String domainName) {
         Blog blog = blogService.getByDomainName(domainName);
         if (null == blog) {
             return null;
         }
 
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+
         BlogAnnualReport report = new BlogAnnualReport();
-        report.setYear(year);
+        report.setYear(currentYear);
         report.setBlogDomainName(domainName);
         report.setBlogName(blog.getName());
         report.setBlogCollectedAt(CommonUtils.dateCommonFormatDisplay(blog.getCollectedAt()));

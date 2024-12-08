@@ -6,7 +6,7 @@ import lombok.Data;
 public class BlogAnnualReport {
 
     private String blogDomainName;
-    private String year;
+    private int year;
     private String blogName;
     private String blogCollectedAt;
     private long joinDaysTillNow;
