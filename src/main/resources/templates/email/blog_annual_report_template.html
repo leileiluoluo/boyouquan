@@ -33,7 +33,7 @@
     <p th:if="${#lists.size(report.pinnedPosts)} > 0">
         更加幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶，它们有：
 
-        <ul th:each="post : ${report.pinnedPosts}" th:if="${stat.count} lt 5">
+        <ul th:each="post, stat : ${report.pinnedPosts}" th:if="${stat.count} lt 5">
             <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
             <li th:if="${stat.count} eq 4">...</li>
         </ul>
