@@ -2,6 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.model.Blog;
 import com.boyouquan.model.BlogAnnualReport;
+import com.boyouquan.model.Post;
 import com.boyouquan.service.*;
 import com.boyouquan.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AnnualReportServiceImpl implements AnnualReportService {
@@ -53,6 +55,14 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         // accessCountTillNow
         long accessCountTillNow = accessService.countByBlogDomainName(domainName, currentYearFirstDay);
         report.setAccessCountTillNow(accessCountTillNow);
+
+        // recommendedPosts
+        List<Post> recommendedPosts = postService.listRecommendedByBlogDomainName(domainName, currentYearFirstDay);
+        report.setRecommendedPosts(recommendedPosts);
+
+        // pinnedPosts
+        List<Post> pinnedPosts = postService.listPinnedByBlogDomainName(domainName, currentYearFirstDay);
+        report.setPinnedPosts(pinnedPosts);
 
         return emailService.getBlogAnnualReport(report);
     }

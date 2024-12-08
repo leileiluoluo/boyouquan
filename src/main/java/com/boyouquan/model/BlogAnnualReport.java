@@ -2,6 +2,8 @@ package com.boyouquan.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class BlogAnnualReport {
 
@@ -12,5 +14,7 @@ public class BlogAnnualReport {
     private long joinDaysTillNow;
     private long postCountTillNow;
     private long accessCountTillNow;
+    private List<Post> recommendedPosts;
+    private List<Post> pinnedPosts;
 
 }
