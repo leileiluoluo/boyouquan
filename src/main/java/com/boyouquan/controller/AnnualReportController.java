@@ -16,8 +16,8 @@ public class AnnualReportController {
     private AnnualReportService annualReportService;
 
     @GetMapping("")
-    public ResponseEntity<String> getAnnualReport(@RequestParam("domainName") String domainName, @RequestParam("year") String year) {
-        String annualReport = annualReportService.getAnnualReport(domainName, year);
+    public ResponseEntity<String> getAnnualReport(@RequestParam("domainName") String domainName) {
+        String annualReport = annualReportService.getAnnualReport(domainName);
 
         return ResponseEntity.ok(annualReport);
     }
