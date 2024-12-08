@@ -1,9 +1,6 @@
 package com.boyouquan.service;
 
-import com.boyouquan.model.Blog;
-import com.boyouquan.model.BlogRequest;
-import com.boyouquan.model.BlogStatus;
-import com.boyouquan.model.Post;
+import com.boyouquan.model.*;
 
 public interface EmailService {
 
@@ -22,6 +19,8 @@ public interface EmailService {
     void sendBlogStatusNotOkNotice(Blog blog, BlogStatus.Status status, String unOkInfo);
 
     void sendBlogUncollectedNotice(BlogRequest blogRequest);
+
+    String getBlogAnnualReport(BlogAnnualReport blogAnnualReport);
 
     void send(String to, String subject, String content, boolean html);
 

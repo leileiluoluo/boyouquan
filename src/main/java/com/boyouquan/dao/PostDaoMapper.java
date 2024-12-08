@@ -23,6 +23,8 @@ public interface PostDaoMapper {
 
     Long countByBlogDomainName(String blogDomainName);
 
+    Long countByBlogDomainNameAndStartDate(String blogDomainName, Date startDate);
+
     Long countByDraftAndBlogDomainName(boolean draft, String blogDomainName);
 
     List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int offset, int rows);

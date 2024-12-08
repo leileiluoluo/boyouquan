@@ -115,6 +115,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Long countByBlogDomainName(String blogDomainName, Date startDate) {
+        return postDaoMapper.countByBlogDomainNameAndStartDate(blogDomainName, startDate);
+    }
+
+    @Override
     public Pagination<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int page, int size) {
         if (page < 1 || size <= 0) {
             return PaginationBuilder.buildEmptyResults();

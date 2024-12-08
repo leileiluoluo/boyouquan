@@ -45,7 +45,6 @@ public class CommonConstants {
     public static final int FEED_POST_QUERY_PAGE_SIZE = 100;
 
     public static final int RANDOM_BLOG_MAX_TRY_TIMES = 3;
-    public static final int SITEMAP_LATEST_POST_FETCH_SIZE = 100;
 
     public static final int POPULAR_BLOGGERS_SIZE = 15;
 
