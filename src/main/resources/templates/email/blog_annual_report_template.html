@@ -7,17 +7,14 @@
     </p>
     <br/>
 
-    <p th:if="${report.postCountTillNow} > 0 && ${report.joinedAfterYearStartDay}">
-        <strong>自您加入博友圈起到现在</strong>，共发布了 <strong style="color: red" th:text="${report.postCountTillNow}"></strong> 篇文章，
-    </p>
-    <p th:if="${report.postCountTillNow} > 0 && !${report.joinedAfterYearStartDay}">
-        <strong>这一年</strong>，您共发布了 <strong style="color: red" th:text="${report.postCountTillNow}"></strong> 篇文章，
+    <strong th:if="${report.joinedAfterYearStartDay}">自您加入博友圈起到现在</strong>，
+    <strong th:unless="${report.joinedAfterYearStartDay}">这一年</strong>，
+
+    <p th:if="${report.postCountTillNow} > 0}">
+        您共发布了 <strong style="color: red" th:text="${report.postCountTillNow}"></strong> 篇文章，
     </p>
 
-    <p th:if="${report.accessCountTillNow} > 0 && ${report.joinedAfterYearStartDay}">
-        从博友圈获得 <strong style="color: red" th:text="${report.accessCountTillNow}"></strong>  次访问。
-    </p>
-    <p th:if="${report.accessCountTillNow} > 0 && !${report.joinedAfterYearStartDay}">
+    <p th:if="${report.accessCountTillNow} > 0}">
         从博友圈获得 <strong style="color: red" th:text="${report.accessCountTillNow}"></strong>  次访问。
     </p>
 
