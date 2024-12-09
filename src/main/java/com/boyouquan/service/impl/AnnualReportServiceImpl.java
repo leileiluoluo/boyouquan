@@ -141,10 +141,12 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         if (null != posts && !posts.isEmpty()) {
             Optional<Post> minNightPublished = posts.stream()
                     .filter(post -> post.getPublishedAt().after(startDate))
+                    .filter(post -> post.getPublishedAt().getHours() >= 21)
                     .max(Comparator.comparingInt(post -> post.getPublishedAt().getHours()));
 
             Optional<Post> earlyMorningPublished = posts.stream()
                     .filter(post -> post.getPublishedAt().after(startDate))
+                    .filter(post -> post.getPublishedAt().getHours() < 5)
                     .min(Comparator.comparingInt(post -> post.getPublishedAt().getHours()));
 
             if (earlyMorningPublished.isPresent()) {
