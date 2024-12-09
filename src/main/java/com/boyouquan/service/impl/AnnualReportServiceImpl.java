@@ -136,7 +136,7 @@ public class AnnualReportServiceImpl implements AnnualReportService {
     }
 
     private Post getMostLatePublishedPost(String domainName, Date startDate) {
-        Pagination<Post> pagination = postService.listWithKeyWord(PostSortType.latest, "", 1, 1000);
+        Pagination<Post> pagination = postService.listByDraftAndBlogDomainName(false, domainName, 1, 1000);
         List<Post> posts = pagination.getResults();
         if (null != posts && !posts.isEmpty()) {
             Optional<Post> minNightPublished = posts.stream()
