@@ -88,7 +88,7 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         // latestUpdatedAt
         Date latestUpdatedAt = postService.getLatestPublishedAtByBlogDomainName(domainName);
         if (null != latestUpdatedAt) {
-            report.setLatestUpdatedAt(CommonUtils.dateHourSecondCommonFormatDisplay(latestUpdatedAt));
+            report.setLatestUpdatedAt(CommonUtils.dateFriendlyDisplay(latestUpdatedAt));
         }
 
         // recommendedPosts
