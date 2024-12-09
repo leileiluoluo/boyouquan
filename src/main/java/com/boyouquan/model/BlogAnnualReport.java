@@ -21,6 +21,9 @@ public class BlogAnnualReport {
     private MonthPublish maxMonthPublish;
     private MonthAccess maxMonthAccess;
 
+    private Post mostAccessedPost;
+    private long mostAccessedPostAccessCount;
+
     private List<Post> recommendedPosts = Collections.emptyList();
     private List<Post> pinnedPosts = Collections.emptyList();
 

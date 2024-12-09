@@ -21,6 +21,18 @@
         ORDER BY SUM(amount) DESC
         LIMIT 1
     </select>
+    <select id="getMostAccessedLinkByBlogDomainName" resultType="com.boyouquan.model.BlogLinkAccess">
+        SELECT
+        link,
+        SUM(amount) AS accessCount
+        FROM access
+        WHERE blog_domain_name=#{blogDomainName}
+        AND link != #{blogAddress}
+        AND year_month_str >= DATE_FORMAT(#{startDate}, '%Y/%m')
+        GROUP BY link
+        ORDER BY SUM(amount) DESC
+        LIMIT 1
+    </select>
     <select id="getBlogAccessSeriesInLatestOneYear" resultType="com.boyouquan.model.MonthAccess">
         SELECT
         v.month AS month, IFNULL(SUM(a.amount), 0) AS count

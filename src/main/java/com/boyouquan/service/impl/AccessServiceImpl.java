@@ -4,6 +4,7 @@ import com.boyouquan.dao.AccessDaoMapper;
 import com.boyouquan.helper.IPControlHelper;
 import com.boyouquan.model.Access;
 import com.boyouquan.model.BlogDomainNameAccess;
+import com.boyouquan.model.BlogLinkAccess;
 import com.boyouquan.model.MonthAccess;
 import com.boyouquan.service.AccessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class AccessServiceImpl implements AccessService {
     @Override
     public BlogDomainNameAccess getMostAccessedBlogDomainNameInLastMonth() {
         return accessDaoMapper.getMostAccessedBlogDomainNameInLastMonth();
+    }
+
+    @Override
+    public BlogLinkAccess getMostAccessedLinkByDomainName(String domainName, String blogAddress, Date startDate) {
+        return accessDaoMapper.getMostAccessedLinkByBlogDomainName(domainName, blogAddress, startDate);
     }
 
     @Override
