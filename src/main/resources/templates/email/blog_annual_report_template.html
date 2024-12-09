@@ -3,7 +3,7 @@
     <br/>
     <p>
         您的博客「<a th:text="${report.blogName}" th:href="'https://www.boyouquan.com/blogs/' + ${report.blogDomainName}"></a>」
-        于 <strong style="color: red" th:text="${report.blogCollectedAt}"></strong> 被博友圈收录，到今天我们已一起走过了 <strong style="color: red" th:text="${report.joinDaysTillNow}"></strong> 个日日夜夜！
+        于 <strong style="color: red" th:text="${report.blogCollectedAt}"></strong> 被博友圈收录，到今天我们已一起走过了 <strong style="color: red" th:text="${report.joinDaysTillNow}"></strong> 个日夜！
     </p>
     <br/>
 
@@ -35,8 +35,12 @@
         获得了 <strong style="color: red" th:text="${report.mostAccessedPostAccessCount}"></strong> 次访问。
     </p>
 
+    <p th:if="${report.latestUpdatedAt} != null">
+        您最近一次更新博客是在 <strong style="color: red" th:text="${report.latestUpdatedAt}"></strong>。
+    </p>
+
     <p th:if="${#lists.size(report.recommendedPosts)} > 0">
-        您有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong>  篇文章被博友圈推荐到了首页：
+        您有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong> 篇文章被博友圈加入到了首页推荐：
 
         <ul th:each="post, stat : ${report.recommendedPosts}" th:if="${stat.count} lt 6">
             <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
@@ -45,7 +49,7 @@
     </p>
 
     <p th:if="${#lists.size(report.pinnedPosts)} > 0">
-        更幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶：
+        更幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶过：
 
         <ul th:each="post, stat : ${report.pinnedPosts}" th:if="${stat.count} lt 6">
             <li><a th:text="${post.title}" th:href="${post.link}"></a></li>

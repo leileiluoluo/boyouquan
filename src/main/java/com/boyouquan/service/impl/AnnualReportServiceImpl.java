@@ -75,7 +75,7 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         MonthAccess maxMonthAccess = getMaxMonthAccess(domainName, startDate);
         report.setMaxMonthAccess(maxMonthAccess);
 
-        // mostPopularPost
+        // mostAccessedPost
         BlogLinkAccess blogLinkAccess = accessService.getMostAccessedLinkByDomainName(domainName, blog.getAddress(), startDate);
         if (null != blogLinkAccess) {
             Post post = postService.getByLink(blogLinkAccess.getLink());
@@ -83,6 +83,12 @@ public class AnnualReportServiceImpl implements AnnualReportService {
                 report.setMostAccessedPost(post);
                 report.setMostAccessedPostAccessCount(blogLinkAccess.getAccessCount());
             }
+        }
+
+        // latestUpdatedAt
+        Date latestUpdatedAt = postService.getLatestPublishedAtByBlogDomainName(domainName);
+        if (null != latestUpdatedAt) {
+            report.setLatestUpdatedAt(CommonUtils.dateHourSecondCommonFormatDisplay(latestUpdatedAt));
         }
 
         // recommendedPosts
