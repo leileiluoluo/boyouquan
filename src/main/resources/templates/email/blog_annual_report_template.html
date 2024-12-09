@@ -31,7 +31,7 @@
     </p>
 
     <p th:if="${report.mostAccessedPost} != null">
-        您获得最多访问的一篇文章是 <a th:text="${report.mostAccessedPost.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${T(com.boyouquan.util.CommonUtils).urlEncode(report.mostAccessedPost.link)})}"></a>，
+        您获得最多访问的一篇文章是「<a th:text="${report.mostAccessedPost.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=report.mostAccessedPost.link)}"></a>」，
         获得了 <strong style="color: red" th:text="${report.mostAccessedPostAccessCount}"></strong> 次访问。
     </p>
 
