@@ -264,4 +264,8 @@ public class CommonUtils {
         return URLEncoder.encode(url, StandardCharsets.UTF_8);
     }
 
+    public static void main(String[] args) {
+        System.out.println(urlEncode("https://leileiluoluo.com/posts/boyouquan-introduction.html"));
+    }
+
 }
