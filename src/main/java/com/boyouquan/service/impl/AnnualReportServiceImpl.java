@@ -28,6 +28,8 @@ public class AnnualReportServiceImpl implements AnnualReportService {
     private AccessService accessService;
     @Autowired
     private PinHistoryService pinHistoryService;
+    @Autowired
+    private PlanetShuttleService planetShuttleService;
 
     @Autowired
     private EmailService emailService;
@@ -106,6 +108,10 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         // pinnedPosts
         List<Post> pinnedPosts = getPinnedPosts(domainName, startDate);
         report.setPinnedPosts(pinnedPosts);
+
+        // planetShuttleInitiatedCount
+        long planetShuttleInitiatedCount = getPlanetShuttleInitiatedCount(domainName, startDate);
+        report.setPlanetShuttleInitiatedCount(planetShuttleInitiatedCount);
 
         return emailService.getBlogAnnualReport(report);
     }
@@ -187,6 +193,14 @@ public class AnnualReportServiceImpl implements AnnualReportService {
             }
         }
         return pinnedPosts;
+    }
+
+    private long getPlanetShuttleInitiatedCount(String domainName, Date startDate) {
+        List<MonthInitiated> monthInitiated = planetShuttleService.getBlogInitiatedSeriesInLatestOneYear(domainName);
+        if (null != monthInitiated && !monthInitiated.isEmpty()) {
+            return monthInitiated.stream().mapToInt(MonthInitiated::getCount).sum();
+        }
+        return 0L;
     }
 
 }

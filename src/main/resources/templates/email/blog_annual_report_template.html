@@ -36,7 +36,7 @@
     </p>
 
     <p th:if="${report.latestUpdatedAt} != null">
-        您最近一次更新博客是在 <strong style="color: red" th:text="${report.latestUpdatedAt}"></strong>，
+        您最近一次更新博客是在 <strong style="color: red" th:text="${report.latestUpdatedAt}"></strong>。
     </p>
 
     <p th:if="${report.mostLatePublishedPost} != null">
@@ -60,5 +60,10 @@
             <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
             <li th:if="${stat.count} eq 5">...</li>
         </ul>
+    </p>
+
+    <p th:if="${report.planetShuttleInitiatedCount} > 0">
+        此外，还要感谢您加入了博友圈「星球穿梭」助力计划，
+        给博友圈带来了 <strong style="color: red" th:text="${report.planetShuttleInitiatedCount}"></strong> 次助力！
     </p>
 </div>

@@ -31,4 +31,6 @@ public class BlogAnnualReport {
     private List<Post> recommendedPosts = Collections.emptyList();
     private List<Post> pinnedPosts = Collections.emptyList();
 
+    private long planetShuttleInitiatedCount;
+
 }
