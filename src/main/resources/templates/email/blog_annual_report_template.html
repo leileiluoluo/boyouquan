@@ -36,14 +36,19 @@
     </p>
 
     <p th:if="${report.latestUpdatedAt} != null">
-        您最近一次更新博客是在 <strong style="color: red" th:text="${report.latestUpdatedAt}"></strong>。
+        您最近一次更新博客是在 <strong style="color: red" th:text="${report.latestUpdatedAt}"></strong>，
+    </p>
+
+    <p th:if="${report.mostLatePublishedPost} != null">
+        您夜深人静更新的一次博客是在 <strong style="color: red" th:text="${report.mostLatePublishedPostPublishedAt}"></strong>，
+        写下的文章是 「<a th:text="${report.mostLatePublishedPost.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${report.mostLatePublishedPost.link})}"></a>」。
     </p>
 
     <p th:if="${#lists.size(report.recommendedPosts)} > 0">
         您有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong> 篇文章被博友圈加入到了首页推荐：
 
         <ul th:each="post, stat : ${report.recommendedPosts}" th:if="${stat.count} lt 6">
-            <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
+            <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
             <li th:if="${stat.count} eq 5">...</li>
         </ul>
     </p>
@@ -52,7 +57,7 @@
         更幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶过：
 
         <ul th:each="post, stat : ${report.pinnedPosts}" th:if="${stat.count} lt 6">
-            <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
+            <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
             <li th:if="${stat.count} eq 5">...</li>
         </ul>
     </p>

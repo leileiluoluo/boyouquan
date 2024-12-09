@@ -25,6 +25,8 @@ public class BlogAnnualReport {
     private long mostAccessedPostAccessCount;
 
     private String latestUpdatedAt;
+    private Post mostLatePublishedPost;
+    private String mostLatePublishedPostPublishedAt;
 
     private List<Post> recommendedPosts = Collections.emptyList();
     private List<Post> pinnedPosts = Collections.emptyList();
