@@ -3,6 +3,7 @@ package com.boyouquan.service.impl;
 import com.boyouquan.model.*;
 import com.boyouquan.service.*;
 import com.boyouquan.util.CommonUtils;
+import com.boyouquan.util.Pagination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,13 @@ public class AnnualReportServiceImpl implements AnnualReportService {
             report.setLatestUpdatedAt(CommonUtils.dateFriendlyDisplay(latestUpdatedAt));
         }
 
+        // mostLatePublishedPost
+        Post mostLatePublishedPost = getMostLatePublishedPost(domainName, startDate);
+        if (null != mostLatePublishedPost) {
+            report.setMostLatePublishedPost(mostLatePublishedPost);
+            report.setMostLatePublishedPostPublishedAt(CommonUtils.dateHourSecondCommonFormatDisplay(mostLatePublishedPost.getPublishedAt()));
+        }
+
         // recommendedPosts
         List<Post> recommendedPosts = postService.listRecommendedByBlogDomainName(domainName, startDate);
         report.setRecommendedPosts(recommendedPosts);
@@ -122,6 +130,28 @@ public class AnnualReportServiceImpl implements AnnualReportService {
                 } catch (ParseException e) {
                     logger.error(e.getMessage(), e);
                 }
+            }
+        }
+        return null;
+    }
+
+    private Post getMostLatePublishedPost(String domainName, Date startDate) {
+        Pagination<Post> pagination = postService.listWithKeyWord(PostSortType.latest, "", 1, 1000);
+        List<Post> posts = pagination.getResults();
+        if (null != posts && !posts.isEmpty()) {
+            Optional<Post> minNightPublished = posts.stream()
+                    .filter(post -> post.getPublishedAt().after(startDate))
+                    .max(Comparator.comparingInt(post -> post.getPublishedAt().getHours()));
+
+            Optional<Post> earlyMorningPublished = posts.stream()
+                    .filter(post -> post.getPublishedAt().after(startDate))
+                    .min(Comparator.comparingInt(post -> post.getPublishedAt().getHours()));
+
+            if (earlyMorningPublished.isPresent()) {
+                return earlyMorningPublished.get();
+            }
+            if (minNightPublished.isPresent()) {
+                return minNightPublished.get();
             }
         }
         return null;
