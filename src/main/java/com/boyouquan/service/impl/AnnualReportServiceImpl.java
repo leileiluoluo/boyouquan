@@ -75,6 +75,16 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         MonthAccess maxMonthAccess = getMaxMonthAccess(domainName, startDate);
         report.setMaxMonthAccess(maxMonthAccess);
 
+        // mostPopularPost
+        BlogLinkAccess blogLinkAccess = accessService.getMostAccessedLinkByDomainName(domainName, blog.getAddress(), startDate);
+        if (null != blogLinkAccess) {
+            Post post = postService.getByLink(blogLinkAccess.getLink());
+            if (null != post) {
+                report.setMostAccessedPost(post);
+                report.setMostAccessedPostAccessCount(blogLinkAccess.getAccessCount());
+            }
+        }
+
         // recommendedPosts
         List<Post> recommendedPosts = postService.listRecommendedByBlogDomainName(domainName, startDate);
         report.setRecommendedPosts(recommendedPosts);

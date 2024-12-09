@@ -30,6 +30,11 @@
         获得了 <strong style="color: red" th:text="${report.maxMonthAccess.count}"></strong> 次访问。
     </p>
 
+    <p th:if="${report.mostAccessedPost} != null">
+        您获得最多访问的一篇文章是 <a th:text="${report.mostAccessedPost.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${T(com.boyouquan.util.CommonUtils).urlEncode(report.mostAccessedPost.link)})}"></a>，
+        获得了 <strong style="color: red" th:text="${report.mostAccessedPostAccessCount}"></strong> 次访问。
+    </p>
+
     <p th:if="${#lists.size(report.recommendedPosts)} > 0">
         您有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong>  篇文章被博友圈推荐到了首页：
 
@@ -40,7 +45,7 @@
     </p>
 
     <p th:if="${#lists.size(report.pinnedPosts)} > 0">
-        更加幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶：
+        更幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶：
 
         <ul th:each="post, stat : ${report.pinnedPosts}" th:if="${stat.count} lt 6">
             <li><a th:text="${post.title}" th:href="${post.link}"></a></li>
