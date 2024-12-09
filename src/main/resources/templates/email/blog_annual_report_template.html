@@ -41,7 +41,7 @@
 
     <p th:if="${report.mostLatePublishedPost} != null">
         您夜深人静更新的一次博客是在 <strong style="color: red" th:text="${report.mostLatePublishedPostPublishedAt}"></strong>，
-        写下的文章是 「<a th:text="${report.mostLatePublishedPost.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${report.mostLatePublishedPost.link})}"></a>」。
+        写下的文章是「<a th:text="${report.mostLatePublishedPost.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${report.mostLatePublishedPost.link})}"></a>」。
     </p>
 
     <p th:if="${#lists.size(report.recommendedPosts)} > 0">
