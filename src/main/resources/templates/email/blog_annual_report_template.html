@@ -5,7 +5,6 @@
         您的博客「<a th:text="${report.blogName}" th:href="'https://www.boyouquan.com/blogs/' + ${report.blogDomainName}"></a>」
         于 <strong style="color: red" th:text="${report.blogCollectedAt}"></strong> 被博友圈收录，到今天我们已一起走过了 <strong style="color: red" th:text="${report.joinDaysTillNow}"></strong> 个日夜！
     </p>
-    <br/>
 
     <p>
         <strong th:if="${report.joinedAfterYearStartDay}">自加入博友圈起到现在，</strong>
@@ -17,7 +16,7 @@
     </p>
 
     <p th:if="${report.accessCountTillNow} > 0">
-        共从博友圈获得 <strong style="color: red" th:text="${report.accessCountTillNow}"></strong>  次访问。
+        共从博友圈获得 <strong style="color: red" th:text="${report.accessCountTillNow}"></strong> 个独立 IP 访问。
     </p>
 
     <p th:if="${report.maxMonthPublish} != null">
@@ -27,12 +26,12 @@
 
     <p th:if="${report.maxMonthAccess} != null">
         从博友圈获得访问最多的月份是 <strong style="color: red" th:text="${report.maxMonthAccess.month}"></strong> 月，
-        获得了 <strong style="color: red" th:text="${report.maxMonthAccess.count}"></strong> 次访问。
+        获得了 <strong style="color: red" th:text="${report.maxMonthAccess.count}"></strong> 个独立 IP 访问。
     </p>
 
     <p th:if="${report.mostAccessedPost} != null">
-        您获得最多访问的一篇文章是「<a th:text="${report.mostAccessedPost.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${report.mostAccessedPost.link})}"></a>」，
-        获得了 <strong style="color: red" th:text="${report.mostAccessedPostAccessCount}"></strong> 次访问。
+        您获得访问最多的一篇文章是「<a th:text="${report.mostAccessedPost.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${report.mostAccessedPost.link})}"></a>」，
+        获得了 <strong style="color: red" th:text="${report.mostAccessedPostAccessCount}"></strong> 个独立 IP 访问。
     </p>
 
     <p th:if="${report.latestUpdatedAt} != null">
@@ -64,14 +63,18 @@
 
     <p th:if="${report.planetShuttleInitiatedCount} > 0">
         此外，还要感谢您加入了博友圈「<a href="https://www.boyouquan.com/planet-shuttle">星球穿梭</a>」助力计划，
-        给博友圈带来了 <strong style="color: red" th:text="${report.planetShuttleInitiatedCount}"></strong> 次助力！
+        给博友们带来了 <strong style="color: red" th:text="${report.planetShuttleInitiatedCount}"></strong> 次助力！
     </p>
 
     <p th:if="${report.isSponsor}">
-        此外，最应该感谢的是您在 2024 对我们的赞助，使的博友圈网站又平稳运行了一年！
+        此外，最应该感谢的是您在 2024 对我们的赞助，使得博友圈网站又平稳运行了一年！
     </p>
 
     <p>除了您的个人年度报告已揭晓外，博友圈网站的「<a href="https://www.boyouquan.com/annual-reports/2024">2024 年度报告</a>」也已出炉，快来一睹为快吧！</p>
 
     <p>最后，博友圈在这里祝您 2025 喜乐安康、万事顺意！</p>
+
+    <br/>
+
+    <p>Copyright © 2023-2025 <a href="https://www.boyouquan.com">www.boyouquan.com</a></p>
 </div>
