@@ -67,7 +67,11 @@
         给博友圈带来了 <strong style="color: red" th:text="${report.planetShuttleInitiatedCount}"></strong> 次助力！
     </p>
 
-    <p>除了您的个人年度报告外，「<a href="https://www.boyouquan.com/annual-reports/2024">博友圈 2024 年度报告</a>」也已新鲜出炉，快来一睹为快吧！</p>
+    <p th:if="${report.isSponsor}">
+        此外，最应该感谢的是您在 2024 对我们的赞助，使的博友圈网站又平稳运行了一年！
+    </p>
+
+    <p>除了您的个人年度报告已揭晓外，博友圈网站的「<a href="https://www.boyouquan.com/annual-reports/2024">2024 年度报告</a>」也已出炉，快来一睹为快吧！</p>
 
     <p>最后，博友圈在这里祝您 2025 喜乐安康、万事顺意！</p>
 </div>

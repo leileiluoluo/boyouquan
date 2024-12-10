@@ -33,4 +33,6 @@ public class BlogAnnualReport {
 
     private long planetShuttleInitiatedCount;
 
+    private boolean isSponsor;
+
 }

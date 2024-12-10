@@ -22,6 +22,8 @@ public interface EmailService {
 
     String getBlogAnnualReport(BlogAnnualReport blogAnnualReport);
 
+    void sendBlogAnnualReport(Blog blog, BlogAnnualReport blogAnnualReport);
+
     void send(String to, String subject, String content, boolean html);
 
 }

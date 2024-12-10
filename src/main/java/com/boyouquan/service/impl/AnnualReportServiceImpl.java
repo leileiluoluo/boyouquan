@@ -34,6 +34,20 @@ public class AnnualReportServiceImpl implements AnnualReportService {
     @Autowired
     private EmailService emailService;
 
+    private List<String> SPONSORS_2024 = List.of(
+            "blog.cuger.cn",
+            "www.evan.xin",
+            "blog.goodboyboy.top",
+            "pinaland.cn",
+            "www.xiangshitan.com",
+            "pwsz.com",
+            "vrast.cn",
+            "www.dao.js.cn",
+            "www.dolingou.com",
+            "inkcodes.com",
+            "www.feinews.com"
+    );
+
     @Override
     public String getAnnualReport(String domainName) {
         Blog blog = blogService.getByDomainName(domainName);
@@ -41,6 +55,28 @@ public class AnnualReportServiceImpl implements AnnualReportService {
             return null;
         }
 
+        // get annual report
+        BlogAnnualReport annualReport = getAnnualReport(domainName, blog);
+
+        return emailService.getBlogAnnualReport(annualReport);
+    }
+
+    @Override
+    public void sendAnnualReport(String domainName) {
+        Blog blog = blogService.getByDomainName(domainName);
+        if (null == blog) {
+            logger.error("blog not found, domainName: {}", domainName);
+            return;
+        }
+
+        // get annual report
+        BlogAnnualReport annualReport = getAnnualReport(domainName, blog);
+
+        // send
+        emailService.sendBlogAnnualReport(blog, annualReport);
+    }
+
+    private BlogAnnualReport getAnnualReport(String domainName, Blog blog) {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
         BlogAnnualReport report = new BlogAnnualReport();
@@ -113,7 +149,10 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         long planetShuttleInitiatedCount = getPlanetShuttleInitiatedCount(domainName, startDate);
         report.setPlanetShuttleInitiatedCount(planetShuttleInitiatedCount);
 
-        return emailService.getBlogAnnualReport(report);
+        // isSponsor
+        report.setSponsor(isSponsor(domainName, SPONSORS_2024));
+
+        return report;
     }
 
     private Date getCurrentYearFirstDay() {
@@ -201,6 +240,10 @@ public class AnnualReportServiceImpl implements AnnualReportService {
             return monthInitiated.stream().mapToInt(MonthInitiated::getCount).sum();
         }
         return 0L;
+    }
+
+    private boolean isSponsor(String domainName, List<String> sponsors) {
+        return sponsors.contains(domainName);
     }
 
 }
