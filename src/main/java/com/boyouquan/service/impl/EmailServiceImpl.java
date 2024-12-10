@@ -212,6 +212,23 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendBlogAnnualReport(Blog blog, BlogAnnualReport blogAnnualReport) {
+        if (null != blog && null != blogAnnualReport) {
+            String adminEmail = "leileiluoluo@leileiluoluo.com"; // blog.getAdminEmail();
+            String subject = "[博友圈] 您的 2024 年度报告已揭晓！";
+
+            Context context = new Context();
+
+            context.setVariable("report", blogAnnualReport);
+
+            String text = templateEngine.process("email/blog_annual_report_template", context);
+
+            // send
+            send(adminEmail, subject, text, true);
+        }
+    }
+
+    @Override
     public void send(String to, String subject, String content, boolean html) {
         try {
             if (to.equals(CommonConstants.FAKE_BLOG_ADMIN_EMAIL)
