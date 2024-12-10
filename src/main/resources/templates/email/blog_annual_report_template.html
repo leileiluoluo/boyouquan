@@ -46,18 +46,16 @@
     <p th:if="${#lists.size(report.recommendedPosts)} > 0">
         您有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong> 篇文章被博友圈加入到了首页推荐：
 
-        <ul th:each="post, stat : ${report.recommendedPosts}" th:if="${stat.count} lt 6">
+        <ul th:each="post, stat : ${report.recommendedPosts}">
             <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
-            <li th:if="${stat.count} eq 5">...</li>
         </ul>
     </p>
 
     <p th:if="${#lists.size(report.pinnedPosts)} > 0">
         更幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶过：
 
-        <ul th:each="post, stat : ${report.pinnedPosts}" th:if="${stat.count} lt 6">
+        <ul th:each="post, stat : ${report.pinnedPosts}">
             <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
-            <li th:if="${stat.count} eq 5">...</li>
         </ul>
     </p>
 
