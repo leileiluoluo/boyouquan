@@ -4,8 +4,8 @@
 <body>
 <div class="email-container">
 <main layout:fragment="content">
-    <p th:text="'您的 ' + ${report.year} + ' 年度报告：'"></p>
-    <br/>
+    <h1 th:text="'您的 ' + ${report.year} + ' 年度报告：'"></h1>
+
     <p>
         您的博客「<a th:text="${report.blogName}" th:href="'https://www.boyouquan.com/blogs/' + ${report.blogDomainName}"></a>」于 <strong style="color: red" th:text="${report.blogCollectedAt}"></strong> 被博友圈收录，到今天我们已一起走过了 <strong style="color: red" th:text="${report.joinDaysTillNow}"></strong> 个日夜！
     </p>
