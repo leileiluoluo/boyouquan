@@ -69,6 +69,15 @@
         WHERE blog_domain_name=#{blogDomainName}
         AND year_month_str >= DATE_FORMAT(#{startDate}, '%Y/%m')
     </select>
+    <select id="listBlogAccessCount" resultType="com.boyouquan.model.BlogAccessCount">
+        SELECT
+        blog_domain_name AS blogDomainName,
+        IFNULL(SUM(amount), 0) AS count
+        FROM access
+        WHERE year_month_str >= DATE_FORMAT(#{startDate}, '%Y/%m')
+        GROUP BY blog_domain_name
+        ORDER BY IFNULL(SUM(amount), 0) DESC
+    </select>
     <select id="countByLink" resultType="java.lang.Long">
         SELECT
         IFNULL(SUM(amount), 0)

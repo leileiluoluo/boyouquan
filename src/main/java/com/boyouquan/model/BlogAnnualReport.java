@@ -18,6 +18,7 @@ public class BlogAnnualReport {
     private long postCountTillNow;
     private String postCountExceedPercent;
     private long accessCountTillNow;
+    private String accessCountExceedPercent;
 
     private MonthPublish maxMonthPublish;
     private MonthAccess maxMonthAccess;
