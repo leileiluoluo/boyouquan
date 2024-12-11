@@ -1,9 +1,17 @@
-<div width="100%" xmlns:th="http://www.thymeleaf.org">
-    <p>告警！</p>
-    <p th:text="'博友圈检测到您的博客「' + ${blog.name} + '」' + ${reason} + '，提醒您进行检查！'"></p>
-    <br/>
-    <p th:text="${unOkInfo}"></p>
-    <br/>
-    <p>博客地址：<a th:text="${blog.address}" th:href="'https://www.boyouquan.com/go?from=email&link=' + ${blog.address}"></a></p>
-    <p>博友圈收录地址：<a th:text="'https://www.boyouquan.com/blogs/' + ${blog.domainName}" th:href="'https://www.boyouquan.com/blogs/' + ${blog.domainName}"></a></p>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout::layout}">
+<body>
+<div class="email-container">
+    <main layout:fragment="content">
+        <h1>告警</h1>
+        <p th:text="'博友圈检测到您的博客「' + ${blog.name} + '」' + ${reason} + '，提醒您进行检查！'"></p>
+        <br/>
+        <p th:text="${unOkInfo}"></p>
+        <br/>
+        <p>博客地址：<a th:text="${blog.address}" th:href="'https://www.boyouquan.com/go?from=email&link=' + ${blog.address}"></a></p>
+        <p>博友圈收录地址：<a th:text="'https://www.boyouquan.com/blogs/' + ${blog.domainName}" th:href="'https://www.boyouquan.com/blogs/' + ${blog.domainName}"></a></p>
+    </main>
 </div>
+</body>
+</html>

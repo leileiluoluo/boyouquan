@@ -1,8 +1,15 @@
-<div width="100%" xmlns:th="http://www.thymeleaf.org">
-    <p>很遗憾的通知您！</p>
-    <br/>
-    <p th:text="'您的博客「' + ${blogRequestInfo.name} + '」被博友圈移出了收录名单！该博客在博友圈的所有数据均已被删除。'"></p>
-    <p th:text="'原因是：' + ${blogRequestInfo.reason}"></p>
-    <p>详情请查看：<a th:text="'https://www.boyouquan.com/blog-requests/' + ${blogRequestInfo.id}"
-                     th:href="'https://www.boyouquan.com/blog-requests/' + ${blogRequestInfo.id}"></a></p>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout::layout}">
+<body>
+<div class="email-container">
+    <main layout:fragment="content">
+        <h1>很遗憾的通知您</h1>
+        <p th:text="'您的博客「' + ${blogRequestInfo.name} + '」被博友圈移出了收录名单！该博客在博友圈的所有数据均已被删除。'"></p>
+        <p th:text="'原因是：' + ${blogRequestInfo.reason}"></p>
+        <p>详情请查看：<a th:text="'https://www.boyouquan.com/blog-requests/' + ${blogRequestInfo.id}"
+                         th:href="'https://www.boyouquan.com/blog-requests/' + ${blogRequestInfo.id}"></a></p>
+    </main>
 </div>
+</body>
+</html>
