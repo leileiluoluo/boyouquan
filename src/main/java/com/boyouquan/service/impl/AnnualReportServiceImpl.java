@@ -34,6 +34,9 @@ public class AnnualReportServiceImpl implements AnnualReportService {
     @Autowired
     private EmailService emailService;
 
+    private final int[] THRESHOLDS = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95};
+    private final String[] PERCENTAGES = {"95%", "90%", "85%", "80%", "75%", "70%", "65%", "60%", "65%", "50%", "45%", "40%", "35%", "30%", "25%", "20%", "15%", "10%", "5%"};
+
     private List<String> SPONSORS_2024 = List.of(
             "blog.cuger.cn",
             "www.evan.xin",
@@ -109,6 +112,10 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         // accessCountTillNow
         long accessCountTillNow = accessService.countByBlogDomainName(domainName, startDate);
         report.setAccessCountTillNow(accessCountTillNow);
+
+        // accessCountExceedPercent
+        String accessCountExceedPercent = getAccessCountExceedPercent(currentYearFirstDay, accessCountTillNow);
+        report.setAccessCountExceedPercent(accessCountExceedPercent);
 
         // maxMonthPublish
         MonthPublish maxMonthPublish = getMaxMonthPublish(domainName, startDate);
@@ -262,12 +269,29 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         }
 
         int size = blogPostCounts.size() - 1;
-        int[] thresholds = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95};
-        String[] percentages = {"95%", "90%", "85%", "80%", "75%", "70%", "65%", "60%", "65%", "50%", "45%", "40%", "35%", "30%", "25%", "20%", "15%", "10%", "5%"};
+        for (int i = 0; i < THRESHOLDS.length; i++) {
+            if (count > blogPostCounts.get(getIndex(size, THRESHOLDS[i]))) {
+                return PERCENTAGES[i];
+            }
+        }
+        return "0%";
+    }
 
-        for (int i = 0; i < thresholds.length; i++) {
-            if (count > blogPostCounts.get(getIndex(size, thresholds[i]))) {
-                return percentages[i];
+    private String getAccessCountExceedPercent(Date startDate, long count) {
+        List<Long> blogAccessCounts = accessService.listBlogAccessCount(startDate)
+                .stream()
+                .map(BlogAccessCount::getCount)
+                .toList();
+
+        if (blogAccessCounts.isEmpty()
+                || blogAccessCounts.size() == 1) {
+            return "0%";
+        }
+
+        int size = blogAccessCounts.size() - 1;
+        for (int i = 0; i < THRESHOLDS.length; i++) {
+            if (count > blogAccessCounts.get(getIndex(size, THRESHOLDS[i]))) {
+                return PERCENTAGES[i];
             }
         }
         return "0%";

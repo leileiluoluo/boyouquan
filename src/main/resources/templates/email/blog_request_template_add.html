@@ -1,9 +1,16 @@
-<div width="100%" xmlns:th="http://www.thymeleaf.org">
-    <p>有新的博客等待审核！</p>
-    <br/>
-    <p th:text="'新提交的博客「' + ${blogRequestInfo.name} + '」需要您的审核！'"></p>
-    <p><a th:href="'https://www.boyouquan.com/blog-requests/' + ${blogRequestInfo.id}">审核详情地址</a></p>
-    <br/>
-    <p>管理控制台：</p>
-    <a href="https://www.boyouquan.com/admin/blog-requests">https://www.boyouquan.com/admin/blog-requests</a>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout::layout}">
+<body>
+<div class="email-container">
+    <main layout:fragment="content">
+        <h1>有新的博客等待审核</h1>
+        <p th:text="'新提交的博客「' + ${blogRequestInfo.name} + '」需要您的审核！'"></p>
+        <p><a th:href="'https://www.boyouquan.com/blog-requests/' + ${blogRequestInfo.id}">审核详情地址</a></p>
+        <br/>
+        <p>管理控制台：</p>
+        <a href="https://www.boyouquan.com/admin/blog-requests">https://www.boyouquan.com/admin/blog-requests</a>
+    </main>
 </div>
+</body>
+</html>

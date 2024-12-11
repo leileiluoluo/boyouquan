@@ -2,10 +2,7 @@ package com.boyouquan.service.impl;
 
 import com.boyouquan.dao.AccessDaoMapper;
 import com.boyouquan.helper.IPControlHelper;
-import com.boyouquan.model.Access;
-import com.boyouquan.model.BlogDomainNameAccess;
-import com.boyouquan.model.BlogLinkAccess;
-import com.boyouquan.model.MonthAccess;
+import com.boyouquan.model.*;
 import com.boyouquan.service.AccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +46,11 @@ public class AccessServiceImpl implements AccessService {
     @Override
     public Long countByBlogDomainName(String blogDomainName, Date startDate) {
         return accessDaoMapper.countByBlogDomainNameAndStartDate(blogDomainName, startDate);
+    }
+
+    @Override
+    public List<BlogAccessCount> listBlogAccessCount(Date startDate) {
+        return accessDaoMapper.listBlogAccessCount(startDate);
     }
 
     @Override

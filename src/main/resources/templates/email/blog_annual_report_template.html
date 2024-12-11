@@ -4,7 +4,7 @@
 <body>
 <div class="email-container">
 <main layout:fragment="content">
-    <h1 th:text="'您的 ' + ${report.year} + ' 年度报告：'"></h1>
+    <h1 th:text="'您的 ' + ${report.year} + ' 年度报告'"></h1>
 
     <p>
         您的博客「<a th:text="${report.blogName}" th:href="'https://www.boyouquan.com/blogs/' + ${report.blogDomainName}"></a>」于 <strong style="color: red" th:text="${report.blogCollectedAt}"></strong> 被博友圈收录，到今天我们已一起走过了 <strong style="color: red" th:text="${report.joinDaysTillNow}"></strong> 个日夜！
@@ -20,7 +20,7 @@
     </p>
 
     <p th:if="${report.accessCountTillNow} > 0">
-        共从博友圈获得 <strong style="color: red" th:text="${report.accessCountTillNow}"></strong> 个独立 IP 访问。
+        共从博友圈获得 <strong style="color: red" th:text="${report.accessCountTillNow}"></strong> 个独立 IP 访问，超过了 <strong style="color: red" th:text="${report.accessCountExceedPercent}"></strong> 的博友。
     </p>
 
     <p th:if="${report.maxMonthPublish} != null">

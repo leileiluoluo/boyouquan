@@ -1,9 +1,6 @@
 package com.boyouquan.service;
 
-import com.boyouquan.model.Access;
-import com.boyouquan.model.BlogDomainNameAccess;
-import com.boyouquan.model.BlogLinkAccess;
-import com.boyouquan.model.MonthAccess;
+import com.boyouquan.model.*;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +18,8 @@ public interface AccessService {
     Long countByBlogDomainName(String blogDomainName);
 
     Long countByBlogDomainName(String blogDomainName, Date startDate);
+
+    List<BlogAccessCount> listBlogAccessCount(Date startDate);
 
     Long countByLink(String link);
 
