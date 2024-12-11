@@ -215,8 +215,19 @@
         AND draft=false
         AND recommended=true
         AND blog_domain_name=#{blogDomainName}
-        AND published_at > #{startDate}
+        AND published_at >= #{startDate}
         ORDER BY published_at DESC
+    </select>
+    <select id="listBlogPostCount" resultType="com.boyouquan.model.BlogPostCount">
+        SELECT
+        blog_domain_name as blogDomainName,
+        count(*) as count
+        FROM post
+        WHERE deleted=false
+        AND draft=false
+        AND published_at >= #{startDate}
+        GROUP BY blog_domain_name
+        ORDER BY count(*) DESC
     </select>
     <select id="getByLink" resultType="com.boyouquan.model.Post">
         SELECT
