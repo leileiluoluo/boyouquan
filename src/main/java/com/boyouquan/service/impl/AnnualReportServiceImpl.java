@@ -92,6 +92,10 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         long joinDaysTillNow = ChronoUnit.DAYS.between(blog.getCollectedAt().toInstant(), Instant.now());
         report.setJoinDaysTillNow(joinDaysTillNow);
 
+        // collectedAtExceedPercent
+        String collectedAtExceedPercent = getCollectedAtExceedPercent(blog.getCollectedAt());
+        report.setCollectedAtExceedPercent(collectedAtExceedPercent);
+
         Date currentYearFirstDay = getCurrentYearFirstDay();
 
         // joinedAfterStartDay
@@ -291,6 +295,27 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         int size = blogAccessCounts.size() - 1;
         for (int i = 0; i < THRESHOLDS.length; i++) {
             if (count > blogAccessCounts.get(getIndex(size, THRESHOLDS[i]))) {
+                return PERCENTAGES[i];
+            }
+        }
+        return "0%";
+    }
+
+    private String getCollectedAtExceedPercent(Date collectedAt) {
+        List<Date> blogCollectedAts = blogService.listBlogCollectedAt()
+                .stream()
+                .map(BlogCollectedAt::getCollectedAt)
+                .toList();
+
+        if (blogCollectedAts.isEmpty()
+                || blogCollectedAts.size() == 1) {
+            return "0%";
+        }
+
+        int size = blogCollectedAts.size() - 1;
+        for (int i = 0; i < THRESHOLDS.length; i++) {
+            Date collectedAtSegment = blogCollectedAts.get(getIndex(size, THRESHOLDS[i]));
+            if (collectedAt.before(collectedAtSegment)) {
                 return PERCENTAGES[i];
             }
         }

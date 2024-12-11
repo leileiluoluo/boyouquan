@@ -12,6 +12,8 @@ public class BlogAnnualReport {
     private int year;
     private String blogName;
     private String blogCollectedAt;
+    private String collectedAtExceedPercent;
+
     private long joinDaysTillNow;
 
     private boolean joinedAfterYearStartDay;

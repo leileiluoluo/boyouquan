@@ -171,6 +171,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public List<BlogCollectedAt> listBlogCollectedAt() {
+        return blogDaoMapper.listBlogCollectedAt();
+    }
+
+    @Override
     public boolean existsByRssAddress(String rssAddress) {
         return blogDaoMapper.existsByRssAddress(rssAddress);
     }
