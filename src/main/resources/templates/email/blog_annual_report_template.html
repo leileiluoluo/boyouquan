@@ -1,4 +1,9 @@
-<div width="100%" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout::layout}">
+<body>
+<div class="email-container">
+<main layout:fragment="content">
     <p th:text="'您的 ' + ${report.year} + ' 年度报告：'"></p>
     <br/>
     <p>
@@ -41,17 +46,17 @@
     <p th:if="${#lists.size(report.recommendedPosts)} > 0">
         您有 <strong style="color: red" th:text="${#lists.size(report.recommendedPosts)}"></strong> 篇文章被博友圈加入到了首页推荐：
 
-        <ul th:each="post, stat : ${report.recommendedPosts}">
-            <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
-        </ul>
+    <ul th:each="post, stat : ${report.recommendedPosts}">
+        <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
+    </ul>
     </p>
 
     <p th:if="${#lists.size(report.pinnedPosts)} > 0">
         更幸运的是，您有 <strong style="color: red" th:text="${#lists.size(report.pinnedPosts)}"></strong>  篇文章被博友圈置顶过：
 
-        <ul th:each="post, stat : ${report.pinnedPosts}">
-            <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
-        </ul>
+    <ul th:each="post, stat : ${report.pinnedPosts}">
+        <li><a th:text="${post.title}" th:href="@{'https://www.boyouquan.com/go?from=email&link={link}'(link=${post.link})}"></a></li>
+    </ul>
     </p>
 
     <p th:if="${report.planetShuttleInitiatedCount} > 0">
@@ -65,8 +70,7 @@
     <p>除了您的个人年度报告已揭晓外，博友圈网站的「<a href="https://www.boyouquan.com/annual-reports/2024">2024 年度报告</a>」也已出炉，快来一睹为快吧！</p>
 
     <p>最后，博友圈在这里祝您 2025 喜乐安康、万事顺意！</p>
-
-    <br/>
-
-    <p>Copyright © 2023-2025 <a href="https://www.boyouquan.com">博友圈</a></p>
+</main>
 </div>
+</body>
+</html>

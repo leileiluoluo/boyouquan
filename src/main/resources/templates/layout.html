@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博友圈</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdf5d7; /* 黄色信纸背景 */
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #f0e68c; /* 信纸的浅黄色边框 */
+            border-radius: 8px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #d2691e; /* 深橙色文字 */
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .footer {
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <main layout:fragment="content">
+
+    </main>
+    <footer class="footer" layout:fragment="footer">
+        <p>Copyright © 2023-2025 <a href="https://www.boyouquan.com">博友圈</a></p>
+    </footer>
+</div>
+</body>
+</html>
