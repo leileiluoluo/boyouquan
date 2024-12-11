@@ -1,6 +1,7 @@
 package com.boyouquan.dao;
 
 import com.boyouquan.model.Blog;
+import com.boyouquan.model.BlogCollectedAt;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public interface BlogDaoMapper {
     Long countWithKeyword(String keyword);
 
     List<Blog> listWithKeyWord(String sort, String keyword, int offset, int rows);
+
+    List<BlogCollectedAt> listBlogCollectedAt();
 
     boolean existsByDomainName(String domainName);
 

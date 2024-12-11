@@ -122,6 +122,14 @@
             </otherwise>
         </choose>
     </select>
+    <select id="listBlogCollectedAt" resultType="com.boyouquan.model.BlogCollectedAt">
+        SELECT
+        domain_name AS domainName,
+        collected_at AS collectedAt
+        FROM blog
+        GROUP BY domain_name
+        ORDER BY collected_at
+    </select>
     <select id="existsByDomainName" resultType="boolean">
         SELECT
         EXISTS (
