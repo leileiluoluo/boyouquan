@@ -1,6 +1,7 @@
 package com.boyouquan.dao;
 
 import com.boyouquan.model.BlogDomainNamePublish;
+import com.boyouquan.model.BlogPostCount;
 import com.boyouquan.model.MonthPublish;
 import com.boyouquan.model.Post;
 
@@ -30,6 +31,8 @@ public interface PostDaoMapper {
     List<Post> listByDraftAndBlogDomainName(boolean draft, String blogDomainName, int offset, int rows);
 
     List<Post> listRecommendedByBlogDomainName(String blogDomainName, Date startDate);
+
+    List<BlogPostCount> listBlogPostCount(Date startDate);
 
     Post getByLink(String link);
 

@@ -102,6 +102,9 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         long postCountTillNow = postService.countByBlogDomainName(domainName, startDate);
         report.setPostCountTillNow(postCountTillNow);
 
+        // postCountExceedPercent
+        String postCountExceedPercent = getPostCountExceedPercent(domainName, startDate);
+
         // accessCountTillNow
         long accessCountTillNow = accessService.countByBlogDomainName(domainName, startDate);
         report.setAccessCountTillNow(accessCountTillNow);
@@ -244,6 +247,34 @@ public class AnnualReportServiceImpl implements AnnualReportService {
 
     private boolean isSponsor(String domainName, List<String> sponsors) {
         return sponsors.contains(domainName);
+    }
+
+    private String getPostCountExceedPercent(String domainName, Date startDate) {
+        long count = postService.countByBlogDomainName(domainName, startDate);
+        List<Long> blogPostCounts = postService.listBlogPostCount(startDate)
+                .stream()
+                .map(BlogPostCount::getCount)
+                .toList();
+
+        if (blogPostCounts.isEmpty()
+                || blogPostCounts.size() == 1) {
+            return "0%";
+        }
+
+        int size = blogPostCounts.size() - 1;
+        int[] thresholds = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95};
+        String[] percentages = {"95%", "90%", "85%", "80%", "75%", "70%", "65%", "60%", "65%", "50%", "45%", "40%", "35%", "30%", "25%", "20%", "15%", "10%", "5%"};
+
+        for (int i = 0; i < thresholds.length; i++) {
+            if (count > blogPostCounts.get(getIndex(size, thresholds[i]))) {
+                return percentages[i];
+            }
+        }
+        return "0%";
+    }
+
+    private int getIndex(int size, int percent) {
+        return size * percent / 100;
     }
 
 }

@@ -16,6 +16,7 @@ public class BlogAnnualReport {
 
     private boolean joinedAfterYearStartDay;
     private long postCountTillNow;
+    private String postCountExceedPercent;
     private long accessCountTillNow;
 
     private MonthPublish maxMonthPublish;

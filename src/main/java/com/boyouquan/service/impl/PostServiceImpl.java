@@ -141,6 +141,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<BlogPostCount> listBlogPostCount(Date startDate) {
+        return postDaoMapper.listBlogPostCount(startDate);
+    }
+
+    @Override
     public boolean existsByLink(String link) {
         return postDaoMapper.existsByLink(link);
     }
