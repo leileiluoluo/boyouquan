@@ -103,7 +103,7 @@ public class AnnualReportServiceImpl implements AnnualReportService {
         report.setPostCountTillNow(postCountTillNow);
 
         // postCountExceedPercent
-        String postCountExceedPercent = getPostCountExceedPercent(startDate, postCountTillNow);
+        String postCountExceedPercent = getPostCountExceedPercent(currentYearFirstDay, postCountTillNow);
         report.setPostCountExceedPercent(postCountExceedPercent);
 
         // accessCountTillNow
@@ -255,8 +255,6 @@ public class AnnualReportServiceImpl implements AnnualReportService {
                 .stream()
                 .map(BlogPostCount::getCount)
                 .toList();
-
-        logger.info("blogPostCounts: {}", blogPostCounts);
 
         if (blogPostCounts.isEmpty()
                 || blogPostCounts.size() == 1) {
