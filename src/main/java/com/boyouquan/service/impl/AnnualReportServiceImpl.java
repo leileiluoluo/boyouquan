@@ -104,6 +104,7 @@ public class AnnualReportServiceImpl implements AnnualReportService {
 
         // postCountExceedPercent
         String postCountExceedPercent = getPostCountExceedPercent(domainName, startDate);
+        report.setPostCountExceedPercent(postCountExceedPercent);
 
         // accessCountTillNow
         long accessCountTillNow = accessService.countByBlogDomainName(domainName, startDate);
